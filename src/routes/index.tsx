@@ -605,9 +605,9 @@ function Index() {
 
 function GoalBlocks({ goal }: { goal: Goal }) {
   const sections = [
-    { key: "situacao", title: "Situação", color: "var(--brand)", emoji: "🔵", items: goal.blocks.situacao, desc: "Entenda o contexto" },
-    { key: "problema", title: "Problema", color: "var(--warn)", emoji: "🟡", items: goal.blocks.problema, desc: "Revele gargalos" },
-    { key: "necessidade", title: "Necessidade", color: "var(--success)", emoji: "🟢", items: goal.blocks.necessidade, desc: "Conduza à solução" },
+    { key: "situacao", title: "Situação", color: "var(--brand)", emoji: "🔵", items: goal.blocks.situacao, desc: "Entenda o contexto", objective: SPIN_OBJECTIVES.situacao },
+    { key: "problema", title: "Problema", color: "var(--warn)", emoji: "🟡", items: goal.blocks.problema, desc: "Revele gargalos", objective: SPIN_OBJECTIVES.problema },
+    { key: "necessidade", title: "Necessidade", color: "var(--success)", emoji: "🟢", items: goal.blocks.necessidade, desc: "Conduza à solução", objective: SPIN_OBJECTIVES.necessidade },
   ];
 
   return (
@@ -619,7 +619,7 @@ function GoalBlocks({ goal }: { goal: Goal }) {
 
       <div className="grid gap-4 lg:grid-cols-2">
         {sections.slice(0, 2).map((s) => (
-          <BlockCard key={s.key} title={s.title} emoji={s.emoji} color={s.color} items={s.items} desc={s.desc} />
+          <BlockCard key={s.key} title={s.title} emoji={s.emoji} color={s.color} items={s.items} desc={s.desc} objective={s.objective} />
         ))}
       </div>
 
@@ -634,6 +634,10 @@ function GoalBlocks({ goal }: { goal: Goal }) {
             <p className="text-xs sm:text-sm font-medium text-[var(--danger)] uppercase tracking-wide">Perguntas mais importantes · gere consciência e urgência</p>
           </div>
         </div>
+        <div className="mt-4 rounded-xl border border-[var(--danger)]/30 bg-white/70 p-3 sm:p-4">
+          <p className="text-[11px] font-bold uppercase tracking-wide text-[var(--danger)]">Objetivo</p>
+          <p className="mt-1 text-sm sm:text-[15px] font-medium text-[var(--navy)] leading-snug">{SPIN_OBJECTIVES.implicacao}</p>
+        </div>
         <ul className="mt-5 grid gap-3 sm:grid-cols-2">
           {goal.blocks.implicacao.map((q, i) => (
             <li key={i} className="rounded-xl border border-[var(--danger)]/25 bg-white p-4 text-[15px] sm:text-base font-semibold text-[var(--navy)] leading-snug shadow-sm">
@@ -644,13 +648,13 @@ function GoalBlocks({ goal }: { goal: Goal }) {
       </div>
 
       <div className="mt-4">
-        {(() => { const s = sections[2]; return <BlockCard title={s.title} emoji={s.emoji} color={s.color} items={s.items} desc={s.desc} />; })()}
+        {(() => { const s = sections[2]; return <BlockCard title={s.title} emoji={s.emoji} color={s.color} items={s.items} desc={s.desc} objective={s.objective} />; })()}
       </div>
     </div>
   );
 }
 
-function BlockCard({ title, emoji, color, items, desc }: { title: string; emoji: string; color: string; items: string[]; desc: string }) {
+function BlockCard({ title, emoji, color, items, desc, objective }: { title: string; emoji: string; color: string; items: string[]; desc: string; objective?: string }) {
   return (
     <div className="rounded-2xl border border-border bg-white p-5">
       <div className="flex items-center gap-2">
@@ -658,6 +662,12 @@ function BlockCard({ title, emoji, color, items, desc }: { title: string; emoji:
         <h4 className="font-bold text-[var(--navy)]">{title}</h4>
         <span className="ml-auto text-[11px] font-medium uppercase tracking-wide text-muted-foreground">{desc}</span>
       </div>
+      {objective && (
+        <div className="mt-3 rounded-lg border border-border bg-[var(--surface)] p-3">
+          <p className="text-[11px] font-bold uppercase tracking-wide" style={{ color }}>Objetivo</p>
+          <p className="mt-1 text-sm text-[var(--navy)] leading-snug">{objective}</p>
+        </div>
+      )}
       <ul className="mt-4 space-y-2.5">
         {items.map((q, i) => (
           <li key={i} className="flex gap-3 rounded-lg bg-[var(--surface)] px-3 py-2.5 text-sm text-[var(--navy)] leading-snug">
