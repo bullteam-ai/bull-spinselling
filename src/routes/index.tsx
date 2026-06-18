@@ -168,6 +168,128 @@ const KILLER_PRINCIPALS = new Set<string>([
 ]);
 const isKiller = (q: string) => KILLER_PRINCIPALS.has(q);
 
+// === MODO TREINAMENTO ===
+// Explica a psicologia por trás de cada Pergunta Principal.
+// Fallback automático por quadrante quando não houver explicação dedicada.
+const QUADRANT_EXPLANATION: Record<Quadrant, string> = {
+  situacao:
+    "Essa pergunta abre a conversa sem pressão. O objetivo é fazer o cliente verbalizar a própria realidade — aquilo que é dito em voz alta passa a ser percebido com mais clareza por quem fala.",
+  problema:
+    "Essa pergunta expõe lacunas sem confrontar. Convida o cliente a perceber sozinho que algo importante pode estar faltando, sem que ele se sinta julgado ou precise defender sua estratégia atual.",
+  implicacao:
+    "Essa pergunta amplia a percepção do custo de não agir. Tira a decisão do campo puramente racional e a leva para o campo emocional — onde a maioria das decisões realmente acontece.",
+  necessidade:
+    "Essa pergunta gera curiosidade e abre espaço para a ajuda. Em vez de oferecer uma solução, convida o cliente a validar algo que talvez nunca tenha analisado profundamente.",
+};
+
+const EXPLANATIONS: Record<string, string> = {
+  // Implicações de atraso → custo emocional do tempo
+  "E se essa independência financeira acontecer 10 anos depois do que você gostaria?":
+    "Essa pergunta existe para ampliar a percepção do custo do atraso. Muitas pessoas enxergam apenas o custo financeiro das decisões. Quando refletimos sobre tempo perdido, experiências adiadas, impacto familiar e oportunidades que não voltam, a decisão passa a ser emocional e não apenas racional. O objetivo não é gerar medo. É gerar consciência.",
+  "E se você precisasse trabalhar 10 anos além do que imagina hoje?":
+    "Transforma um número distante em uma sensação concreta. O cliente sente o peso de adiar a liberdade e percebe que o verdadeiro custo não está em trabalhar, mas em perder a escolha de parar quando quiser.",
+  "E se essa compra atrasar cinco anos?":
+    "Conecta o objetivo a algo maior do que o imóvel: rotina familiar, momentos com filhos, conforto. O cliente para de pensar em metros quadrados e passa a pensar em vida.",
+  "E se essa compra atrasar mais alguns anos?":
+    "Faz o cliente perceber que o desconforto atual continua todos os dias enquanto a compra não acontece. O custo invisível da rotina aparece.",
+  "E se essa viagem não acontecer nos próximos 5 anos?":
+    "Transforma um problema financeiro em um problema de vida. O cliente deixa de pensar em dinheiro e passa a pensar em experiências, tempo e memórias que não voltam.",
+  "E se esse projeto continuar parado pelos próximos 5 anos?":
+    "Ativa o medo do arrependimento. Muitas pessoas temem mais nunca tentar do que tentar e errar. A pergunta faz esse risco ficar visível.",
+  "E se nada mudar nos próximos 10 anos?":
+    "Tira o cliente da inércia. Quando ele projeta a situação atual no futuro, percebe que ‘continuar como está’ também é uma escolha — e raramente é a melhor.",
+  "E se mais 10 anos passarem da mesma forma?":
+    "Faz o tempo virar protagonista. O cliente sem objetivo costuma viver no automático; essa pergunta o obriga a olhar para frente e perceber o custo invisível da ausência de direção.",
+  "E se algo importante estivesse desalinhado hoje, como você descobriria?":
+    "Coloca em xeque a confiança automática no acompanhamento atual sem atacar o assessor. Cria espaço para uma segunda visão sem gerar conflito.",
+
+  // Necessidades → curiosidade e abertura
+  "Faz sentido validar se o caminho atual é realmente o mais eficiente?":
+    "Essa pergunta cria curiosidade. Ela não vende uma solução. Ela convida o cliente a verificar algo que talvez nunca tenha analisado profundamente.",
+  "Faria sentido validar se o caminho atual realmente entrega a aposentadoria que você deseja?":
+    "Reduz a resistência ao reposicionar a conversa como validação, não como crítica. O cliente não precisa admitir erro — apenas aceitar conferir os números.",
+  "Faz sentido validar se existe uma forma mais eficiente de chegar nesse objetivo?":
+    "Abre espaço para comparação sem confronto. O cliente percebe que pode existir um caminho melhor sem precisar dizer que o atual está errado.",
+  "Faz sentido validar se existe uma forma mais eficiente de atingir esse objetivo?":
+    "Convida à curiosidade. Em vez de oferecer produto, oferece clareza — e clareza é algo que ninguém recusa.",
+  "Faz sentido construir uma estratégia para transformar essa viagem em uma meta concreta?":
+    "Tira o sonho do campo da intenção e leva para o campo do planejamento. Quando algo vira meta com prazo, sai do ‘um dia’ e entra na agenda.",
+  "Faz sentido entender qual estrutura financeira seria necessária para transformar esse projeto em realidade?":
+    "Substitui a vaga ideia de ‘empreender um dia’ por uma pergunta concreta de quanto e como. Move o cliente da contemplação para a execução.",
+  "Faz sentido organizar tudo para ter mais clareza e previsibilidade?":
+    "Ninguém recusa clareza. A palavra ‘organizar’ é leve e desarma — ao mesmo tempo em que abre porta para um trabalho profundo.",
+  "Faz sentido descobrir quais objetivos realmente fazem sentido para você?":
+    "Para o cliente sem objetivo claro, o primeiro passo não é investir melhor — é descobrir para onde ir. Essa pergunta entrega exatamente isso.",
+  "Faz sentido validar se tudo continua alinhado aos seus objetivos atuais?":
+    "Permite uma segunda visão sem competir com o assessor atual. Posiciona a entrevista como complemento, não como ameaça.",
+
+  // Problemas → reconhecer lacuna sem confronto
+  "Hoje você sente que possui um plano claro para alcançar essa independência?":
+    "A palavra ‘claro’ é o gatilho. Mesmo quem tem investimentos raramente tem um plano claro — e ao admitir isso, o cliente abre espaço para a próxima etapa.",
+  "Hoje você acredita que sua estratégia atual é suficiente para entregar essa aposentadoria?":
+    "Diferencia ‘ter dinheiro guardado’ de ‘ter uma estratégia suficiente’. Quase ninguém validou de fato, e a percepção dessa lacuna gera necessidade.",
+  "Hoje você sente que existe um plano claro para comprar esse imóvel dentro do prazo desejado?":
+    "Conecta o desejo ao prazo. É no prazo que o plano costuma falhar, e admitir isso é o primeiro passo para querer estruturá-lo.",
+  "Hoje você já sabe exatamente como pretende viabilizar essa compra?":
+    "Substitui ‘você se planeja?’ pelo concreto ‘como?’. Forçar a explicação do método revela a ausência dele.",
+  "Hoje você possui um planejamento específico para realizar essa viagem?":
+    "A palavra ‘específico’ desmascara o ‘um dia a gente vai’. O cliente percebe que sem reserva e data, a viagem dificilmente sai do papel.",
+  "Hoje você já possui clareza financeira sobre o que esse projeto exige?":
+    "Empreendedores travam mais por falta de números do que por falta de coragem. Ao perceber essa lacuna, o cliente passa a desejar a clareza.",
+  "Você sente que o resultado financeiro que possui hoje reflete o esforço que faz?":
+    "Toca direto na frustração de quem ganha bem e não acumula. Conecta esforço a resultado e expõe um desalinhamento que incomoda.",
+
+  // Situação chave → contexto que vira gatilho
+  "Se dinheiro não fosse um problema, o que você faria imediatamente?":
+    "Revela os verdadeiros desejos do cliente sem pressão. Muitas vezes ele descobre, ali na ligação, o que realmente quer da vida — e isso muda o tom da conversa.",
+  "Seu assessor conhece profundamente todos os seus objetivos financeiros?":
+    "Diferencia ‘ter assessor’ de ‘ter planejamento’. Sem atacar ninguém, expõe que a maior parte do trabalho costuma ser sobre produto, não sobre vida.",
+
+  // Killer questions referenciadas no topo (também aparecem em busca/favoritos)
+  "O que acontece se isso não mudar nos próximos 5 anos?":
+    "Coloca o problema no futuro e tira o cliente do conforto do presente. A projeção amplia o desconforto e cria urgência sem precisar empurrar nada.",
+  "O que está custando para você não resolver isso hoje?":
+    "Transforma indecisão em prejuízo concreto. Quando o custo de não agir fica visível, a inação deixa de parecer neutra.",
+  "Como isso impacta sua família?":
+    "Grande parte das decisões financeiras não são tomadas apenas por razões financeiras. Quando conectamos o objetivo a filhos, cônjuge ou pessoas importantes, aumentamos a relevância emocional da conversa.",
+  "Se continuar exatamente como está, qual será o cenário daqui a 10 anos?":
+    "Força o cliente a sair da rotina mental e desenhar o futuro. Quase sempre, o cenário que ele descreve é diferente do que ele deseja.",
+  "Você acredita que está no melhor caminho possível ou apenas no caminho que conhece?":
+    "Reduz a resistência natural do cliente. Em vez de confrontar a estratégia atual, cria abertura para novas possibilidades. O cliente não precisa admitir que está errado — apenas considerar que pode existir uma alternativa melhor.",
+};
+
+const getExplanation = (principal: string, quadrant: Quadrant) =>
+  EXPLANATIONS[principal] ?? QUADRANT_EXPLANATION[quadrant];
+
+// === PSICOLOGIA DA ENTREVISTA ===
+const PSYCHOLOGY_PRINCIPLES: { title: string; description: string }[] = [
+  {
+    title: "O cliente percebe um objetivo importante",
+    description:
+      "Enquanto o objetivo não for emocionalmente relevante, não existe urgência para agir.",
+  },
+  {
+    title: "O cliente percebe que não sabe exatamente como chegar lá",
+    description:
+      "As pessoas raramente procuram ajuda quando acreditam possuir todas as respostas.",
+  },
+  {
+    title: "O cliente percebe que o atraso tem um custo",
+    description:
+      "Quando o custo de não agir fica visível, a mudança passa a fazer sentido.",
+  },
+  {
+    title: "O cliente percebe que existe uma forma melhor",
+    description:
+      "O cliente não precisa acreditar que está errado. Ele apenas precisa acreditar que existe espaço para melhoria.",
+  },
+  {
+    title: "O cliente acredita que a entrevista ajudará",
+    description:
+      "O valor da entrevista precisa ser maior do que o esforço de participar dela.",
+  },
+];
+
 type Script = {
   principal: string;
   simLabel?: string;
