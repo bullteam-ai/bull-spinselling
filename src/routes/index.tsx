@@ -3,6 +3,7 @@ import { useState } from "react";
 import {
   Target, UserRound, Home, Car, Plane, Rocket, BarChart3, HelpCircle, Handshake,
   Flame, AlertTriangle, ClipboardCopy, Check, ChevronDown, TrafficCone, ArrowRight,
+  Trophy, Mic, ShieldCheck, XCircle, CheckCircle2, Thermometer, ListOrdered,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
@@ -43,6 +44,62 @@ const BUYING_SIGNALS = [
   "É verdade.",
   "Não tinha olhado por esse lado.",
 ];
+
+const TOP_QUESTIONS = [
+  "O que acontece se isso não mudar nos próximos 5 anos?",
+  "O que está custando para você não resolver isso hoje?",
+  "Como isso impacta sua família?",
+  "Se continuar exatamente como está, qual será o cenário daqui a 10 anos?",
+  "Você acredita que está no melhor caminho possível ou apenas no caminho que conhece?",
+];
+
+const THERMOMETER = [
+  { level: 1, color: "var(--danger)", emoji: "🔴", label: "Cliente não percebe o problema" },
+  { level: 2, color: "#FF8A3D",        emoji: "🟠", label: "Cliente percebe o problema" },
+  { level: 3, color: "var(--warn)",   emoji: "🟡", label: "Cliente percebe o impacto" },
+  { level: 4, color: "var(--success)", emoji: "🟢", label: "Cliente quer resolver", highlight: true },
+];
+
+const TRANSITIONS = [
+  { from: "Situação", to: "Problema",     text: "Entendi. Agora me ajuda a entender uma coisa…" },
+  { from: "Problema", to: "Implicação",   text: "E se isso continuar exatamente como está…" },
+  { from: "Implicação", to: "Necessidade", text: "Faz sentido então entender qual seria o caminho mais eficiente para resolver isso?" },
+  { from: "Necessidade", to: "Agendamento", text: "Pelo que você compartilhou, acredito que valha a pena aprofundarmos isso em uma entrevista estratégica." },
+];
+
+const OBJECTIONS = [
+  { objection: "Preciso pensar", answer: "Perfeito. E normalmente quando alguém me diz isso, é porque ainda não conseguiu visualizar completamente o impacto ou o caminho para resolver. O que especificamente você gostaria de analisar melhor?" },
+  { objection: "Não tenho tempo", answer: "Justamente por isso faz sentido conversarmos. A entrevista existe para economizar tempo e evitar decisões no escuro." },
+  { objection: "Já tenho assessor", answer: "Excelente. Inclusive é por isso que faz sentido validar se tudo continua alinhado com seus objetivos atuais." },
+];
+
+const KILLER_MISTAKES = [
+  "Explicar produto cedo demais",
+  "Falar de investimentos antes da dor",
+  "Fazer cálculo antes da implicação",
+  "Discutir rentabilidade",
+  "Tentar vender durante a ligação",
+];
+
+const RIGHT_MOVES = ["Descobrir", "Explorar", "Amplificar", "Conscientizar", "Agendar"];
+
+const IDEAL_FLOW = [
+  "Descobrir Objetivo",
+  "Fazer Perguntas de Situação",
+  "Encontrar Problemas",
+  "Amplificar Impactos",
+  "Gerar Necessidade",
+  "Ouvir Sinais de Compra",
+  "Agendar Entrevista",
+  "Não Vender Nada",
+];
+
+const SPIN_OBJECTIVES: Record<"situacao" | "problema" | "implicacao" | "necessidade", string> = {
+  situacao: "Entender a realidade atual do cliente.",
+  problema: "Identificar lacunas, dificuldades e ausência de planejamento.",
+  implicacao: "Ampliar o impacto financeiro, emocional e familiar do problema. Esta é a etapa mais importante da metodologia.",
+  necessidade: "Levar o cliente a perceber valor em buscar ajuda especializada.",
+};
 
 const SCRIPT = `Perfeito. Pelo que você compartilhou comigo, existem alguns pontos que vale a pena analisar com mais profundidade para entender exatamente onde você está hoje e qual o caminho mais eficiente para atingir esse objetivo.
 
@@ -140,6 +197,7 @@ const GOALS: Goal[] = [
 function Index() {
   const [openGoal, setOpenGoal] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+  const [openObjection, setOpenObjection] = useState<number | null>(0);
 
   const toggleGoal = (id: string) => setOpenGoal((cur) => (cur === id ? null : id));
 
@@ -226,6 +284,63 @@ function Index() {
             </div>
           </section>
 
+          {/* Top converting questions */}
+          <section aria-labelledby="top-q-title">
+            <div className="relative overflow-hidden rounded-3xl border-2 border-[var(--brand)] bg-gradient-to-br from-[var(--navy)] via-[#102a55] to-[var(--navy)] p-5 sm:p-8 text-white shadow-xl shadow-[var(--brand)]/15">
+              <div className="pointer-events-none absolute -top-24 -right-16 h-72 w-72 rounded-full bg-[var(--brand)]/40 blur-3xl" />
+              <div className="relative">
+                <div className="flex items-center gap-3">
+                  <div aria-hidden className="flex h-11 w-11 items-center justify-center rounded-xl bg-[var(--warn)] text-[var(--navy)] shadow-lg shadow-[var(--warn)]/30">
+                    <Trophy className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <h2 id="top-q-title" className="text-xl sm:text-2xl font-bold tracking-tight">
+                      🏆 Perguntas que Mais Geram Agendamento
+                    </h2>
+                    <p className="text-xs sm:text-sm font-medium uppercase tracking-wide text-[var(--warn)]">As 5 que mais convertem · use sem medo</p>
+                  </div>
+                </div>
+                <ol className="mt-6 grid gap-3">
+                  {TOP_QUESTIONS.map((q, i) => (
+                    <li key={i} className="flex gap-4 rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur">
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[var(--warn)] text-base font-extrabold text-[var(--navy)]">{i + 1}</span>
+                      <p className="text-[15px] sm:text-base font-semibold leading-snug">{q}</p>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            </div>
+          </section>
+
+          {/* Transition phrases */}
+          <section aria-labelledby="trans-title">
+            <div className="rounded-3xl border border-border bg-white p-5 sm:p-7 shadow-sm">
+              <div className="flex items-center gap-3">
+                <div aria-hidden className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--brand)]/10 text-[var(--brand)]">
+                  <Mic className="h-5 w-5" />
+                </div>
+                <div>
+                  <h2 id="trans-title" className="text-xl sm:text-2xl font-bold tracking-tight text-[var(--navy)]">
+                    🎤 Frases de Transição
+                  </h2>
+                  <p className="text-sm text-muted-foreground">Conduza o cliente etapa por etapa sem perder o ritmo</p>
+                </div>
+              </div>
+              <div className="mt-5 grid gap-3">
+                {TRANSITIONS.map((t, i) => (
+                  <div key={i} className="rounded-2xl border border-border bg-[var(--surface)] p-4 sm:p-5">
+                    <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-[var(--brand)]">
+                      <span>{t.from}</span>
+                      <ArrowRight aria-hidden className="h-3.5 w-3.5" />
+                      <span>{t.to}</span>
+                    </div>
+                    <p className="mt-2 text-[15px] sm:text-base font-medium text-[var(--navy)] leading-snug">"{t.text}"</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
           {/* Goals */}
           <section aria-labelledby="goals-title">
             <div className="flex items-end justify-between gap-4 mb-5">
@@ -279,6 +394,116 @@ function Index() {
             )}
           </section>
 
+          {/* Objections */}
+          <section aria-labelledby="obj-title">
+            <div className="rounded-3xl border border-border bg-white p-5 sm:p-7 shadow-sm">
+              <div className="flex items-center gap-3">
+                <div aria-hidden className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--success)]/15 text-[var(--success)]">
+                  <ShieldCheck className="h-5 w-5" />
+                </div>
+                <h2 id="obj-title" className="text-xl sm:text-2xl font-bold tracking-tight text-[var(--navy)]">
+                  🛡️ Contorno de Objeções
+                </h2>
+              </div>
+              <div className="mt-5 space-y-3">
+                {OBJECTIONS.map((o, i) => {
+                  const open = openObjection === i;
+                  const panelId = `obj-panel-${i}`;
+                  return (
+                    <div key={i} className="overflow-hidden rounded-2xl border border-border bg-[var(--surface)]">
+                      <button
+                        type="button"
+                        onClick={() => setOpenObjection(open ? null : i)}
+                        aria-expanded={open}
+                        aria-controls={panelId}
+                        className="flex min-h-14 w-full items-center gap-3 p-4 text-left"
+                      >
+                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[var(--danger)]/10 text-sm font-bold text-[var(--danger)]">{i + 1}</span>
+                        <span className="flex-1 font-semibold text-[var(--navy)]">"{o.objection}"</span>
+                        <ChevronDown aria-hidden className={`h-4 w-4 text-muted-foreground transition motion-reduce:transition-none ${open ? "rotate-180 text-[var(--brand)]" : ""}`} />
+                      </button>
+                      {open && (
+                        <div id={panelId} className="border-t border-border bg-white p-4 sm:p-5">
+                          <p className="text-xs font-semibold uppercase tracking-wide text-[var(--success)]">Resposta</p>
+                          <p className="mt-2 text-[15px] sm:text-base leading-relaxed text-[var(--navy)]">{o.answer}</p>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </section>
+
+          {/* Mistakes vs right moves */}
+          <section aria-labelledby="mistakes-title">
+            <div className="rounded-3xl border border-border bg-white p-5 sm:p-7 shadow-sm">
+              <div className="flex items-center gap-3">
+                <div aria-hidden className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--danger)]/15 text-[var(--danger)]">
+                  <AlertTriangle className="h-5 w-5" />
+                </div>
+                <h2 id="mistakes-title" className="text-xl sm:text-2xl font-bold tracking-tight text-[var(--navy)]">
+                  ⚠️ Erros que Matam o Agendamento
+                </h2>
+              </div>
+              <div className="mt-5 grid gap-4 md:grid-cols-2">
+                <div className="rounded-2xl border border-[var(--danger)]/25 bg-[#FFF5F2] p-5">
+                  <p className="text-xs font-bold uppercase tracking-wide text-[var(--danger)]">Não faça</p>
+                  <ul className="mt-3 space-y-2">
+                    {KILLER_MISTAKES.map((m) => (
+                      <li key={m} className="flex items-start gap-2 text-[15px] text-[var(--navy)] leading-snug">
+                        <XCircle aria-hidden className="mt-0.5 h-4 w-4 shrink-0 text-[var(--danger)]" />
+                        <span>{m}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="rounded-2xl border border-[var(--success)]/30 bg-[var(--success)]/8 p-5" style={{ backgroundColor: "color-mix(in oklab, var(--success) 8%, white)" }}>
+                  <p className="text-xs font-bold uppercase tracking-wide text-[var(--success)]">Faça</p>
+                  <ul className="mt-3 space-y-2">
+                    {RIGHT_MOVES.map((m) => (
+                      <li key={m} className="flex items-start gap-2 text-[15px] font-semibold text-[var(--navy)] leading-snug">
+                        <CheckCircle2 aria-hidden className="mt-0.5 h-4 w-4 shrink-0 text-[var(--success)]" />
+                        <span>{m}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Ideal flow + filosofia */}
+          <section aria-labelledby="ideal-title">
+            <div className="rounded-3xl border-2 border-[var(--brand)] bg-white p-5 sm:p-8 shadow-xl shadow-[var(--brand)]/10">
+              <div className="flex items-center gap-3">
+                <div aria-hidden className="flex h-11 w-11 items-center justify-center rounded-xl bg-[var(--brand)] text-white shadow-lg shadow-[var(--brand)]/30">
+                  <ListOrdered className="h-5 w-5" />
+                </div>
+                <h2 id="ideal-title" className="text-xl sm:text-2xl font-bold tracking-tight text-[var(--navy)]">
+                  🏆 Roteiro Ideal de Uma Ligação
+                </h2>
+              </div>
+              <ol className="mt-6 grid gap-3 sm:grid-cols-2">
+                {IDEAL_FLOW.map((step, i) => (
+                  <li key={step} className="flex items-center gap-3 rounded-2xl border border-border bg-[var(--surface)] p-4">
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[var(--brand)] text-sm font-extrabold text-white">{i + 1}</span>
+                    <span className="font-semibold text-[var(--navy)]">{step}</span>
+                  </li>
+                ))}
+              </ol>
+              <div className="mt-6 rounded-2xl bg-gradient-to-br from-[var(--navy)] to-[#0b1c3a] p-6 sm:p-8 text-white">
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-[var(--success)]">Filosofia Bull Team</p>
+                <p className="mt-3 text-lg sm:text-2xl font-bold leading-snug">
+                  O objetivo da ligação não é vender.
+                </p>
+                <p className="mt-2 text-lg sm:text-2xl font-bold leading-snug text-white/90">
+                  O objetivo da ligação é fazer o cliente <span className="text-[var(--success)]">desejar participar</span> da Entrevista Estratégica Financeira.
+                </p>
+              </div>
+            </div>
+          </section>
+
           {/* Final booking */}
           <section aria-labelledby="booking-title">
             <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[var(--navy)] to-[#0b1c3a] p-6 sm:p-10 text-white shadow-xl">
@@ -314,7 +539,37 @@ function Index() {
 
         {/* Side panel: Buying signals */}
         <aside aria-label="Sinais de compra" className="mt-8 lg:mt-0">
-          <div className="lg:sticky lg:top-24">
+          <div className="lg:sticky lg:top-24 space-y-4">
+            {/* Termômetro de Consciência */}
+            <div className="rounded-3xl border border-border bg-white p-5 shadow-sm">
+              <div className="flex items-center gap-3">
+                <div aria-hidden className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--danger)]/10 text-[var(--danger)]">
+                  <Thermometer className="h-4 w-4" />
+                </div>
+                <h3 className="font-bold text-[var(--navy)]">🌡️ Termômetro de Consciência</h3>
+              </div>
+              <ol className="mt-4 space-y-2">
+                {THERMOMETER.map((t) => (
+                  <li
+                    key={t.level}
+                    className={`flex items-center gap-3 rounded-xl border p-3 text-sm ${
+                      t.highlight
+                        ? "border-[var(--success)] bg-[var(--success)]/10 text-[var(--navy)] font-bold shadow-sm shadow-[var(--success)]/20"
+                        : "border-border bg-[var(--surface)] text-[var(--navy)]"
+                    }`}
+                  >
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-xs font-extrabold text-white" style={{ backgroundColor: t.color }}>
+                      {t.level}
+                    </span>
+                    <span className="leading-snug">{t.label}</span>
+                  </li>
+                ))}
+              </ol>
+              <p className="mt-4 rounded-xl border border-[var(--success)]/30 bg-[var(--success)]/10 p-3 text-xs sm:text-sm font-medium text-[var(--navy)]">
+                O objetivo da ligação é conduzir o cliente até os níveis <span className="font-bold">3 ou 4</span> antes de convidar para a entrevista.
+              </p>
+            </div>
+
             <div className="rounded-3xl border border-border bg-white p-5 shadow-sm">
               <div className="flex items-center gap-3">
                 <div aria-hidden className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--warn)]/15 text-[var(--warn)]">
@@ -350,9 +605,9 @@ function Index() {
 
 function GoalBlocks({ goal }: { goal: Goal }) {
   const sections = [
-    { key: "situacao", title: "Situação", color: "var(--brand)", emoji: "🔵", items: goal.blocks.situacao, desc: "Entenda o contexto" },
-    { key: "problema", title: "Problema", color: "var(--warn)", emoji: "🟡", items: goal.blocks.problema, desc: "Revele gargalos" },
-    { key: "necessidade", title: "Necessidade", color: "var(--success)", emoji: "🟢", items: goal.blocks.necessidade, desc: "Conduza à solução" },
+    { key: "situacao", title: "Situação", color: "var(--brand)", emoji: "🔵", items: goal.blocks.situacao, desc: "Entenda o contexto", objective: SPIN_OBJECTIVES.situacao },
+    { key: "problema", title: "Problema", color: "var(--warn)", emoji: "🟡", items: goal.blocks.problema, desc: "Revele gargalos", objective: SPIN_OBJECTIVES.problema },
+    { key: "necessidade", title: "Necessidade", color: "var(--success)", emoji: "🟢", items: goal.blocks.necessidade, desc: "Conduza à solução", objective: SPIN_OBJECTIVES.necessidade },
   ];
 
   return (
@@ -364,7 +619,7 @@ function GoalBlocks({ goal }: { goal: Goal }) {
 
       <div className="grid gap-4 lg:grid-cols-2">
         {sections.slice(0, 2).map((s) => (
-          <BlockCard key={s.key} title={s.title} emoji={s.emoji} color={s.color} items={s.items} desc={s.desc} />
+          <BlockCard key={s.key} title={s.title} emoji={s.emoji} color={s.color} items={s.items} desc={s.desc} objective={s.objective} />
         ))}
       </div>
 
@@ -379,6 +634,10 @@ function GoalBlocks({ goal }: { goal: Goal }) {
             <p className="text-xs sm:text-sm font-medium text-[var(--danger)] uppercase tracking-wide">Perguntas mais importantes · gere consciência e urgência</p>
           </div>
         </div>
+        <div className="mt-4 rounded-xl border border-[var(--danger)]/30 bg-white/70 p-3 sm:p-4">
+          <p className="text-[11px] font-bold uppercase tracking-wide text-[var(--danger)]">Objetivo</p>
+          <p className="mt-1 text-sm sm:text-[15px] font-medium text-[var(--navy)] leading-snug">{SPIN_OBJECTIVES.implicacao}</p>
+        </div>
         <ul className="mt-5 grid gap-3 sm:grid-cols-2">
           {goal.blocks.implicacao.map((q, i) => (
             <li key={i} className="rounded-xl border border-[var(--danger)]/25 bg-white p-4 text-[15px] sm:text-base font-semibold text-[var(--navy)] leading-snug shadow-sm">
@@ -389,13 +648,13 @@ function GoalBlocks({ goal }: { goal: Goal }) {
       </div>
 
       <div className="mt-4">
-        {(() => { const s = sections[2]; return <BlockCard title={s.title} emoji={s.emoji} color={s.color} items={s.items} desc={s.desc} />; })()}
+        {(() => { const s = sections[2]; return <BlockCard title={s.title} emoji={s.emoji} color={s.color} items={s.items} desc={s.desc} objective={s.objective} />; })()}
       </div>
     </div>
   );
 }
 
-function BlockCard({ title, emoji, color, items, desc }: { title: string; emoji: string; color: string; items: string[]; desc: string }) {
+function BlockCard({ title, emoji, color, items, desc, objective }: { title: string; emoji: string; color: string; items: string[]; desc: string; objective?: string }) {
   return (
     <div className="rounded-2xl border border-border bg-white p-5">
       <div className="flex items-center gap-2">
@@ -403,6 +662,12 @@ function BlockCard({ title, emoji, color, items, desc }: { title: string; emoji:
         <h4 className="font-bold text-[var(--navy)]">{title}</h4>
         <span className="ml-auto text-[11px] font-medium uppercase tracking-wide text-muted-foreground">{desc}</span>
       </div>
+      {objective && (
+        <div className="mt-3 rounded-lg border border-border bg-[var(--surface)] p-3">
+          <p className="text-[11px] font-bold uppercase tracking-wide" style={{ color }}>Objetivo</p>
+          <p className="mt-1 text-sm text-[var(--navy)] leading-snug">{objective}</p>
+        </div>
+      )}
       <ul className="mt-4 space-y-2.5">
         {items.map((q, i) => (
           <li key={i} className="flex gap-3 rounded-lg bg-[var(--surface)] px-3 py-2.5 text-sm text-[var(--navy)] leading-snug">
