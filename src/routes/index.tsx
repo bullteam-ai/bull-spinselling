@@ -354,7 +354,7 @@ function GoalBlocks({ goal }: { goal: Goal }) {
 
       <div className="grid gap-4 lg:grid-cols-2">
         {sections.slice(0, 2).map((s) => (
-          <BlockCard key={s.key} {...s} />
+          <BlockCard key={s.key} title={s.title} emoji={s.emoji} color={s.color} items={s.items} desc={s.desc} />
         ))}
       </div>
 
