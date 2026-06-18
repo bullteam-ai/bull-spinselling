@@ -101,6 +101,20 @@ O ideal é fazermos uma Entrevista Estratégica Financeira, onde conseguimos col
 
 Tenho disponibilidade na terça às 19h ou quarta às 18h. Qual funciona melhor para você?`;
 
+const CLOSING_SCRIPT = `Após agendarmos a entrevista, você receberá um link da pré-entrevista.
+
+Nele você preencherá seus principais objetivos financeiros e algumas informações importantes.
+
+Com isso conseguimos preparar a reunião de forma personalizada e trazer análises mais relevantes para a sua realidade.
+
+Durante a entrevista vamos organizar suas informações, estruturar cenários e mostrar possíveis caminhos para alcançar os objetivos que você compartilhou.
+
+Ao final, caso faça sentido para você, podemos apresentar uma proposta de continuidade.
+
+Caso não faça sentido, você ainda sairá com muito mais clareza sobre sua vida financeira e sobre os próximos passos.
+
+Pelo que você compartilhou comigo hoje, acredito que essa conversa pode gerar bastante valor para você.`;
+
 type Quadrant = "situacao" | "problema" | "implicacao" | "necessidade";
 
 const QUADRANTS: { key: Quadrant; emoji: string; label: string; color: string; chip: string }[] = [
@@ -923,6 +937,7 @@ const GOALS: Goal[] = [
 function Index() {
   const [openGoal, setOpenGoal] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+  const [copiedClosing, setCopiedClosing] = useState(false);
   const [openObjection, setOpenObjection] = useState<number | null>(0);
   // Modo de uso: "call" durante ligações (padrão) · "training" para capacitação
   const [callMode, setCallMode] = useState(true);
@@ -992,6 +1007,16 @@ function Index() {
       await navigator.clipboard.writeText(SCRIPT);
       setCopied(true);
       setTimeout(() => setCopied(false), 2200);
+    } catch {
+      // ignore
+    }
+  };
+
+  const copyClosingScript = async () => {
+    try {
+      await navigator.clipboard.writeText(CLOSING_SCRIPT);
+      setCopiedClosing(true);
+      setTimeout(() => setCopiedClosing(false), 2200);
     } catch {
       // ignore
     }
