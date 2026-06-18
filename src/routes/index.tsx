@@ -1635,44 +1635,6 @@ function Index() {
               </p>
             </div>
 
-            <div className="rounded-3xl border border-border bg-white p-5 shadow-sm">
-              <div className="flex items-center gap-3">
-                <div aria-hidden className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--warn)]/15 text-[var(--warn)]">
-                  <TrafficCone className="h-4 w-4" />
-                </div>
-                <h3 className="font-bold text-[var(--navy)]">🚦 Sinais de Compra</h3>
-              </div>
-              <ul className="mt-4 space-y-2">
-                {BUYING_SIGNALS.map((s) => (
-                  <li key={s} className="flex items-start gap-2 rounded-lg bg-[var(--surface)] px-3 py-2 text-sm text-[var(--navy)]">
-                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--warn)]" />
-                    <span>{s}</span>
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-4 rounded-xl border border-[var(--success)]/30 bg-[var(--success)]/10 p-3 text-sm font-medium text-[var(--navy)]">
-                Quando ouvir <span className="font-bold">duas ou mais</span>, avance para o agendamento.
-              </div>
-            </div>
-
-            <div className="rounded-3xl border-2 border-[var(--success)] bg-gradient-to-br from-[var(--navy)] to-[#0b1c3a] p-5 text-white shadow-lg shadow-[var(--success)]/15">
-              <div className="flex items-center gap-3">
-                <div aria-hidden className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--success)] text-[var(--navy)]">
-                  <Sparkles className="h-4 w-4" />
-                </div>
-                <h3 className="font-bold">📅 Script de Agendamento</h3>
-              </div>
-              <p className="mt-3 text-[13px] leading-relaxed text-white/85 whitespace-pre-line">{SCRIPT}</p>
-              <button
-                type="button"
-                onClick={copyScript}
-                aria-live="polite"
-                className="mt-4 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-[var(--success)] px-4 text-sm font-bold text-[var(--navy)] transition hover:brightness-105 active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100"
-              >
-                {copied ? <Check aria-hidden className="h-4 w-4" /> : <ClipboardCopy aria-hidden className="h-4 w-4" />}
-                {copied ? "Copiado!" : "Copiar Script"}
-              </button>
-            </div>
           </div>
         </aside>
       </main>
