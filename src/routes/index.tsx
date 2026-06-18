@@ -1393,8 +1393,8 @@ function Index() {
                   const open = openGoal === g.id;
                   const panelId = `goal-panel-${g.id}`;
                   return (
+                    <Fragment key={g.id}>
                     <button
-                      key={g.id}
                       type="button"
                       onClick={() => toggleGoal(g.id)}
                       aria-expanded={open}
@@ -1417,28 +1417,31 @@ function Index() {
                         </p>
                       </div>
                     </button>
+                    {open && (
+                      <div
+                        className="col-span-2 sm:col-span-3"
+                        id={panelId}
+                        role="region"
+                        aria-label="Roteiro do objetivo selecionado"
+                      >
+                        <GoalBlocks
+                          goal={g}
+                          activeQuads={activeQuads}
+                          expanded={expanded}
+                          toggleExpand={toggleExpand}
+                          favorites={favorites}
+                          toggleFav={toggleFav}
+                          training={training}
+                          toggleTraining={toggleTraining}
+                          callMode={callMode}
+                        />
+                      </div>
+                    )}
+                    </Fragment>
                   );
                 })}
               </div>
 
-              {openGoal && (
-                <div className="mt-6" id={`goal-panel-${openGoal}`} role="region" aria-label="Roteiro do objetivo selecionado">
-                  {GOALS.filter((g) => g.id === openGoal).map((g) => (
-                    <GoalBlocks
-                      key={g.id}
-                      goal={g}
-                      activeQuads={activeQuads}
-                      expanded={expanded}
-                      toggleExpand={toggleExpand}
-                      favorites={favorites}
-                      toggleFav={toggleFav}
-                      training={training}
-                      toggleTraining={toggleTraining}
-                      callMode={callMode}
-                    />
-                  ))}
-                </div>
-              )}
             </section>
           )}
 
