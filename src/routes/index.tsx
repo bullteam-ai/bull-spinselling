@@ -125,6 +125,49 @@ const HIGH_CONVERSION_MARKERS = [
 const isHighConversion = (q: string) =>
   HIGH_CONVERSION_MARKERS.some((m) => q.toLowerCase().includes(m.toLowerCase()));
 
+// As 3 perguntas de maior impacto por objetivo financeiro.
+// Critério: maior poder de elevar a consciência do cliente (Termômetro nível 3-4)
+// e gerar desejo de participar da Entrevista Estratégica Financeira.
+const KILLER_PRINCIPALS = new Set<string>([
+  // Independência Financeira
+  "Hoje você sente que possui um plano claro para alcançar essa independência?",
+  "E se essa independência financeira acontecer 10 anos depois do que você gostaria?",
+  "Faz sentido validar se o caminho atual é realmente o mais eficiente?",
+  // Aposentadoria
+  "Hoje você acredita que sua estratégia atual é suficiente para entregar essa aposentadoria?",
+  "E se você precisasse trabalhar 10 anos além do que imagina hoje?",
+  "Faria sentido validar se o caminho atual realmente entrega a aposentadoria que você deseja?",
+  // Compra de Casa
+  "Hoje você sente que existe um plano claro para comprar esse imóvel dentro do prazo desejado?",
+  "E se essa compra atrasar cinco anos?",
+  "Faz sentido validar se existe uma forma mais eficiente de chegar nesse objetivo?",
+  // Compra de Carro
+  "Hoje você já sabe exatamente como pretende viabilizar essa compra?",
+  "E se essa compra atrasar mais alguns anos?",
+  "Faz sentido validar se existe uma forma mais eficiente de atingir esse objetivo?",
+  // Viagens
+  "Hoje você possui um planejamento específico para realizar essa viagem?",
+  "E se essa viagem não acontecer nos próximos 5 anos?",
+  "Faz sentido construir uma estratégia para transformar essa viagem em uma meta concreta?",
+  // Empreendedorismo
+  "Hoje você já possui clareza financeira sobre o que esse projeto exige?",
+  "E se esse projeto continuar parado pelos próximos 5 anos?",
+  "Faz sentido entender qual estrutura financeira seria necessária para transformar esse projeto em realidade?",
+  // Organização Financeira
+  "Você sente que o resultado financeiro que possui hoje reflete o esforço que faz?",
+  "E se nada mudar nos próximos 10 anos?",
+  "Faz sentido organizar tudo para ter mais clareza e previsibilidade?",
+  // Cliente Sem Objetivo
+  "Se dinheiro não fosse um problema, o que você faria imediatamente?",
+  "E se mais 10 anos passarem da mesma forma?",
+  "Faz sentido descobrir quais objetivos realmente fazem sentido para você?",
+  // Já Possui Assessor
+  "Seu assessor conhece profundamente todos os seus objetivos financeiros?",
+  "E se algo importante estivesse desalinhado hoje, como você descobriria?",
+  "Faz sentido validar se tudo continua alinhado aos seus objetivos atuais?",
+]);
+const isKiller = (q: string) => KILLER_PRINCIPALS.has(q);
+
 type Script = {
   principal: string;
   simLabel?: string;
