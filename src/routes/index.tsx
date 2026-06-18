@@ -1828,6 +1828,7 @@ function ScriptCard({
             <Pin aria-hidden className="h-3.5 w-3.5" />
             {favorited ? "Favoritado" : "Favoritar"}
           </button>
+          {!callMode && (
           <button
             type="button"
             onClick={onTraining}
@@ -1842,9 +1843,10 @@ function ScriptCard({
             <GraduationCap aria-hidden className="h-3.5 w-3.5" />
             🎓 Por que essa pergunta existe?
           </button>
+          )}
         </div>
 
-        {training && (
+        {!callMode && training && (
           <div className="mt-3 relative overflow-hidden rounded-xl border border-[var(--brand)]/30 bg-gradient-to-br from-[#EEF4FF] via-white to-[#F5F0FF] p-4 shadow-inner">
             <div className="pointer-events-none absolute -top-10 -right-10 h-32 w-32 rounded-full bg-[var(--brand)]/10 blur-2xl" />
             <div className="relative">
