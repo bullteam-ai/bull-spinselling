@@ -1017,27 +1017,25 @@ function Index() {
         Pular para o conteúdo
       </a>
 
-      {!callMode && (
-        <header className="relative overflow-hidden bg-gradient-to-br from-[var(--navy)] via-[var(--navy)] to-[#0b1c3a] text-white motion-reduce:bg-[var(--navy)]">
+      <header className="relative overflow-hidden bg-gradient-to-br from-[var(--navy)] via-[var(--navy)] to-[#0b1c3a] text-white motion-reduce:bg-[var(--navy)]">
           <div className="pointer-events-none absolute -top-32 -right-32 h-96 w-96 rounded-full bg-[var(--brand)]/30 blur-3xl" />
           <div className="pointer-events-none absolute -bottom-40 -left-20 h-96 w-96 rounded-full bg-[var(--success)]/20 blur-3xl" />
-          <div className="mx-auto max-w-7xl px-6 pt-14 pb-10 sm:pt-20 sm:pb-14 relative">
+          <div className="mx-auto max-w-7xl px-6 pt-10 pb-8 sm:pt-16 sm:pb-12 relative">
             <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium tracking-wide text-white/80 backdrop-blur">
               <span className="h-1.5 w-1.5 rounded-full bg-[var(--success)]" />
-              Guia ao vivo · SPIN Selling
+              {trainingMode ? "Modo Treinamento ativo" : "Guia ao vivo · pronto para a ligação"}
             </div>
-            <h1 className="mt-5 text-4xl sm:text-6xl font-bold tracking-tight">
+            <h1 className="mt-4 text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight">
               <span className="mr-2">🐂</span>Bull Team
             </h1>
-            <p className="mt-3 text-lg sm:text-xl text-white/80 font-medium">
+            <p className="mt-2 text-lg sm:text-xl text-white/85 font-medium">
               Guia de Agendamento de Entrevista
             </p>
-            <p className="mt-5 max-w-2xl text-base sm:text-lg text-white/70 leading-relaxed">
-              "Conduza a conversa. Não dispare perguntas. Cada resposta abre um novo caminho."
+            <p className="mt-4 max-w-2xl text-base sm:text-lg text-white/75 leading-relaxed">
+              Faça as perguntas certas. Gere consciência. Agende mais entrevistas.
             </p>
           </div>
         </header>
-      )}
 
       {/* Sticky control bar */}
       <nav aria-label="Controles de navegação" className="sticky top-0 z-40 border-b border-border bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85">
