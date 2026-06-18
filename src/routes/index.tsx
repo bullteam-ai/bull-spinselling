@@ -1546,13 +1546,39 @@ function Index() {
             </section>
           )}
 
-          {!callMode && !searchResults && (
-            <section aria-labelledby="booking-title">
+          {!searchResults && (
+            <section id="sinais" aria-labelledby="sinais-title" className="scroll-mt-28">
+              <div className="rounded-3xl border border-border bg-white p-5 sm:p-7 shadow-sm">
+                <div className="flex items-center gap-3">
+                  <div aria-hidden className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--warn)]/15 text-[var(--warn)]">
+                    <TrafficCone className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <h2 id="sinais-title" className="text-xl sm:text-2xl font-bold tracking-tight text-[var(--navy)]">
+                      🚦 Sinais de Compra
+                    </h2>
+                    <p className="text-sm text-muted-foreground">Quando ouvir <span className="font-bold text-[var(--navy)]">duas ou mais</span>, avance para o agendamento.</p>
+                  </div>
+                </div>
+                <ul className="mt-5 grid gap-2 sm:grid-cols-2">
+                  {BUYING_SIGNALS.map((s) => (
+                    <li key={s} className="flex items-start gap-2 rounded-xl border border-border bg-[var(--surface)] px-3 py-2.5 text-[15px] text-[var(--navy)]">
+                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--warn)]" />
+                      <span className="leading-snug">"{s}"</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </section>
+          )}
+
+          {!searchResults && (
+            <section id="agendamento" aria-labelledby="booking-title" className="scroll-mt-28">
               <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[var(--navy)] to-[#0b1c3a] p-6 sm:p-10 text-white shadow-xl">
                 <div className="pointer-events-none absolute -top-20 -right-20 h-72 w-72 rounded-full bg-[var(--success)]/30 blur-3xl" />
                 <div className="relative">
                   <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-3 py-1 text-xs font-medium text-white/80 backdrop-blur">
-                    <span className="h-1.5 w-1.5 rounded-full bg-[var(--success)]" /> Etapa 5 · Fechar agendamento
+                    <span className="h-1.5 w-1.5 rounded-full bg-[var(--success)]" /> Fechar agendamento
                   </div>
                   <h2 id="booking-title" className="mt-4 text-2xl sm:text-3xl font-bold tracking-tight">
                     📅 Transição para Agendamento
