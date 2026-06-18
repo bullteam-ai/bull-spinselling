@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import {
   Target, UserRound, Home, Car, Plane, Rocket, BarChart3, HelpCircle, Handshake,
   Flame, AlertTriangle, ClipboardCopy, Check, ChevronDown, TrafficCone, ArrowRight,
@@ -1709,6 +1709,19 @@ function GoalBlocks({
   toggleTraining: (k: string) => void;
   callMode: boolean;
 }) {
+  const firstCardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = firstCardRef.current;
+    if (!el) return;
+    const timer = setTimeout(() => {
+      el.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }, 120);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const filtered = QUADRANTS.filter((q) => activeQuads.includes(q.key));
+
   return (
     <div className="rounded-3xl border border-border bg-white p-4 sm:p-7 shadow-sm">
       <div className="mb-5 flex items-center gap-3">
@@ -1717,11 +1730,12 @@ function GoalBlocks({
       </div>
 
       <div className="space-y-4">
-        {QUADRANTS.filter((q) => activeQuads.includes(q.key)).map((quad) => {
+        {filtered.map((quad, i) => {
           const key = `${goal.id}|${quad.key}`;
           const script = goal.blocks[quad.key];
+          const isFirst = i === 0;
           return (
-            <div key={quad.key}>
+            <div key={quad.key} ref={isFirst ? firstCardRef : undefined}>
               {!callMode && (
                 <div className="mb-2 flex items-center gap-2 text-xs font-bold uppercase tracking-wide" style={{ color: quad.color }}>
                   <span aria-hidden>{quad.emoji}</span>
@@ -1740,6 +1754,7 @@ function GoalBlocks({
                 training={training.has(key)}
                 onTraining={() => toggleTraining(key)}
                 callMode={callMode}
+                isFirst={isFirst}
               />
             </div>
           );
@@ -1750,7 +1765,7 @@ function GoalBlocks({
 }
 
 function ScriptCard({
-  script, quadrant, expanded, onToggle, favorited, onFav, training, onTraining, callMode, contextLabel,
+  script, quadrant, expanded, onToggle, favorited, onFav, training, onTraining, callMode, contextLabel, isFirst,
 }: {
   fullKey: string;
   script: Script;
@@ -1763,7 +1778,16 @@ function ScriptCard({
   onTraining: () => void;
   callMode: boolean;
   contextLabel?: string;
+  isFirst?: boolean;
 }) {
+  const [showHighlight, setShowHighlight] = useState(isFirst ?? false);
+
+  useEffect(() => {
+    if (!isFirst) return;
+    const t = setTimeout(() => setShowHighlight(false), 2600);
+    return () => clearTimeout(t);
+  }, [isFirst]);
+
   const isImportant = quadrant.key === "implicacao";
   const isHigh = isHighConversion(script.principal);
   const isKillerQ = isKiller(script.principal);
@@ -1772,7 +1796,7 @@ function ScriptCard({
 
   return (
     <div
-      className={`rounded-2xl border bg-white shadow-sm ${
+      className={`rounded-2xl border bg-white shadow-sm transition ${showHighlight ? "ring-2 ring-[var(--brand)] ring-offset-2 ring-offset-white animate-pulse" : ""} ${
         isKillerQ
           ? "border-2 border-[var(--warn)] shadow-lg shadow-[var(--warn)]/20"
           : isImportant
