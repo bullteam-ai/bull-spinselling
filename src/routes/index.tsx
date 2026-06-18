@@ -111,6 +111,52 @@ Tenho disponibilidade na terça às 19h ou quarta às 18h. Qual funciona melhor 
 type Block = { situacao: string[]; problema: string[]; implicacao: string[]; necessidade: string[] };
 type Goal = { id: string; icon: typeof Target; emoji: string; title: string; blocks: Block };
 
+type Quadrant = "situacao" | "problema" | "implicacao" | "necessidade";
+
+const QUADRANTS: { key: Quadrant; emoji: string; label: string; color: string; chip: string }[] = [
+  { key: "situacao",    emoji: "🔵", label: "Situação",    color: "var(--brand)",   chip: "bg-[var(--brand)]/10 text-[var(--brand)] border-[var(--brand)]/30" },
+  { key: "problema",    emoji: "🟡", label: "Problema",    color: "var(--warn)",    chip: "bg-[var(--warn)]/10 text-[#8a5a00] border-[var(--warn)]/40" },
+  { key: "implicacao",  emoji: "🟠", label: "Implicação",  color: "var(--danger)",  chip: "bg-[var(--danger)]/10 text-[var(--danger)] border-[var(--danger)]/30" },
+  { key: "necessidade", emoji: "🟢", label: "Necessidade", color: "var(--success)", chip: "bg-[var(--success)]/10 text-[var(--success)] border-[var(--success)]/30" },
+];
+
+const EXPLORATION: Record<Quadrant, { sim: string; nao: string; transicao: string; procurar: string }> = {
+  situacao: {
+    sim: "Aprofunde com números, prazos e valores específicos. Anote tudo.",
+    nao: "Use a lacuna como gancho — siga direto para perguntas de Problema.",
+    transicao: "Entendi. Agora me ajuda a entender uma coisa…",
+    procurar: "Clareza (ou ausência dela) sobre o cenário atual.",
+  },
+  problema: {
+    sim: "Existe dor. Avance para Implicação ampliando o impacto financeiro e emocional.",
+    nao: "Reformule a pergunta. O cliente provavelmente ainda não percebeu a lacuna.",
+    transicao: "E se isso continuar exatamente como está…",
+    procurar: "Hesitação, 'nunca calculei', 'não sei responder' — sinais de inconsciência.",
+  },
+  implicacao: {
+    sim: "Silêncio é ouro. Não preencha. Deixe a consciência se instalar.",
+    nao: "Amplifique: traga família, tempo perdido, oportunidade que não volta.",
+    transicao: "Faz sentido então entender qual seria o caminho mais eficiente para resolver isso?",
+    procurar: "Mudança de tom, suspiro, 'nunca pensei nisso', 'é verdade'.",
+  },
+  necessidade: {
+    sim: "🎯 Convide imediatamente para a Entrevista Estratégica Financeira.",
+    nao: "Volte para Implicação. A dor ainda não está totalmente clara.",
+    transicao: "Pelo que você compartilhou, vale a pena aprofundarmos em uma entrevista estratégica.",
+    procurar: "'Faz sentido', 'gostaria de entender', 'como funciona?'",
+  },
+};
+
+// Marcações de alta conversão por trecho (case-insensitive).
+const HIGH_CONVERSION_MARKERS = [
+  "5 anos", "10 anos", "família", "custando", "melhor caminho", "deixaria de viver",
+  "trabalhar por obrigação", "trabalhar além", "padrão de vida", "juros compostos",
+  "ficaram apenas na vontade", "outras pessoas executando",
+];
+
+const isHighConversion = (q: string) =>
+  HIGH_CONVERSION_MARKERS.some((m) => q.toLowerCase().includes(m.toLowerCase()));
+
 const GOALS: Goal[] = [
   {
     id: "independencia", emoji: "🎯", icon: Target, title: "Independência Financeira",
