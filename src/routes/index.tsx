@@ -1607,6 +1607,202 @@ function Index() {
                 </ul>
               </div>
             </section>
+        )}
+
+          {!searchResults && (
+            <section id="fechamento" aria-labelledby="closing-title" className="scroll-mt-28">
+              <div className="relative overflow-hidden rounded-3xl border-2 border-[var(--brand)] bg-gradient-to-br from-[var(--navy)] via-[#0e2040] to-[#071225] p-6 sm:p-10 text-white shadow-2xl shadow-[var(--brand)]/20">
+                <div className="pointer-events-none absolute -top-20 -right-20 h-80 w-80 rounded-full bg-[var(--brand)]/25 blur-3xl" />
+                <div className="pointer-events-none absolute -bottom-20 -left-20 h-80 w-80 rounded-full bg-[var(--success)]/20 blur-3xl" />
+                <div className="relative">
+                  <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium tracking-wide text-white/80 backdrop-blur">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[var(--success)]" />
+                    Último passo da ligação
+                  </div>
+                  <h2 id="closing-title" className="mt-4 text-2xl sm:text-3xl font-bold tracking-tight">
+                    📅 Fechamento e Agendamento
+                  </h2>
+                  <p className="mt-2 text-white/70 max-w-2xl">
+                    Conduza o cliente desde a aceitação da entrevista até a confirmação final da reunião.
+                  </p>
+
+                  <div className="mt-8 space-y-6">
+                    {/* 1️⃣ Tirar o Doce */}
+                    <div className="rounded-2xl border border-white/10 bg-white/5 p-5 sm:p-6 backdrop-blur">
+                      <div className="flex items-center gap-3">
+                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--brand)] text-lg shadow-lg shadow-[var(--brand)]/30">🍬</span>
+                        <div>
+                          <h3 className="text-lg font-bold">Tirar o Doce</h3>
+                          <p className="text-xs text-white/60">Aumentar valor percebido da entrevista</p>
+                        </div>
+                      </div>
+                      <p className="mt-4 text-[15px] leading-relaxed text-white/85">
+                        &ldquo;Hoje muitas pessoas querem melhorar a aposentadoria, comprar um imóvel com mais eficiência, investir melhor, organizar a vida financeira ou conquistar independência financeira.
+                        <br /><br />
+                        Por isso a procura por planejamento financeiro aumentou muito.
+                        <br /><br />
+                        Os especialistas possuem uma agenda bastante concorrida e poucos horários realmente disponíveis.
+                        <br /><br />
+                        Por isso precisamos encontrar um horário que faça sentido para você e que você realmente consiga participar.&rdquo;
+                      </p>
+                    </div>
+
+                    {/* 2️⃣ Sondar a Agenda */}
+                    <div className="rounded-2xl border border-white/10 bg-white/5 p-5 sm:p-6 backdrop-blur">
+                      <div className="flex items-center gap-3">
+                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--success)] text-lg shadow-lg shadow-[var(--success)]/30">🗓️</span>
+                        <div>
+                          <h3 className="text-lg font-bold">Entender a Rotina do Cliente</h3>
+                          <p className="text-xs text-white/60">Encontrar um horário de qualidade</p>
+                        </div>
+                      </div>
+                      <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                        <div className="rounded-xl border border-[var(--success)]/30 bg-[var(--success)]/10 p-4">
+                          <p className="text-xs font-bold uppercase tracking-wide text-[var(--success)]">✅ Perguntas recomendadas</p>
+                          <ul className="mt-3 space-y-2 text-sm text-white/90">
+                            <li>• Que horas você costuma entrar e sair do trabalho?</li>
+                            <li>• O que normalmente faz depois do expediente?</li>
+                            <li>• Onde mora e onde trabalha?</li>
+                            <li>• Existe alguma atividade fixa durante a semana?</li>
+                            <li>• Como costuma ser sua rotina à noite?</li>
+                          </ul>
+                          <p className="mt-3 text-xs text-white/60 italic">
+                            &ldquo;O objetivo não é perguntar disponibilidade. O objetivo é entender a rotina para encontrar o melhor horário.&rdquo;
+                          </p>
+                        </div>
+                        <div className="rounded-xl border border-[var(--danger)]/30 bg-[var(--danger)]/10 p-4">
+                          <p className="text-xs font-bold uppercase tracking-wide text-[var(--danger)]">❌ Evite perguntar</p>
+                          <ul className="mt-3 space-y-2 text-sm text-white/90">
+                            <li>• Como anda sua agenda?</li>
+                            <li>• Como funcionam seus horários?</li>
+                            <li>• Qual horário você pode?</li>
+                          </ul>
+                          <p className="mt-3 text-xs text-white/60 italic">
+                            &ldquo;Perguntas genéricas normalmente geram respostas genéricas.&rdquo;
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* 3️⃣ Definição do Horário */}
+                    <div className="rounded-2xl border border-white/10 bg-white/5 p-5 sm:p-6 backdrop-blur">
+                      <div className="flex items-center gap-3">
+                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--warn)] text-[var(--navy)] text-lg shadow-lg shadow-[var(--warn)]/30">⏰</span>
+                        <div>
+                          <h3 className="text-lg font-bold">Escolha do Horário</h3>
+                          <p className="text-xs text-white/60">Assumir o controle da agenda</p>
+                        </div>
+                      </div>
+                      <div className="mt-4 rounded-xl border border-[var(--brand)]/30 bg-[var(--brand)]/10 p-5">
+                        <p className="text-sm text-white/70 mb-3">Ao invés de perguntar:</p>
+                        <p className="text-base font-medium text-white/90">&ldquo;Quando você pode?&rdquo;</p>
+                        <div className="my-3 h-px bg-white/10" />
+                        <p className="text-sm text-white/70 mb-3">Utilizar:</p>
+                        <p className="text-base font-bold text-white">
+                          &ldquo;Tenho disponibilidade na terça às 19h ou quarta às 18h. Qual funciona melhor para você?&rdquo;
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* 4️⃣ Agendar com Qualidade */}
+                    <div className="rounded-2xl border border-white/10 bg-white/5 p-5 sm:p-6 backdrop-blur">
+                      <div className="flex items-center gap-3">
+                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--success)] text-lg shadow-lg shadow-[var(--success)]/30">🤝</span>
+                        <div>
+                          <h3 className="text-lg font-bold">Compromisso com a Reunião</h3>
+                          <p className="text-xs text-white/60">Reduzir faltas</p>
+                        </div>
+                      </div>
+                      <div className="mt-4 grid gap-2 sm:grid-cols-2">
+                        {[
+                          "Você tem certeza de que nesse dia e horário não existe nenhum compromisso marcado?",
+                          "Posso contar com sua palavra de que estará presente?",
+                          "Fazendo chuva ou sol, conseguimos manter esse compromisso?",
+                          "Esse horário realmente funciona para você?",
+                        ].map((q) => (
+                          <div key={q} className="flex items-start gap-2 rounded-xl border border-white/10 bg-white/5 p-3 text-sm text-white/90">
+                            <CheckCircle2 aria-hidden className="mt-0.5 h-4 w-4 shrink-0 text-[var(--success)]" />
+                            <span>{q}</span>
+                          </div>
+                        ))}
+                      </div>
+                      <p className="mt-4 rounded-xl border border-[var(--brand)]/30 bg-[var(--brand)]/10 p-3 text-xs font-medium text-white/90 text-center">
+                        &ldquo;O objetivo não é pressionar. É garantir comprometimento.&rdquo;
+                      </p>
+                    </div>
+
+                    {/* 5️⃣ Formalização */}
+                    <div className="rounded-2xl border border-white/10 bg-white/5 p-5 sm:p-6 backdrop-blur">
+                      <div className="flex items-center gap-3">
+                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--brand)] text-lg shadow-lg shadow-[var(--brand)]/30">📧</span>
+                        <div>
+                          <h3 className="text-lg font-bold">Formalização da Reunião</h3>
+                          <p className="text-xs text-white/60">Coletar os dados de forma natural</p>
+                        </div>
+                      </div>
+                      <div className="mt-4 rounded-xl border border-[var(--brand)]/30 bg-[var(--brand)]/10 p-5">
+                        <p className="text-sm text-white/70 mb-3">Ao invés de pedir autorização:</p>
+                        <p className="text-base font-bold text-white">&ldquo;Qual o seu melhor e-mail?&rdquo;</p>
+                        <div className="my-3 h-px bg-white/10" />
+                        <p className="text-xs text-white/60 italic">
+                          &ldquo;O e-mail serve para formalizar a reunião e não para confirmar interesse.&rdquo;
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* 6️⃣ Reforço de Valor */}
+                    <div className="rounded-2xl border border-white/10 bg-white/5 p-5 sm:p-6 backdrop-blur">
+                      <div className="flex items-center gap-3">
+                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--warn)] text-[var(--navy)] text-lg shadow-lg shadow-[var(--warn)]/30">💎</span>
+                        <div>
+                          <h3 className="text-lg font-bold">Reforçar o Valor da Entrevista</h3>
+                          <p className="text-xs text-white/60">Fazer o cliente encerrar a ligação acreditando no valor</p>
+                        </div>
+                      </div>
+                      <div className="mt-4 grid gap-2 sm:grid-cols-2">
+                        {[
+                          "Você sairá da entrevista sabendo exatamente onde está e quais são os próximos passos.",
+                          "Vamos transformar seus objetivos em números e cenários concretos.",
+                          "Você terá uma visão clara do caminho mais eficiente para chegar onde deseja.",
+                          "Mesmo que não exista continuidade, você receberá um diagnóstico financeiro muito mais claro do que possui hoje.",
+                        ].map((q) => (
+                          <div key={q} className="flex items-start gap-2 rounded-xl border border-white/10 bg-white/5 p-3 text-sm text-white/90">
+                            <Star aria-hidden className="mt-0.5 h-4 w-4 shrink-0 text-[var(--warn)]" />
+                            <span>{q}</span>
+                          </div>
+                        ))}
+                      </div>
+                      <p className="mt-4 rounded-xl border border-[var(--warn)]/30 bg-[var(--warn)]/10 p-4 text-sm font-semibold text-white/95 text-center">
+                        &ldquo;O cliente deve encerrar a ligação acreditando que essa pode ser uma das reuniões mais importantes da vida financeira dele.&rdquo;
+                      </p>
+                    </div>
+
+                    {/* 7️⃣ Resumo do Processo */}
+                    <div className="rounded-2xl border border-white/10 bg-white/5 p-5 sm:p-6 backdrop-blur">
+                      <div className="flex items-center gap-3">
+                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--success)] text-lg shadow-lg shadow-[var(--success)]/30">📋</span>
+                        <div>
+                          <h3 className="text-lg font-bold">O Que Acontece Agora</h3>
+                          <p className="text-xs text-white/60">Deixar o cliente animado para a reunião</p>
+                        </div>
+                      </div>
+                      <div className="mt-4 rounded-xl border border-white/10 bg-white/5 p-5 text-white/90 leading-relaxed whitespace-pre-line">
+                        {CLOSING_SCRIPT}
+                      </div>
+                      <button
+                        type="button"
+                        onClick={copyClosingScript}
+                        aria-live="polite"
+                        className="mt-5 inline-flex min-h-12 items-center gap-2 rounded-xl bg-[var(--success)] px-5 py-3 text-sm font-semibold text-[var(--navy)] shadow-lg shadow-[var(--success)]/25 transition hover:brightness-105 active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100"
+                      >
+                        {copiedClosing ? <Check aria-hidden className="h-4 w-4" /> : <ClipboardCopy aria-hidden className="h-4 w-4" />}
+                        {copiedClosing ? "Script copiado!" : "📌 Copiar Script"}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
           )}
 
           {!searchResults && (
