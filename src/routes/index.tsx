@@ -1709,7 +1709,40 @@ function ScriptCard({
             <Pin aria-hidden className="h-3.5 w-3.5" />
             {favorited ? "Favoritado" : "Favoritar"}
           </button>
+          <button
+            type="button"
+            onClick={onTraining}
+            aria-pressed={training}
+            aria-label="Por que essa pergunta existe"
+            className={`inline-flex min-h-9 items-center gap-1.5 rounded-lg border px-3 text-xs font-semibold transition motion-reduce:transition-none ${
+              training
+                ? "border-[var(--brand)] bg-[var(--brand)] text-white shadow-sm shadow-[var(--brand)]/30"
+                : "border-border bg-white text-[var(--brand)] hover:border-[var(--brand)]"
+            }`}
+          >
+            <GraduationCap aria-hidden className="h-3.5 w-3.5" />
+            🎓 Por que essa pergunta existe?
+          </button>
         </div>
+
+        {training && (
+          <div className="mt-3 relative overflow-hidden rounded-xl border border-[var(--brand)]/30 bg-gradient-to-br from-[#EEF4FF] via-white to-[#F5F0FF] p-4 shadow-inner">
+            <div className="pointer-events-none absolute -top-10 -right-10 h-32 w-32 rounded-full bg-[var(--brand)]/10 blur-2xl" />
+            <div className="relative">
+              <div className="flex items-center gap-2">
+                <div aria-hidden className="flex h-7 w-7 items-center justify-center rounded-lg bg-[var(--brand)] text-white">
+                  <GraduationCap className="h-3.5 w-3.5" />
+                </div>
+                <p className="text-[11px] font-extrabold uppercase tracking-wider text-[var(--brand)]">
+                  Modo Treinamento · Psicologia da Pergunta
+                </p>
+              </div>
+              <p className={`mt-2 leading-relaxed text-[var(--navy)] ${callMode ? "text-base" : "text-sm"}`}>
+                {getExplanation(script.principal, quadrant.key)}
+              </p>
+            </div>
+          </div>
+        )}
       </div>
 
       {expanded && (
