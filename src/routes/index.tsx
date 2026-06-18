@@ -1222,8 +1222,8 @@ function Index() {
             </section>
           )}
 
-          {!callMode && !searchResults && (
-            <section aria-labelledby="psy-title">
+          {trainingMode && !searchResults && (
+            <section id="treinamento" aria-labelledby="psy-title" className="scroll-mt-28">
               <div className="relative overflow-hidden rounded-3xl border-2 border-[var(--brand)] bg-gradient-to-br from-[#0a1733] via-[var(--navy)] to-[#1a2e5c] p-6 sm:p-10 text-white shadow-2xl shadow-[var(--brand)]/20">
                 <div className="pointer-events-none absolute -top-32 -right-20 h-80 w-80 rounded-full bg-[var(--brand)]/30 blur-3xl" />
                 <div className="pointer-events-none absolute -bottom-32 -left-20 h-80 w-80 rounded-full bg-[var(--success)]/15 blur-3xl" />
