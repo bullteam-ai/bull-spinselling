@@ -1564,7 +1564,7 @@ function Index() {
 }
 
 function GoalBlocks({
-  goal, activeQuads, expanded, toggleExpand, favorites, toggleFav, callMode,
+  goal, activeQuads, expanded, toggleExpand, favorites, toggleFav, training, toggleTraining, callMode,
 }: {
   goal: Goal;
   activeQuads: Quadrant[];
@@ -1572,6 +1572,8 @@ function GoalBlocks({
   toggleExpand: (k: string) => void;
   favorites: Set<string>;
   toggleFav: (k: string) => void;
+  training: Set<string>;
+  toggleTraining: (k: string) => void;
   callMode: boolean;
 }) {
   return (
@@ -1602,6 +1604,8 @@ function GoalBlocks({
                 onToggle={() => toggleExpand(key)}
                 favorited={favorites.has(key)}
                 onFav={() => toggleFav(key)}
+                training={training.has(key)}
+                onTraining={() => toggleTraining(key)}
                 callMode={callMode}
               />
             </div>
@@ -1613,7 +1617,7 @@ function GoalBlocks({
 }
 
 function ScriptCard({
-  script, quadrant, expanded, onToggle, favorited, onFav, callMode, contextLabel,
+  script, quadrant, expanded, onToggle, favorited, onFav, training, onTraining, callMode, contextLabel,
 }: {
   fullKey: string;
   script: Script;
@@ -1622,6 +1626,8 @@ function ScriptCard({
   onToggle: () => void;
   favorited: boolean;
   onFav: () => void;
+  training: boolean;
+  onTraining: () => void;
   callMode: boolean;
   contextLabel?: string;
 }) {
