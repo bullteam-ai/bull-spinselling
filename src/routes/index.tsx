@@ -924,7 +924,18 @@ function Index() {
   const [openGoal, setOpenGoal] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [openObjection, setOpenObjection] = useState<number | null>(0);
-  const [callMode, setCallMode] = useState(false);
+  // Modo de uso: "call" durante ligações (padrão) · "training" para capacitação
+  const [callMode, setCallMode] = useState(true);
+  const trainingMode = !callMode;
+
+  const scrollToId = (id: string) => {
+    const el = typeof document !== "undefined" ? document.getElementById(id) : null;
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+  const goTraining = () => {
+    setCallMode(false);
+    setTimeout(() => scrollToId("treinamento"), 60);
+  };
   const [query, setQuery] = useState("");
   const [activeQuads, setActiveQuads] = useState<Quadrant[]>(["situacao", "problema", "implicacao", "necessidade"]);
   const [favorites, setFavorites] = useState<Set<string>>(new Set());
