@@ -1709,6 +1709,19 @@ function GoalBlocks({
   toggleTraining: (k: string) => void;
   callMode: boolean;
 }) {
+  const firstCardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = firstCardRef.current;
+    if (!el) return;
+    const timer = setTimeout(() => {
+      el.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }, 120);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const filtered = QUADRANTS.filter((q) => activeQuads.includes(q.key));
+
   return (
     <div className="rounded-3xl border border-border bg-white p-4 sm:p-7 shadow-sm">
       <div className="mb-5 flex items-center gap-3">
@@ -1717,11 +1730,12 @@ function GoalBlocks({
       </div>
 
       <div className="space-y-4">
-        {QUADRANTS.filter((q) => activeQuads.includes(q.key)).map((quad) => {
+        {filtered.map((quad, i) => {
           const key = `${goal.id}|${quad.key}`;
           const script = goal.blocks[quad.key];
+          const isFirst = i === 0;
           return (
-            <div key={quad.key}>
+            <div key={quad.key} ref={isFirst ? firstCardRef : undefined}>
               {!callMode && (
                 <div className="mb-2 flex items-center gap-2 text-xs font-bold uppercase tracking-wide" style={{ color: quad.color }}>
                   <span aria-hidden>{quad.emoji}</span>
@@ -1740,6 +1754,7 @@ function GoalBlocks({
                 training={training.has(key)}
                 onTraining={() => toggleTraining(key)}
                 callMode={callMode}
+                isFirst={isFirst}
               />
             </div>
           );
