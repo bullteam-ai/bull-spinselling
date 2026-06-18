@@ -1765,7 +1765,7 @@ function GoalBlocks({
 }
 
 function ScriptCard({
-  script, quadrant, expanded, onToggle, favorited, onFav, training, onTraining, callMode, contextLabel,
+  script, quadrant, expanded, onToggle, favorited, onFav, training, onTraining, callMode, contextLabel, isFirst,
 }: {
   fullKey: string;
   script: Script;
@@ -1778,7 +1778,16 @@ function ScriptCard({
   onTraining: () => void;
   callMode: boolean;
   contextLabel?: string;
+  isFirst?: boolean;
 }) {
+  const [showHighlight, setShowHighlight] = useState(isFirst ?? false);
+
+  useEffect(() => {
+    if (!isFirst) return;
+    const t = setTimeout(() => setShowHighlight(false), 2600);
+    return () => clearTimeout(t);
+  }, [isFirst]);
+
   const isImportant = quadrant.key === "implicacao";
   const isHigh = isHighConversion(script.principal);
   const isKillerQ = isKiller(script.principal);
@@ -1787,7 +1796,7 @@ function ScriptCard({
 
   return (
     <div
-      className={`rounded-2xl border bg-white shadow-sm ${
+      className={`rounded-2xl border bg-white shadow-sm transition ${showHighlight ? "ring-2 ring-[var(--brand)] ring-offset-2 ring-offset-white animate-pulse" : ""} ${
         isKillerQ
           ? "border-2 border-[var(--warn)] shadow-lg shadow-[var(--warn)]/20"
           : isImportant
