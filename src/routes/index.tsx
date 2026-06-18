@@ -1369,17 +1369,17 @@ function Index() {
           )}
 
           {!searchResults && (
-            <section aria-labelledby="goals-title">
-              <div className="flex items-end justify-between gap-4 mb-5">
+            <section id="objetivos" aria-labelledby="goals-title" className="scroll-mt-28">
+              <div className="flex items-end justify-between gap-4 mb-6">
                 <div>
-                  <h2 id="goals-title" className="text-xl sm:text-2xl font-bold tracking-tight text-[var(--navy)]">
-                    🎯 Objetivo Financeiro do Cliente
+                  <h2 id="goals-title" className="text-2xl sm:text-3xl font-bold tracking-tight text-[var(--navy)]">
+                    🎯 Escolha o Objetivo Principal do Cliente
                   </h2>
-                  <p className="mt-1 text-sm text-muted-foreground">Selecione → conduza o roteiro → cada resposta abre um novo caminho</p>
+                  <p className="mt-2 text-sm sm:text-base text-muted-foreground">Toque um cartão para abrir o roteiro completo.</p>
                 </div>
               </div>
 
-              <div className="grid gap-2.5 grid-cols-2 sm:grid-cols-3 lg:grid-cols-3">
+              <div className="grid gap-4 sm:gap-5 grid-cols-2 sm:grid-cols-3">
                 {GOALS.map((g) => {
                   const open = openGoal === g.id;
                   const panelId = `goal-panel-${g.id}`;
@@ -1390,20 +1390,22 @@ function Index() {
                       onClick={() => toggleGoal(g.id)}
                       aria-expanded={open}
                       aria-controls={panelId}
-                      className={`group relative flex min-h-14 items-center gap-2.5 rounded-2xl border p-3 sm:p-4 text-left transition-all motion-reduce:transition-none ${
+                      className={`group relative flex min-h-[120px] sm:min-h-[152px] flex-col items-start justify-between gap-3 overflow-hidden rounded-3xl border p-4 sm:p-6 text-left transition-all motion-reduce:transition-none ${
                         open
-                          ? "border-[var(--brand)] bg-[var(--brand)]/5 shadow-md shadow-[var(--brand)]/10"
-                          : "border-border bg-white hover:border-[var(--brand)]/40 hover:-translate-y-0.5 hover:shadow-md motion-reduce:hover:translate-y-0"
+                          ? "border-[var(--brand)] bg-gradient-to-br from-[var(--brand)]/10 via-white to-[var(--brand)]/5 shadow-xl shadow-[var(--brand)]/15 ring-1 ring-[var(--brand)]/30"
+                          : "border-border bg-white hover:border-[var(--brand)]/40 hover:-translate-y-1 hover:shadow-xl hover:shadow-[var(--brand)]/10 motion-reduce:hover:translate-y-0"
                       }`}
                     >
-                      <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-xl transition ${
-                        open ? "bg-[var(--brand)] text-white" : "bg-[var(--surface)] text-[var(--navy)]"
+                      <div className={`flex h-12 w-12 sm:h-14 sm:w-14 shrink-0 items-center justify-center rounded-2xl text-2xl sm:text-3xl transition ${
+                        open ? "bg-[var(--brand)] text-white shadow-md shadow-[var(--brand)]/30" : "bg-[var(--surface)] text-[var(--navy)] group-hover:bg-[var(--brand)]/10"
                       }`}>
                         <span aria-hidden>{g.emoji}</span>
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-[var(--navy)] text-sm sm:text-[15px] leading-tight truncate">{g.title}</p>
-                        <p className="text-[11px] text-muted-foreground">{open ? "Aberto" : "Tocar"}</p>
+                      <div className="min-w-0">
+                        <p className="font-bold text-[var(--navy)] text-[15px] sm:text-lg leading-tight">{g.title}</p>
+                        <p className={`mt-1 text-[11px] sm:text-xs font-semibold uppercase tracking-wider ${open ? "text-[var(--brand)]" : "text-muted-foreground"}`}>
+                          {open ? "Roteiro aberto ↓" : "Tocar para abrir →"}
+                        </p>
                       </div>
                     </button>
                   );
