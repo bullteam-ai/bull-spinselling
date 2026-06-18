@@ -1052,20 +1052,42 @@ function Index() {
                 className="w-full min-h-11 rounded-xl border border-border bg-white pl-9 pr-3 text-sm text-[var(--navy)] outline-none placeholder:text-muted-foreground focus:border-[var(--brand)]"
               />
             </div>
-            <button
-              type="button"
-              onClick={() => setCallMode((v) => !v)}
-              aria-pressed={callMode}
-              className={`shrink-0 inline-flex min-h-11 items-center gap-2 rounded-xl border px-3 sm:px-4 text-sm font-semibold transition motion-reduce:transition-none ${
-                callMode
-                  ? "border-[var(--success)] bg-[var(--success)] text-[var(--navy)] shadow-md shadow-[var(--success)]/30"
-                  : "border-border bg-white text-[var(--navy)] hover:border-[var(--success)]"
-              }`}
+            <div
+              role="tablist"
+              aria-label="Modo de uso"
+              className="shrink-0 inline-flex items-center rounded-xl border border-border bg-[var(--surface)] p-1"
             >
-              <Headphones aria-hidden className="h-4 w-4" />
-              <span className="hidden sm:inline">🎯 Modo Ligação</span>
-              <span className="sm:hidden">🎯</span>
-            </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={callMode}
+                onClick={() => setCallMode(true)}
+                className={`inline-flex min-h-9 items-center gap-1.5 rounded-lg px-2.5 sm:px-3 text-xs sm:text-sm font-semibold transition motion-reduce:transition-none ${
+                  callMode
+                    ? "bg-[var(--success)] text-[var(--navy)] shadow-sm shadow-[var(--success)]/30"
+                    : "text-muted-foreground hover:text-[var(--navy)]"
+                }`}
+              >
+                <Headphones aria-hidden className="h-3.5 w-3.5" />
+                <span className="hidden sm:inline">🎯 Modo Ligação</span>
+                <span className="sm:hidden">🎯 Ligação</span>
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={trainingMode}
+                onClick={() => setCallMode(false)}
+                className={`inline-flex min-h-9 items-center gap-1.5 rounded-lg px-2.5 sm:px-3 text-xs sm:text-sm font-semibold transition motion-reduce:transition-none ${
+                  trainingMode
+                    ? "bg-[var(--brand)] text-white shadow-sm shadow-[var(--brand)]/30"
+                    : "text-muted-foreground hover:text-[var(--navy)]"
+                }`}
+              >
+                <GraduationCap aria-hidden className="h-3.5 w-3.5" />
+                <span className="hidden sm:inline">🎓 Modo Treinamento</span>
+                <span className="sm:hidden">🎓 Treino</span>
+              </button>
+            </div>
           </div>
 
           <div className="flex items-center gap-3 overflow-x-auto">
