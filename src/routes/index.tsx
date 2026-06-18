@@ -929,6 +929,7 @@ function Index() {
   const [activeQuads, setActiveQuads] = useState<Quadrant[]>(["situacao", "problema", "implicacao", "necessidade"]);
   const [favorites, setFavorites] = useState<Set<string>>(new Set());
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
+  const [training, setTraining] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     try {
@@ -949,6 +950,13 @@ function Index() {
 
   const toggleExpand = (key: string) =>
     setExpanded((cur) => {
+      const next = new Set(cur);
+      if (next.has(key)) next.delete(key); else next.add(key);
+      return next;
+    });
+
+  const toggleTraining = (key: string) =>
+    setTraining((cur) => {
       const next = new Set(cur);
       if (next.has(key)) next.delete(key); else next.add(key);
       return next;
