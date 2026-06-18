@@ -924,7 +924,18 @@ function Index() {
   const [openGoal, setOpenGoal] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [openObjection, setOpenObjection] = useState<number | null>(0);
-  const [callMode, setCallMode] = useState(false);
+  // Modo de uso: "call" durante ligações (padrão) · "training" para capacitação
+  const [callMode, setCallMode] = useState(true);
+  const trainingMode = !callMode;
+
+  const scrollToId = (id: string) => {
+    const el = typeof document !== "undefined" ? document.getElementById(id) : null;
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+  const goTraining = () => {
+    setCallMode(false);
+    setTimeout(() => scrollToId("treinamento"), 60);
+  };
   const [query, setQuery] = useState("");
   const [activeQuads, setActiveQuads] = useState<Quadrant[]>(["situacao", "problema", "implicacao", "necessidade"]);
   const [favorites, setFavorites] = useState<Set<string>>(new Set());
@@ -998,7 +1009,7 @@ function Index() {
   }, [q]);
 
   return (
-    <div className={`min-h-dvh bg-[var(--surface)] text-foreground ${callMode ? "text-[17px] sm:text-[18px]" : ""}`}>
+    <div className={`min-h-dvh bg-[var(--surface)] text-foreground pb-24 ${callMode ? "text-[17px] sm:text-[18px]" : ""}`}>
       <a
         href="#conteudo"
         className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-lg focus:bg-[var(--navy)] focus:px-3 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
@@ -1006,27 +1017,25 @@ function Index() {
         Pular para o conteúdo
       </a>
 
-      {!callMode && (
-        <header className="relative overflow-hidden bg-gradient-to-br from-[var(--navy)] via-[var(--navy)] to-[#0b1c3a] text-white motion-reduce:bg-[var(--navy)]">
+      <header className="relative overflow-hidden bg-gradient-to-br from-[var(--navy)] via-[var(--navy)] to-[#0b1c3a] text-white motion-reduce:bg-[var(--navy)]">
           <div className="pointer-events-none absolute -top-32 -right-32 h-96 w-96 rounded-full bg-[var(--brand)]/30 blur-3xl" />
           <div className="pointer-events-none absolute -bottom-40 -left-20 h-96 w-96 rounded-full bg-[var(--success)]/20 blur-3xl" />
-          <div className="mx-auto max-w-7xl px-6 pt-14 pb-10 sm:pt-20 sm:pb-14 relative">
+          <div className="mx-auto max-w-7xl px-6 pt-10 pb-8 sm:pt-16 sm:pb-12 relative">
             <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium tracking-wide text-white/80 backdrop-blur">
               <span className="h-1.5 w-1.5 rounded-full bg-[var(--success)]" />
-              Guia ao vivo · SPIN Selling
+              {trainingMode ? "Modo Treinamento ativo" : "Guia ao vivo · pronto para a ligação"}
             </div>
-            <h1 className="mt-5 text-4xl sm:text-6xl font-bold tracking-tight">
+            <h1 className="mt-4 text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight">
               <span className="mr-2">🐂</span>Bull Team
             </h1>
-            <p className="mt-3 text-lg sm:text-xl text-white/80 font-medium">
+            <p className="mt-2 text-lg sm:text-xl text-white/85 font-medium">
               Guia de Agendamento de Entrevista
             </p>
-            <p className="mt-5 max-w-2xl text-base sm:text-lg text-white/70 leading-relaxed">
-              "Conduza a conversa. Não dispare perguntas. Cada resposta abre um novo caminho."
+            <p className="mt-4 max-w-2xl text-base sm:text-lg text-white/75 leading-relaxed">
+              Faça as perguntas certas. Gere consciência. Agende mais entrevistas.
             </p>
           </div>
         </header>
-      )}
 
       {/* Sticky control bar */}
       <nav aria-label="Controles de navegação" className="sticky top-0 z-40 border-b border-border bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85">
@@ -1043,20 +1052,42 @@ function Index() {
                 className="w-full min-h-11 rounded-xl border border-border bg-white pl-9 pr-3 text-sm text-[var(--navy)] outline-none placeholder:text-muted-foreground focus:border-[var(--brand)]"
               />
             </div>
-            <button
-              type="button"
-              onClick={() => setCallMode((v) => !v)}
-              aria-pressed={callMode}
-              className={`shrink-0 inline-flex min-h-11 items-center gap-2 rounded-xl border px-3 sm:px-4 text-sm font-semibold transition motion-reduce:transition-none ${
-                callMode
-                  ? "border-[var(--success)] bg-[var(--success)] text-[var(--navy)] shadow-md shadow-[var(--success)]/30"
-                  : "border-border bg-white text-[var(--navy)] hover:border-[var(--success)]"
-              }`}
+            <div
+              role="tablist"
+              aria-label="Modo de uso"
+              className="shrink-0 inline-flex items-center rounded-xl border border-border bg-[var(--surface)] p-1"
             >
-              <Headphones aria-hidden className="h-4 w-4" />
-              <span className="hidden sm:inline">🎯 Modo Ligação</span>
-              <span className="sm:hidden">🎯</span>
-            </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={callMode}
+                onClick={() => setCallMode(true)}
+                className={`inline-flex min-h-9 items-center gap-1.5 rounded-lg px-2.5 sm:px-3 text-xs sm:text-sm font-semibold transition motion-reduce:transition-none ${
+                  callMode
+                    ? "bg-[var(--success)] text-[var(--navy)] shadow-sm shadow-[var(--success)]/30"
+                    : "text-muted-foreground hover:text-[var(--navy)]"
+                }`}
+              >
+                <Headphones aria-hidden className="h-3.5 w-3.5" />
+                <span className="hidden sm:inline">🎯 Modo Ligação</span>
+                <span className="sm:hidden">🎯 Ligação</span>
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={trainingMode}
+                onClick={() => setCallMode(false)}
+                className={`inline-flex min-h-9 items-center gap-1.5 rounded-lg px-2.5 sm:px-3 text-xs sm:text-sm font-semibold transition motion-reduce:transition-none ${
+                  trainingMode
+                    ? "bg-[var(--brand)] text-white shadow-sm shadow-[var(--brand)]/30"
+                    : "text-muted-foreground hover:text-[var(--navy)]"
+                }`}
+              >
+                <GraduationCap aria-hidden className="h-3.5 w-3.5" />
+                <span className="hidden sm:inline">🎓 Modo Treinamento</span>
+                <span className="sm:hidden">🎓 Treino</span>
+              </button>
+            </div>
           </div>
 
           <div className="flex items-center gap-3 overflow-x-auto">
@@ -1191,8 +1222,8 @@ function Index() {
             </section>
           )}
 
-          {!callMode && !searchResults && (
-            <section aria-labelledby="psy-title">
+          {trainingMode && !searchResults && (
+            <section id="treinamento" aria-labelledby="psy-title" className="scroll-mt-28">
               <div className="relative overflow-hidden rounded-3xl border-2 border-[var(--brand)] bg-gradient-to-br from-[#0a1733] via-[var(--navy)] to-[#1a2e5c] p-6 sm:p-10 text-white shadow-2xl shadow-[var(--brand)]/20">
                 <div className="pointer-events-none absolute -top-32 -right-20 h-80 w-80 rounded-full bg-[var(--brand)]/30 blur-3xl" />
                 <div className="pointer-events-none absolute -bottom-32 -left-20 h-80 w-80 rounded-full bg-[var(--success)]/15 blur-3xl" />
@@ -1254,7 +1285,7 @@ function Index() {
             </section>
           )}
 
-          {!callMode && !searchResults && (
+          {trainingMode && !searchResults && (
             <section aria-labelledby="killer-title">
               <div className="rounded-3xl border border-[var(--danger)]/25 bg-gradient-to-br from-[#FFF5F2] to-white p-5 sm:p-8 shadow-sm">
                 <div className="flex items-center gap-3">
@@ -1278,7 +1309,7 @@ function Index() {
             </section>
           )}
 
-          {!callMode && !searchResults && (
+          {trainingMode && !searchResults && (
             <section aria-labelledby="top-q-title">
               <div className="relative overflow-hidden rounded-3xl border-2 border-[var(--brand)] bg-gradient-to-br from-[var(--navy)] via-[#102a55] to-[var(--navy)] p-5 sm:p-8 text-white shadow-xl shadow-[var(--brand)]/15">
                 <div className="pointer-events-none absolute -top-24 -right-16 h-72 w-72 rounded-full bg-[var(--brand)]/40 blur-3xl" />
@@ -1307,7 +1338,7 @@ function Index() {
             </section>
           )}
 
-          {!callMode && !searchResults && (
+          {trainingMode && !searchResults && (
             <section aria-labelledby="trans-title">
               <div className="rounded-3xl border border-border bg-white p-5 sm:p-7 shadow-sm">
                 <div className="flex items-center gap-3">
@@ -1338,17 +1369,17 @@ function Index() {
           )}
 
           {!searchResults && (
-            <section aria-labelledby="goals-title">
-              <div className="flex items-end justify-between gap-4 mb-5">
+            <section id="objetivos" aria-labelledby="goals-title" className="scroll-mt-28">
+              <div className="flex items-end justify-between gap-4 mb-6">
                 <div>
-                  <h2 id="goals-title" className="text-xl sm:text-2xl font-bold tracking-tight text-[var(--navy)]">
-                    🎯 Objetivo Financeiro do Cliente
+                  <h2 id="goals-title" className="text-2xl sm:text-3xl font-bold tracking-tight text-[var(--navy)]">
+                    🎯 Escolha o Objetivo Principal do Cliente
                   </h2>
-                  <p className="mt-1 text-sm text-muted-foreground">Selecione → conduza o roteiro → cada resposta abre um novo caminho</p>
+                  <p className="mt-2 text-sm sm:text-base text-muted-foreground">Toque um cartão para abrir o roteiro completo.</p>
                 </div>
               </div>
 
-              <div className="grid gap-2.5 grid-cols-2 sm:grid-cols-3 lg:grid-cols-3">
+              <div className="grid gap-4 sm:gap-5 grid-cols-2 sm:grid-cols-3">
                 {GOALS.map((g) => {
                   const open = openGoal === g.id;
                   const panelId = `goal-panel-${g.id}`;
@@ -1359,20 +1390,22 @@ function Index() {
                       onClick={() => toggleGoal(g.id)}
                       aria-expanded={open}
                       aria-controls={panelId}
-                      className={`group relative flex min-h-14 items-center gap-2.5 rounded-2xl border p-3 sm:p-4 text-left transition-all motion-reduce:transition-none ${
+                      className={`group relative flex min-h-[120px] sm:min-h-[152px] flex-col items-start justify-between gap-3 overflow-hidden rounded-3xl border p-4 sm:p-6 text-left transition-all motion-reduce:transition-none ${
                         open
-                          ? "border-[var(--brand)] bg-[var(--brand)]/5 shadow-md shadow-[var(--brand)]/10"
-                          : "border-border bg-white hover:border-[var(--brand)]/40 hover:-translate-y-0.5 hover:shadow-md motion-reduce:hover:translate-y-0"
+                          ? "border-[var(--brand)] bg-gradient-to-br from-[var(--brand)]/10 via-white to-[var(--brand)]/5 shadow-xl shadow-[var(--brand)]/15 ring-1 ring-[var(--brand)]/30"
+                          : "border-border bg-white hover:border-[var(--brand)]/40 hover:-translate-y-1 hover:shadow-xl hover:shadow-[var(--brand)]/10 motion-reduce:hover:translate-y-0"
                       }`}
                     >
-                      <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-xl transition ${
-                        open ? "bg-[var(--brand)] text-white" : "bg-[var(--surface)] text-[var(--navy)]"
+                      <div className={`flex h-12 w-12 sm:h-14 sm:w-14 shrink-0 items-center justify-center rounded-2xl text-2xl sm:text-3xl transition ${
+                        open ? "bg-[var(--brand)] text-white shadow-md shadow-[var(--brand)]/30" : "bg-[var(--surface)] text-[var(--navy)] group-hover:bg-[var(--brand)]/10"
                       }`}>
                         <span aria-hidden>{g.emoji}</span>
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-[var(--navy)] text-sm sm:text-[15px] leading-tight truncate">{g.title}</p>
-                        <p className="text-[11px] text-muted-foreground">{open ? "Aberto" : "Tocar"}</p>
+                      <div className="min-w-0">
+                        <p className="font-bold text-[var(--navy)] text-[15px] sm:text-lg leading-tight">{g.title}</p>
+                        <p className={`mt-1 text-[11px] sm:text-xs font-semibold uppercase tracking-wider ${open ? "text-[var(--brand)]" : "text-muted-foreground"}`}>
+                          {open ? "Roteiro aberto ↓" : "Tocar para abrir →"}
+                        </p>
                       </div>
                     </button>
                   );
@@ -1400,7 +1433,7 @@ function Index() {
             </section>
           )}
 
-          {!callMode && !searchResults && (
+          {trainingMode && !searchResults && (
             <section aria-labelledby="obj-title">
               <div className="rounded-3xl border border-border bg-white p-5 sm:p-7 shadow-sm">
                 <div className="flex items-center gap-3">
@@ -1442,7 +1475,7 @@ function Index() {
             </section>
           )}
 
-          {!callMode && !searchResults && (
+          {trainingMode && !searchResults && (
             <section aria-labelledby="mistakes-title">
               <div className="rounded-3xl border border-border bg-white p-5 sm:p-7 shadow-sm">
                 <div className="flex items-center gap-3">
@@ -1481,7 +1514,7 @@ function Index() {
             </section>
           )}
 
-          {!callMode && !searchResults && (
+          {trainingMode && !searchResults && (
             <section aria-labelledby="ideal-title">
               <div className="rounded-3xl border-2 border-[var(--brand)] bg-white p-5 sm:p-8 shadow-xl shadow-[var(--brand)]/10">
                 <div className="flex items-center gap-3">
@@ -1513,13 +1546,39 @@ function Index() {
             </section>
           )}
 
-          {!callMode && !searchResults && (
-            <section aria-labelledby="booking-title">
+          {!searchResults && (
+            <section id="sinais" aria-labelledby="sinais-title" className="scroll-mt-28">
+              <div className="rounded-3xl border border-border bg-white p-5 sm:p-7 shadow-sm">
+                <div className="flex items-center gap-3">
+                  <div aria-hidden className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--warn)]/15 text-[var(--warn)]">
+                    <TrafficCone className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <h2 id="sinais-title" className="text-xl sm:text-2xl font-bold tracking-tight text-[var(--navy)]">
+                      🚦 Sinais de Compra
+                    </h2>
+                    <p className="text-sm text-muted-foreground">Quando ouvir <span className="font-bold text-[var(--navy)]">duas ou mais</span>, avance para o agendamento.</p>
+                  </div>
+                </div>
+                <ul className="mt-5 grid gap-2 sm:grid-cols-2">
+                  {BUYING_SIGNALS.map((s) => (
+                    <li key={s} className="flex items-start gap-2 rounded-xl border border-border bg-[var(--surface)] px-3 py-2.5 text-[15px] text-[var(--navy)]">
+                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--warn)]" />
+                      <span className="leading-snug">"{s}"</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </section>
+          )}
+
+          {!searchResults && (
+            <section id="agendamento" aria-labelledby="booking-title" className="scroll-mt-28">
               <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[var(--navy)] to-[#0b1c3a] p-6 sm:p-10 text-white shadow-xl">
                 <div className="pointer-events-none absolute -top-20 -right-20 h-72 w-72 rounded-full bg-[var(--success)]/30 blur-3xl" />
                 <div className="relative">
                   <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-3 py-1 text-xs font-medium text-white/80 backdrop-blur">
-                    <span className="h-1.5 w-1.5 rounded-full bg-[var(--success)]" /> Etapa 5 · Fechar agendamento
+                    <span className="h-1.5 w-1.5 rounded-full bg-[var(--success)]" /> Fechar agendamento
                   </div>
                   <h2 id="booking-title" className="mt-4 text-2xl sm:text-3xl font-bold tracking-tight">
                     📅 Transição para Agendamento
@@ -1576,44 +1635,6 @@ function Index() {
               </p>
             </div>
 
-            <div className="rounded-3xl border border-border bg-white p-5 shadow-sm">
-              <div className="flex items-center gap-3">
-                <div aria-hidden className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--warn)]/15 text-[var(--warn)]">
-                  <TrafficCone className="h-4 w-4" />
-                </div>
-                <h3 className="font-bold text-[var(--navy)]">🚦 Sinais de Compra</h3>
-              </div>
-              <ul className="mt-4 space-y-2">
-                {BUYING_SIGNALS.map((s) => (
-                  <li key={s} className="flex items-start gap-2 rounded-lg bg-[var(--surface)] px-3 py-2 text-sm text-[var(--navy)]">
-                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--warn)]" />
-                    <span>{s}</span>
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-4 rounded-xl border border-[var(--success)]/30 bg-[var(--success)]/10 p-3 text-sm font-medium text-[var(--navy)]">
-                Quando ouvir <span className="font-bold">duas ou mais</span>, avance para o agendamento.
-              </div>
-            </div>
-
-            <div className="rounded-3xl border-2 border-[var(--success)] bg-gradient-to-br from-[var(--navy)] to-[#0b1c3a] p-5 text-white shadow-lg shadow-[var(--success)]/15">
-              <div className="flex items-center gap-3">
-                <div aria-hidden className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--success)] text-[var(--navy)]">
-                  <Sparkles className="h-4 w-4" />
-                </div>
-                <h3 className="font-bold">📅 Script de Agendamento</h3>
-              </div>
-              <p className="mt-3 text-[13px] leading-relaxed text-white/85 whitespace-pre-line">{SCRIPT}</p>
-              <button
-                type="button"
-                onClick={copyScript}
-                aria-live="polite"
-                className="mt-4 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-[var(--success)] px-4 text-sm font-bold text-[var(--navy)] transition hover:brightness-105 active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100"
-              >
-                {copied ? <Check aria-hidden className="h-4 w-4" /> : <ClipboardCopy aria-hidden className="h-4 w-4" />}
-                {copied ? "Copiado!" : "Copiar Script"}
-              </button>
-            </div>
           </div>
         </aside>
       </main>
@@ -1624,6 +1645,41 @@ function Index() {
           <span>SPIN Selling</span>
         </div>
       </footer>
+
+      {/* Barra de navegação fixa — sempre visível */}
+      <nav
+        aria-label="Navegação rápida"
+        className="fixed inset-x-0 bottom-0 z-50 border-t border-border bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85 shadow-[0_-8px_24px_-12px_rgba(11,28,58,0.18)]"
+        style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
+      >
+        <div className="mx-auto grid max-w-7xl grid-cols-4 gap-1 px-2 py-2 sm:px-6">
+          {[
+            { id: "objetivos", icon: Target, label: "Objetivos", emoji: "🏠", action: () => scrollToId("objetivos") },
+            { id: "sinais", icon: TrafficCone, label: "Sinais", emoji: "🚦", action: () => scrollToId("sinais") },
+            { id: "agendamento", icon: Sparkles, label: "Agendamento", emoji: "📅", action: () => scrollToId("agendamento") },
+            { id: "treinamento", icon: GraduationCap, label: "Treinamento", emoji: "🎓", action: goTraining, highlight: trainingMode },
+          ].map((item) => {
+            const Icon = item.icon;
+            const active = (item as { highlight?: boolean }).highlight;
+            return (
+              <button
+                key={item.id}
+                type="button"
+                onClick={item.action}
+                className={`group flex min-h-12 flex-col items-center justify-center gap-0.5 rounded-xl px-1 py-1.5 text-[11px] font-semibold transition motion-reduce:transition-none ${
+                  active
+                    ? "bg-[var(--brand)]/10 text-[var(--brand)]"
+                    : "text-muted-foreground hover:bg-[var(--surface)] hover:text-[var(--navy)]"
+                }`}
+              >
+                <Icon aria-hidden className="h-4 w-4 sm:hidden" />
+                <span aria-hidden className="hidden text-base leading-none sm:inline">{item.emoji}</span>
+                <span className="leading-none">{item.label}</span>
+              </button>
+            );
+          })}
+        </div>
+      </nav>
     </div>
   );
 }
@@ -1772,6 +1828,7 @@ function ScriptCard({
             <Pin aria-hidden className="h-3.5 w-3.5" />
             {favorited ? "Favoritado" : "Favoritar"}
           </button>
+          {!callMode && (
           <button
             type="button"
             onClick={onTraining}
@@ -1786,9 +1843,10 @@ function ScriptCard({
             <GraduationCap aria-hidden className="h-3.5 w-3.5" />
             🎓 Por que essa pergunta existe?
           </button>
+          )}
         </div>
 
-        {training && (
+        {!callMode && training && (
           <div className="mt-3 relative overflow-hidden rounded-xl border border-[var(--brand)]/30 bg-gradient-to-br from-[#EEF4FF] via-white to-[#F5F0FF] p-4 shadow-inner">
             <div className="pointer-events-none absolute -top-10 -right-10 h-32 w-32 rounded-full bg-[var(--brand)]/10 blur-2xl" />
             <div className="relative">
