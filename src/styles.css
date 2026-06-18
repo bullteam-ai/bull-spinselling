@@ -88,7 +88,7 @@
   --secondary: oklch(0.96 0.01 250);
   --secondary-foreground: var(--navy);
   --muted: oklch(0.965 0.008 250);
-  --muted-foreground: oklch(0.5 0.03 260);
+  --muted-foreground: oklch(0.42 0.04 260);
   --accent: oklch(0.95 0.02 260);
   --accent-foreground: var(--navy);
   --destructive: var(--danger);
@@ -157,5 +157,24 @@
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  /* Global keyboard focus ring — visible on every interactive element */
+  :where(a, button, [role="button"], input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+    border-radius: 0.5rem;
+  }
+
+  /* Honor user's reduced-motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }

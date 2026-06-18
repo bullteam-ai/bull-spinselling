@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import {
   Target, UserRound, Home, Car, Plane, Rocket, BarChart3, HelpCircle, Handshake,
   Flame, AlertTriangle, ClipboardCopy, Check, ChevronDown, TrafficCone, ArrowRight,
@@ -154,9 +154,15 @@ function Index() {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--surface)] text-foreground">
+    <div className="min-h-dvh bg-[var(--surface)] text-foreground">
+      <a
+        href="#conteudo"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-lg focus:bg-[var(--navy)] focus:px-3 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
+      >
+        Pular para o conteúdo
+      </a>
       {/* Header */}
-      <header className="relative overflow-hidden bg-gradient-to-br from-[var(--navy)] via-[var(--navy)] to-[#0b1c3a] text-white">
+      <header className="relative overflow-hidden bg-gradient-to-br from-[var(--navy)] via-[var(--navy)] to-[#0b1c3a] text-white motion-reduce:bg-[var(--navy)]">
         <div className="pointer-events-none absolute -top-32 -right-32 h-96 w-96 rounded-full bg-[var(--brand)]/30 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-40 -left-20 h-96 w-96 rounded-full bg-[var(--success)]/20 blur-3xl" />
         <div className="mx-auto max-w-7xl px-6 pt-14 pb-10 sm:pt-20 sm:pb-14 relative">
@@ -177,9 +183,9 @@ function Index() {
       </header>
 
       {/* Sticky flow bar */}
-      <div className="sticky top-0 z-40 border-b border-border bg-white/85 backdrop-blur supports-[backdrop-filter]:bg-white/70">
+      <nav aria-label="Etapas do funil" className="sticky top-0 z-40 border-b border-border bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          <ol className="flex items-center gap-2 overflow-x-auto py-3 text-xs sm:text-sm scrollbar-none">
+          <ol className="flex items-center gap-2 overflow-x-auto py-3 text-xs sm:text-sm">
             {FLOW.map((step, i) => (
               <li key={step} className="flex items-center gap-2 shrink-0">
                 <div className="flex items-center gap-2 rounded-full border border-border bg-white px-3 py-1.5 shadow-sm">
@@ -188,20 +194,20 @@ function Index() {
                   </span>
                   <span className="font-medium text-[var(--navy)] whitespace-nowrap">{step}</span>
                 </div>
-                {i < FLOW.length - 1 && <ArrowRight className="h-4 w-4 text-muted-foreground shrink-0" />}
+                {i < FLOW.length - 1 && <ArrowRight aria-hidden className="h-4 w-4 text-muted-foreground shrink-0" />}
               </li>
             ))}
           </ol>
         </div>
-      </div>
+      </nav>
 
-      <main className="mx-auto max-w-7xl px-4 sm:px-6 py-10 lg:grid lg:grid-cols-[1fr_320px] lg:gap-8">
-        <div className="space-y-10">
+      <main id="conteudo" className="mx-auto max-w-7xl px-4 sm:px-6 py-8 sm:py-10 lg:grid lg:grid-cols-[1fr_320px] lg:gap-8">
+        <div className="space-y-8 sm:space-y-10">
           {/* Killer questions */}
           <section aria-labelledby="killer-title">
-            <div className="rounded-3xl border border-[var(--danger)]/25 bg-gradient-to-br from-[#FFF5F2] to-white p-6 sm:p-8 shadow-sm">
+            <div className="rounded-3xl border border-[var(--danger)]/25 bg-gradient-to-br from-[#FFF5F2] to-white p-5 sm:p-8 shadow-sm">
               <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--danger)] text-white shadow-lg shadow-[var(--danger)]/30">
+                <div aria-hidden className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--danger)] text-white shadow-lg shadow-[var(--danger)]/30">
                   <Flame className="h-5 w-5" />
                 </div>
                 <h2 id="killer-title" className="text-xl sm:text-2xl font-bold tracking-tight text-[var(--navy)]">
@@ -233,16 +239,19 @@ function Index() {
 
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {GOALS.map((g) => {
-                const Icon = g.icon;
                 const open = openGoal === g.id;
+                const panelId = `goal-panel-${g.id}`;
                 return (
                   <button
                     key={g.id}
+                    type="button"
                     onClick={() => toggleGoal(g.id)}
-                    className={`group relative flex items-center gap-3 rounded-2xl border p-4 text-left transition-all ${
+                    aria-expanded={open}
+                    aria-controls={panelId}
+                    className={`group relative flex min-h-14 items-center gap-3 rounded-2xl border p-4 text-left transition-all motion-reduce:transition-none ${
                       open
                         ? "border-[var(--brand)] bg-[var(--brand)]/5 shadow-md shadow-[var(--brand)]/10"
-                        : "border-border bg-white hover:border-[var(--brand)]/40 hover:-translate-y-0.5 hover:shadow-md"
+                        : "border-border bg-white hover:border-[var(--brand)]/40 hover:-translate-y-0.5 hover:shadow-md motion-reduce:hover:translate-y-0"
                     }`}
                   >
                     <div className={`flex h-11 w-11 items-center justify-center rounded-xl text-xl transition ${
@@ -254,8 +263,7 @@ function Index() {
                       <p className="font-semibold text-[var(--navy)] truncate">{g.title}</p>
                       <p className="text-xs text-muted-foreground">{open ? "Roteiro aberto" : "Tocar para abrir"}</p>
                     </div>
-                    <ChevronDown className={`h-4 w-4 text-muted-foreground transition ${open ? "rotate-180 text-[var(--brand)]" : ""}`} />
-                    <Icon className="absolute right-4 bottom-4 h-3.5 w-3.5 text-transparent" />
+                    <ChevronDown aria-hidden className={`h-4 w-4 shrink-0 text-muted-foreground transition motion-reduce:transition-none ${open ? "rotate-180 text-[var(--brand)]" : ""}`} />
                   </button>
                 );
               })}
@@ -263,7 +271,7 @@ function Index() {
 
             {/* Expanded content */}
             {openGoal && (
-              <div className="mt-6">
+              <div className="mt-6" id={`goal-panel-${openGoal}`} role="region" aria-label="Roteiro do objetivo selecionado">
                 {GOALS.filter((g) => g.id === openGoal).map((g) => (
                   <GoalBlocks key={g.id} goal={g} />
                 ))}
@@ -291,10 +299,12 @@ function Index() {
                 </div>
 
                 <button
+                  type="button"
                   onClick={copyScript}
-                  className="mt-5 inline-flex items-center gap-2 rounded-xl bg-[var(--success)] px-5 py-3 text-sm font-semibold text-[var(--navy)] shadow-lg shadow-[var(--success)]/25 transition hover:brightness-105 active:scale-[0.98]"
+                  aria-live="polite"
+                  className="mt-5 inline-flex min-h-12 items-center gap-2 rounded-xl bg-[var(--success)] px-5 py-3 text-sm font-semibold text-[var(--navy)] shadow-lg shadow-[var(--success)]/25 transition hover:brightness-105 active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100"
                 >
-                  {copied ? <Check className="h-4 w-4" /> : <ClipboardCopy className="h-4 w-4" />}
+                  {copied ? <Check aria-hidden className="h-4 w-4" /> : <ClipboardCopy aria-hidden className="h-4 w-4" />}
                   {copied ? "Script copiado!" : "📋 Copiar Script"}
                 </button>
               </div>
@@ -303,12 +313,12 @@ function Index() {
         </div>
 
         {/* Side panel: Buying signals */}
-        <aside className="mt-10 lg:mt-0">
+        <aside aria-label="Sinais de compra" className="mt-8 lg:mt-0">
           <div className="lg:sticky lg:top-24">
             <div className="rounded-3xl border border-border bg-white p-5 shadow-sm">
               <div className="flex items-center gap-3">
-                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--warn)]/15 text-[var(--warn)]">
-                  <TrafficCone className="h-4.5 w-4.5" />
+                <div aria-hidden className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--warn)]/15 text-[var(--warn)]">
+                  <TrafficCone className="h-4 w-4" />
                 </div>
                 <h3 className="font-bold text-[var(--navy)]">🚦 Sinais de Compra</h3>
               </div>
