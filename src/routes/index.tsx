@@ -1009,7 +1009,7 @@ function Index() {
   }, [q]);
 
   return (
-    <div className={`min-h-dvh bg-[var(--surface)] text-foreground ${callMode ? "text-[17px] sm:text-[18px]" : ""}`}>
+    <div className={`min-h-dvh bg-[var(--surface)] text-foreground pb-24 ${callMode ? "text-[17px] sm:text-[18px]" : ""}`}>
       <a
         href="#conteudo"
         className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-lg focus:bg-[var(--navy)] focus:px-3 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
