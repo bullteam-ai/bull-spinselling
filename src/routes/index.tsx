@@ -11,9 +11,9 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Bull Team | Agendamento de Entrevista" },
-      { name: "description", content: "Guia visual SPIN Selling para consultores Bull Team conduzirem ligações e agendarem mais Entrevistas Estratégicas Financeiras." },
+      { name: "description", content: "Guia consultivo SPIN Selling para consultores Bull Team conduzirem ligações e agendarem mais Entrevistas Estratégicas Financeiras." },
       { property: "og:title", content: "Bull Team | Agendamento de Entrevista" },
-      { property: "og:description", content: "Faça as perguntas certas. Gere consciência. Crie urgência. Agende mais entrevistas." },
+      { property: "og:description", content: "Roteiros conversacionais por objetivo financeiro. Conduza, não pergunte." },
     ],
   }),
   component: Index,
@@ -95,21 +95,11 @@ const IDEAL_FLOW = [
   "Não Vender Nada",
 ];
 
-const SPIN_OBJECTIVES: Record<"situacao" | "problema" | "implicacao" | "necessidade", string> = {
-  situacao: "Entender a realidade atual do cliente.",
-  problema: "Identificar lacunas, dificuldades e ausência de planejamento.",
-  implicacao: "Ampliar o impacto financeiro, emocional e familiar do problema. Esta é a etapa mais importante da metodologia.",
-  necessidade: "Levar o cliente a perceber valor em buscar ajuda especializada.",
-};
-
 const SCRIPT = `Perfeito. Pelo que você compartilhou comigo, existem alguns pontos que vale a pena analisar com mais profundidade para entender exatamente onde você está hoje e qual o caminho mais eficiente para atingir esse objetivo.
 
 O ideal é fazermos uma Entrevista Estratégica Financeira, onde conseguimos colocar tudo isso em números e construir um plano claro.
 
 Tenho disponibilidade na terça às 19h ou quarta às 18h. Qual funciona melhor para você?`;
-
-type Block = { situacao: string[]; problema: string[]; implicacao: string[]; necessidade: string[] };
-type Goal = { id: string; icon: typeof Target; emoji: string; title: string; blocks: Block };
 
 type Quadrant = "situacao" | "problema" | "implicacao" | "necessidade";
 
@@ -120,123 +110,647 @@ const QUADRANTS: { key: Quadrant; emoji: string; label: string; color: string; c
   { key: "necessidade", emoji: "🟢", label: "Necessidade", color: "var(--success)", chip: "bg-[var(--success)]/10 text-[var(--success)] border-[var(--success)]/30" },
 ];
 
-const EXPLORATION: Record<Quadrant, { sim: string; nao: string; transicao: string; procurar: string }> = {
-  situacao: {
-    sim: "Aprofunde com números, prazos e valores específicos. Anote tudo.",
-    nao: "Use a lacuna como gancho — siga direto para perguntas de Problema.",
-    transicao: "Entendi. Agora me ajuda a entender uma coisa…",
-    procurar: "Clareza (ou ausência dela) sobre o cenário atual.",
-  },
-  problema: {
-    sim: "Existe dor. Avance para Implicação ampliando o impacto financeiro e emocional.",
-    nao: "Reformule a pergunta. O cliente provavelmente ainda não percebeu a lacuna.",
-    transicao: "E se isso continuar exatamente como está…",
-    procurar: "Hesitação, 'nunca calculei', 'não sei responder' — sinais de inconsciência.",
-  },
-  implicacao: {
-    sim: "Silêncio é ouro. Não preencha. Deixe a consciência se instalar.",
-    nao: "Amplifique: traga família, tempo perdido, oportunidade que não volta.",
-    transicao: "Faz sentido então entender qual seria o caminho mais eficiente para resolver isso?",
-    procurar: "Mudança de tom, suspiro, 'nunca pensei nisso', 'é verdade'.",
-  },
-  necessidade: {
-    sim: "🎯 Convide imediatamente para a Entrevista Estratégica Financeira.",
-    nao: "Volte para Implicação. A dor ainda não está totalmente clara.",
-    transicao: "Pelo que você compartilhou, vale a pena aprofundarmos em uma entrevista estratégica.",
-    procurar: "'Faz sentido', 'gostaria de entender', 'como funciona?'",
-  },
+const SPIN_OBJECTIVES: Record<Quadrant, string> = {
+  situacao: "Entender a realidade atual do cliente.",
+  problema: "Identificar lacunas, dificuldades e ausência de planejamento.",
+  implicacao: "Ampliar o impacto financeiro, emocional e familiar do problema. Esta é a etapa mais importante da metodologia.",
+  necessidade: "Levar o cliente a perceber valor em buscar ajuda especializada.",
 };
 
-// Marcações de alta conversão por trecho (case-insensitive).
 const HIGH_CONVERSION_MARKERS = [
   "5 anos", "10 anos", "família", "custando", "melhor caminho", "deixaria de viver",
-  "trabalhar por obrigação", "trabalhar além", "padrão de vida", "juros compostos",
-  "ficaram apenas na vontade", "outras pessoas executando",
+  "trabalhar por obrigação", "trabalhar 10 anos além", "padrão de vida", "juros compostos",
+  "não voltam", "tempo perdido", "perder tempo", "perder a liberdade",
 ];
-
 const isHighConversion = (q: string) =>
   HIGH_CONVERSION_MARKERS.some((m) => q.toLowerCase().includes(m.toLowerCase()));
+
+type Script = {
+  principal: string;
+  simLabel?: string;
+  naoLabel?: string;
+  sim: string[];
+  nao: string[];
+  transicao: string;
+  procurar: string[];
+};
+type Goal = {
+  id: string;
+  emoji: string;
+  icon: typeof Target;
+  title: string;
+  blocks: Record<Quadrant, Script>;
+};
 
 const GOALS: Goal[] = [
   {
     id: "independencia", emoji: "🎯", icon: Target, title: "Independência Financeira",
     blocks: {
-      situacao: ["O que significa independência financeira para você?", "Em qual idade pretende alcançá-la?", "Quanto de renda mensal seria suficiente?", "O que mudaria na sua vida?", "O que vem fazendo hoje?"],
-      problema: ["Já calculou quanto patrimônio precisa?", "Sabe quanto investir por mês?", "Tem um plano estruturado?", "Possui acompanhamento?", "Está confiante ou apenas espera chegar lá?"],
-      implicacao: ["E se esse objetivo estiver 10 anos mais distante?", "O que deixaria de viver?", "Como seria trabalhar por obrigação?", "Qual impacto na família?", "O que custa perder mais 5 anos?"],
-      necessidade: ["Faz sentido validar o caminho atual?", "Gostaria de saber exatamente onde está?", "Quer entender como acelerar esse processo?", "Seria útil uma projeção clara?"],
+      situacao: {
+        principal: "O que significa independência financeira para você?",
+        simLabel: "Se responder claramente",
+        naoLabel: "Se responder de forma vaga",
+        sim: [
+          "Quando você começou a pensar nisso?",
+          "Existe algum motivo específico por trás desse objetivo?",
+          "O que faria você dizer: 'cheguei lá'?",
+          "O que mudaria na sua rotina?",
+        ],
+        nao: [
+          "Quando você imagina sua vida ideal?",
+          "O que gostaria de poder fazer sem depender do trabalho?",
+          "Existe algo que sente que hoje não consegue fazer?",
+        ],
+        transicao: "Interessante. Então existe uma visão do que você gostaria de construir. Agora quero entender como isso está estruturado hoje.",
+        procurar: ["Sonhos", "Motivações", "Liberdade", "Família", "Qualidade de vida"],
+      },
+      problema: {
+        principal: "Hoje você sente que possui um plano claro para alcançar essa independência?",
+        sim: [
+          "Como esse plano foi construído?",
+          "Existe alguma projeção?",
+          "Você revisa esse plano?",
+          "O que te dá confiança de que ele funcionará?",
+          "É uma certeza ou uma expectativa?",
+        ],
+        nao: [
+          "O que acredita que está faltando?",
+          "O que mais gera insegurança?",
+          "Já tentou construir esse plano antes?",
+        ],
+        transicao: "Entendi. Independentemente de existir um plano, vale entender o quanto ele realmente aproxima você desse objetivo.",
+        procurar: ["Falta de validação", "Falta de projeção", "Excesso de confiança", "Falta de clareza"],
+      },
+      implicacao: {
+        principal: "E se essa independência financeira acontecer 10 anos depois do que você gostaria?",
+        simLabel: "Se reconhecer impacto",
+        naoLabel: "Se minimizar impacto",
+        sim: [
+          "O que deixaria de viver?",
+          "Quem seria impactado?",
+          "O que mudaria para sua família?",
+          "Como você se sentiria?",
+        ],
+        nao: [
+          "Então o prazo não é tão importante?",
+          "Se pudesse antecipar em 10 anos faria diferença?",
+          "Existe alguma experiência que estaria adiando?",
+        ],
+        transicao: "É justamente aqui que muitas pessoas percebem que o custo não é apenas financeiro.",
+        procurar: ["Dor emocional", "Tempo perdido", "Família", "Qualidade de vida", "Oportunidades perdidas"],
+      },
+      necessidade: {
+        principal: "Faz sentido validar se o caminho atual é realmente o mais eficiente?",
+        sim: [
+          "O que gostaria de validar?",
+          "O que mais gera dúvida hoje?",
+          "O que gostaria de enxergar com mais clareza?",
+        ],
+        nao: [
+          "Você acredita ter 100% de certeza sobre o caminho atual?",
+          "Existe algum risco em nunca validar?",
+          "O que aconteceria se existisse uma forma melhor e você não conhecesse?",
+        ],
+        transicao: "Por isso acredito que vale a pena colocarmos tudo em números para enxergar exatamente onde você está e qual o caminho mais eficiente.",
+        procurar: ["Curiosidade", "Dúvidas", "Busca por clareza", "Desejo de acelerar resultados"],
+      },
     },
   },
   {
     id: "aposentadoria", emoji: "👴", icon: UserRound, title: "Aposentadoria",
     blocks: {
-      situacao: ["Com quantos anos pretende parar?", "Qual padrão de vida deseja?", "Quanto precisará por mês?", "Já possui estratégia?"],
-      problema: ["Já fez projeções?", "Depende apenas do INSS?", "Tem clareza do patrimônio necessário?", "Sabe se está no caminho correto?"],
-      implicacao: ["E se precisar trabalhar além do planejado?", "Como seria reduzir seu padrão de vida?", "Qual impacto para sua família?", "Quanto custa perder anos de juros compostos?"],
-      necessidade: ["Faz sentido validar sua estratégia?", "Gostaria de visualizar cenários futuros?", "Quer saber quanto precisa acumular?"],
+      situacao: {
+        principal: "Quando você pensa em aposentadoria, o que realmente gostaria que ela proporcionasse para sua vida?",
+        simLabel: "Se responder claramente",
+        naoLabel: "Se responder de forma vaga",
+        sim: [
+          "O que torna isso importante para você?",
+          "Existe alguma experiência que gostaria de viver nessa fase?",
+          "Como imagina sua rotina?",
+          "Existe alguém que você gostaria de beneficiar junto com você?",
+        ],
+        nao: [
+          "Já parou para imaginar como gostaria de viver aos 60 ou 70 anos?",
+          "Existe algo que definitivamente não gostaria de abrir mão?",
+          "Qual padrão de vida gostaria de manter?",
+        ],
+        transicao: "Interessante. Então existe uma expectativa em relação ao futuro. Agora vale entender o quanto isso está estruturado hoje.",
+        procurar: ["Qualidade de vida", "Família", "Liberdade", "Segurança"],
+      },
+      problema: {
+        principal: "Hoje você acredita que sua estratégia atual é suficiente para entregar essa aposentadoria?",
+        sim: [
+          "O que te dá essa confiança?",
+          "Existe alguma projeção formal?",
+          "Você sabe qual renda terá?",
+          "Já revisou esse planejamento recentemente?",
+          "É uma certeza ou uma expectativa?",
+        ],
+        nao: [
+          "O que mais preocupa você?",
+          "O que sente que está faltando?",
+          "Já tentou organizar isso anteriormente?",
+        ],
+        transicao: "Muitas pessoas possuem patrimônio, mas nunca validaram se ele realmente sustentará o padrão de vida desejado.",
+        procurar: ["Falta de projeção", "Dependência do INSS", "Excesso de confiança", "Falta de validação"],
+      },
+      implicacao: {
+        principal: "E se você precisasse trabalhar 10 anos além do que imagina hoje?",
+        simLabel: "Se reconhecer impacto",
+        naoLabel: "Se minimizar",
+        sim: [
+          "Como isso afetaria sua qualidade de vida?",
+          "O que deixaria de viver?",
+          "Como isso impactaria sua família?",
+        ],
+        nao: [
+          "Então o prazo não é importante?",
+          "Se pudesse parar antes faria diferença?",
+          "Existe alguma liberdade que gostaria de conquistar?",
+        ],
+        transicao: "O problema normalmente não é trabalhar, mas perder a liberdade de escolher.",
+        procurar: ["Tempo", "Liberdade", "Família", "Saúde"],
+      },
+      necessidade: {
+        principal: "Faria sentido validar se o caminho atual realmente entrega a aposentadoria que você deseja?",
+        sim: [
+          "O que mais gostaria de validar?",
+          "O que ainda gera dúvida?",
+          "Existe algum cenário que gostaria de enxergar?",
+        ],
+        nao: [
+          "Você acredita ter 100% de certeza dos números?",
+          "Existe algum risco em nunca validar isso?",
+          "O que aconteceria se existisse um caminho melhor?",
+        ],
+        transicao: "Talvez valha a pena colocar tudo em números para ter clareza sobre onde você está e para onde está indo.",
+        procurar: ["Curiosidade", "Clareza", "Segurança", "Validação"],
+      },
     },
   },
   {
     id: "casa", emoji: "🏠", icon: Home, title: "Compra de Casa",
     blocks: {
-      situacao: ["Pretende comprar imóvel?", "Em quanto tempo?", "Qual valor?", "Quanto já possui guardado?"],
-      problema: ["Sabe quanto precisa acumular?", "Tem plano definido?", "Está conseguindo poupar?"],
-      implicacao: ["E se atrasar 5 anos?", "Quanto continuará pagando de aluguel?", "O que isso muda para sua família?", "Existe algum sonho ligado a essa conquista?"],
-      necessidade: ["Faz sentido descobrir o caminho mais eficiente?", "Gostaria de saber o valor necessário?", "Quer validar o prazo?"],
+      situacao: {
+        principal: "Hoje existe algum imóvel específico que você gostaria de conquistar ou ainda está desenhando esse objetivo?",
+        simLabel: "Se responder claramente",
+        naoLabel: "Se responder de forma vaga",
+        sim: [
+          "O que mais te atrai nesse imóvel?",
+          "O que essa conquista representa para você?",
+          "Quem mais seria beneficiado?",
+        ],
+        nao: [
+          "Como seria o imóvel ideal?",
+          "O que gostaria que ele proporcionasse?",
+          "Existe alguma região ou característica específica?",
+        ],
+        transicao: "Então não estamos falando apenas de um imóvel, mas de algo importante para sua vida e sua família.",
+        procurar: ["Realização", "Segurança", "Família", "Conforto"],
+      },
+      problema: {
+        principal: "Hoje você sente que existe um plano claro para comprar esse imóvel dentro do prazo desejado?",
+        sim: [
+          "Como esse plano foi construído?",
+          "Existe alguma projeção formal?",
+          "Você acompanha sua evolução?",
+          "O que pode fazer esse plano não acontecer?",
+        ],
+        nao: [
+          "O que está faltando?",
+          "Qual a maior dificuldade?",
+          "O que impede avançar mais rápido?",
+        ],
+        transicao: "Então vale entender se o caminho atual realmente leva ao prazo que você deseja.",
+        procurar: ["Falta de planejamento", "Falta de acompanhamento", "Falta de números"],
+      },
+      implicacao: {
+        principal: "E se essa compra atrasar cinco anos?",
+        simLabel: "Se reconhecer impacto",
+        naoLabel: "Se minimizar",
+        sim: [
+          "O que mudaria?",
+          "Quem seria impactado?",
+          "O que deixaria de viver?",
+          "Como se sentiria olhando para trás?",
+        ],
+        nao: [
+          "Então o prazo não é tão relevante?",
+          "Se pudesse antecipar faria diferença?",
+          "Existe algum sonho ligado a essa conquista?",
+        ],
+        transicao: "Muitas vezes o custo não está apenas no aluguel, mas nas experiências adiadas.",
+        procurar: ["Família", "Sonhos", "Conforto", "Frustração"],
+      },
+      necessidade: {
+        principal: "Faz sentido validar se existe uma forma mais eficiente de chegar nesse objetivo?",
+        sim: [
+          "O que gostaria de validar?",
+          "O que mais gera dúvida?",
+          "Existe algum prazo que gostaria de confirmar?",
+        ],
+        nao: [
+          "Você acredita que já conhece todas as possibilidades?",
+          "Existe algum risco em não revisar essa estratégia?",
+        ],
+        transicao: "Talvez valha a pena entender se o caminho atual realmente é o mais eficiente.",
+        procurar: ["Curiosidade", "Desejo de acelerar", "Clareza"],
+      },
     },
   },
   {
     id: "carro", emoji: "🚗", icon: Car, title: "Compra de Carro",
     blocks: {
-      situacao: ["Qual carro pretende comprar?", "Em quanto tempo?", "Já definiu valor?"],
-      problema: ["Sabe quanto precisa guardar?", "Tem planejamento?", "Seu dinheiro trabalha para esse objetivo?"],
-      implicacao: ["Quanto isso pode atrasar?", "O que esse atraso gera no dia a dia?", "Como isso afeta sua rotina?"],
-      necessidade: ["Faz sentido criar um plano?", "Gostaria de saber o valor necessário por mês?"],
+      situacao: {
+        principal: "Qual veículo você gostaria de adquirir e o que ele representaria para você?",
+        simLabel: "Se responder claramente",
+        naoLabel: "Se responder de forma vaga",
+        sim: [
+          "O que fez escolher esse modelo?",
+          "Existe alguma necessidade específica?",
+          "Há quanto tempo pensa nisso?",
+        ],
+        nao: [
+          "Como seria o carro ideal?",
+          "O que ele resolveria na sua rotina?",
+          "Existe alguma característica indispensável?",
+        ],
+        transicao: "Interessante. Então existe um objetivo concreto por trás dessa compra.",
+        procurar: ["Necessidade", "Conforto", "Mobilidade", "Status"],
+      },
+      problema: {
+        principal: "Hoje você já sabe exatamente como pretende viabilizar essa compra?",
+        sim: [
+          "Como estruturou esse plano?",
+          "Existe uma reserva específica?",
+          "O plano depende de algo acontecer?",
+        ],
+        nao: [
+          "O que falta definir?",
+          "Qual sua principal dúvida?",
+          "Isso já atrasou sua decisão?",
+        ],
+        transicao: "Muitas compras não atrasam por falta de renda, mas por falta de planejamento.",
+        procurar: ["Falta de clareza", "Dependência de eventos futuros", "Ausência de estratégia"],
+      },
+      implicacao: {
+        principal: "E se essa compra atrasar mais alguns anos?",
+        simLabel: "Se reconhecer impacto",
+        naoLabel: "Se minimizar",
+        sim: [
+          "Como isso afeta sua rotina?",
+          "Existe algum desconforto atual?",
+          "O que continua acontecendo enquanto esse objetivo não acontece?",
+        ],
+        nao: [
+          "Então o prazo não é importante?",
+          "Se pudesse antecipar faria diferença?",
+        ],
+        transicao: "Às vezes o impacto parece pequeno até colocarmos em perspectiva o tempo perdido.",
+        procurar: ["Desconforto", "Tempo", "Rotina", "Frustração"],
+      },
+      necessidade: {
+        principal: "Faz sentido validar se existe uma forma mais eficiente de atingir esse objetivo?",
+        sim: [
+          "O que gostaria de entender melhor?",
+          "Existe algum cenário que gostaria de comparar?",
+        ],
+        nao: [
+          "Você acredita que o caminho atual já é o ideal?",
+          "Existe algum risco em nunca validar isso?",
+        ],
+        transicao: "Talvez valha a pena colocar isso em números para entender todas as possibilidades.",
+        procurar: ["Curiosidade", "Clareza", "Comparação de cenários"],
+      },
     },
   },
   {
     id: "viagens", emoji: "✈️", icon: Plane, title: "Viagens",
     blocks: {
-      situacao: ["Qual viagem gostaria de fazer?", "Quando?", "Quem irá junto?"],
-      problema: ["Possui reserva específica?", "Sabe quanto custará?", "Tem estratégia para isso?"],
-      implicacao: ["Quantas viagens ficaram apenas na vontade?", "O que sua família deixa de viver?", "Como seria olhar para trás e perceber que adiou experiências?"],
-      necessidade: ["Faz sentido transformar isso em meta concreta?", "Gostaria de estruturar uma estratégia?"],
+      situacao: {
+        principal: "Existe alguma viagem que você sonha em fazer e ainda não conseguiu realizar?",
+        sim: [
+          "O que torna essa viagem especial?",
+          "Quem você gostaria que estivesse junto?",
+          "Há quanto tempo pensa nisso?",
+          "Existe algum motivo pelo qual ela ainda não aconteceu?",
+          "O que essa experiência representaria para você?",
+        ],
+        nao: [
+          "Existe algum lugar que desperta sua curiosidade?",
+          "Se pudesse viajar para qualquer lugar hoje, qual escolheria?",
+          "Existe alguma experiência que gostaria de proporcionar para sua família?",
+        ],
+        transicao: "Interessante. Muitas vezes as viagens representam muito mais do que lazer, elas representam experiências e momentos que não voltam.",
+        procurar: ["Família", "Experiências", "Sonhos", "Memórias", "Realização"],
+      },
+      problema: {
+        principal: "Hoje você possui um planejamento específico para realizar essa viagem?",
+        sim: [
+          "Como esse planejamento foi construído?",
+          "Existe uma reserva exclusiva?",
+          "Você sabe exatamente quanto precisará?",
+          "Já revisou os custos recentemente?",
+          "Existe alguma data definida?",
+        ],
+        nao: [
+          "O que normalmente impede essa organização?",
+          "A viagem acaba ficando sempre para depois?",
+          "Isso já aconteceu outras vezes?",
+          "Existe alguma insegurança em relação aos custos?",
+        ],
+        transicao: "É muito comum que viagens importantes acabem sendo adiadas não pela falta de renda, mas pela ausência de um plano específico.",
+        procurar: ["Falta de organização", "Prioridades conflitantes", "Falta de reserva", "Objetivos adiados"],
+      },
+      implicacao: {
+        principal: "E se essa viagem não acontecer nos próximos 5 anos?",
+        simLabel: "Se reconhecer impacto",
+        naoLabel: "Se minimizar",
+        sim: [
+          "O que você deixaria de viver?",
+          "Quem mais seria impactado?",
+          "Existe alguma experiência que não poderia ser recuperada depois?",
+          "Como se sentiria olhando para trás?",
+        ],
+        nao: [
+          "Então essa viagem não é tão importante?",
+          "Se pudesse realizar no próximo ano faria diferença?",
+          "Existe alguma experiência ligada à sua família que gostaria de viver enquanto todos estão juntos?",
+        ],
+        transicao: "Em muitos casos o custo de adiar não está no dinheiro, mas nos momentos que não voltam.",
+        procurar: ["Emoção", "Família", "Tempo", "Experiências perdidas"],
+      },
+      necessidade: {
+        principal: "Faz sentido construir uma estratégia para transformar essa viagem em uma meta concreta?",
+        sim: [
+          "O que gostaria de validar?",
+          "Existe alguma data que gostaria de confirmar?",
+          "Gostaria de entender o valor necessário para isso?",
+        ],
+        nao: [
+          "Você acredita que ela acontecerá naturalmente?",
+          "Existe algum risco de continuar adiando indefinidamente?",
+        ],
+        transicao: "Talvez valha a pena entender como transformar esse sonho em um plano com prazo e números definidos.",
+        procurar: ["Comprometimento", "Clareza", "Prazo", "Planejamento"],
+      },
     },
   },
   {
     id: "empreendedorismo", emoji: "🚀", icon: Rocket, title: "Empreendedorismo",
     blocks: {
-      situacao: ["Existe algum negócio que deseja abrir?", "Em quanto tempo?", "Quanto acredita precisar?"],
-      problema: ["Já calculou o capital?", "Possui reserva?", "Tem planejamento financeiro?"],
-      implicacao: ["Quanto tempo esse projeto está parado?", "O que deixa de ganhar?", "Como se sentiria vendo outras pessoas executando essa ideia?"],
-      necessidade: ["Faz sentido construir um plano para isso?", "Gostaria de saber quanto patrimônio precisa acumular?"],
+      situacao: {
+        principal: "Existe algum projeto ou negócio que você gostaria de tirar do papel?",
+        sim: [
+          "Como surgiu essa ideia?",
+          "Há quanto tempo ela existe?",
+          "O que te atrai nesse projeto?",
+          "O que mudaria na sua vida se desse certo?",
+        ],
+        nao: [
+          "Já pensou em ter alguma fonte de renda adicional?",
+          "Existe alguma habilidade que gostaria de transformar em negócio?",
+          "Existe algo que faria se tivesse mais segurança financeira?",
+        ],
+        transicao: "Interessante. Muitas vezes existe uma oportunidade que fica parada por anos esperando o momento certo.",
+        procurar: ["Sonhos", "Ambição", "Liberdade", "Crescimento"],
+      },
+      problema: {
+        principal: "Hoje você já possui clareza financeira sobre o que esse projeto exige?",
+        sim: [
+          "Como chegou nesses números?",
+          "Já validou esse cálculo?",
+          "Existe margem para imprevistos?",
+          "Considerou capital de giro?",
+          "Existe um plano financeiro para execução?",
+        ],
+        nao: [
+          "O que falta descobrir?",
+          "O que mais gera dúvida?",
+          "Isso tem atrasado o início do projeto?",
+        ],
+        transicao: "Muitas vezes o projeto não fica parado por falta de capacidade, mas pela ausência de clareza financeira.",
+        procurar: ["Falta de números", "Insegurança", "Falta de planejamento"],
+      },
+      implicacao: {
+        principal: "E se esse projeto continuar parado pelos próximos 5 anos?",
+        simLabel: "Se reconhecer impacto",
+        naoLabel: "Se minimizar",
+        sim: [
+          "O que você deixaria de conquistar?",
+          "Como se sentiria?",
+          "Existe alguma oportunidade que poderia ser perdida?",
+          "Qual seria o custo dessa espera?",
+        ],
+        nao: [
+          "Então ele não é tão importante?",
+          "Se estivesse funcionando hoje faria diferença?",
+          "Existe alguma realização pessoal ligada a ele?",
+        ],
+        transicao: "Às vezes o maior risco não é errar, mas nunca executar.",
+        procurar: ["Arrependimento", "Oportunidade perdida", "Realização pessoal"],
+      },
+      necessidade: {
+        principal: "Faz sentido entender qual estrutura financeira seria necessária para transformar esse projeto em realidade?",
+        sim: [
+          "O que mais gostaria de validar?",
+          "Existe um prazo desejado?",
+          "Gostaria de saber quanto patrimônio precisaria acumular?",
+        ],
+        nao: [
+          "Você acredita que já possui todas as respostas necessárias?",
+          "Existe algum risco em continuar sem essa clareza?",
+        ],
+        transicao: "Talvez valha a pena colocar isso em números para transformar uma ideia em um plano.",
+        procurar: ["Clareza", "Execução", "Planejamento", "Próximo passo"],
+      },
     },
   },
   {
     id: "organizacao", emoji: "📊", icon: BarChart3, title: "Organização Financeira",
     blocks: {
-      situacao: ["Possui controle financeiro?", "Faz orçamento?", "Sabe para onde vai o dinheiro?"],
-      problema: ["Sobra o que gostaria no final do mês?", "Consegue investir de forma consistente?", "Tem sensação de ganhar bem e não ver resultado?"],
-      implicacao: ["Quanto dinheiro pode estar perdendo?", "Qual impacto em 10 anos?", "Isso gera estresse?"],
-      necessidade: ["Faz sentido organizar isso?", "Gostaria de ter mais clareza?"],
+      situacao: {
+        principal: "Hoje você sente que possui total controle sobre sua vida financeira?",
+        sim: [
+          "Como realiza esse controle?",
+          "O que acompanha mensalmente?",
+          "Você mede sua evolução?",
+          "Existe alguma área que gostaria de melhorar?",
+        ],
+        nao: [
+          "O que mais gera dificuldade?",
+          "Onde sente que perde controle?",
+          "Isso gera preocupação?",
+        ],
+        transicao: "Controlar o dinheiro é importante, mas entender se ele está levando você aos objetivos certos é ainda mais importante.",
+        procurar: ["Organização", "Clareza", "Controle"],
+      },
+      problema: {
+        principal: "Você sente que o resultado financeiro que possui hoje reflete o esforço que faz?",
+        sim: [
+          "Como mede esse resultado?",
+          "Está satisfeito com sua evolução?",
+          "Existe algo que gostaria de acelerar?",
+        ],
+        nao: [
+          "O que mais incomoda?",
+          "Tem a sensação de ganhar bem e não acumular?",
+          "Onde acredita que está o problema?",
+        ],
+        transicao: "Muitas pessoas trabalham muito, mas não conseguem transformar renda em patrimônio.",
+        procurar: ["Frustração", "Falta de patrimônio", "Falta de direção"],
+      },
+      implicacao: {
+        principal: "E se nada mudar nos próximos 10 anos?",
+        simLabel: "Se reconhecer impacto",
+        naoLabel: "Se minimizar",
+        sim: [
+          "Como isso afetaria seus objetivos?",
+          "Qual seria o impacto para sua família?",
+          "Como se sentiria?",
+        ],
+        nao: [
+          "Então você está totalmente satisfeito com a situação atual?",
+          "Não existe nada que gostaria de melhorar?",
+        ],
+        transicao: "Pequenos desperdícios repetidos durante anos costumam gerar impactos enormes.",
+        procurar: ["Tempo perdido", "Potencial desperdiçado", "Frustração futura"],
+      },
+      necessidade: {
+        principal: "Faz sentido organizar tudo para ter mais clareza e previsibilidade?",
+        sim: [
+          "O que mais gostaria de entender?",
+          "Onde sente maior necessidade de organização?",
+        ],
+        nao: [
+          "Existe algum risco em continuar sem essa clareza?",
+          "Como saberá se está evoluindo?",
+        ],
+        transicao: "Talvez valha a pena transformar sua vida financeira em algo mensurável e previsível.",
+        procurar: ["Clareza", "Organização", "Controle"],
+      },
     },
   },
   {
     id: "sem-objetivo", emoji: "❓", icon: HelpCircle, title: "Cliente Sem Objetivo",
     blocks: {
-      situacao: ["Se dinheiro não fosse problema, o que faria?", "Existe algo que gostaria de proporcionar à família?", "Qual sonho ainda não realizou?"],
-      problema: ["Seu dinheiro está trabalhando para algo?", "Você mede sua evolução financeira?"],
-      implicacao: ["Quem não define um destino chega onde?", "Como saber se está evoluindo?", "E se passar mais 10 anos assim?"],
-      necessidade: ["Faz sentido descobrir objetivos relevantes?", "Gostaria de ter mais clareza?"],
+      situacao: {
+        principal: "Se dinheiro não fosse um problema, o que você faria imediatamente?",
+        simLabel: "Se responder",
+        naoLabel: "Se não souber responder",
+        sim: [
+          "O que torna isso importante?",
+          "Há quanto tempo pensa nisso?",
+          "O que impede isso de acontecer hoje?",
+        ],
+        nao: [
+          "Já parou para refletir sobre isso?",
+          "Existe algo que gostaria de proporcionar para sua família?",
+          "Existe alguma experiência que gostaria de viver?",
+        ],
+        transicao: "Muitas pessoas trabalham para ganhar dinheiro, mas nunca definem exatamente para quê.",
+        procurar: ["Sonhos", "Desejos ocultos", "Valores pessoais"],
+      },
+      problema: {
+        principal: "Hoje seu dinheiro está trabalhando para algum objetivo específico?",
+        sim: [
+          "Qual objetivo?",
+          "Existe um plano para ele?",
+          "Você acompanha sua evolução?",
+        ],
+        nao: [
+          "Como mede seu progresso financeiro?",
+          "Como sabe se está avançando?",
+        ],
+        transicao: "Quem não define um destino normalmente tem dificuldade de medir a evolução.",
+        procurar: ["Falta de direção", "Falta de metas"],
+      },
+      implicacao: {
+        principal: "E se mais 10 anos passarem da mesma forma?",
+        simLabel: "Se reconhecer impacto",
+        naoLabel: "Se minimizar",
+        sim: [
+          "O que deixaria de conquistar?",
+          "Como se sentiria?",
+        ],
+        nao: [
+          "Então não existe nada que gostaria de acelerar?",
+          "Não existe nenhum sonho importante?",
+        ],
+        transicao: "O risco não é apenas perder dinheiro. É perder tempo.",
+        procurar: ["Tempo", "Arrependimento", "Oportunidades"],
+      },
+      necessidade: {
+        principal: "Faz sentido descobrir quais objetivos realmente fazem sentido para você?",
+        sim: [
+          "O que gostaria de construir?",
+          "O que seria prioridade?",
+        ],
+        nao: [
+          "Como saberá se está evoluindo financeiramente?",
+        ],
+        transicao: "Talvez o primeiro passo não seja investir melhor, mas descobrir para onde quer ir.",
+        procurar: ["Clareza", "Propósito", "Direção"],
+      },
     },
   },
   {
     id: "assessor", emoji: "🤝", icon: Handshake, title: "Já Possui Assessor",
     blocks: {
-      situacao: ["Há quanto tempo trabalha com ele?", "Com qual frequência se encontram?", "Ele conhece todos seus objetivos?"],
-      problema: ["Possui planejamento formalizado?", "Tem projeções?", "Sabe a probabilidade de atingir suas metas?"],
-      implicacao: ["Como descobriria se algo está errado?", "Quanto tempo poderia perder?", "Quando foi a última revisão profunda?"],
-      necessidade: ["Faz sentido ter uma segunda visão?", "Gostaria de validar se tudo está alinhado?"],
+      situacao: {
+        principal: "Seu assessor conhece profundamente todos os seus objetivos financeiros?",
+        sim: [
+          "Com que frequência revisam isso?",
+          "Existe um planejamento formal?",
+          "Como acompanham a evolução?",
+        ],
+        nao: [
+          "O que normalmente é discutido?",
+          "Existe algum objetivo importante que nunca foi tratado?",
+        ],
+        transicao: "Ter assessor é excelente. A questão é entender o nível de profundidade desse acompanhamento.",
+        procurar: ["Planejamento", "Frequência", "Profundidade"],
+      },
+      problema: {
+        principal: "Hoje você sabe qual a probabilidade de atingir cada um dos seus objetivos?",
+        sim: [
+          "Como essa probabilidade foi calculada?",
+          "Quando foi revisada?",
+        ],
+        nao: [
+          "Como mede se está no caminho certo?",
+          "Existe alguma projeção formal?",
+        ],
+        transicao: "Muitas pessoas possuem investimentos, mas não possuem planejamento.",
+        procurar: ["Falta de projeção", "Falta de acompanhamento"],
+      },
+      implicacao: {
+        principal: "E se algo importante estivesse desalinhado hoje, como você descobriria?",
+        simLabel: "Se reconhecer dificuldade",
+        naoLabel: "Se responder facilmente",
+        sim: [
+          "Quanto tempo poderia ser perdido?",
+          "Qual seria o impacto?",
+        ],
+        nao: [
+          "Quando foi a última revisão profunda?",
+          "Tudo continua alinhado com seus objetivos atuais?",
+        ],
+        transicao: "O problema raramente é ter assessor. O problema é acreditar que tudo continua correto sem revisar.",
+        procurar: ["Confiança excessiva", "Falta de revisão"],
+      },
+      necessidade: {
+        principal: "Faz sentido validar se tudo continua alinhado aos seus objetivos atuais?",
+        sim: [
+          "O que gostaria de revisar?",
+          "Existe alguma dúvida atual?",
+        ],
+        nao: [
+          "Existe algum risco em nunca buscar uma segunda visão?",
+        ],
+        transicao: "Uma segunda visão não substitui o trabalho atual. Ela ajuda a validar se tudo continua fazendo sentido.",
+        procurar: ["Abertura", "Curiosidade", "Validação"],
+      },
     },
   },
 ];
@@ -251,7 +765,6 @@ function Index() {
   const [favorites, setFavorites] = useState<Set<string>>(new Set());
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
 
-  // Carrega favoritos do navegador
   useEffect(() => {
     try {
       const raw = localStorage.getItem("bullteam.favs");
@@ -291,19 +804,19 @@ function Index() {
     }
   };
 
-  // Busca global: retorna objetivos com lista de matches por quadrante
+  // Busca global: percorre principal + sim + nao + procurar de cada script
   const q = query.trim().toLowerCase();
   const searchResults = useMemo(() => {
     if (!q) return null;
-    const results: { goal: Goal; matches: { quadrant: Quadrant; question: string }[] }[] = [];
+    const results: { goal: Goal; matches: { quadrant: Quadrant; script: Script }[] }[] = [];
     for (const g of GOALS) {
-      const matches: { quadrant: Quadrant; question: string }[] = [];
       const titleHit = g.title.toLowerCase().includes(q);
+      const matches: { quadrant: Quadrant; script: Script }[] = [];
       for (const quad of QUADRANTS) {
-        for (const question of g.blocks[quad.key]) {
-          if (titleHit || question.toLowerCase().includes(q)) {
-            matches.push({ quadrant: quad.key, question });
-          }
+        const s = g.blocks[quad.key];
+        const haystack = [s.principal, s.transicao, ...s.sim, ...s.nao, ...s.procurar].join(" \n ").toLowerCase();
+        if (titleHit || haystack.includes(q)) {
+          matches.push({ quadrant: quad.key, script: s });
         }
       }
       if (matches.length) results.push({ goal: g, matches });
@@ -319,33 +832,32 @@ function Index() {
       >
         Pular para o conteúdo
       </a>
-      {/* Header */}
+
       {!callMode && (
-      <header className="relative overflow-hidden bg-gradient-to-br from-[var(--navy)] via-[var(--navy)] to-[#0b1c3a] text-white motion-reduce:bg-[var(--navy)]">
-        <div className="pointer-events-none absolute -top-32 -right-32 h-96 w-96 rounded-full bg-[var(--brand)]/30 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-40 -left-20 h-96 w-96 rounded-full bg-[var(--success)]/20 blur-3xl" />
-        <div className="mx-auto max-w-7xl px-6 pt-14 pb-10 sm:pt-20 sm:pb-14 relative">
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium tracking-wide text-white/80 backdrop-blur">
-            <span className="h-1.5 w-1.5 rounded-full bg-[var(--success)]" />
-            Guia ao vivo · SPIN Selling
+        <header className="relative overflow-hidden bg-gradient-to-br from-[var(--navy)] via-[var(--navy)] to-[#0b1c3a] text-white motion-reduce:bg-[var(--navy)]">
+          <div className="pointer-events-none absolute -top-32 -right-32 h-96 w-96 rounded-full bg-[var(--brand)]/30 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-40 -left-20 h-96 w-96 rounded-full bg-[var(--success)]/20 blur-3xl" />
+          <div className="mx-auto max-w-7xl px-6 pt-14 pb-10 sm:pt-20 sm:pb-14 relative">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium tracking-wide text-white/80 backdrop-blur">
+              <span className="h-1.5 w-1.5 rounded-full bg-[var(--success)]" />
+              Guia ao vivo · SPIN Selling
+            </div>
+            <h1 className="mt-5 text-4xl sm:text-6xl font-bold tracking-tight">
+              <span className="mr-2">🐂</span>Bull Team
+            </h1>
+            <p className="mt-3 text-lg sm:text-xl text-white/80 font-medium">
+              Guia de Agendamento de Entrevista
+            </p>
+            <p className="mt-5 max-w-2xl text-base sm:text-lg text-white/70 leading-relaxed">
+              "Conduza a conversa. Não dispare perguntas. Cada resposta abre um novo caminho."
+            </p>
           </div>
-          <h1 className="mt-5 text-4xl sm:text-6xl font-bold tracking-tight">
-            <span className="mr-2">🐂</span>Bull Team
-          </h1>
-          <p className="mt-3 text-lg sm:text-xl text-white/80 font-medium">
-            Guia de Agendamento de Entrevista
-          </p>
-          <p className="mt-5 max-w-2xl text-base sm:text-lg text-white/70 leading-relaxed">
-            "Faça as perguntas certas. Gere consciência. Crie urgência. Agende mais entrevistas."
-          </p>
-        </div>
-      </header>
+        </header>
       )}
 
-      {/* Sticky control bar: busca + filtros + modo ligação */}
+      {/* Sticky control bar */}
       <nav aria-label="Controles de navegação" className="sticky top-0 z-40 border-b border-border bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85">
         <div className="mx-auto max-w-7xl px-3 sm:px-6 py-3 space-y-3">
-          {/* Linha 1: busca + modo ligação */}
           <div className="flex items-center gap-2">
             <div className="relative flex-1 min-w-0">
               <Search aria-hidden className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -374,7 +886,6 @@ function Index() {
             </button>
           </div>
 
-          {/* Linha 2: flow + filtros de quadrante */}
           <div className="flex items-center gap-3 overflow-x-auto">
             {!callMode && (
               <ol className="flex items-center gap-1.5 text-xs shrink-0">
@@ -416,7 +927,6 @@ function Index() {
 
       <main id="conteudo" className="mx-auto max-w-7xl px-3 sm:px-6 py-6 sm:py-10 lg:grid lg:grid-cols-[1fr_340px] lg:gap-8">
         <div className="space-y-6 sm:space-y-10">
-          {/* Resultados da busca */}
           {searchResults && (
             <section aria-label="Resultados da busca">
               <div className="rounded-3xl border-2 border-[var(--brand)] bg-white p-4 sm:p-6 shadow-sm">
@@ -437,28 +947,30 @@ function Index() {
                         <div className="flex items-center gap-2 text-sm font-bold text-[var(--navy)]">
                           <span aria-hidden>{goal.emoji}</span>
                           <span>{goal.title}</span>
-                          <span className="text-xs font-medium text-muted-foreground">· {matches.length} {matches.length === 1 ? "pergunta" : "perguntas"}</span>
+                          <span className="text-xs font-medium text-muted-foreground">· {matches.length} {matches.length === 1 ? "roteiro" : "roteiros"}</span>
                         </div>
-                        <ul className="mt-2 space-y-2">
+                        <div className="mt-2 space-y-3">
                           {matches
                             .filter((m) => activeQuads.includes(m.quadrant))
-                            .map((m, i) => {
+                            .map((m) => {
                               const quad = QUADRANTS.find((x) => x.key === m.quadrant)!;
+                              const key = `${goal.id}|${m.quadrant}`;
                               return (
-                                <QuestionCard
-                                  key={`${goal.id}-${m.quadrant}-${i}`}
-                                  fullKey={`${goal.id}|${m.quadrant}|${m.question}`}
-                                  question={m.question}
+                                <ScriptCard
+                                  key={key}
+                                  fullKey={key}
+                                  script={m.script}
                                   quadrant={quad}
-                                  expanded={expanded.has(`${goal.id}|${m.quadrant}|${m.question}`)}
-                                  onToggle={() => toggleExpand(`${goal.id}|${m.quadrant}|${m.question}`)}
-                                  favorited={favorites.has(`${goal.id}|${m.quadrant}|${m.question}`)}
-                                  onFav={() => toggleFav(`${goal.id}|${m.quadrant}|${m.question}`)}
+                                  contextLabel={`${goal.emoji} ${goal.title}`}
+                                  expanded={expanded.has(key)}
+                                  onToggle={() => toggleExpand(key)}
+                                  favorited={favorites.has(key)}
+                                  onFav={() => toggleFav(key)}
                                   callMode={callMode}
                                 />
                               );
                             })}
-                        </ul>
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -467,29 +979,28 @@ function Index() {
             </section>
           )}
 
-          {/* Favoritos (apenas se houver) */}
           {!searchResults && favorites.size > 0 && (
-            <section aria-label="Perguntas favoritas">
+            <section aria-label="Roteiros favoritos">
               <div className="rounded-3xl border-2 border-[var(--warn)] bg-gradient-to-br from-[#FFFBEB] to-white p-4 sm:p-6 shadow-sm">
                 <div className="flex items-center gap-2">
                   <Pin aria-hidden className="h-4 w-4 text-[var(--warn)]" />
-                  <h2 className="text-base sm:text-lg font-bold text-[var(--navy)]">📌 Suas perguntas favoritas</h2>
+                  <h2 className="text-base sm:text-lg font-bold text-[var(--navy)]">📌 Seus roteiros favoritos</h2>
                   <span className="ml-auto text-xs font-semibold text-muted-foreground">{favorites.size}</span>
                 </div>
-                <ul className="mt-3 space-y-2">
+                <div className="mt-3 space-y-3">
                   {[...favorites].map((key) => {
-                    const [goalId, quadKey, ...rest] = key.split("|");
-                    const question = rest.join("|");
-                    const quad = QUADRANTS.find((x) => x.key === (quadKey as Quadrant));
-                    if (!quad || !activeQuads.includes(quad.key)) return null;
+                    const [goalId, quadKey] = key.split("|");
                     const goal = GOALS.find((g) => g.id === goalId);
+                    const quad = QUADRANTS.find((x) => x.key === (quadKey as Quadrant));
+                    if (!goal || !quad || !activeQuads.includes(quad.key)) return null;
+                    const script = goal.blocks[quad.key];
                     return (
-                      <QuestionCard
+                      <ScriptCard
                         key={key}
                         fullKey={key}
-                        question={question}
+                        script={script}
                         quadrant={quad}
-                        contextLabel={goal ? `${goal.emoji} ${goal.title}` : undefined}
+                        contextLabel={`${goal.emoji} ${goal.title}`}
                         expanded={expanded.has(key)}
                         onToggle={() => toggleExpand(key)}
                         favorited
@@ -498,315 +1009,302 @@ function Index() {
                       />
                     );
                   })}
+                </div>
+              </div>
+            </section>
+          )}
+
+          {!callMode && !searchResults && (
+            <section aria-labelledby="killer-title">
+              <div className="rounded-3xl border border-[var(--danger)]/25 bg-gradient-to-br from-[#FFF5F2] to-white p-5 sm:p-8 shadow-sm">
+                <div className="flex items-center gap-3">
+                  <div aria-hidden className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--danger)] text-white shadow-lg shadow-[var(--danger)]/30">
+                    <Flame className="h-5 w-5" />
+                  </div>
+                  <h2 id="killer-title" className="text-xl sm:text-2xl font-bold tracking-tight text-[var(--navy)]">
+                    Perguntas Matadoras
+                  </h2>
+                </div>
+                <p className="mt-1 text-sm text-muted-foreground">Sempre acessíveis · Use a qualquer momento da ligação</p>
+                <ul className="mt-6 grid gap-3 sm:grid-cols-2">
+                  {KILLER_QUESTIONS.map((q, i) => (
+                    <li key={i} className="group flex gap-3 rounded-2xl border border-border bg-white p-4 transition hover:border-[var(--danger)]/40 hover:shadow-md">
+                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--danger)]/10 text-xs font-bold text-[var(--danger)]">{i + 1}</span>
+                      <p className="text-[15px] leading-snug text-[var(--navy)] font-medium">{q}</p>
+                    </li>
+                  ))}
                 </ul>
               </div>
             </section>
           )}
 
-          {/* Killer questions */}
           {!callMode && !searchResults && (
-          <section aria-labelledby="killer-title">
-            <div className="rounded-3xl border border-[var(--danger)]/25 bg-gradient-to-br from-[#FFF5F2] to-white p-5 sm:p-8 shadow-sm">
-              <div className="flex items-center gap-3">
-                <div aria-hidden className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--danger)] text-white shadow-lg shadow-[var(--danger)]/30">
-                  <Flame className="h-5 w-5" />
+            <section aria-labelledby="top-q-title">
+              <div className="relative overflow-hidden rounded-3xl border-2 border-[var(--brand)] bg-gradient-to-br from-[var(--navy)] via-[#102a55] to-[var(--navy)] p-5 sm:p-8 text-white shadow-xl shadow-[var(--brand)]/15">
+                <div className="pointer-events-none absolute -top-24 -right-16 h-72 w-72 rounded-full bg-[var(--brand)]/40 blur-3xl" />
+                <div className="relative">
+                  <div className="flex items-center gap-3">
+                    <div aria-hidden className="flex h-11 w-11 items-center justify-center rounded-xl bg-[var(--warn)] text-[var(--navy)] shadow-lg shadow-[var(--warn)]/30">
+                      <Trophy className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <h2 id="top-q-title" className="text-xl sm:text-2xl font-bold tracking-tight">
+                        🏆 Perguntas que Mais Geram Agendamento
+                      </h2>
+                      <p className="text-xs sm:text-sm font-medium uppercase tracking-wide text-[var(--warn)]">As 5 que mais convertem · use sem medo</p>
+                    </div>
+                  </div>
+                  <ol className="mt-6 grid gap-3">
+                    {TOP_QUESTIONS.map((q, i) => (
+                      <li key={i} className="flex gap-4 rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur">
+                        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[var(--warn)] text-base font-extrabold text-[var(--navy)]">{i + 1}</span>
+                        <p className="text-[15px] sm:text-base font-semibold leading-snug">{q}</p>
+                      </li>
+                    ))}
+                  </ol>
                 </div>
-                <h2 id="killer-title" className="text-xl sm:text-2xl font-bold tracking-tight text-[var(--navy)]">
-                  Perguntas Matadoras
-                </h2>
               </div>
-              <p className="mt-1 text-sm text-muted-foreground">Sempre acessíveis · Use a qualquer momento da ligação</p>
-              <ul className="mt-6 grid gap-3 sm:grid-cols-2">
-                {KILLER_QUESTIONS.map((q, i) => (
-                  <li key={i} className="group flex gap-3 rounded-2xl border border-border bg-white p-4 transition hover:border-[var(--danger)]/40 hover:shadow-md">
-                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--danger)]/10 text-xs font-bold text-[var(--danger)]">{i + 1}</span>
-                    <p className="text-[15px] leading-snug text-[var(--navy)] font-medium">{q}</p>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </section>
+            </section>
           )}
 
-          {/* Top converting questions */}
           {!callMode && !searchResults && (
-          <section aria-labelledby="top-q-title">
-            <div className="relative overflow-hidden rounded-3xl border-2 border-[var(--brand)] bg-gradient-to-br from-[var(--navy)] via-[#102a55] to-[var(--navy)] p-5 sm:p-8 text-white shadow-xl shadow-[var(--brand)]/15">
-              <div className="pointer-events-none absolute -top-24 -right-16 h-72 w-72 rounded-full bg-[var(--brand)]/40 blur-3xl" />
-              <div className="relative">
+            <section aria-labelledby="trans-title">
+              <div className="rounded-3xl border border-border bg-white p-5 sm:p-7 shadow-sm">
                 <div className="flex items-center gap-3">
-                  <div aria-hidden className="flex h-11 w-11 items-center justify-center rounded-xl bg-[var(--warn)] text-[var(--navy)] shadow-lg shadow-[var(--warn)]/30">
-                    <Trophy className="h-5 w-5" />
+                  <div aria-hidden className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--brand)]/10 text-[var(--brand)]">
+                    <Mic className="h-5 w-5" />
                   </div>
                   <div>
-                    <h2 id="top-q-title" className="text-xl sm:text-2xl font-bold tracking-tight">
-                      🏆 Perguntas que Mais Geram Agendamento
+                    <h2 id="trans-title" className="text-xl sm:text-2xl font-bold tracking-tight text-[var(--navy)]">
+                      🎤 Frases de Transição
                     </h2>
-                    <p className="text-xs sm:text-sm font-medium uppercase tracking-wide text-[var(--warn)]">As 5 que mais convertem · use sem medo</p>
+                    <p className="text-sm text-muted-foreground">Conduza o cliente etapa por etapa sem perder o ritmo</p>
                   </div>
                 </div>
-                <ol className="mt-6 grid gap-3">
-                  {TOP_QUESTIONS.map((q, i) => (
-                    <li key={i} className="flex gap-4 rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur">
-                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[var(--warn)] text-base font-extrabold text-[var(--navy)]">{i + 1}</span>
-                      <p className="text-[15px] sm:text-base font-semibold leading-snug">{q}</p>
-                    </li>
+                <div className="mt-5 grid gap-3">
+                  {TRANSITIONS.map((t, i) => (
+                    <div key={i} className="rounded-2xl border border-border bg-[var(--surface)] p-4 sm:p-5">
+                      <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-[var(--brand)]">
+                        <span>{t.from}</span>
+                        <ArrowRight aria-hidden className="h-3.5 w-3.5" />
+                        <span>{t.to}</span>
+                      </div>
+                      <p className="mt-2 text-[15px] sm:text-base font-medium text-[var(--navy)] leading-snug">"{t.text}"</p>
+                    </div>
                   ))}
-                </ol>
-              </div>
-            </div>
-          </section>
-          )}
-
-          {/* Transition phrases */}
-          {!callMode && !searchResults && (
-          <section aria-labelledby="trans-title">
-            <div className="rounded-3xl border border-border bg-white p-5 sm:p-7 shadow-sm">
-              <div className="flex items-center gap-3">
-                <div aria-hidden className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--brand)]/10 text-[var(--brand)]">
-                  <Mic className="h-5 w-5" />
-                </div>
-                <div>
-                  <h2 id="trans-title" className="text-xl sm:text-2xl font-bold tracking-tight text-[var(--navy)]">
-                    🎤 Frases de Transição
-                  </h2>
-                  <p className="text-sm text-muted-foreground">Conduza o cliente etapa por etapa sem perder o ritmo</p>
                 </div>
               </div>
-              <div className="mt-5 grid gap-3">
-                {TRANSITIONS.map((t, i) => (
-                  <div key={i} className="rounded-2xl border border-border bg-[var(--surface)] p-4 sm:p-5">
-                    <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-[var(--brand)]">
-                      <span>{t.from}</span>
-                      <ArrowRight aria-hidden className="h-3.5 w-3.5" />
-                      <span>{t.to}</span>
-                    </div>
-                    <p className="mt-2 text-[15px] sm:text-base font-medium text-[var(--navy)] leading-snug">"{t.text}"</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
+            </section>
           )}
 
-          {/* Goals */}
           {!searchResults && (
-          <section aria-labelledby="goals-title">
-            <div className="flex items-end justify-between gap-4 mb-5">
-              <div>
-                <h2 id="goals-title" className="text-xl sm:text-2xl font-bold tracking-tight text-[var(--navy)]">
-                  🎯 Objetivo Financeiro do Cliente
-                </h2>
-                <p className="mt-1 text-sm text-muted-foreground">Selecione → veja as perguntas → toque em "Mostrar Exploração"</p>
-              </div>
-            </div>
-
-            <div className="grid gap-2.5 grid-cols-2 sm:grid-cols-3 lg:grid-cols-3">
-              {GOALS.map((g) => {
-                const open = openGoal === g.id;
-                const panelId = `goal-panel-${g.id}`;
-                return (
-                  <button
-                    key={g.id}
-                    type="button"
-                    onClick={() => toggleGoal(g.id)}
-                    aria-expanded={open}
-                    aria-controls={panelId}
-                    className={`group relative flex min-h-14 items-center gap-2.5 rounded-2xl border p-3 sm:p-4 text-left transition-all motion-reduce:transition-none ${
-                      open
-                        ? "border-[var(--brand)] bg-[var(--brand)]/5 shadow-md shadow-[var(--brand)]/10"
-                        : "border-border bg-white hover:border-[var(--brand)]/40 hover:-translate-y-0.5 hover:shadow-md motion-reduce:hover:translate-y-0"
-                    }`}
-                  >
-                    <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-xl transition ${
-                      open ? "bg-[var(--brand)] text-white" : "bg-[var(--surface)] text-[var(--navy)]"
-                    }`}>
-                      <span aria-hidden>{g.emoji}</span>
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="font-semibold text-[var(--navy)] text-sm sm:text-[15px] leading-tight truncate">{g.title}</p>
-                      <p className="text-[11px] text-muted-foreground">{open ? "Aberto" : "Tocar"}</p>
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Expanded content */}
-            {openGoal && (
-              <div className="mt-6" id={`goal-panel-${openGoal}`} role="region" aria-label="Roteiro do objetivo selecionado">
-                {GOALS.filter((g) => g.id === openGoal).map((g) => (
-                  <GoalBlocks
-                    key={g.id}
-                    goal={g}
-                    activeQuads={activeQuads}
-                    expanded={expanded}
-                    toggleExpand={toggleExpand}
-                    favorites={favorites}
-                    toggleFav={toggleFav}
-                    callMode={callMode}
-                  />
-                ))}
-              </div>
-            )}
-          </section>
-          )}
-
-          {/* Objections */}
-          {!callMode && !searchResults && (
-          <section aria-labelledby="obj-title">
-            <div className="rounded-3xl border border-border bg-white p-5 sm:p-7 shadow-sm">
-              <div className="flex items-center gap-3">
-                <div aria-hidden className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--success)]/15 text-[var(--success)]">
-                  <ShieldCheck className="h-5 w-5" />
+            <section aria-labelledby="goals-title">
+              <div className="flex items-end justify-between gap-4 mb-5">
+                <div>
+                  <h2 id="goals-title" className="text-xl sm:text-2xl font-bold tracking-tight text-[var(--navy)]">
+                    🎯 Objetivo Financeiro do Cliente
+                  </h2>
+                  <p className="mt-1 text-sm text-muted-foreground">Selecione → conduza o roteiro → cada resposta abre um novo caminho</p>
                 </div>
-                <h2 id="obj-title" className="text-xl sm:text-2xl font-bold tracking-tight text-[var(--navy)]">
-                  🛡️ Contorno de Objeções
-                </h2>
               </div>
-              <div className="mt-5 space-y-3">
-                {OBJECTIONS.map((o, i) => {
-                  const open = openObjection === i;
-                  const panelId = `obj-panel-${i}`;
+
+              <div className="grid gap-2.5 grid-cols-2 sm:grid-cols-3 lg:grid-cols-3">
+                {GOALS.map((g) => {
+                  const open = openGoal === g.id;
+                  const panelId = `goal-panel-${g.id}`;
                   return (
-                    <div key={i} className="overflow-hidden rounded-2xl border border-border bg-[var(--surface)]">
-                      <button
-                        type="button"
-                        onClick={() => setOpenObjection(open ? null : i)}
-                        aria-expanded={open}
-                        aria-controls={panelId}
-                        className="flex min-h-14 w-full items-center gap-3 p-4 text-left"
-                      >
-                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[var(--danger)]/10 text-sm font-bold text-[var(--danger)]">{i + 1}</span>
-                        <span className="flex-1 font-semibold text-[var(--navy)]">"{o.objection}"</span>
-                        <ChevronDown aria-hidden className={`h-4 w-4 text-muted-foreground transition motion-reduce:transition-none ${open ? "rotate-180 text-[var(--brand)]" : ""}`} />
-                      </button>
-                      {open && (
-                        <div id={panelId} className="border-t border-border bg-white p-4 sm:p-5">
-                          <p className="text-xs font-semibold uppercase tracking-wide text-[var(--success)]">Resposta</p>
-                          <p className="mt-2 text-[15px] sm:text-base leading-relaxed text-[var(--navy)]">{o.answer}</p>
-                        </div>
-                      )}
-                    </div>
+                    <button
+                      key={g.id}
+                      type="button"
+                      onClick={() => toggleGoal(g.id)}
+                      aria-expanded={open}
+                      aria-controls={panelId}
+                      className={`group relative flex min-h-14 items-center gap-2.5 rounded-2xl border p-3 sm:p-4 text-left transition-all motion-reduce:transition-none ${
+                        open
+                          ? "border-[var(--brand)] bg-[var(--brand)]/5 shadow-md shadow-[var(--brand)]/10"
+                          : "border-border bg-white hover:border-[var(--brand)]/40 hover:-translate-y-0.5 hover:shadow-md motion-reduce:hover:translate-y-0"
+                      }`}
+                    >
+                      <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-xl transition ${
+                        open ? "bg-[var(--brand)] text-white" : "bg-[var(--surface)] text-[var(--navy)]"
+                      }`}>
+                        <span aria-hidden>{g.emoji}</span>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-semibold text-[var(--navy)] text-sm sm:text-[15px] leading-tight truncate">{g.title}</p>
+                        <p className="text-[11px] text-muted-foreground">{open ? "Aberto" : "Tocar"}</p>
+                      </div>
+                    </button>
                   );
                 })}
               </div>
-            </div>
-          </section>
+
+              {openGoal && (
+                <div className="mt-6" id={`goal-panel-${openGoal}`} role="region" aria-label="Roteiro do objetivo selecionado">
+                  {GOALS.filter((g) => g.id === openGoal).map((g) => (
+                    <GoalBlocks
+                      key={g.id}
+                      goal={g}
+                      activeQuads={activeQuads}
+                      expanded={expanded}
+                      toggleExpand={toggleExpand}
+                      favorites={favorites}
+                      toggleFav={toggleFav}
+                      callMode={callMode}
+                    />
+                  ))}
+                </div>
+              )}
+            </section>
           )}
 
-          {/* Mistakes vs right moves */}
           {!callMode && !searchResults && (
-          <section aria-labelledby="mistakes-title">
-            <div className="rounded-3xl border border-border bg-white p-5 sm:p-7 shadow-sm">
-              <div className="flex items-center gap-3">
-                <div aria-hidden className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--danger)]/15 text-[var(--danger)]">
-                  <AlertTriangle className="h-5 w-5" />
+            <section aria-labelledby="obj-title">
+              <div className="rounded-3xl border border-border bg-white p-5 sm:p-7 shadow-sm">
+                <div className="flex items-center gap-3">
+                  <div aria-hidden className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--success)]/15 text-[var(--success)]">
+                    <ShieldCheck className="h-5 w-5" />
+                  </div>
+                  <h2 id="obj-title" className="text-xl sm:text-2xl font-bold tracking-tight text-[var(--navy)]">
+                    🛡️ Contorno de Objeções
+                  </h2>
                 </div>
-                <h2 id="mistakes-title" className="text-xl sm:text-2xl font-bold tracking-tight text-[var(--navy)]">
-                  ⚠️ Erros que Matam o Agendamento
-                </h2>
+                <div className="mt-5 space-y-3">
+                  {OBJECTIONS.map((o, i) => {
+                    const open = openObjection === i;
+                    const panelId = `obj-panel-${i}`;
+                    return (
+                      <div key={i} className="overflow-hidden rounded-2xl border border-border bg-[var(--surface)]">
+                        <button
+                          type="button"
+                          onClick={() => setOpenObjection(open ? null : i)}
+                          aria-expanded={open}
+                          aria-controls={panelId}
+                          className="flex min-h-14 w-full items-center gap-3 p-4 text-left"
+                        >
+                          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[var(--danger)]/10 text-sm font-bold text-[var(--danger)]">{i + 1}</span>
+                          <span className="flex-1 font-semibold text-[var(--navy)]">"{o.objection}"</span>
+                          <ChevronDown aria-hidden className={`h-4 w-4 text-muted-foreground transition motion-reduce:transition-none ${open ? "rotate-180 text-[var(--brand)]" : ""}`} />
+                        </button>
+                        {open && (
+                          <div id={panelId} className="border-t border-border bg-white p-4 sm:p-5">
+                            <p className="text-xs font-semibold uppercase tracking-wide text-[var(--success)]">Resposta</p>
+                            <p className="mt-2 text-[15px] sm:text-base leading-relaxed text-[var(--navy)]">{o.answer}</p>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-              <div className="mt-5 grid gap-4 md:grid-cols-2">
-                <div className="rounded-2xl border border-[var(--danger)]/25 bg-[#FFF5F2] p-5">
-                  <p className="text-xs font-bold uppercase tracking-wide text-[var(--danger)]">Não faça</p>
-                  <ul className="mt-3 space-y-2">
-                    {KILLER_MISTAKES.map((m) => (
-                      <li key={m} className="flex items-start gap-2 text-[15px] text-[var(--navy)] leading-snug">
-                        <XCircle aria-hidden className="mt-0.5 h-4 w-4 shrink-0 text-[var(--danger)]" />
-                        <span>{m}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="rounded-2xl border border-[var(--success)]/30 bg-[var(--success)]/8 p-5" style={{ backgroundColor: "color-mix(in oklab, var(--success) 8%, white)" }}>
-                  <p className="text-xs font-bold uppercase tracking-wide text-[var(--success)]">Faça</p>
-                  <ul className="mt-3 space-y-2">
-                    {RIGHT_MOVES.map((m) => (
-                      <li key={m} className="flex items-start gap-2 text-[15px] font-semibold text-[var(--navy)] leading-snug">
-                        <CheckCircle2 aria-hidden className="mt-0.5 h-4 w-4 shrink-0 text-[var(--success)]" />
-                        <span>{m}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </section>
+            </section>
           )}
 
-          {/* Ideal flow + filosofia */}
           {!callMode && !searchResults && (
-          <section aria-labelledby="ideal-title">
-            <div className="rounded-3xl border-2 border-[var(--brand)] bg-white p-5 sm:p-8 shadow-xl shadow-[var(--brand)]/10">
-              <div className="flex items-center gap-3">
-                <div aria-hidden className="flex h-11 w-11 items-center justify-center rounded-xl bg-[var(--brand)] text-white shadow-lg shadow-[var(--brand)]/30">
-                  <ListOrdered className="h-5 w-5" />
+            <section aria-labelledby="mistakes-title">
+              <div className="rounded-3xl border border-border bg-white p-5 sm:p-7 shadow-sm">
+                <div className="flex items-center gap-3">
+                  <div aria-hidden className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--danger)]/15 text-[var(--danger)]">
+                    <AlertTriangle className="h-5 w-5" />
+                  </div>
+                  <h2 id="mistakes-title" className="text-xl sm:text-2xl font-bold tracking-tight text-[var(--navy)]">
+                    ⚠️ Erros que Matam o Agendamento
+                  </h2>
                 </div>
-                <h2 id="ideal-title" className="text-xl sm:text-2xl font-bold tracking-tight text-[var(--navy)]">
-                  🏆 Roteiro Ideal de Uma Ligação
-                </h2>
+                <div className="mt-5 grid gap-4 md:grid-cols-2">
+                  <div className="rounded-2xl border border-[var(--danger)]/25 bg-[#FFF5F2] p-5">
+                    <p className="text-xs font-bold uppercase tracking-wide text-[var(--danger)]">Não faça</p>
+                    <ul className="mt-3 space-y-2">
+                      {KILLER_MISTAKES.map((m) => (
+                        <li key={m} className="flex items-start gap-2 text-[15px] text-[var(--navy)] leading-snug">
+                          <XCircle aria-hidden className="mt-0.5 h-4 w-4 shrink-0 text-[var(--danger)]" />
+                          <span>{m}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="rounded-2xl border border-[var(--success)]/30 p-5" style={{ backgroundColor: "color-mix(in oklab, var(--success) 8%, white)" }}>
+                    <p className="text-xs font-bold uppercase tracking-wide text-[var(--success)]">Faça</p>
+                    <ul className="mt-3 space-y-2">
+                      {RIGHT_MOVES.map((m) => (
+                        <li key={m} className="flex items-start gap-2 text-[15px] font-semibold text-[var(--navy)] leading-snug">
+                          <CheckCircle2 aria-hidden className="mt-0.5 h-4 w-4 shrink-0 text-[var(--success)]" />
+                          <span>{m}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
               </div>
-              <ol className="mt-6 grid gap-3 sm:grid-cols-2">
-                {IDEAL_FLOW.map((step, i) => (
-                  <li key={step} className="flex items-center gap-3 rounded-2xl border border-border bg-[var(--surface)] p-4">
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[var(--brand)] text-sm font-extrabold text-white">{i + 1}</span>
-                    <span className="font-semibold text-[var(--navy)]">{step}</span>
-                  </li>
-                ))}
-              </ol>
-              <div className="mt-6 rounded-2xl bg-gradient-to-br from-[var(--navy)] to-[#0b1c3a] p-6 sm:p-8 text-white">
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-[var(--success)]">Filosofia Bull Team</p>
-                <p className="mt-3 text-lg sm:text-2xl font-bold leading-snug">
-                  O objetivo da ligação não é vender.
-                </p>
-                <p className="mt-2 text-lg sm:text-2xl font-bold leading-snug text-white/90">
-                  O objetivo da ligação é fazer o cliente <span className="text-[var(--success)]">desejar participar</span> da Entrevista Estratégica Financeira.
-                </p>
-              </div>
-            </div>
-          </section>
+            </section>
           )}
 
-          {/* Final booking */}
           {!callMode && !searchResults && (
-          <section aria-labelledby="booking-title">
-            <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[var(--navy)] to-[#0b1c3a] p-6 sm:p-10 text-white shadow-xl">
-              <div className="pointer-events-none absolute -top-20 -right-20 h-72 w-72 rounded-full bg-[var(--success)]/30 blur-3xl" />
-              <div className="relative">
-                <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-3 py-1 text-xs font-medium text-white/80 backdrop-blur">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[var(--success)]" /> Etapa 5 · Fechar agendamento
+            <section aria-labelledby="ideal-title">
+              <div className="rounded-3xl border-2 border-[var(--brand)] bg-white p-5 sm:p-8 shadow-xl shadow-[var(--brand)]/10">
+                <div className="flex items-center gap-3">
+                  <div aria-hidden className="flex h-11 w-11 items-center justify-center rounded-xl bg-[var(--brand)] text-white shadow-lg shadow-[var(--brand)]/30">
+                    <ListOrdered className="h-5 w-5" />
+                  </div>
+                  <h2 id="ideal-title" className="text-xl sm:text-2xl font-bold tracking-tight text-[var(--navy)]">
+                    🏆 Roteiro Ideal de Uma Ligação
+                  </h2>
                 </div>
-                <h2 id="booking-title" className="mt-4 text-2xl sm:text-3xl font-bold tracking-tight">
-                  📅 Transição para Agendamento
-                </h2>
-                <p className="mt-2 text-white/70 max-w-2xl">
-                  Leia o script abaixo com firmeza e ofereça os dois horários. Não dê espaço para o "vou pensar".
-                </p>
-
-                <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-5 sm:p-6 text-white/90 leading-relaxed whitespace-pre-line">
-                  {SCRIPT}
+                <ol className="mt-6 grid gap-3 sm:grid-cols-2">
+                  {IDEAL_FLOW.map((step, i) => (
+                    <li key={step} className="flex items-center gap-3 rounded-2xl border border-border bg-[var(--surface)] p-4">
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[var(--brand)] text-sm font-extrabold text-white">{i + 1}</span>
+                      <span className="font-semibold text-[var(--navy)]">{step}</span>
+                    </li>
+                  ))}
+                </ol>
+                <div className="mt-6 rounded-2xl bg-gradient-to-br from-[var(--navy)] to-[#0b1c3a] p-6 sm:p-8 text-white">
+                  <p className="text-xs font-bold uppercase tracking-[0.2em] text-[var(--success)]">Filosofia Bull Team</p>
+                  <p className="mt-3 text-lg sm:text-2xl font-bold leading-snug">
+                    O objetivo da ligação não é vender.
+                  </p>
+                  <p className="mt-2 text-lg sm:text-2xl font-bold leading-snug text-white/90">
+                    O objetivo da ligação é fazer o cliente <span className="text-[var(--success)]">desejar participar</span> da Entrevista Estratégica Financeira.
+                  </p>
                 </div>
-
-                <button
-                  type="button"
-                  onClick={copyScript}
-                  aria-live="polite"
-                  className="mt-5 inline-flex min-h-12 items-center gap-2 rounded-xl bg-[var(--success)] px-5 py-3 text-sm font-semibold text-[var(--navy)] shadow-lg shadow-[var(--success)]/25 transition hover:brightness-105 active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100"
-                >
-                  {copied ? <Check aria-hidden className="h-4 w-4" /> : <ClipboardCopy aria-hidden className="h-4 w-4" />}
-                  {copied ? "Script copiado!" : "📋 Copiar Script"}
-                </button>
               </div>
-            </div>
-          </section>
+            </section>
+          )}
+
+          {!callMode && !searchResults && (
+            <section aria-labelledby="booking-title">
+              <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[var(--navy)] to-[#0b1c3a] p-6 sm:p-10 text-white shadow-xl">
+                <div className="pointer-events-none absolute -top-20 -right-20 h-72 w-72 rounded-full bg-[var(--success)]/30 blur-3xl" />
+                <div className="relative">
+                  <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-3 py-1 text-xs font-medium text-white/80 backdrop-blur">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[var(--success)]" /> Etapa 5 · Fechar agendamento
+                  </div>
+                  <h2 id="booking-title" className="mt-4 text-2xl sm:text-3xl font-bold tracking-tight">
+                    📅 Transição para Agendamento
+                  </h2>
+                  <p className="mt-2 text-white/70 max-w-2xl">
+                    Leia o script abaixo com firmeza e ofereça os dois horários. Não dê espaço para o "vou pensar".
+                  </p>
+                  <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-5 sm:p-6 text-white/90 leading-relaxed whitespace-pre-line">
+                    {SCRIPT}
+                  </div>
+                  <button
+                    type="button"
+                    onClick={copyScript}
+                    aria-live="polite"
+                    className="mt-5 inline-flex min-h-12 items-center gap-2 rounded-xl bg-[var(--success)] px-5 py-3 text-sm font-semibold text-[var(--navy)] shadow-lg shadow-[var(--success)]/25 transition hover:brightness-105 active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100"
+                  >
+                    {copied ? <Check aria-hidden className="h-4 w-4" /> : <ClipboardCopy aria-hidden className="h-4 w-4" />}
+                    {copied ? "Script copiado!" : "📋 Copiar Script"}
+                  </button>
+                </div>
+              </div>
+            </section>
           )}
         </div>
 
-        {/* Side panel: Sinais + Termômetro + Script (sempre visível) */}
         <aside aria-label="Painel de apoio" className="mt-6 lg:mt-0">
           <div className="lg:sticky lg:top-32 space-y-4">
-            {/* Termômetro de Consciência */}
             <div className="rounded-3xl border border-border bg-white p-5 shadow-sm">
               <div className="flex items-center gap-3">
                 <div aria-hidden className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--danger)]/10 text-[var(--danger)]">
@@ -832,7 +1330,7 @@ function Index() {
                 ))}
               </ol>
               <p className="mt-4 rounded-xl border border-[var(--success)]/30 bg-[var(--success)]/10 p-3 text-xs sm:text-sm font-medium text-[var(--navy)]">
-                O objetivo da ligação é conduzir o cliente até os níveis <span className="font-bold">3 ou 4</span> antes de convidar para a entrevista.
+                Conduza o cliente até os níveis <span className="font-bold">3 ou 4</span> antes de convidar para a entrevista.
               </p>
             </div>
 
@@ -852,11 +1350,10 @@ function Index() {
                 ))}
               </ul>
               <div className="mt-4 rounded-xl border border-[var(--success)]/30 bg-[var(--success)]/10 p-3 text-sm font-medium text-[var(--navy)]">
-                Quando ouvir <span className="font-bold">duas ou mais</span> dessas frases, avance para o agendamento.
+                Quando ouvir <span className="font-bold">duas ou mais</span>, avance para o agendamento.
               </div>
             </div>
 
-            {/* Script de Agendamento (sempre visível) */}
             <div className="rounded-3xl border-2 border-[var(--success)] bg-gradient-to-br from-[var(--navy)] to-[#0b1c3a] p-5 text-white shadow-lg shadow-[var(--success)]/15">
               <div className="flex items-center gap-3">
                 <div aria-hidden className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--success)] text-[var(--navy)]">
@@ -889,7 +1386,9 @@ function Index() {
   );
 }
 
-type GoalBlocksProps = {
+function GoalBlocks({
+  goal, activeQuads, expanded, toggleExpand, favorites, toggleFav, callMode,
+}: {
   goal: Goal;
   activeQuads: Quadrant[];
   expanded: Set<string>;
@@ -897,9 +1396,7 @@ type GoalBlocksProps = {
   favorites: Set<string>;
   toggleFav: (k: string) => void;
   callMode: boolean;
-};
-
-function GoalBlocks({ goal, activeQuads, expanded, toggleExpand, favorites, toggleFav, callMode }: GoalBlocksProps) {
+}) {
   return (
     <div className="rounded-3xl border border-border bg-white p-4 sm:p-7 shadow-sm">
       <div className="mb-5 flex items-center gap-3">
@@ -907,176 +1404,171 @@ function GoalBlocks({ goal, activeQuads, expanded, toggleExpand, favorites, togg
         <h3 className="text-lg sm:text-xl font-bold tracking-tight text-[var(--navy)]">{goal.title}</h3>
       </div>
 
-      <div className="space-y-5">
-        {QUADRANTS.filter((q) => activeQuads.includes(q.key)).map((quad) => (
-          <QuadrantBlock
-            key={quad.key}
-            quadrant={quad}
-            goalId={goal.id}
-            items={goal.blocks[quad.key]}
-            expanded={expanded}
-            toggleExpand={toggleExpand}
-            favorites={favorites}
-            toggleFav={toggleFav}
-            callMode={callMode}
-          />
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function QuadrantBlock({
-  quadrant, goalId, items, expanded, toggleExpand, favorites, toggleFav, callMode,
-}: {
-  quadrant: (typeof QUADRANTS)[number];
-  goalId: string;
-  items: string[];
-  expanded: Set<string>;
-  toggleExpand: (k: string) => void;
-  favorites: Set<string>;
-  toggleFav: (k: string) => void;
-  callMode: boolean;
-}) {
-  const isImplicacao = quadrant.key === "implicacao";
-  return (
-    <div
-      className={`rounded-2xl border p-4 sm:p-5 ${
-        isImplicacao
-          ? "border-2 border-[var(--danger)] bg-gradient-to-br from-[#FFF1ED] via-white to-[#FFF6E8] shadow-md shadow-[var(--danger)]/10"
-          : "border-border bg-[var(--surface)]"
-      }`}
-    >
-      <div className="flex items-center gap-2">
-        <span aria-hidden>{quadrant.emoji}</span>
-        <h4 className="font-bold text-[var(--navy)]">{quadrant.label}</h4>
-        {isImplicacao && (
-          <span className="ml-auto inline-flex items-center gap-1 rounded-full bg-[var(--danger)] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">
-            <Star className="h-3 w-3" aria-hidden /> Mais importantes
-          </span>
-        )}
-      </div>
-      {!callMode && (
-        <p className="mt-1 text-xs text-muted-foreground leading-snug">{SPIN_OBJECTIVES[quadrant.key]}</p>
-      )}
-      <ul className="mt-3 space-y-2">
-        {items.map((q, i) => {
-          const key = `${goalId}|${quadrant.key}|${q}`;
+      <div className="space-y-4">
+        {QUADRANTS.filter((q) => activeQuads.includes(q.key)).map((quad) => {
+          const key = `${goal.id}|${quad.key}`;
+          const script = goal.blocks[quad.key];
           return (
-            <QuestionCard
-              key={key}
-              fullKey={key}
-              question={q}
-              quadrant={quadrant}
-              index={i + 1}
-              expanded={expanded.has(key)}
-              onToggle={() => toggleExpand(key)}
-              favorited={favorites.has(key)}
-              onFav={() => toggleFav(key)}
-              callMode={callMode}
-            />
+            <div key={quad.key}>
+              {!callMode && (
+                <div className="mb-2 flex items-center gap-2 text-xs font-bold uppercase tracking-wide" style={{ color: quad.color }}>
+                  <span aria-hidden>{quad.emoji}</span>
+                  <span>{quad.label}</span>
+                  <span className="text-muted-foreground font-medium normal-case tracking-normal">· {SPIN_OBJECTIVES[quad.key]}</span>
+                </div>
+              )}
+              <ScriptCard
+                fullKey={key}
+                script={script}
+                quadrant={quad}
+                expanded={expanded.has(key)}
+                onToggle={() => toggleExpand(key)}
+                favorited={favorites.has(key)}
+                onFav={() => toggleFav(key)}
+                callMode={callMode}
+              />
+            </div>
           );
         })}
-      </ul>
+      </div>
     </div>
   );
 }
 
-function QuestionCard({
-  question, quadrant, expanded, onToggle, favorited, onFav, callMode, index, contextLabel,
+function ScriptCard({
+  script, quadrant, expanded, onToggle, favorited, onFav, callMode, contextLabel,
 }: {
   fullKey: string;
-  question: string;
+  script: Script;
   quadrant: (typeof QUADRANTS)[number];
   expanded: boolean;
   onToggle: () => void;
   favorited: boolean;
   onFav: () => void;
   callMode: boolean;
-  index?: number;
   contextLabel?: string;
 }) {
   const isImportant = quadrant.key === "implicacao";
-  const isHigh = isHighConversion(question);
-  const expl = EXPLORATION[quadrant.key];
+  const isHigh = isHighConversion(script.principal);
+  const simLabel = script.simLabel ?? "Se responder SIM";
+  const naoLabel = script.naoLabel ?? "Se responder NÃO";
 
   return (
-    <li className="rounded-xl border border-border bg-white shadow-sm">
-      <div className="flex items-start gap-2 p-3 sm:p-4">
-        {index !== undefined && (
-          <span className="mt-0.5 shrink-0 font-bold tabular-nums text-sm" style={{ color: quadrant.color }}>
-            {index}.
-          </span>
+    <div
+      className={`rounded-2xl border bg-white shadow-sm ${
+        isImportant
+          ? "border-2 border-[var(--danger)] shadow-md shadow-[var(--danger)]/10"
+          : "border-border"
+      }`}
+    >
+      <div className={`p-3 sm:p-4 ${isImportant ? "bg-gradient-to-br from-[#FFF1ED] via-white to-[#FFF6E8] rounded-t-2xl" : ""}`}>
+        {contextLabel && (
+          <p className="text-[11px] font-semibold text-muted-foreground mb-1">{contextLabel}</p>
         )}
-        <div className="flex-1 min-w-0">
-          {contextLabel && (
-            <p className="text-[11px] font-semibold text-muted-foreground mb-1">{contextLabel}</p>
+        <div className="flex flex-wrap items-center gap-1.5">
+          <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide ${quadrant.chip}`}>
+            <span aria-hidden>{quadrant.emoji}</span> {quadrant.label}
+          </span>
+          {isImportant && (
+            <span className="inline-flex items-center gap-1 rounded-full bg-[var(--danger)] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">
+              <Star className="h-3 w-3" aria-hidden /> Mais Importante
+            </span>
           )}
-          <div className="flex items-start gap-2 flex-wrap">
-            {isImportant && (
-              <span className="inline-flex items-center gap-1 rounded-full bg-[var(--danger)]/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-[var(--danger)]">
-                <Star className="h-3 w-3" aria-hidden /> Mais Importante
-              </span>
-            )}
-            {isHigh && (
-              <span className="inline-flex items-center gap-1 rounded-full bg-[var(--warn)]/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-[#8a5a00]">
-                🔥 Alta Conversão
-              </span>
-            )}
-          </div>
-          <p className={`mt-1 font-semibold text-[var(--navy)] leading-snug ${callMode ? "text-lg sm:text-xl" : "text-[15px] sm:text-base"}`}>
-            ❓ {question}
-          </p>
-          <div className="mt-2 flex flex-wrap items-center gap-2">
-            <button
-              type="button"
-              onClick={onToggle}
-              aria-expanded={expanded}
-              className="inline-flex min-h-9 items-center gap-1.5 rounded-lg border border-border bg-[var(--surface)] px-3 text-xs font-semibold text-[var(--navy)] transition hover:border-[var(--brand)] motion-reduce:transition-none"
-            >
-              <ChevronDown aria-hidden className={`h-3.5 w-3.5 transition ${expanded ? "rotate-180" : ""}`} />
-              {expanded ? "Ocultar Exploração" : "Mostrar Exploração"}
-            </button>
-            <button
-              type="button"
-              onClick={onFav}
-              aria-pressed={favorited}
-              aria-label={favorited ? "Remover dos favoritos" : "Favoritar pergunta"}
-              className={`inline-flex min-h-9 items-center gap-1.5 rounded-lg border px-3 text-xs font-semibold transition motion-reduce:transition-none ${
-                favorited
-                  ? "border-[var(--warn)] bg-[var(--warn)] text-[var(--navy)]"
-                  : "border-border bg-white text-muted-foreground hover:border-[var(--warn)]"
-              }`}
-            >
-              <Pin aria-hidden className="h-3.5 w-3.5" />
-              {favorited ? "Favoritada" : "Favoritar"}
-            </button>
-          </div>
+          {isHigh && (
+            <span className="inline-flex items-center gap-1 rounded-full bg-[var(--warn)]/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-[#8a5a00]">
+              🔥 Alta Conversão
+            </span>
+          )}
+        </div>
+        <p className={`mt-2 font-semibold text-[var(--navy)] leading-snug ${callMode ? "text-lg sm:text-2xl" : "text-[15px] sm:text-lg"}`}>
+          ❓ {script.principal}
+        </p>
+        <div className="mt-3 flex flex-wrap items-center gap-2">
+          <button
+            type="button"
+            onClick={onToggle}
+            aria-expanded={expanded}
+            className="inline-flex min-h-9 items-center gap-1.5 rounded-lg border border-border bg-[var(--surface)] px-3 text-xs font-semibold text-[var(--navy)] transition hover:border-[var(--brand)] motion-reduce:transition-none"
+          >
+            <ChevronDown aria-hidden className={`h-3.5 w-3.5 transition ${expanded ? "rotate-180" : ""}`} />
+            {expanded ? "Ocultar Exploração" : "Mostrar Exploração"}
+          </button>
+          <button
+            type="button"
+            onClick={onFav}
+            aria-pressed={favorited}
+            aria-label={favorited ? "Remover dos favoritos" : "Favoritar roteiro"}
+            className={`inline-flex min-h-9 items-center gap-1.5 rounded-lg border px-3 text-xs font-semibold transition motion-reduce:transition-none ${
+              favorited
+                ? "border-[var(--warn)] bg-[var(--warn)] text-[var(--navy)]"
+                : "border-border bg-white text-muted-foreground hover:border-[var(--warn)]"
+            }`}
+          >
+            <Pin aria-hidden className="h-3.5 w-3.5" />
+            {favorited ? "Favoritado" : "Favoritar"}
+          </button>
         </div>
       </div>
 
       {expanded && (
-        <div className="border-t border-border bg-[var(--surface)] p-3 sm:p-4 space-y-2.5 rounded-b-xl">
-          <div className="rounded-lg border border-[var(--success)]/30 bg-[var(--success)]/10 p-3">
-            <p className="text-[11px] font-bold uppercase tracking-wide text-[var(--success)]">✅ Se responder SIM</p>
-            <p className="mt-1 text-sm text-[var(--navy)] leading-snug">{expl.sim}</p>
-          </div>
-          <div className="rounded-lg border border-[var(--danger)]/30 bg-[var(--danger)]/10 p-3">
-            <p className="text-[11px] font-bold uppercase tracking-wide text-[var(--danger)]">❌ Se responder NÃO</p>
-            <p className="mt-1 text-sm text-[var(--navy)] leading-snug">{expl.nao}</p>
-          </div>
-          <div className="rounded-lg border border-[var(--brand)]/30 bg-[var(--brand)]/8 p-3" style={{ backgroundColor: "color-mix(in oklab, var(--brand) 8%, white)" }}>
+        <div className="border-t border-border bg-[var(--surface)] p-3 sm:p-4 space-y-3 rounded-b-2xl">
+          <ExplorationList
+            label={`✅ ${simLabel}`}
+            items={script.sim}
+            tone="success"
+            callMode={callMode}
+          />
+          <ExplorationList
+            label={`❌ ${naoLabel}`}
+            items={script.nao}
+            tone="danger"
+            callMode={callMode}
+          />
+          <div className="rounded-lg border border-[var(--brand)]/30 p-3" style={{ backgroundColor: "color-mix(in oklab, var(--brand) 8%, white)" }}>
             <p className="text-[11px] font-bold uppercase tracking-wide text-[var(--brand)]">🎤 Transição</p>
-            <p className="mt-1 text-sm font-medium text-[var(--navy)] leading-snug">"{expl.transicao}"</p>
+            <p className={`mt-1 font-medium text-[var(--navy)] leading-snug ${callMode ? "text-base" : "text-sm"}`}>"{script.transicao}"</p>
           </div>
-          {!callMode && (
+          {!callMode && script.procurar.length > 0 && (
             <div className="rounded-lg border border-border bg-white p-3">
               <p className="text-[11px] font-bold uppercase tracking-wide text-muted-foreground">💡 O que procurar</p>
-              <p className="mt-1 text-sm text-[var(--navy)] leading-snug">{expl.procurar}</p>
+              <div className="mt-2 flex flex-wrap gap-1.5">
+                {script.procurar.map((p) => (
+                  <span key={p} className="inline-flex items-center rounded-full bg-[var(--surface)] border border-border px-2.5 py-0.5 text-xs font-medium text-[var(--navy)]">
+                    {p}
+                  </span>
+                ))}
+              </div>
             </div>
           )}
         </div>
       )}
-    </li>
+    </div>
+  );
+}
+
+function ExplorationList({
+  label, items, tone, callMode,
+}: {
+  label: string;
+  items: string[];
+  tone: "success" | "danger";
+  callMode: boolean;
+}) {
+  const colorVar = tone === "success" ? "var(--success)" : "var(--danger)";
+  return (
+    <div className="rounded-lg border p-3" style={{
+      borderColor: `color-mix(in oklab, ${colorVar} 35%, transparent)`,
+      backgroundColor: `color-mix(in oklab, ${colorVar} 8%, white)`,
+    }}>
+      <p className="text-[11px] font-bold uppercase tracking-wide" style={{ color: colorVar }}>{label}</p>
+      <ul className="mt-2 space-y-1.5">
+        {items.map((q, i) => (
+          <li key={i} className={`flex gap-2 text-[var(--navy)] leading-snug ${callMode ? "text-base" : "text-sm"}`}>
+            <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full" style={{ backgroundColor: colorVar }} />
+            <span>{q}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
