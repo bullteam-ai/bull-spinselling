@@ -1196,7 +1196,6 @@ function Index() {
               {/* Psicologia da Entrevista — sempre próxima do topo */}
             </section>
           )}
-
           {!callMode && !searchResults && (
             <section aria-labelledby="psy-title">
               <div className="relative overflow-hidden rounded-3xl border-2 border-[var(--brand)] bg-gradient-to-br from-[#0a1733] via-[var(--navy)] to-[#1a2e5c] p-6 sm:p-10 text-white shadow-2xl shadow-[var(--brand)]/20">
