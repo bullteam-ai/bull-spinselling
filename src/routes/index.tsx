@@ -180,6 +180,14 @@ const KILLER_PRINCIPALS = new Set<string>([
   "Seu assessor conhece profundamente todos os seus objetivos financeiros?",
   "E se algo importante estivesse desalinhado hoje, como você descobriria?",
   "Faz sentido validar se tudo continua alinhado aos seus objetivos atuais?",
+  // Futuro dos Filhos
+  "Hoje existe algum planejamento específico para ajudar seus filhos a alcançarem esses objetivos?",
+  "E se chegar o momento em que seu filho precisar dessa ajuda e ela não estiver disponível?",
+  "Faz sentido entender quanto seria necessário para garantir essas oportunidades aos seus filhos?",
+  // Casamento e Projetos Familiares
+  "Hoje vocês possuem um plano financeiro estruturado para alcançar esses objetivos?",
+  "E se esses objetivos familiares demorarem muito mais tempo para acontecer?",
+  "Faz sentido validar se vocês estão utilizando a melhor estratégia para alcançar esses objetivos familiares?",
 ]);
 const isKiller = (q: string) => KILLER_PRINCIPALS.has(q);
 
