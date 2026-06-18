@@ -1192,11 +1192,6 @@ function Index() {
           )}
 
           {!callMode && !searchResults && (
-            <section aria-labelledby="killer-title">
-              {/* Psicologia da Entrevista — sempre próxima do topo */}
-            </section>
-          )}
-          {!callMode && !searchResults && (
             <section aria-labelledby="psy-title">
               <div className="relative overflow-hidden rounded-3xl border-2 border-[var(--brand)] bg-gradient-to-br from-[#0a1733] via-[var(--navy)] to-[#1a2e5c] p-6 sm:p-10 text-white shadow-2xl shadow-[var(--brand)]/20">
                 <div className="pointer-events-none absolute -top-32 -right-20 h-80 w-80 rounded-full bg-[var(--brand)]/30 blur-3xl" />
