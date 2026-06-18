@@ -3,6 +3,7 @@ import { useState } from "react";
 import {
   Target, UserRound, Home, Car, Plane, Rocket, BarChart3, HelpCircle, Handshake,
   Flame, AlertTriangle, ClipboardCopy, Check, ChevronDown, TrafficCone, ArrowRight,
+  Trophy, Mic, ShieldCheck, XCircle, CheckCircle2, Thermometer, ListOrdered,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
@@ -43,6 +44,62 @@ const BUYING_SIGNALS = [
   "É verdade.",
   "Não tinha olhado por esse lado.",
 ];
+
+const TOP_QUESTIONS = [
+  "O que acontece se isso não mudar nos próximos 5 anos?",
+  "O que está custando para você não resolver isso hoje?",
+  "Como isso impacta sua família?",
+  "Se continuar exatamente como está, qual será o cenário daqui a 10 anos?",
+  "Você acredita que está no melhor caminho possível ou apenas no caminho que conhece?",
+];
+
+const THERMOMETER = [
+  { level: 1, color: "var(--danger)", emoji: "🔴", label: "Cliente não percebe o problema" },
+  { level: 2, color: "#FF8A3D",        emoji: "🟠", label: "Cliente percebe o problema" },
+  { level: 3, color: "var(--warn)",   emoji: "🟡", label: "Cliente percebe o impacto" },
+  { level: 4, color: "var(--success)", emoji: "🟢", label: "Cliente quer resolver", highlight: true },
+];
+
+const TRANSITIONS = [
+  { from: "Situação", to: "Problema",     text: "Entendi. Agora me ajuda a entender uma coisa…" },
+  { from: "Problema", to: "Implicação",   text: "E se isso continuar exatamente como está…" },
+  { from: "Implicação", to: "Necessidade", text: "Faz sentido então entender qual seria o caminho mais eficiente para resolver isso?" },
+  { from: "Necessidade", to: "Agendamento", text: "Pelo que você compartilhou, acredito que valha a pena aprofundarmos isso em uma entrevista estratégica." },
+];
+
+const OBJECTIONS = [
+  { objection: "Preciso pensar", answer: "Perfeito. E normalmente quando alguém me diz isso, é porque ainda não conseguiu visualizar completamente o impacto ou o caminho para resolver. O que especificamente você gostaria de analisar melhor?" },
+  { objection: "Não tenho tempo", answer: "Justamente por isso faz sentido conversarmos. A entrevista existe para economizar tempo e evitar decisões no escuro." },
+  { objection: "Já tenho assessor", answer: "Excelente. Inclusive é por isso que faz sentido validar se tudo continua alinhado com seus objetivos atuais." },
+];
+
+const KILLER_MISTAKES = [
+  "Explicar produto cedo demais",
+  "Falar de investimentos antes da dor",
+  "Fazer cálculo antes da implicação",
+  "Discutir rentabilidade",
+  "Tentar vender durante a ligação",
+];
+
+const RIGHT_MOVES = ["Descobrir", "Explorar", "Amplificar", "Conscientizar", "Agendar"];
+
+const IDEAL_FLOW = [
+  "Descobrir Objetivo",
+  "Fazer Perguntas de Situação",
+  "Encontrar Problemas",
+  "Amplificar Impactos",
+  "Gerar Necessidade",
+  "Ouvir Sinais de Compra",
+  "Agendar Entrevista",
+  "Não Vender Nada",
+];
+
+const SPIN_OBJECTIVES: Record<"situacao" | "problema" | "implicacao" | "necessidade", string> = {
+  situacao: "Entender a realidade atual do cliente.",
+  problema: "Identificar lacunas, dificuldades e ausência de planejamento.",
+  implicacao: "Ampliar o impacto financeiro, emocional e familiar do problema. Esta é a etapa mais importante da metodologia.",
+  necessidade: "Levar o cliente a perceber valor em buscar ajuda especializada.",
+};
 
 const SCRIPT = `Perfeito. Pelo que você compartilhou comigo, existem alguns pontos que vale a pena analisar com mais profundidade para entender exatamente onde você está hoje e qual o caminho mais eficiente para atingir esse objetivo.
 
