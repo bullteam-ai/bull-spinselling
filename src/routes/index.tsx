@@ -1285,7 +1285,7 @@ function Index() {
             </section>
           )}
 
-          {!callMode && !searchResults && (
+          {trainingMode && !searchResults && (
             <section aria-labelledby="killer-title">
               <div className="rounded-3xl border border-[var(--danger)]/25 bg-gradient-to-br from-[#FFF5F2] to-white p-5 sm:p-8 shadow-sm">
                 <div className="flex items-center gap-3">
@@ -1309,7 +1309,7 @@ function Index() {
             </section>
           )}
 
-          {!callMode && !searchResults && (
+          {trainingMode && !searchResults && (
             <section aria-labelledby="top-q-title">
               <div className="relative overflow-hidden rounded-3xl border-2 border-[var(--brand)] bg-gradient-to-br from-[var(--navy)] via-[#102a55] to-[var(--navy)] p-5 sm:p-8 text-white shadow-xl shadow-[var(--brand)]/15">
                 <div className="pointer-events-none absolute -top-24 -right-16 h-72 w-72 rounded-full bg-[var(--brand)]/40 blur-3xl" />
@@ -1338,7 +1338,7 @@ function Index() {
             </section>
           )}
 
-          {!callMode && !searchResults && (
+          {trainingMode && !searchResults && (
             <section aria-labelledby="trans-title">
               <div className="rounded-3xl border border-border bg-white p-5 sm:p-7 shadow-sm">
                 <div className="flex items-center gap-3">
@@ -1431,7 +1431,7 @@ function Index() {
             </section>
           )}
 
-          {!callMode && !searchResults && (
+          {trainingMode && !searchResults && (
             <section aria-labelledby="obj-title">
               <div className="rounded-3xl border border-border bg-white p-5 sm:p-7 shadow-sm">
                 <div className="flex items-center gap-3">
@@ -1473,7 +1473,7 @@ function Index() {
             </section>
           )}
 
-          {!callMode && !searchResults && (
+          {trainingMode && !searchResults && (
             <section aria-labelledby="mistakes-title">
               <div className="rounded-3xl border border-border bg-white p-5 sm:p-7 shadow-sm">
                 <div className="flex items-center gap-3">
@@ -1512,7 +1512,7 @@ function Index() {
             </section>
           )}
 
-          {!callMode && !searchResults && (
+          {trainingMode && !searchResults && (
             <section aria-labelledby="ideal-title">
               <div className="rounded-3xl border-2 border-[var(--brand)] bg-white p-5 sm:p-8 shadow-xl shadow-[var(--brand)]/10">
                 <div className="flex items-center gap-3">
