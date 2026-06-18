@@ -1,9 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Target, UserRound, Home, Car, Plane, Rocket, BarChart3, HelpCircle, Handshake,
   Flame, AlertTriangle, ClipboardCopy, Check, ChevronDown, TrafficCone, ArrowRight,
   Trophy, Mic, ShieldCheck, XCircle, CheckCircle2, Thermometer, ListOrdered,
+  Search, Star, Pin, Headphones, Filter, Sparkles,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
