@@ -1139,6 +1139,8 @@ function Index() {
                                   onToggle={() => toggleExpand(key)}
                                   favorited={favorites.has(key)}
                                   onFav={() => toggleFav(key)}
+                                  training={training.has(key)}
+                                  onTraining={() => toggleTraining(key)}
                                   callMode={callMode}
                                 />
                               );
@@ -1178,6 +1180,8 @@ function Index() {
                         onToggle={() => toggleExpand(key)}
                         favorited
                         onFav={() => toggleFav(key)}
+                        training={training.has(key)}
+                        onTraining={() => toggleTraining(key)}
                         callMode={callMode}
                       />
                     );
