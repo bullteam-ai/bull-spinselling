@@ -1,9 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Target, UserRound, Home, Car, Plane, Rocket, BarChart3, HelpCircle, Handshake,
   Flame, AlertTriangle, ClipboardCopy, Check, ChevronDown, TrafficCone, ArrowRight,
   Trophy, Mic, ShieldCheck, XCircle, CheckCircle2, Thermometer, ListOrdered,
+  Search, Star, Pin, Headphones, Filter, Sparkles,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
@@ -110,6 +111,52 @@ Tenho disponibilidade na terça às 19h ou quarta às 18h. Qual funciona melhor 
 type Block = { situacao: string[]; problema: string[]; implicacao: string[]; necessidade: string[] };
 type Goal = { id: string; icon: typeof Target; emoji: string; title: string; blocks: Block };
 
+type Quadrant = "situacao" | "problema" | "implicacao" | "necessidade";
+
+const QUADRANTS: { key: Quadrant; emoji: string; label: string; color: string; chip: string }[] = [
+  { key: "situacao",    emoji: "🔵", label: "Situação",    color: "var(--brand)",   chip: "bg-[var(--brand)]/10 text-[var(--brand)] border-[var(--brand)]/30" },
+  { key: "problema",    emoji: "🟡", label: "Problema",    color: "var(--warn)",    chip: "bg-[var(--warn)]/10 text-[#8a5a00] border-[var(--warn)]/40" },
+  { key: "implicacao",  emoji: "🟠", label: "Implicação",  color: "var(--danger)",  chip: "bg-[var(--danger)]/10 text-[var(--danger)] border-[var(--danger)]/30" },
+  { key: "necessidade", emoji: "🟢", label: "Necessidade", color: "var(--success)", chip: "bg-[var(--success)]/10 text-[var(--success)] border-[var(--success)]/30" },
+];
+
+const EXPLORATION: Record<Quadrant, { sim: string; nao: string; transicao: string; procurar: string }> = {
+  situacao: {
+    sim: "Aprofunde com números, prazos e valores específicos. Anote tudo.",
+    nao: "Use a lacuna como gancho — siga direto para perguntas de Problema.",
+    transicao: "Entendi. Agora me ajuda a entender uma coisa…",
+    procurar: "Clareza (ou ausência dela) sobre o cenário atual.",
+  },
+  problema: {
+    sim: "Existe dor. Avance para Implicação ampliando o impacto financeiro e emocional.",
+    nao: "Reformule a pergunta. O cliente provavelmente ainda não percebeu a lacuna.",
+    transicao: "E se isso continuar exatamente como está…",
+    procurar: "Hesitação, 'nunca calculei', 'não sei responder' — sinais de inconsciência.",
+  },
+  implicacao: {
+    sim: "Silêncio é ouro. Não preencha. Deixe a consciência se instalar.",
+    nao: "Amplifique: traga família, tempo perdido, oportunidade que não volta.",
+    transicao: "Faz sentido então entender qual seria o caminho mais eficiente para resolver isso?",
+    procurar: "Mudança de tom, suspiro, 'nunca pensei nisso', 'é verdade'.",
+  },
+  necessidade: {
+    sim: "🎯 Convide imediatamente para a Entrevista Estratégica Financeira.",
+    nao: "Volte para Implicação. A dor ainda não está totalmente clara.",
+    transicao: "Pelo que você compartilhou, vale a pena aprofundarmos em uma entrevista estratégica.",
+    procurar: "'Faz sentido', 'gostaria de entender', 'como funciona?'",
+  },
+};
+
+// Marcações de alta conversão por trecho (case-insensitive).
+const HIGH_CONVERSION_MARKERS = [
+  "5 anos", "10 anos", "família", "custando", "melhor caminho", "deixaria de viver",
+  "trabalhar por obrigação", "trabalhar além", "padrão de vida", "juros compostos",
+  "ficaram apenas na vontade", "outras pessoas executando",
+];
+
+const isHighConversion = (q: string) =>
+  HIGH_CONVERSION_MARKERS.some((m) => q.toLowerCase().includes(m.toLowerCase()));
+
 const GOALS: Goal[] = [
   {
     id: "independencia", emoji: "🎯", icon: Target, title: "Independência Financeira",
@@ -198,6 +245,39 @@ function Index() {
   const [openGoal, setOpenGoal] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [openObjection, setOpenObjection] = useState<number | null>(0);
+  const [callMode, setCallMode] = useState(false);
+  const [query, setQuery] = useState("");
+  const [activeQuads, setActiveQuads] = useState<Quadrant[]>(["situacao", "problema", "implicacao", "necessidade"]);
+  const [favorites, setFavorites] = useState<Set<string>>(new Set());
+  const [expanded, setExpanded] = useState<Set<string>>(new Set());
+
+  // Carrega favoritos do navegador
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem("bullteam.favs");
+      if (raw) setFavorites(new Set(JSON.parse(raw)));
+    } catch {}
+  }, []);
+  useEffect(() => {
+    try { localStorage.setItem("bullteam.favs", JSON.stringify([...favorites])); } catch {}
+  }, [favorites]);
+
+  const toggleFav = (key: string) =>
+    setFavorites((cur) => {
+      const next = new Set(cur);
+      if (next.has(key)) next.delete(key); else next.add(key);
+      return next;
+    });
+
+  const toggleExpand = (key: string) =>
+    setExpanded((cur) => {
+      const next = new Set(cur);
+      if (next.has(key)) next.delete(key); else next.add(key);
+      return next;
+    });
+
+  const toggleQuad = (q: Quadrant) =>
+    setActiveQuads((cur) => (cur.includes(q) ? cur.filter((x) => x !== q) : [...cur, q]));
 
   const toggleGoal = (id: string) => setOpenGoal((cur) => (cur === id ? null : id));
 
@@ -211,8 +291,28 @@ function Index() {
     }
   };
 
+  // Busca global: retorna objetivos com lista de matches por quadrante
+  const q = query.trim().toLowerCase();
+  const searchResults = useMemo(() => {
+    if (!q) return null;
+    const results: { goal: Goal; matches: { quadrant: Quadrant; question: string }[] }[] = [];
+    for (const g of GOALS) {
+      const matches: { quadrant: Quadrant; question: string }[] = [];
+      const titleHit = g.title.toLowerCase().includes(q);
+      for (const quad of QUADRANTS) {
+        for (const question of g.blocks[quad.key]) {
+          if (titleHit || question.toLowerCase().includes(q)) {
+            matches.push({ quadrant: quad.key, question });
+          }
+        }
+      }
+      if (matches.length) results.push({ goal: g, matches });
+    }
+    return results;
+  }, [q]);
+
   return (
-    <div className="min-h-dvh bg-[var(--surface)] text-foreground">
+    <div className={`min-h-dvh bg-[var(--surface)] text-foreground ${callMode ? "text-[17px] sm:text-[18px]" : ""}`}>
       <a
         href="#conteudo"
         className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-lg focus:bg-[var(--navy)] focus:px-3 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
@@ -220,6 +320,7 @@ function Index() {
         Pular para o conteúdo
       </a>
       {/* Header */}
+      {!callMode && (
       <header className="relative overflow-hidden bg-gradient-to-br from-[var(--navy)] via-[var(--navy)] to-[#0b1c3a] text-white motion-reduce:bg-[var(--navy)]">
         <div className="pointer-events-none absolute -top-32 -right-32 h-96 w-96 rounded-full bg-[var(--brand)]/30 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-40 -left-20 h-96 w-96 rounded-full bg-[var(--success)]/20 blur-3xl" />
@@ -239,29 +340,171 @@ function Index() {
           </p>
         </div>
       </header>
+      )}
 
-      {/* Sticky flow bar */}
-      <nav aria-label="Etapas do funil" className="sticky top-0 z-40 border-b border-border bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          <ol className="flex items-center gap-2 overflow-x-auto py-3 text-xs sm:text-sm">
-            {FLOW.map((step, i) => (
-              <li key={step} className="flex items-center gap-2 shrink-0">
-                <div className="flex items-center gap-2 rounded-full border border-border bg-white px-3 py-1.5 shadow-sm">
-                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[var(--brand)] text-[10px] font-bold text-white">
-                    {i + 1}
-                  </span>
-                  <span className="font-medium text-[var(--navy)] whitespace-nowrap">{step}</span>
-                </div>
-                {i < FLOW.length - 1 && <ArrowRight aria-hidden className="h-4 w-4 text-muted-foreground shrink-0" />}
-              </li>
-            ))}
-          </ol>
+      {/* Sticky control bar: busca + filtros + modo ligação */}
+      <nav aria-label="Controles de navegação" className="sticky top-0 z-40 border-b border-border bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85">
+        <div className="mx-auto max-w-7xl px-3 sm:px-6 py-3 space-y-3">
+          {/* Linha 1: busca + modo ligação */}
+          <div className="flex items-center gap-2">
+            <div className="relative flex-1 min-w-0">
+              <Search aria-hidden className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <input
+                type="search"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Buscar perguntas, objetivos ou palavras-chave (ex: família)"
+                aria-label="Busca global"
+                className="w-full min-h-11 rounded-xl border border-border bg-white pl-9 pr-3 text-sm text-[var(--navy)] outline-none placeholder:text-muted-foreground focus:border-[var(--brand)]"
+              />
+            </div>
+            <button
+              type="button"
+              onClick={() => setCallMode((v) => !v)}
+              aria-pressed={callMode}
+              className={`shrink-0 inline-flex min-h-11 items-center gap-2 rounded-xl border px-3 sm:px-4 text-sm font-semibold transition motion-reduce:transition-none ${
+                callMode
+                  ? "border-[var(--success)] bg-[var(--success)] text-[var(--navy)] shadow-md shadow-[var(--success)]/30"
+                  : "border-border bg-white text-[var(--navy)] hover:border-[var(--success)]"
+              }`}
+            >
+              <Headphones aria-hidden className="h-4 w-4" />
+              <span className="hidden sm:inline">🎯 Modo Ligação</span>
+              <span className="sm:hidden">🎯</span>
+            </button>
+          </div>
+
+          {/* Linha 2: flow + filtros de quadrante */}
+          <div className="flex items-center gap-3 overflow-x-auto">
+            {!callMode && (
+              <ol className="flex items-center gap-1.5 text-xs shrink-0">
+                {FLOW.map((step, i) => (
+                  <li key={step} className="flex items-center gap-1.5 shrink-0">
+                    <div className="flex items-center gap-1.5 rounded-full border border-border bg-white px-2.5 py-1">
+                      <span className="flex h-4 w-4 items-center justify-center rounded-full bg-[var(--brand)] text-[10px] font-bold text-white">{i + 1}</span>
+                      <span className="font-medium text-[var(--navy)] whitespace-nowrap">{step}</span>
+                    </div>
+                    {i < FLOW.length - 1 && <ArrowRight aria-hidden className="h-3.5 w-3.5 text-muted-foreground shrink-0" />}
+                  </li>
+                ))}
+              </ol>
+            )}
+            <div className="flex items-center gap-1.5 shrink-0 ml-auto">
+              <Filter aria-hidden className="h-3.5 w-3.5 text-muted-foreground" />
+              {QUADRANTS.map((quad) => {
+                const active = activeQuads.includes(quad.key);
+                return (
+                  <button
+                    key={quad.key}
+                    type="button"
+                    onClick={() => toggleQuad(quad.key)}
+                    aria-pressed={active}
+                    className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-xs font-semibold transition motion-reduce:transition-none ${
+                      active ? quad.chip : "border-border bg-white text-muted-foreground"
+                    }`}
+                    title={quad.label}
+                  >
+                    <span aria-hidden>{quad.emoji}</span>
+                    <span className="hidden sm:inline">{quad.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </nav>
 
-      <main id="conteudo" className="mx-auto max-w-7xl px-4 sm:px-6 py-8 sm:py-10 lg:grid lg:grid-cols-[1fr_320px] lg:gap-8">
-        <div className="space-y-8 sm:space-y-10">
+      <main id="conteudo" className="mx-auto max-w-7xl px-3 sm:px-6 py-6 sm:py-10 lg:grid lg:grid-cols-[1fr_340px] lg:gap-8">
+        <div className="space-y-6 sm:space-y-10">
+          {/* Resultados da busca */}
+          {searchResults && (
+            <section aria-label="Resultados da busca">
+              <div className="rounded-3xl border-2 border-[var(--brand)] bg-white p-4 sm:p-6 shadow-sm">
+                <div className="flex items-center justify-between gap-3">
+                  <h2 className="text-lg sm:text-xl font-bold text-[var(--navy)]">
+                    🔎 Resultados para "<span className="text-[var(--brand)]">{query}</span>"
+                  </h2>
+                  <button type="button" onClick={() => setQuery("")} className="text-xs font-semibold text-muted-foreground hover:text-[var(--navy)]">
+                    Limpar
+                  </button>
+                </div>
+                {searchResults.length === 0 ? (
+                  <p className="mt-4 text-sm text-muted-foreground">Nenhuma pergunta encontrada. Tente outro termo.</p>
+                ) : (
+                  <div className="mt-4 space-y-5">
+                    {searchResults.map(({ goal, matches }) => (
+                      <div key={goal.id}>
+                        <div className="flex items-center gap-2 text-sm font-bold text-[var(--navy)]">
+                          <span aria-hidden>{goal.emoji}</span>
+                          <span>{goal.title}</span>
+                          <span className="text-xs font-medium text-muted-foreground">· {matches.length} {matches.length === 1 ? "pergunta" : "perguntas"}</span>
+                        </div>
+                        <ul className="mt-2 space-y-2">
+                          {matches
+                            .filter((m) => activeQuads.includes(m.quadrant))
+                            .map((m, i) => {
+                              const quad = QUADRANTS.find((x) => x.key === m.quadrant)!;
+                              return (
+                                <QuestionCard
+                                  key={`${goal.id}-${m.quadrant}-${i}`}
+                                  fullKey={`${goal.id}|${m.quadrant}|${m.question}`}
+                                  question={m.question}
+                                  quadrant={quad}
+                                  expanded={expanded.has(`${goal.id}|${m.quadrant}|${m.question}`)}
+                                  onToggle={() => toggleExpand(`${goal.id}|${m.quadrant}|${m.question}`)}
+                                  favorited={favorites.has(`${goal.id}|${m.quadrant}|${m.question}`)}
+                                  onFav={() => toggleFav(`${goal.id}|${m.quadrant}|${m.question}`)}
+                                  callMode={callMode}
+                                />
+                              );
+                            })}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </section>
+          )}
+
+          {/* Favoritos (apenas se houver) */}
+          {!searchResults && favorites.size > 0 && (
+            <section aria-label="Perguntas favoritas">
+              <div className="rounded-3xl border-2 border-[var(--warn)] bg-gradient-to-br from-[#FFFBEB] to-white p-4 sm:p-6 shadow-sm">
+                <div className="flex items-center gap-2">
+                  <Pin aria-hidden className="h-4 w-4 text-[var(--warn)]" />
+                  <h2 className="text-base sm:text-lg font-bold text-[var(--navy)]">📌 Suas perguntas favoritas</h2>
+                  <span className="ml-auto text-xs font-semibold text-muted-foreground">{favorites.size}</span>
+                </div>
+                <ul className="mt-3 space-y-2">
+                  {[...favorites].map((key) => {
+                    const [goalId, quadKey, ...rest] = key.split("|");
+                    const question = rest.join("|");
+                    const quad = QUADRANTS.find((x) => x.key === (quadKey as Quadrant));
+                    if (!quad || !activeQuads.includes(quad.key)) return null;
+                    const goal = GOALS.find((g) => g.id === goalId);
+                    return (
+                      <QuestionCard
+                        key={key}
+                        fullKey={key}
+                        question={question}
+                        quadrant={quad}
+                        contextLabel={goal ? `${goal.emoji} ${goal.title}` : undefined}
+                        expanded={expanded.has(key)}
+                        onToggle={() => toggleExpand(key)}
+                        favorited
+                        onFav={() => toggleFav(key)}
+                        callMode={callMode}
+                      />
+                    );
+                  })}
+                </ul>
+              </div>
+            </section>
+          )}
+
           {/* Killer questions */}
+          {!callMode && !searchResults && (
           <section aria-labelledby="killer-title">
             <div className="rounded-3xl border border-[var(--danger)]/25 bg-gradient-to-br from-[#FFF5F2] to-white p-5 sm:p-8 shadow-sm">
               <div className="flex items-center gap-3">
@@ -283,8 +526,10 @@ function Index() {
               </ul>
             </div>
           </section>
+          )}
 
           {/* Top converting questions */}
+          {!callMode && !searchResults && (
           <section aria-labelledby="top-q-title">
             <div className="relative overflow-hidden rounded-3xl border-2 border-[var(--brand)] bg-gradient-to-br from-[var(--navy)] via-[#102a55] to-[var(--navy)] p-5 sm:p-8 text-white shadow-xl shadow-[var(--brand)]/15">
               <div className="pointer-events-none absolute -top-24 -right-16 h-72 w-72 rounded-full bg-[var(--brand)]/40 blur-3xl" />
@@ -311,8 +556,10 @@ function Index() {
               </div>
             </div>
           </section>
+          )}
 
           {/* Transition phrases */}
+          {!callMode && !searchResults && (
           <section aria-labelledby="trans-title">
             <div className="rounded-3xl border border-border bg-white p-5 sm:p-7 shadow-sm">
               <div className="flex items-center gap-3">
@@ -340,19 +587,21 @@ function Index() {
               </div>
             </div>
           </section>
+          )}
 
           {/* Goals */}
+          {!searchResults && (
           <section aria-labelledby="goals-title">
             <div className="flex items-end justify-between gap-4 mb-5">
               <div>
                 <h2 id="goals-title" className="text-xl sm:text-2xl font-bold tracking-tight text-[var(--navy)]">
-                  Escolha o Objetivo do Cliente
+                  🎯 Objetivo Financeiro do Cliente
                 </h2>
-                <p className="mt-1 text-sm text-muted-foreground">Clique no card para expandir o roteiro SPIN</p>
+                <p className="mt-1 text-sm text-muted-foreground">Selecione → veja as perguntas → toque em "Mostrar Exploração"</p>
               </div>
             </div>
 
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-2.5 grid-cols-2 sm:grid-cols-3 lg:grid-cols-3">
               {GOALS.map((g) => {
                 const open = openGoal === g.id;
                 const panelId = `goal-panel-${g.id}`;
@@ -363,22 +612,21 @@ function Index() {
                     onClick={() => toggleGoal(g.id)}
                     aria-expanded={open}
                     aria-controls={panelId}
-                    className={`group relative flex min-h-14 items-center gap-3 rounded-2xl border p-4 text-left transition-all motion-reduce:transition-none ${
+                    className={`group relative flex min-h-14 items-center gap-2.5 rounded-2xl border p-3 sm:p-4 text-left transition-all motion-reduce:transition-none ${
                       open
                         ? "border-[var(--brand)] bg-[var(--brand)]/5 shadow-md shadow-[var(--brand)]/10"
                         : "border-border bg-white hover:border-[var(--brand)]/40 hover:-translate-y-0.5 hover:shadow-md motion-reduce:hover:translate-y-0"
                     }`}
                   >
-                    <div className={`flex h-11 w-11 items-center justify-center rounded-xl text-xl transition ${
+                    <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-xl transition ${
                       open ? "bg-[var(--brand)] text-white" : "bg-[var(--surface)] text-[var(--navy)]"
                     }`}>
                       <span aria-hidden>{g.emoji}</span>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="font-semibold text-[var(--navy)] truncate">{g.title}</p>
-                      <p className="text-xs text-muted-foreground">{open ? "Roteiro aberto" : "Tocar para abrir"}</p>
+                      <p className="font-semibold text-[var(--navy)] text-sm sm:text-[15px] leading-tight truncate">{g.title}</p>
+                      <p className="text-[11px] text-muted-foreground">{open ? "Aberto" : "Tocar"}</p>
                     </div>
-                    <ChevronDown aria-hidden className={`h-4 w-4 shrink-0 text-muted-foreground transition motion-reduce:transition-none ${open ? "rotate-180 text-[var(--brand)]" : ""}`} />
                   </button>
                 );
               })}
@@ -388,13 +636,24 @@ function Index() {
             {openGoal && (
               <div className="mt-6" id={`goal-panel-${openGoal}`} role="region" aria-label="Roteiro do objetivo selecionado">
                 {GOALS.filter((g) => g.id === openGoal).map((g) => (
-                  <GoalBlocks key={g.id} goal={g} />
+                  <GoalBlocks
+                    key={g.id}
+                    goal={g}
+                    activeQuads={activeQuads}
+                    expanded={expanded}
+                    toggleExpand={toggleExpand}
+                    favorites={favorites}
+                    toggleFav={toggleFav}
+                    callMode={callMode}
+                  />
                 ))}
               </div>
             )}
           </section>
+          )}
 
           {/* Objections */}
+          {!callMode && !searchResults && (
           <section aria-labelledby="obj-title">
             <div className="rounded-3xl border border-border bg-white p-5 sm:p-7 shadow-sm">
               <div className="flex items-center gap-3">
@@ -434,8 +693,10 @@ function Index() {
               </div>
             </div>
           </section>
+          )}
 
           {/* Mistakes vs right moves */}
+          {!callMode && !searchResults && (
           <section aria-labelledby="mistakes-title">
             <div className="rounded-3xl border border-border bg-white p-5 sm:p-7 shadow-sm">
               <div className="flex items-center gap-3">
@@ -472,8 +733,10 @@ function Index() {
               </div>
             </div>
           </section>
+          )}
 
           {/* Ideal flow + filosofia */}
+          {!callMode && !searchResults && (
           <section aria-labelledby="ideal-title">
             <div className="rounded-3xl border-2 border-[var(--brand)] bg-white p-5 sm:p-8 shadow-xl shadow-[var(--brand)]/10">
               <div className="flex items-center gap-3">
@@ -503,8 +766,10 @@ function Index() {
               </div>
             </div>
           </section>
+          )}
 
           {/* Final booking */}
+          {!callMode && !searchResults && (
           <section aria-labelledby="booking-title">
             <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[var(--navy)] to-[#0b1c3a] p-6 sm:p-10 text-white shadow-xl">
               <div className="pointer-events-none absolute -top-20 -right-20 h-72 w-72 rounded-full bg-[var(--success)]/30 blur-3xl" />
@@ -535,11 +800,12 @@ function Index() {
               </div>
             </div>
           </section>
+          )}
         </div>
 
-        {/* Side panel: Buying signals */}
-        <aside aria-label="Sinais de compra" className="mt-8 lg:mt-0">
-          <div className="lg:sticky lg:top-24 space-y-4">
+        {/* Side panel: Sinais + Termômetro + Script (sempre visível) */}
+        <aside aria-label="Painel de apoio" className="mt-6 lg:mt-0">
+          <div className="lg:sticky lg:top-32 space-y-4">
             {/* Termômetro de Consciência */}
             <div className="rounded-3xl border border-border bg-white p-5 shadow-sm">
               <div className="flex items-center gap-3">
@@ -589,6 +855,26 @@ function Index() {
                 Quando ouvir <span className="font-bold">duas ou mais</span> dessas frases, avance para o agendamento.
               </div>
             </div>
+
+            {/* Script de Agendamento (sempre visível) */}
+            <div className="rounded-3xl border-2 border-[var(--success)] bg-gradient-to-br from-[var(--navy)] to-[#0b1c3a] p-5 text-white shadow-lg shadow-[var(--success)]/15">
+              <div className="flex items-center gap-3">
+                <div aria-hidden className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--success)] text-[var(--navy)]">
+                  <Sparkles className="h-4 w-4" />
+                </div>
+                <h3 className="font-bold">📅 Script de Agendamento</h3>
+              </div>
+              <p className="mt-3 text-[13px] leading-relaxed text-white/85 whitespace-pre-line">{SCRIPT}</p>
+              <button
+                type="button"
+                onClick={copyScript}
+                aria-live="polite"
+                className="mt-4 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-[var(--success)] px-4 text-sm font-bold text-[var(--navy)] transition hover:brightness-105 active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100"
+              >
+                {copied ? <Check aria-hidden className="h-4 w-4" /> : <ClipboardCopy aria-hidden className="h-4 w-4" />}
+                {copied ? "Copiado!" : "Copiar Script"}
+              </button>
+            </div>
           </div>
         </aside>
       </main>
@@ -603,79 +889,194 @@ function Index() {
   );
 }
 
-function GoalBlocks({ goal }: { goal: Goal }) {
-  const sections = [
-    { key: "situacao", title: "Situação", color: "var(--brand)", emoji: "🔵", items: goal.blocks.situacao, desc: "Entenda o contexto", objective: SPIN_OBJECTIVES.situacao },
-    { key: "problema", title: "Problema", color: "var(--warn)", emoji: "🟡", items: goal.blocks.problema, desc: "Revele gargalos", objective: SPIN_OBJECTIVES.problema },
-    { key: "necessidade", title: "Necessidade", color: "var(--success)", emoji: "🟢", items: goal.blocks.necessidade, desc: "Conduza à solução", objective: SPIN_OBJECTIVES.necessidade },
-  ];
+type GoalBlocksProps = {
+  goal: Goal;
+  activeQuads: Quadrant[];
+  expanded: Set<string>;
+  toggleExpand: (k: string) => void;
+  favorites: Set<string>;
+  toggleFav: (k: string) => void;
+  callMode: boolean;
+};
 
+function GoalBlocks({ goal, activeQuads, expanded, toggleExpand, favorites, toggleFav, callMode }: GoalBlocksProps) {
   return (
-    <div className="rounded-3xl border border-border bg-white p-5 sm:p-7 shadow-sm">
+    <div className="rounded-3xl border border-border bg-white p-4 sm:p-7 shadow-sm">
       <div className="mb-5 flex items-center gap-3">
         <span className="text-2xl" aria-hidden>{goal.emoji}</span>
         <h3 className="text-lg sm:text-xl font-bold tracking-tight text-[var(--navy)]">{goal.title}</h3>
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-2">
-        {sections.slice(0, 2).map((s) => (
-          <BlockCard key={s.key} title={s.title} emoji={s.emoji} color={s.color} items={s.items} desc={s.desc} objective={s.objective} />
+      <div className="space-y-5">
+        {QUADRANTS.filter((q) => activeQuads.includes(q.key)).map((quad) => (
+          <QuadrantBlock
+            key={quad.key}
+            quadrant={quad}
+            goalId={goal.id}
+            items={goal.blocks[quad.key]}
+            expanded={expanded}
+            toggleExpand={toggleExpand}
+            favorites={favorites}
+            toggleFav={toggleFav}
+            callMode={callMode}
+          />
         ))}
-      </div>
-
-      {/* Implicação — destaque máximo */}
-      <div className="mt-4 rounded-2xl border-2 border-[var(--danger)] bg-gradient-to-br from-[#FFF1ED] via-white to-[#FFF6E8] p-5 sm:p-6 shadow-lg shadow-[var(--danger)]/10">
-        <div className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[var(--danger)] text-white shadow-md">
-            <AlertTriangle className="h-5 w-5" />
-          </div>
-          <div>
-            <h4 className="text-lg sm:text-xl font-bold tracking-tight text-[var(--navy)]">🟠 Implicação</h4>
-            <p className="text-xs sm:text-sm font-medium text-[var(--danger)] uppercase tracking-wide">Perguntas mais importantes · gere consciência e urgência</p>
-          </div>
-        </div>
-        <div className="mt-4 rounded-xl border border-[var(--danger)]/30 bg-white/70 p-3 sm:p-4">
-          <p className="text-[11px] font-bold uppercase tracking-wide text-[var(--danger)]">Objetivo</p>
-          <p className="mt-1 text-sm sm:text-[15px] font-medium text-[var(--navy)] leading-snug">{SPIN_OBJECTIVES.implicacao}</p>
-        </div>
-        <ul className="mt-5 grid gap-3 sm:grid-cols-2">
-          {goal.blocks.implicacao.map((q, i) => (
-            <li key={i} className="rounded-xl border border-[var(--danger)]/25 bg-white p-4 text-[15px] sm:text-base font-semibold text-[var(--navy)] leading-snug shadow-sm">
-              {q}
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <div className="mt-4">
-        {(() => { const s = sections[2]; return <BlockCard title={s.title} emoji={s.emoji} color={s.color} items={s.items} desc={s.desc} objective={s.objective} />; })()}
       </div>
     </div>
   );
 }
 
-function BlockCard({ title, emoji, color, items, desc, objective }: { title: string; emoji: string; color: string; items: string[]; desc: string; objective?: string }) {
+function QuadrantBlock({
+  quadrant, goalId, items, expanded, toggleExpand, favorites, toggleFav, callMode,
+}: {
+  quadrant: (typeof QUADRANTS)[number];
+  goalId: string;
+  items: string[];
+  expanded: Set<string>;
+  toggleExpand: (k: string) => void;
+  favorites: Set<string>;
+  toggleFav: (k: string) => void;
+  callMode: boolean;
+}) {
+  const isImplicacao = quadrant.key === "implicacao";
   return (
-    <div className="rounded-2xl border border-border bg-white p-5">
+    <div
+      className={`rounded-2xl border p-4 sm:p-5 ${
+        isImplicacao
+          ? "border-2 border-[var(--danger)] bg-gradient-to-br from-[#FFF1ED] via-white to-[#FFF6E8] shadow-md shadow-[var(--danger)]/10"
+          : "border-border bg-[var(--surface)]"
+      }`}
+    >
       <div className="flex items-center gap-2">
-        <span aria-hidden>{emoji}</span>
-        <h4 className="font-bold text-[var(--navy)]">{title}</h4>
-        <span className="ml-auto text-[11px] font-medium uppercase tracking-wide text-muted-foreground">{desc}</span>
+        <span aria-hidden>{quadrant.emoji}</span>
+        <h4 className="font-bold text-[var(--navy)]">{quadrant.label}</h4>
+        {isImplicacao && (
+          <span className="ml-auto inline-flex items-center gap-1 rounded-full bg-[var(--danger)] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">
+            <Star className="h-3 w-3" aria-hidden /> Mais importantes
+          </span>
+        )}
       </div>
-      {objective && (
-        <div className="mt-3 rounded-lg border border-border bg-[var(--surface)] p-3">
-          <p className="text-[11px] font-bold uppercase tracking-wide" style={{ color }}>Objetivo</p>
-          <p className="mt-1 text-sm text-[var(--navy)] leading-snug">{objective}</p>
-        </div>
+      {!callMode && (
+        <p className="mt-1 text-xs text-muted-foreground leading-snug">{SPIN_OBJECTIVES[quadrant.key]}</p>
       )}
-      <ul className="mt-4 space-y-2.5">
-        {items.map((q, i) => (
-          <li key={i} className="flex gap-3 rounded-lg bg-[var(--surface)] px-3 py-2.5 text-sm text-[var(--navy)] leading-snug">
-            <span className="mt-0.5 font-bold tabular-nums" style={{ color }}>{i + 1}.</span>
-            <span>{q}</span>
-          </li>
-        ))}
+      <ul className="mt-3 space-y-2">
+        {items.map((q, i) => {
+          const key = `${goalId}|${quadrant.key}|${q}`;
+          return (
+            <QuestionCard
+              key={key}
+              fullKey={key}
+              question={q}
+              quadrant={quadrant}
+              index={i + 1}
+              expanded={expanded.has(key)}
+              onToggle={() => toggleExpand(key)}
+              favorited={favorites.has(key)}
+              onFav={() => toggleFav(key)}
+              callMode={callMode}
+            />
+          );
+        })}
       </ul>
     </div>
+  );
+}
+
+function QuestionCard({
+  question, quadrant, expanded, onToggle, favorited, onFav, callMode, index, contextLabel,
+}: {
+  fullKey: string;
+  question: string;
+  quadrant: (typeof QUADRANTS)[number];
+  expanded: boolean;
+  onToggle: () => void;
+  favorited: boolean;
+  onFav: () => void;
+  callMode: boolean;
+  index?: number;
+  contextLabel?: string;
+}) {
+  const isImportant = quadrant.key === "implicacao";
+  const isHigh = isHighConversion(question);
+  const expl = EXPLORATION[quadrant.key];
+
+  return (
+    <li className="rounded-xl border border-border bg-white shadow-sm">
+      <div className="flex items-start gap-2 p-3 sm:p-4">
+        {index !== undefined && (
+          <span className="mt-0.5 shrink-0 font-bold tabular-nums text-sm" style={{ color: quadrant.color }}>
+            {index}.
+          </span>
+        )}
+        <div className="flex-1 min-w-0">
+          {contextLabel && (
+            <p className="text-[11px] font-semibold text-muted-foreground mb-1">{contextLabel}</p>
+          )}
+          <div className="flex items-start gap-2 flex-wrap">
+            {isImportant && (
+              <span className="inline-flex items-center gap-1 rounded-full bg-[var(--danger)]/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-[var(--danger)]">
+                <Star className="h-3 w-3" aria-hidden /> Mais Importante
+              </span>
+            )}
+            {isHigh && (
+              <span className="inline-flex items-center gap-1 rounded-full bg-[var(--warn)]/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-[#8a5a00]">
+                🔥 Alta Conversão
+              </span>
+            )}
+          </div>
+          <p className={`mt-1 font-semibold text-[var(--navy)] leading-snug ${callMode ? "text-lg sm:text-xl" : "text-[15px] sm:text-base"}`}>
+            ❓ {question}
+          </p>
+          <div className="mt-2 flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onClick={onToggle}
+              aria-expanded={expanded}
+              className="inline-flex min-h-9 items-center gap-1.5 rounded-lg border border-border bg-[var(--surface)] px-3 text-xs font-semibold text-[var(--navy)] transition hover:border-[var(--brand)] motion-reduce:transition-none"
+            >
+              <ChevronDown aria-hidden className={`h-3.5 w-3.5 transition ${expanded ? "rotate-180" : ""}`} />
+              {expanded ? "Ocultar Exploração" : "Mostrar Exploração"}
+            </button>
+            <button
+              type="button"
+              onClick={onFav}
+              aria-pressed={favorited}
+              aria-label={favorited ? "Remover dos favoritos" : "Favoritar pergunta"}
+              className={`inline-flex min-h-9 items-center gap-1.5 rounded-lg border px-3 text-xs font-semibold transition motion-reduce:transition-none ${
+                favorited
+                  ? "border-[var(--warn)] bg-[var(--warn)] text-[var(--navy)]"
+                  : "border-border bg-white text-muted-foreground hover:border-[var(--warn)]"
+              }`}
+            >
+              <Pin aria-hidden className="h-3.5 w-3.5" />
+              {favorited ? "Favoritada" : "Favoritar"}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {expanded && (
+        <div className="border-t border-border bg-[var(--surface)] p-3 sm:p-4 space-y-2.5 rounded-b-xl">
+          <div className="rounded-lg border border-[var(--success)]/30 bg-[var(--success)]/10 p-3">
+            <p className="text-[11px] font-bold uppercase tracking-wide text-[var(--success)]">✅ Se responder SIM</p>
+            <p className="mt-1 text-sm text-[var(--navy)] leading-snug">{expl.sim}</p>
+          </div>
+          <div className="rounded-lg border border-[var(--danger)]/30 bg-[var(--danger)]/10 p-3">
+            <p className="text-[11px] font-bold uppercase tracking-wide text-[var(--danger)]">❌ Se responder NÃO</p>
+            <p className="mt-1 text-sm text-[var(--navy)] leading-snug">{expl.nao}</p>
+          </div>
+          <div className="rounded-lg border border-[var(--brand)]/30 bg-[var(--brand)]/8 p-3" style={{ backgroundColor: "color-mix(in oklab, var(--brand) 8%, white)" }}>
+            <p className="text-[11px] font-bold uppercase tracking-wide text-[var(--brand)]">🎤 Transição</p>
+            <p className="mt-1 text-sm font-medium text-[var(--navy)] leading-snug">"{expl.transicao}"</p>
+          </div>
+          {!callMode && (
+            <div className="rounded-lg border border-border bg-white p-3">
+              <p className="text-[11px] font-bold uppercase tracking-wide text-muted-foreground">💡 O que procurar</p>
+              <p className="mt-1 text-sm text-[var(--navy)] leading-snug">{expl.procurar}</p>
+            </div>
+          )}
+        </div>
+      )}
+    </li>
   );
 }
