@@ -5,6 +5,7 @@ import {
   Flame, AlertTriangle, ClipboardCopy, Check, ChevronDown, TrafficCone, ArrowRight,
   Trophy, Mic, ShieldCheck, XCircle, CheckCircle2, Thermometer, ListOrdered,
   Search, Star, Pin, Headphones, Filter, Sparkles, GraduationCap, Brain, Quote,
+  Baby, Heart,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
