@@ -4,7 +4,7 @@ import {
   Target, UserRound, Home, Car, Plane, Rocket, BarChart3, HelpCircle, Handshake,
   Flame, AlertTriangle, ClipboardCopy, Check, ChevronDown, TrafficCone, ArrowRight,
   Trophy, Mic, ShieldCheck, XCircle, CheckCircle2, Thermometer, ListOrdered,
-  Search, Star, Pin, Headphones, Filter, Sparkles,
+  Search, Star, Pin, Headphones, Filter, Sparkles, GraduationCap, Brain, Quote,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
