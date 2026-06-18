@@ -81,10 +81,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "description", content: "Guia visual de condução de entrevistas com metodologia SPIN Selling para consultores Bull Team." },
       { name: "author", content: "Bull Team" },
       { property: "og:title", content: "Bull Team | Agendamento de Entrevista" },
-      { property: "og:description", content: "Faça as perguntas certas. Gere consciência. Crie urgência. Agende mais entrevistas." },
+      { property: "og:description", content: "Guia visual de condução de entrevistas com metodologia SPIN Selling para consultores Bull Team." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@BullTeam" },
+      { name: "twitter:title", content: "Bull Team | Agendamento de Entrevista" },
+      { name: "twitter:description", content: "Guia visual de condução de entrevistas com metodologia SPIN Selling para consultores Bull Team." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/bf4feb22-bdc1-42f0-b67b-0b21c6979e85/id-preview-3dd0646e--47053e90-1c99-49d5-8629-06ae87ce9173.lovable.app-1781755868874.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/bf4feb22-bdc1-42f0-b67b-0b21c6979e85/id-preview-3dd0646e--47053e90-1c99-49d5-8629-06ae87ce9173.lovable.app-1781755868874.png" },
     ],
     links: [
       {
