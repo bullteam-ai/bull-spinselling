@@ -539,7 +539,37 @@ function Index() {
 
         {/* Side panel: Buying signals */}
         <aside aria-label="Sinais de compra" className="mt-8 lg:mt-0">
-          <div className="lg:sticky lg:top-24">
+          <div className="lg:sticky lg:top-24 space-y-4">
+            {/* Termômetro de Consciência */}
+            <div className="rounded-3xl border border-border bg-white p-5 shadow-sm">
+              <div className="flex items-center gap-3">
+                <div aria-hidden className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--danger)]/10 text-[var(--danger)]">
+                  <Thermometer className="h-4 w-4" />
+                </div>
+                <h3 className="font-bold text-[var(--navy)]">🌡️ Termômetro de Consciência</h3>
+              </div>
+              <ol className="mt-4 space-y-2">
+                {THERMOMETER.map((t) => (
+                  <li
+                    key={t.level}
+                    className={`flex items-center gap-3 rounded-xl border p-3 text-sm ${
+                      t.highlight
+                        ? "border-[var(--success)] bg-[var(--success)]/10 text-[var(--navy)] font-bold shadow-sm shadow-[var(--success)]/20"
+                        : "border-border bg-[var(--surface)] text-[var(--navy)]"
+                    }`}
+                  >
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-xs font-extrabold text-white" style={{ backgroundColor: t.color }}>
+                      {t.level}
+                    </span>
+                    <span className="leading-snug">{t.label}</span>
+                  </li>
+                ))}
+              </ol>
+              <p className="mt-4 rounded-xl border border-[var(--success)]/30 bg-[var(--success)]/10 p-3 text-xs sm:text-sm font-medium text-[var(--navy)]">
+                O objetivo da ligação é conduzir o cliente até os níveis <span className="font-bold">3 ou 4</span> antes de convidar para a entrevista.
+              </p>
+            </div>
+
             <div className="rounded-3xl border border-border bg-white p-5 shadow-sm">
               <div className="flex items-center gap-3">
                 <div aria-hidden className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--warn)]/15 text-[var(--warn)]">
