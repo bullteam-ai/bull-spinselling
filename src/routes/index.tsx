@@ -5,6 +5,7 @@ import {
   Flame, AlertTriangle, ClipboardCopy, Check, ChevronDown, TrafficCone, ArrowRight,
   Trophy, Mic, ShieldCheck, XCircle, CheckCircle2, Thermometer, ListOrdered,
   Search, Star, Pin, Headphones, Filter, Sparkles, GraduationCap, Brain, Quote,
+  Baby, Heart,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
@@ -179,6 +180,14 @@ const KILLER_PRINCIPALS = new Set<string>([
   "Seu assessor conhece profundamente todos os seus objetivos financeiros?",
   "E se algo importante estivesse desalinhado hoje, como você descobriria?",
   "Faz sentido validar se tudo continua alinhado aos seus objetivos atuais?",
+  // Futuro dos Filhos
+  "Hoje existe algum planejamento específico para ajudar seus filhos a alcançarem esses objetivos?",
+  "E se chegar o momento em que seu filho precisar dessa ajuda e ela não estiver disponível?",
+  "Faz sentido entender quanto seria necessário para garantir essas oportunidades aos seus filhos?",
+  // Casamento e Projetos Familiares
+  "Hoje vocês possuem um plano financeiro estruturado para alcançar esses objetivos?",
+  "E se esses objetivos familiares demorarem muito mais tempo para acontecer?",
+  "Faz sentido validar se vocês estão utilizando a melhor estratégia para alcançar esses objetivos familiares?",
 ]);
 const isKiller = (q: string) => KILLER_PRINCIPALS.has(q);
 
@@ -318,6 +327,7 @@ type Goal = {
   emoji: string;
   icon: typeof Target;
   title: string;
+  highConversion?: boolean;
   blocks: Record<Quadrant, Script>;
 };
 
@@ -464,6 +474,147 @@ const GOALS: Goal[] = [
         ],
         transicao: "Talvez valha a pena colocar tudo em números para ter clareza sobre onde você está e para onde está indo.",
         procurar: ["Curiosidade", "Clareza", "Segurança", "Validação"],
+      },
+    },
+  },
+  {
+    id: "filhos", emoji: "👶", icon: Baby, title: "Futuro dos Filhos", highConversion: true,
+    blocks: {
+      situacao: {
+        principal: "Quando você pensa no futuro dos seus filhos, o que mais gostaria de proporcionar para eles?",
+        simLabel: "Se responder claramente",
+        naoLabel: "Se responder de forma vaga",
+        sim: [
+          "O que torna isso importante para você?",
+          "Existe algo que você gostaria que eles tivessem e você não teve?",
+          "Qual é seu maior sonho para eles?",
+          "Existe alguma preocupação específica com o futuro deles?",
+        ],
+        nao: [
+          "Quando imagina seus filhos adultos, o que gostaria que eles tivessem conquistado?",
+          "Existe algo que gostaria de facilitar para eles?",
+          "Qual seria sua maior realização como pai ou mãe?",
+        ],
+        transicao: "É interessante porque praticamente todos os pais possuem sonhos para os filhos, mas poucos transformam isso em um plano.",
+        procurar: ["Educação", "Faculdade", "Intercâmbio", "Segurança", "Independência", "Legado"],
+      },
+      problema: {
+        principal: "Hoje existe algum planejamento específico para ajudar seus filhos a alcançarem esses objetivos?",
+        sim: [
+          "Como esse planejamento foi estruturado?",
+          "Existe um valor definido?",
+          "Você acompanha essa evolução?",
+          "Esse planejamento foi revisado recentemente?",
+          "Você sabe se ele será suficiente?",
+        ],
+        nao: [
+          "O que impede você de começar?",
+          "Já pensou em estruturar isso?",
+          "Existe alguma preocupação em deixar para depois?",
+        ],
+        transicao: "Muitas vezes o desejo existe, mas o plano ainda não foi construído.",
+        procurar: ["Falta de planejamento", "Falta de acompanhamento", "Falta de números", "Excesso de confiança"],
+      },
+      implicacao: {
+        principal: "E se chegar o momento em que seu filho precisar dessa ajuda e ela não estiver disponível?",
+        simLabel: "Se reconhecer impacto",
+        naoLabel: "Se minimizar",
+        sim: [
+          "Como você se sentiria?",
+          "O que isso mudaria para ele?",
+          "Existe alguma oportunidade que poderia ser perdida?",
+          "Isso geraria alguma frustração?",
+        ],
+        nao: [
+          "Então essa preparação não é tão importante?",
+          "Se pudesse garantir isso hoje faria diferença?",
+          "Existe algum sonho dele que você gostaria de ajudar a realizar?",
+        ],
+        transicao: "O impacto normalmente não é financeiro. É emocional. É a sensação de não conseguir entregar algo que era importante.",
+        procurar: ["Culpa", "Responsabilidade", "Proteção", "Amor", "Legado"],
+      },
+      necessidade: {
+        principal: "Faz sentido entender quanto seria necessário para garantir essas oportunidades aos seus filhos?",
+        sim: [
+          "O que você gostaria de validar?",
+          "Existe algum prazo importante?",
+          "Gostaria de visualizar cenários?",
+        ],
+        nao: [
+          "Você acredita que conseguirá construir isso sem planejamento?",
+          "Existe algum risco em não validar esses números?",
+        ],
+        transicao: "Talvez valha a pena colocar esse objetivo em números para garantir que ele não fique apenas no desejo.",
+        procurar: ["Proteção", "Segurança", "Planejamento", "Futuro"],
+      },
+    },
+  },
+  {
+    id: "familia", emoji: "💍", icon: Heart, title: "Casamento e Projetos Familiares", highConversion: true,
+    blocks: {
+      situacao: {
+        principal: "Quando você pensa no seu casamento e na sua família, quais são os principais objetivos que gostaria de construir juntos?",
+        simLabel: "Se responder claramente",
+        naoLabel: "Se responder de forma vaga",
+        sim: [
+          "O que é mais importante para vocês?",
+          "Existe algum sonho que compartilham?",
+          "Como imaginam a vida daqui a 10 ou 20 anos?",
+          "Existe alguma meta financeira em comum?",
+        ],
+        nao: [
+          "Vocês costumam conversar sobre objetivos financeiros?",
+          "Existe algo que gostariam de conquistar juntos?",
+          "Como imaginam o futuro da família?",
+        ],
+        transicao: "Os maiores projetos da vida normalmente são construídos em conjunto.",
+        procurar: ["Sonhos em comum", "Família", "Imóvel", "Filhos", "Liberdade financeira"],
+      },
+      problema: {
+        principal: "Hoje vocês possuem um plano financeiro estruturado para alcançar esses objetivos?",
+        sim: [
+          "Como esse plano foi construído?",
+          "Ambos conhecem esse planejamento?",
+          "Existe acompanhamento?",
+          "Vocês revisam esse plano?",
+        ],
+        nao: [
+          "O que dificulta esse alinhamento?",
+          "Já tentaram construir algo juntos?",
+          "Existem prioridades diferentes?",
+        ],
+        transicao: "Muitas famílias possuem objetivos em comum, mas não possuem uma estratégia em comum.",
+        procurar: ["Falta de alinhamento", "Falta de planejamento", "Falta de comunicação"],
+      },
+      implicacao: {
+        principal: "E se esses objetivos familiares demorarem muito mais tempo para acontecer?",
+        simLabel: "Se reconhecer impacto",
+        naoLabel: "Se minimizar",
+        sim: [
+          "O que deixariam de viver?",
+          "Como isso impactaria a família?",
+          "Existe algum sonho que poderia ficar para depois?",
+        ],
+        nao: [
+          "Então o prazo não é tão importante?",
+          "Se pudesse acelerar essas conquistas faria diferença?",
+        ],
+        transicao: "Normalmente o impacto não está apenas no dinheiro, mas nas experiências que a família deixa de viver.",
+        procurar: ["Tempo", "Família", "Sonhos", "Qualidade de vida"],
+      },
+      necessidade: {
+        principal: "Faz sentido validar se vocês estão utilizando a melhor estratégia para alcançar esses objetivos familiares?",
+        sim: [
+          "O que mais gostariam de validar?",
+          "Existe algum objetivo prioritário?",
+          "Gostariam de visualizar cenários?",
+        ],
+        nao: [
+          "Existe algum risco em continuar sem essa validação?",
+          "Como saberão se estão no melhor caminho?",
+        ],
+        transicao: "Talvez valha a pena colocar esses objetivos em números para trazer mais clareza e previsibilidade.",
+        procurar: ["Clareza", "Planejamento", "União", "Construção familiar"],
       },
     },
   },
@@ -1441,6 +1592,15 @@ function Index() {
                           {open ? "Roteiro aberto ↓" : "Tocar para abrir →"}
                         </p>
                       </div>
+                      {g.highConversion && (
+                        <span
+                          className="absolute top-3 right-3 inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-amber-500 to-rose-500 px-2.5 py-1 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-white shadow-md shadow-rose-500/30"
+                          aria-label="Alta Conversão"
+                        >
+                          <Flame className="h-3 w-3" aria-hidden />
+                          Alta Conversão
+                        </span>
+                      )}
                     </button>
                     {open && (
                       <div
