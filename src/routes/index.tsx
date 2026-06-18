@@ -319,6 +319,7 @@ type Goal = {
   emoji: string;
   icon: typeof Target;
   title: string;
+  highConversion?: boolean;
   blocks: Record<Quadrant, Script>;
 };
 
