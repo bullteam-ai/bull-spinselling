@@ -1645,6 +1645,41 @@ function Index() {
           <span>SPIN Selling</span>
         </div>
       </footer>
+
+      {/* Barra de navegação fixa — sempre visível */}
+      <nav
+        aria-label="Navegação rápida"
+        className="fixed inset-x-0 bottom-0 z-50 border-t border-border bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85 shadow-[0_-8px_24px_-12px_rgba(11,28,58,0.18)]"
+        style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
+      >
+        <div className="mx-auto grid max-w-7xl grid-cols-4 gap-1 px-2 py-2 sm:px-6">
+          {[
+            { id: "objetivos", icon: Target, label: "Objetivos", emoji: "🏠", action: () => scrollToId("objetivos") },
+            { id: "sinais", icon: TrafficCone, label: "Sinais", emoji: "🚦", action: () => scrollToId("sinais") },
+            { id: "agendamento", icon: Sparkles, label: "Agendamento", emoji: "📅", action: () => scrollToId("agendamento") },
+            { id: "treinamento", icon: GraduationCap, label: "Treinamento", emoji: "🎓", action: goTraining, highlight: trainingMode },
+          ].map((item) => {
+            const Icon = item.icon;
+            const active = (item as { highlight?: boolean }).highlight;
+            return (
+              <button
+                key={item.id}
+                type="button"
+                onClick={item.action}
+                className={`group flex min-h-12 flex-col items-center justify-center gap-0.5 rounded-xl px-1 py-1.5 text-[11px] font-semibold transition motion-reduce:transition-none ${
+                  active
+                    ? "bg-[var(--brand)]/10 text-[var(--brand)]"
+                    : "text-muted-foreground hover:bg-[var(--surface)] hover:text-[var(--navy)]"
+                }`}
+              >
+                <Icon aria-hidden className="h-4 w-4 sm:hidden" />
+                <span aria-hidden className="hidden text-base leading-none sm:inline">{item.emoji}</span>
+                <span className="leading-none">{item.label}</span>
+              </button>
+            );
+          })}
+        </div>
+      </nav>
     </div>
   );
 }
