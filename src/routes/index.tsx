@@ -202,7 +202,7 @@ function Index() {
       </nav>
 
       <main id="conteudo" className="mx-auto max-w-7xl px-4 sm:px-6 py-8 sm:py-10 lg:grid lg:grid-cols-[1fr_320px] lg:gap-8">
-        <div className="space-y-8 sm:space-y-10 order-2 lg:order-1">
+        <div className="space-y-8 sm:space-y-10">
           {/* Killer questions */}
           <section aria-labelledby="killer-title">
             <div className="rounded-3xl border border-[var(--danger)]/25 bg-gradient-to-br from-[#FFF5F2] to-white p-5 sm:p-8 shadow-sm">
@@ -313,7 +313,7 @@ function Index() {
         </div>
 
         {/* Side panel: Buying signals */}
-        <aside aria-label="Sinais de compra" className="mb-8 lg:mb-0 lg:mt-0 order-1 lg:order-2">
+        <aside aria-label="Sinais de compra" className="mt-8 lg:mt-0">
           <div className="lg:sticky lg:top-24">
             <div className="rounded-3xl border border-border bg-white p-5 shadow-sm">
               <div className="flex items-center gap-3">
