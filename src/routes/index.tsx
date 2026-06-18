@@ -1493,18 +1493,27 @@ function ScriptCard({
 }) {
   const isImportant = quadrant.key === "implicacao";
   const isHigh = isHighConversion(script.principal);
+  const isKillerQ = isKiller(script.principal);
   const simLabel = script.simLabel ?? "Se responder SIM";
   const naoLabel = script.naoLabel ?? "Se responder NÃO";
 
   return (
     <div
       className={`rounded-2xl border bg-white shadow-sm ${
-        isImportant
+        isKillerQ
+          ? "border-2 border-[var(--warn)] shadow-lg shadow-[var(--warn)]/20"
+          : isImportant
           ? "border-2 border-[var(--danger)] shadow-md shadow-[var(--danger)]/10"
           : "border-border"
       }`}
     >
-      <div className={`p-3 sm:p-4 ${isImportant ? "bg-gradient-to-br from-[#FFF1ED] via-white to-[#FFF6E8] rounded-t-2xl" : ""}`}>
+      <div className={`p-3 sm:p-4 ${
+        isKillerQ
+          ? "bg-gradient-to-br from-[#FFFBEB] via-white to-[#FFF1ED] rounded-t-2xl"
+          : isImportant
+          ? "bg-gradient-to-br from-[#FFF1ED] via-white to-[#FFF6E8] rounded-t-2xl"
+          : ""
+      }`}>
         {contextLabel && (
           <p className="text-[11px] font-semibold text-muted-foreground mb-1">{contextLabel}</p>
         )}
@@ -1512,6 +1521,14 @@ function ScriptCard({
           <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide ${quadrant.chip}`}>
             <span aria-hidden>{quadrant.emoji}</span> {quadrant.label}
           </span>
+          {isKillerQ && (
+            <span
+              className="inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-[var(--warn)] to-[#FFB020] px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wide text-[var(--navy)] shadow-sm"
+              title="Uma das 3 perguntas de maior impacto deste objetivo"
+            >
+              <span aria-hidden>⭐⭐⭐⭐⭐</span> Pergunta Matadora
+            </span>
+          )}
           {isImportant && (
             <span className="inline-flex items-center gap-1 rounded-full bg-[var(--danger)] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">
               <Star className="h-3 w-3" aria-hidden /> Mais Importante
