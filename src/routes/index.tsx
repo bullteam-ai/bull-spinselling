@@ -379,7 +379,7 @@ function GoalBlocks({ goal }: { goal: Goal }) {
       </div>
 
       <div className="mt-4">
-        <BlockCard {...sections[2]} />
+        {(() => { const s = sections[2]; return <BlockCard title={s.title} emoji={s.emoji} color={s.color} items={s.items} desc={s.desc} />; })()}
       </div>
     </div>
   );
