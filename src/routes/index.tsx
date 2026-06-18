@@ -1592,6 +1592,15 @@ function Index() {
                           {open ? "Roteiro aberto ↓" : "Tocar para abrir →"}
                         </p>
                       </div>
+                      {g.highConversion && (
+                        <span
+                          className="absolute top-3 right-3 inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-amber-500 to-rose-500 px-2.5 py-1 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-white shadow-md shadow-rose-500/30"
+                          aria-label="Alta Conversão"
+                        >
+                          <Flame className="h-3 w-3" aria-hidden />
+                          Alta Conversão
+                        </span>
+                      )}
                     </button>
                     {open && (
                       <div
