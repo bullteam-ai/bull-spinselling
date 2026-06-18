@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import {
   Target, UserRound, Home, Car, Plane, Rocket, BarChart3, HelpCircle, Handshake,
   Flame, AlertTriangle, ClipboardCopy, Check, ChevronDown, TrafficCone, ArrowRight,
@@ -976,7 +976,16 @@ function Index() {
   const toggleQuad = (q: Quadrant) =>
     setActiveQuads((cur) => (cur.includes(q) ? cur.filter((x) => x !== q) : [...cur, q]));
 
-  const toggleGoal = (id: string) => setOpenGoal((cur) => (cur === id ? null : id));
+  const toggleGoal = (id: string) => {
+    setOpenGoal((cur) => (cur === id ? null : id));
+    // Garantir que o roteiro fique visível logo abaixo do card tocado
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        const el = document.getElementById(`goal-panel-${id}`);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 80);
+    });
+  };
 
   const copyScript = async () => {
     try {
@@ -1384,8 +1393,8 @@ function Index() {
                   const open = openGoal === g.id;
                   const panelId = `goal-panel-${g.id}`;
                   return (
+                    <Fragment key={g.id}>
                     <button
-                      key={g.id}
                       type="button"
                       onClick={() => toggleGoal(g.id)}
                       aria-expanded={open}
@@ -1408,28 +1417,31 @@ function Index() {
                         </p>
                       </div>
                     </button>
+                    {open && (
+                      <div
+                        className="col-span-2 sm:col-span-3"
+                        id={panelId}
+                        role="region"
+                        aria-label="Roteiro do objetivo selecionado"
+                      >
+                        <GoalBlocks
+                          goal={g}
+                          activeQuads={activeQuads}
+                          expanded={expanded}
+                          toggleExpand={toggleExpand}
+                          favorites={favorites}
+                          toggleFav={toggleFav}
+                          training={training}
+                          toggleTraining={toggleTraining}
+                          callMode={callMode}
+                        />
+                      </div>
+                    )}
+                    </Fragment>
                   );
                 })}
               </div>
 
-              {openGoal && (
-                <div className="mt-6" id={`goal-panel-${openGoal}`} role="region" aria-label="Roteiro do objetivo selecionado">
-                  {GOALS.filter((g) => g.id === openGoal).map((g) => (
-                    <GoalBlocks
-                      key={g.id}
-                      goal={g}
-                      activeQuads={activeQuads}
-                      expanded={expanded}
-                      toggleExpand={toggleExpand}
-                      favorites={favorites}
-                      toggleFav={toggleFav}
-                      training={training}
-                      toggleTraining={toggleTraining}
-                      callMode={callMode}
-                    />
-                  ))}
-                </div>
-              )}
             </section>
           )}
 
