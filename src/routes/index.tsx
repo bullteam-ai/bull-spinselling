@@ -976,7 +976,16 @@ function Index() {
   const toggleQuad = (q: Quadrant) =>
     setActiveQuads((cur) => (cur.includes(q) ? cur.filter((x) => x !== q) : [...cur, q]));
 
-  const toggleGoal = (id: string) => setOpenGoal((cur) => (cur === id ? null : id));
+  const toggleGoal = (id: string) => {
+    setOpenGoal((cur) => (cur === id ? null : id));
+    // Garantir que o roteiro fique visível logo abaixo do card tocado
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        const el = document.getElementById(`goal-panel-${id}`);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 80);
+    });
+  };
 
   const copyScript = async () => {
     try {
