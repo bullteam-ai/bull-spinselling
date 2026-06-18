@@ -1327,6 +1327,8 @@ function Index() {
                       toggleExpand={toggleExpand}
                       favorites={favorites}
                       toggleFav={toggleFav}
+                      training={training}
+                      toggleTraining={toggleTraining}
                       callMode={callMode}
                     />
                   ))}
