@@ -4,7 +4,7 @@ import {
   Target, UserRound, Home, Car, Plane, Rocket, BarChart3, HelpCircle, Handshake,
   Flame, AlertTriangle, ClipboardCopy, Check, ChevronDown, TrafficCone, ArrowRight,
   Trophy, Mic, ShieldCheck, XCircle, CheckCircle2, Thermometer, ListOrdered,
-  Search, Star, Pin, Headphones, Filter, Sparkles,
+  Search, Star, Pin, Headphones, Filter, Sparkles, GraduationCap, Brain, Quote,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
@@ -167,6 +167,128 @@ const KILLER_PRINCIPALS = new Set<string>([
   "Faz sentido validar se tudo continua alinhado aos seus objetivos atuais?",
 ]);
 const isKiller = (q: string) => KILLER_PRINCIPALS.has(q);
+
+// === MODO TREINAMENTO ===
+// Explica a psicologia por trás de cada Pergunta Principal.
+// Fallback automático por quadrante quando não houver explicação dedicada.
+const QUADRANT_EXPLANATION: Record<Quadrant, string> = {
+  situacao:
+    "Essa pergunta abre a conversa sem pressão. O objetivo é fazer o cliente verbalizar a própria realidade — aquilo que é dito em voz alta passa a ser percebido com mais clareza por quem fala.",
+  problema:
+    "Essa pergunta expõe lacunas sem confrontar. Convida o cliente a perceber sozinho que algo importante pode estar faltando, sem que ele se sinta julgado ou precise defender sua estratégia atual.",
+  implicacao:
+    "Essa pergunta amplia a percepção do custo de não agir. Tira a decisão do campo puramente racional e a leva para o campo emocional — onde a maioria das decisões realmente acontece.",
+  necessidade:
+    "Essa pergunta gera curiosidade e abre espaço para a ajuda. Em vez de oferecer uma solução, convida o cliente a validar algo que talvez nunca tenha analisado profundamente.",
+};
+
+const EXPLANATIONS: Record<string, string> = {
+  // Implicações de atraso → custo emocional do tempo
+  "E se essa independência financeira acontecer 10 anos depois do que você gostaria?":
+    "Essa pergunta existe para ampliar a percepção do custo do atraso. Muitas pessoas enxergam apenas o custo financeiro das decisões. Quando refletimos sobre tempo perdido, experiências adiadas, impacto familiar e oportunidades que não voltam, a decisão passa a ser emocional e não apenas racional. O objetivo não é gerar medo. É gerar consciência.",
+  "E se você precisasse trabalhar 10 anos além do que imagina hoje?":
+    "Transforma um número distante em uma sensação concreta. O cliente sente o peso de adiar a liberdade e percebe que o verdadeiro custo não está em trabalhar, mas em perder a escolha de parar quando quiser.",
+  "E se essa compra atrasar cinco anos?":
+    "Conecta o objetivo a algo maior do que o imóvel: rotina familiar, momentos com filhos, conforto. O cliente para de pensar em metros quadrados e passa a pensar em vida.",
+  "E se essa compra atrasar mais alguns anos?":
+    "Faz o cliente perceber que o desconforto atual continua todos os dias enquanto a compra não acontece. O custo invisível da rotina aparece.",
+  "E se essa viagem não acontecer nos próximos 5 anos?":
+    "Transforma um problema financeiro em um problema de vida. O cliente deixa de pensar em dinheiro e passa a pensar em experiências, tempo e memórias que não voltam.",
+  "E se esse projeto continuar parado pelos próximos 5 anos?":
+    "Ativa o medo do arrependimento. Muitas pessoas temem mais nunca tentar do que tentar e errar. A pergunta faz esse risco ficar visível.",
+  "E se nada mudar nos próximos 10 anos?":
+    "Tira o cliente da inércia. Quando ele projeta a situação atual no futuro, percebe que ‘continuar como está’ também é uma escolha — e raramente é a melhor.",
+  "E se mais 10 anos passarem da mesma forma?":
+    "Faz o tempo virar protagonista. O cliente sem objetivo costuma viver no automático; essa pergunta o obriga a olhar para frente e perceber o custo invisível da ausência de direção.",
+  "E se algo importante estivesse desalinhado hoje, como você descobriria?":
+    "Coloca em xeque a confiança automática no acompanhamento atual sem atacar o assessor. Cria espaço para uma segunda visão sem gerar conflito.",
+
+  // Necessidades → curiosidade e abertura
+  "Faz sentido validar se o caminho atual é realmente o mais eficiente?":
+    "Essa pergunta cria curiosidade. Ela não vende uma solução. Ela convida o cliente a verificar algo que talvez nunca tenha analisado profundamente.",
+  "Faria sentido validar se o caminho atual realmente entrega a aposentadoria que você deseja?":
+    "Reduz a resistência ao reposicionar a conversa como validação, não como crítica. O cliente não precisa admitir erro — apenas aceitar conferir os números.",
+  "Faz sentido validar se existe uma forma mais eficiente de chegar nesse objetivo?":
+    "Abre espaço para comparação sem confronto. O cliente percebe que pode existir um caminho melhor sem precisar dizer que o atual está errado.",
+  "Faz sentido validar se existe uma forma mais eficiente de atingir esse objetivo?":
+    "Convida à curiosidade. Em vez de oferecer produto, oferece clareza — e clareza é algo que ninguém recusa.",
+  "Faz sentido construir uma estratégia para transformar essa viagem em uma meta concreta?":
+    "Tira o sonho do campo da intenção e leva para o campo do planejamento. Quando algo vira meta com prazo, sai do ‘um dia’ e entra na agenda.",
+  "Faz sentido entender qual estrutura financeira seria necessária para transformar esse projeto em realidade?":
+    "Substitui a vaga ideia de ‘empreender um dia’ por uma pergunta concreta de quanto e como. Move o cliente da contemplação para a execução.",
+  "Faz sentido organizar tudo para ter mais clareza e previsibilidade?":
+    "Ninguém recusa clareza. A palavra ‘organizar’ é leve e desarma — ao mesmo tempo em que abre porta para um trabalho profundo.",
+  "Faz sentido descobrir quais objetivos realmente fazem sentido para você?":
+    "Para o cliente sem objetivo claro, o primeiro passo não é investir melhor — é descobrir para onde ir. Essa pergunta entrega exatamente isso.",
+  "Faz sentido validar se tudo continua alinhado aos seus objetivos atuais?":
+    "Permite uma segunda visão sem competir com o assessor atual. Posiciona a entrevista como complemento, não como ameaça.",
+
+  // Problemas → reconhecer lacuna sem confronto
+  "Hoje você sente que possui um plano claro para alcançar essa independência?":
+    "A palavra ‘claro’ é o gatilho. Mesmo quem tem investimentos raramente tem um plano claro — e ao admitir isso, o cliente abre espaço para a próxima etapa.",
+  "Hoje você acredita que sua estratégia atual é suficiente para entregar essa aposentadoria?":
+    "Diferencia ‘ter dinheiro guardado’ de ‘ter uma estratégia suficiente’. Quase ninguém validou de fato, e a percepção dessa lacuna gera necessidade.",
+  "Hoje você sente que existe um plano claro para comprar esse imóvel dentro do prazo desejado?":
+    "Conecta o desejo ao prazo. É no prazo que o plano costuma falhar, e admitir isso é o primeiro passo para querer estruturá-lo.",
+  "Hoje você já sabe exatamente como pretende viabilizar essa compra?":
+    "Substitui ‘você se planeja?’ pelo concreto ‘como?’. Forçar a explicação do método revela a ausência dele.",
+  "Hoje você possui um planejamento específico para realizar essa viagem?":
+    "A palavra ‘específico’ desmascara o ‘um dia a gente vai’. O cliente percebe que sem reserva e data, a viagem dificilmente sai do papel.",
+  "Hoje você já possui clareza financeira sobre o que esse projeto exige?":
+    "Empreendedores travam mais por falta de números do que por falta de coragem. Ao perceber essa lacuna, o cliente passa a desejar a clareza.",
+  "Você sente que o resultado financeiro que possui hoje reflete o esforço que faz?":
+    "Toca direto na frustração de quem ganha bem e não acumula. Conecta esforço a resultado e expõe um desalinhamento que incomoda.",
+
+  // Situação chave → contexto que vira gatilho
+  "Se dinheiro não fosse um problema, o que você faria imediatamente?":
+    "Revela os verdadeiros desejos do cliente sem pressão. Muitas vezes ele descobre, ali na ligação, o que realmente quer da vida — e isso muda o tom da conversa.",
+  "Seu assessor conhece profundamente todos os seus objetivos financeiros?":
+    "Diferencia ‘ter assessor’ de ‘ter planejamento’. Sem atacar ninguém, expõe que a maior parte do trabalho costuma ser sobre produto, não sobre vida.",
+
+  // Killer questions referenciadas no topo (também aparecem em busca/favoritos)
+  "O que acontece se isso não mudar nos próximos 5 anos?":
+    "Coloca o problema no futuro e tira o cliente do conforto do presente. A projeção amplia o desconforto e cria urgência sem precisar empurrar nada.",
+  "O que está custando para você não resolver isso hoje?":
+    "Transforma indecisão em prejuízo concreto. Quando o custo de não agir fica visível, a inação deixa de parecer neutra.",
+  "Como isso impacta sua família?":
+    "Grande parte das decisões financeiras não são tomadas apenas por razões financeiras. Quando conectamos o objetivo a filhos, cônjuge ou pessoas importantes, aumentamos a relevância emocional da conversa.",
+  "Se continuar exatamente como está, qual será o cenário daqui a 10 anos?":
+    "Força o cliente a sair da rotina mental e desenhar o futuro. Quase sempre, o cenário que ele descreve é diferente do que ele deseja.",
+  "Você acredita que está no melhor caminho possível ou apenas no caminho que conhece?":
+    "Reduz a resistência natural do cliente. Em vez de confrontar a estratégia atual, cria abertura para novas possibilidades. O cliente não precisa admitir que está errado — apenas considerar que pode existir uma alternativa melhor.",
+};
+
+const getExplanation = (principal: string, quadrant: Quadrant) =>
+  EXPLANATIONS[principal] ?? QUADRANT_EXPLANATION[quadrant];
+
+// === PSICOLOGIA DA ENTREVISTA ===
+const PSYCHOLOGY_PRINCIPLES: { title: string; description: string }[] = [
+  {
+    title: "O cliente percebe um objetivo importante",
+    description:
+      "Enquanto o objetivo não for emocionalmente relevante, não existe urgência para agir.",
+  },
+  {
+    title: "O cliente percebe que não sabe exatamente como chegar lá",
+    description:
+      "As pessoas raramente procuram ajuda quando acreditam possuir todas as respostas.",
+  },
+  {
+    title: "O cliente percebe que o atraso tem um custo",
+    description:
+      "Quando o custo de não agir fica visível, a mudança passa a fazer sentido.",
+  },
+  {
+    title: "O cliente percebe que existe uma forma melhor",
+    description:
+      "O cliente não precisa acreditar que está errado. Ele apenas precisa acreditar que existe espaço para melhoria.",
+  },
+  {
+    title: "O cliente acredita que a entrevista ajudará",
+    description:
+      "O valor da entrevista precisa ser maior do que o esforço de participar dela.",
+  },
+];
 
 type Script = {
   principal: string;
@@ -807,6 +929,7 @@ function Index() {
   const [activeQuads, setActiveQuads] = useState<Quadrant[]>(["situacao", "problema", "implicacao", "necessidade"]);
   const [favorites, setFavorites] = useState<Set<string>>(new Set());
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
+  const [training, setTraining] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     try {
@@ -827,6 +950,13 @@ function Index() {
 
   const toggleExpand = (key: string) =>
     setExpanded((cur) => {
+      const next = new Set(cur);
+      if (next.has(key)) next.delete(key); else next.add(key);
+      return next;
+    });
+
+  const toggleTraining = (key: string) =>
+    setTraining((cur) => {
       const next = new Set(cur);
       if (next.has(key)) next.delete(key); else next.add(key);
       return next;
@@ -1009,6 +1139,8 @@ function Index() {
                                   onToggle={() => toggleExpand(key)}
                                   favorited={favorites.has(key)}
                                   onFav={() => toggleFav(key)}
+                                  training={training.has(key)}
+                                  onTraining={() => toggleTraining(key)}
                                   callMode={callMode}
                                 />
                               );
@@ -1048,10 +1180,75 @@ function Index() {
                         onToggle={() => toggleExpand(key)}
                         favorited
                         onFav={() => toggleFav(key)}
+                        training={training.has(key)}
+                        onTraining={() => toggleTraining(key)}
                         callMode={callMode}
                       />
                     );
                   })}
+                </div>
+              </div>
+            </section>
+          )}
+
+          {!callMode && !searchResults && (
+            <section aria-labelledby="psy-title">
+              <div className="relative overflow-hidden rounded-3xl border-2 border-[var(--brand)] bg-gradient-to-br from-[#0a1733] via-[var(--navy)] to-[#1a2e5c] p-6 sm:p-10 text-white shadow-2xl shadow-[var(--brand)]/20">
+                <div className="pointer-events-none absolute -top-32 -right-20 h-80 w-80 rounded-full bg-[var(--brand)]/30 blur-3xl" />
+                <div className="pointer-events-none absolute -bottom-32 -left-20 h-80 w-80 rounded-full bg-[var(--success)]/15 blur-3xl" />
+                <div className="relative">
+                  <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium tracking-wide text-white/80 backdrop-blur">
+                    <Sparkles aria-hidden className="h-3 w-3 text-[var(--success)]" />
+                    Treinamento · Fundamento da metodologia
+                  </div>
+                  <div className="mt-4 flex items-start gap-4">
+                    <div aria-hidden className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--brand)] to-[#5a8cff] text-white shadow-lg shadow-[var(--brand)]/40">
+                      <Brain className="h-6 w-6" />
+                    </div>
+                    <div>
+                      <h2 id="psy-title" className="text-2xl sm:text-3xl font-bold tracking-tight">
+                        🧠 Psicologia da Entrevista
+                      </h2>
+                      <p className="mt-2 text-base sm:text-lg text-white/80 leading-snug">
+                        O que realmente faz uma pessoa aceitar uma entrevista estratégica?
+                      </p>
+                    </div>
+                  </div>
+
+                  <ol className="mt-7 grid gap-3 sm:grid-cols-2">
+                    {PSYCHOLOGY_PRINCIPLES.map((p, i) => (
+                      <li
+                        key={p.title}
+                        className="group flex gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur transition hover:border-[var(--success)]/40 hover:bg-white/10 motion-reduce:transition-none"
+                      >
+                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-[var(--success)] text-sm font-extrabold text-[var(--navy)] shadow-md shadow-[var(--success)]/30">
+                          {i + 1}
+                        </span>
+                        <div>
+                          <p className="flex items-start gap-1.5 text-[15px] font-bold leading-snug">
+                            <CheckCircle2 aria-hidden className="mt-0.5 h-4 w-4 shrink-0 text-[var(--success)]" />
+                            <span>{p.title}</span>
+                          </p>
+                          <p className="mt-1.5 text-sm leading-relaxed text-white/75">{p.description}</p>
+                        </div>
+                      </li>
+                    ))}
+                  </ol>
+
+                  <figure className="mt-8 relative overflow-hidden rounded-2xl border border-[var(--success)]/40 bg-gradient-to-br from-black/40 via-[var(--navy)] to-black/40 p-6 sm:p-8">
+                    <Quote aria-hidden className="absolute -top-2 -left-1 h-16 w-16 text-[var(--success)]/15" />
+                    <div className="relative">
+                      <blockquote className="text-xl sm:text-2xl font-bold leading-snug">
+                        <p>"O objetivo da ligação não é convencer o cliente.</p>
+                        <p className="mt-1 text-white/90">
+                          O objetivo da ligação é ajudá-lo a perceber algo que ainda não havia percebido."
+                        </p>
+                      </blockquote>
+                      <figcaption className="mt-5 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-[var(--success)]">
+                        <span aria-hidden>🐂</span> Filosofia Comercial Bull Team
+                      </figcaption>
+                    </div>
+                  </figure>
                 </div>
               </div>
             </section>
@@ -1193,6 +1390,8 @@ function Index() {
                       toggleExpand={toggleExpand}
                       favorites={favorites}
                       toggleFav={toggleFav}
+                      training={training}
+                      toggleTraining={toggleTraining}
                       callMode={callMode}
                     />
                   ))}
@@ -1430,7 +1629,7 @@ function Index() {
 }
 
 function GoalBlocks({
-  goal, activeQuads, expanded, toggleExpand, favorites, toggleFav, callMode,
+  goal, activeQuads, expanded, toggleExpand, favorites, toggleFav, training, toggleTraining, callMode,
 }: {
   goal: Goal;
   activeQuads: Quadrant[];
@@ -1438,6 +1637,8 @@ function GoalBlocks({
   toggleExpand: (k: string) => void;
   favorites: Set<string>;
   toggleFav: (k: string) => void;
+  training: Set<string>;
+  toggleTraining: (k: string) => void;
   callMode: boolean;
 }) {
   return (
@@ -1468,6 +1669,8 @@ function GoalBlocks({
                 onToggle={() => toggleExpand(key)}
                 favorited={favorites.has(key)}
                 onFav={() => toggleFav(key)}
+                training={training.has(key)}
+                onTraining={() => toggleTraining(key)}
                 callMode={callMode}
               />
             </div>
@@ -1479,7 +1682,7 @@ function GoalBlocks({
 }
 
 function ScriptCard({
-  script, quadrant, expanded, onToggle, favorited, onFav, callMode, contextLabel,
+  script, quadrant, expanded, onToggle, favorited, onFav, training, onTraining, callMode, contextLabel,
 }: {
   fullKey: string;
   script: Script;
@@ -1488,6 +1691,8 @@ function ScriptCard({
   onToggle: () => void;
   favorited: boolean;
   onFav: () => void;
+  training: boolean;
+  onTraining: () => void;
   callMode: boolean;
   contextLabel?: string;
 }) {
@@ -1567,7 +1772,40 @@ function ScriptCard({
             <Pin aria-hidden className="h-3.5 w-3.5" />
             {favorited ? "Favoritado" : "Favoritar"}
           </button>
+          <button
+            type="button"
+            onClick={onTraining}
+            aria-pressed={training}
+            aria-label="Por que essa pergunta existe"
+            className={`inline-flex min-h-9 items-center gap-1.5 rounded-lg border px-3 text-xs font-semibold transition motion-reduce:transition-none ${
+              training
+                ? "border-[var(--brand)] bg-[var(--brand)] text-white shadow-sm shadow-[var(--brand)]/30"
+                : "border-border bg-white text-[var(--brand)] hover:border-[var(--brand)]"
+            }`}
+          >
+            <GraduationCap aria-hidden className="h-3.5 w-3.5" />
+            🎓 Por que essa pergunta existe?
+          </button>
         </div>
+
+        {training && (
+          <div className="mt-3 relative overflow-hidden rounded-xl border border-[var(--brand)]/30 bg-gradient-to-br from-[#EEF4FF] via-white to-[#F5F0FF] p-4 shadow-inner">
+            <div className="pointer-events-none absolute -top-10 -right-10 h-32 w-32 rounded-full bg-[var(--brand)]/10 blur-2xl" />
+            <div className="relative">
+              <div className="flex items-center gap-2">
+                <div aria-hidden className="flex h-7 w-7 items-center justify-center rounded-lg bg-[var(--brand)] text-white">
+                  <GraduationCap className="h-3.5 w-3.5" />
+                </div>
+                <p className="text-[11px] font-extrabold uppercase tracking-wider text-[var(--brand)]">
+                  Modo Treinamento · Psicologia da Pergunta
+                </p>
+              </div>
+              <p className={`mt-2 leading-relaxed text-[var(--navy)] ${callMode ? "text-base" : "text-sm"}`}>
+                {getExplanation(script.principal, quadrant.key)}
+              </p>
+            </div>
+          </div>
+        )}
       </div>
 
       {expanded && (
