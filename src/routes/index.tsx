@@ -1193,6 +1193,75 @@ function Index() {
 
           {!callMode && !searchResults && (
             <section aria-labelledby="killer-title">
+              {/* Psicologia da Entrevista — sempre próxima do topo */}
+            </section>
+          )}
+
+          {!callMode && !searchResults && (
+            <section aria-labelledby="psy-title">
+              <div className="relative overflow-hidden rounded-3xl border-2 border-[var(--brand)] bg-gradient-to-br from-[#0a1733] via-[var(--navy)] to-[#1a2e5c] p-6 sm:p-10 text-white shadow-2xl shadow-[var(--brand)]/20">
+                <div className="pointer-events-none absolute -top-32 -right-20 h-80 w-80 rounded-full bg-[var(--brand)]/30 blur-3xl" />
+                <div className="pointer-events-none absolute -bottom-32 -left-20 h-80 w-80 rounded-full bg-[var(--success)]/15 blur-3xl" />
+                <div className="relative">
+                  <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium tracking-wide text-white/80 backdrop-blur">
+                    <Sparkles aria-hidden className="h-3 w-3 text-[var(--success)]" />
+                    Treinamento · Fundamento da metodologia
+                  </div>
+                  <div className="mt-4 flex items-start gap-4">
+                    <div aria-hidden className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--brand)] to-[#5a8cff] text-white shadow-lg shadow-[var(--brand)]/40">
+                      <Brain className="h-6 w-6" />
+                    </div>
+                    <div>
+                      <h2 id="psy-title" className="text-2xl sm:text-3xl font-bold tracking-tight">
+                        🧠 Psicologia da Entrevista
+                      </h2>
+                      <p className="mt-2 text-base sm:text-lg text-white/80 leading-snug">
+                        O que realmente faz uma pessoa aceitar uma entrevista estratégica?
+                      </p>
+                    </div>
+                  </div>
+
+                  <ol className="mt-7 grid gap-3 sm:grid-cols-2">
+                    {PSYCHOLOGY_PRINCIPLES.map((p, i) => (
+                      <li
+                        key={p.title}
+                        className="group flex gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur transition hover:border-[var(--success)]/40 hover:bg-white/10 motion-reduce:transition-none"
+                      >
+                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-[var(--success)] text-sm font-extrabold text-[var(--navy)] shadow-md shadow-[var(--success)]/30">
+                          {i + 1}
+                        </span>
+                        <div>
+                          <p className="flex items-start gap-1.5 text-[15px] font-bold leading-snug">
+                            <CheckCircle2 aria-hidden className="mt-0.5 h-4 w-4 shrink-0 text-[var(--success)]" />
+                            <span>{p.title}</span>
+                          </p>
+                          <p className="mt-1.5 text-sm leading-relaxed text-white/75">{p.description}</p>
+                        </div>
+                      </li>
+                    ))}
+                  </ol>
+
+                  <figure className="mt-8 relative overflow-hidden rounded-2xl border border-[var(--success)]/40 bg-gradient-to-br from-black/40 via-[var(--navy)] to-black/40 p-6 sm:p-8">
+                    <Quote aria-hidden className="absolute -top-2 -left-1 h-16 w-16 text-[var(--success)]/15" />
+                    <div className="relative">
+                      <blockquote className="text-xl sm:text-2xl font-bold leading-snug">
+                        <p>"O objetivo da ligação não é convencer o cliente.</p>
+                        <p className="mt-1 text-white/90">
+                          O objetivo da ligação é ajudá-lo a perceber algo que ainda não havia percebido."
+                        </p>
+                      </blockquote>
+                      <figcaption className="mt-5 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-[var(--success)]">
+                        <span aria-hidden>🐂</span> Filosofia Comercial Bull Team
+                      </figcaption>
+                    </div>
+                  </figure>
+                </div>
+              </div>
+            </section>
+          )}
+
+          {!callMode && !searchResults && (
+            <section aria-labelledby="killer-title">
               <div className="rounded-3xl border border-[var(--danger)]/25 bg-gradient-to-br from-[#FFF5F2] to-white p-5 sm:p-8 shadow-sm">
                 <div className="flex items-center gap-3">
                   <div aria-hidden className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--danger)] text-white shadow-lg shadow-[var(--danger)]/30">
