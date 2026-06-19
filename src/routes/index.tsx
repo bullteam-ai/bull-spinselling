@@ -2158,8 +2158,9 @@ function Index() {
         className="fixed inset-x-0 bottom-0 z-50 border-t border-border bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85 shadow-[0_-8px_24px_-12px_rgba(11,28,58,0.18)]"
         style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
       >
-        <div className="mx-auto grid max-w-7xl grid-cols-4 gap-1 px-2 py-2 sm:px-6">
+        <div className="mx-auto grid max-w-7xl grid-cols-5 gap-1 px-2 py-2 sm:px-6">
           {[
+            { id: "abertura", icon: Handshake, label: "Abertura", emoji: "🤝", action: () => scrollToId("abertura") },
             { id: "objetivos", icon: Target, label: "Objetivos", emoji: "🏠", action: () => scrollToId("objetivos") },
             { id: "sinais", icon: TrafficCone, label: "Sinais", emoji: "🚦", action: () => scrollToId("sinais") },
             { id: "fechamento", icon: Sparkles, label: "Agendamento", emoji: "📅", action: () => scrollToId("fechamento") },
