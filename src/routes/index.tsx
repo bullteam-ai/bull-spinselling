@@ -405,20 +405,27 @@ const EXPLANATIONS: Record<string, string> = {
     "Vende união e aceleração. A entrevista vira uma decisão tomada em conjunto, com mais clareza.",
 
   // Problemas → reconhecer lacuna sem confronto
-  "Hoje você sente que possui um plano claro para alcançar essa independência?":
-    "A palavra 'claro' é o gatilho. Quem tem investimentos raramente tem plano claro — e admitir isso abre a próxima etapa.",
-  "Hoje você acredita que sua estratégia atual é suficiente para entregar essa aposentadoria?":
-    "Diferencia 'ter dinheiro' de 'ter estratégia'. A lacuna gera necessidade imediata.",
-  "Hoje você sente que existe um plano claro para comprar esse imóvel dentro do prazo desejado?":
-    "Conecta desejo ao prazo. É no prazo que o plano costuma falhar.",
-  "Hoje você já sabe exatamente como pretende viabilizar essa compra?":
-    "Força a explicação do método. Revela a ausência dele sem confronto.",
-  "Hoje você possui um planejamento específico para realizar essa viagem?":
-    "'Específico' desmascara o 'um dia a gente vai'. Sem data e reserva, não sai do papel.",
-  "Hoje você já possui clareza financeira sobre o que esse projeto exige?":
-    "Empreendedores travam por falta de números, não de coragem. A lacuna gera desejo de clareza.",
-  "Você sente que o resultado financeiro que possui hoje reflete o esforço que faz?":
-    "Toca na frustração de quem ganha bem e não acumula. Expõe o desalinhamento esforço x resultado.",
+  // Problemas → gerar dúvida saudável sem confrontar (Princípio da Incerteza Elegante)
+  "Você tem 100% de certeza de que as decisões financeiras e investimentos que está tomando hoje são o caminho mais eficiente para alcançar sua independência financeira?":
+    "'100% de certeza' é o gatilho. Ninguém responde sim com convicção. O cliente conclui sozinho: 'talvez eu não saiba'.",
+  "Você tem 100% de certeza de que a estratégia atual vai gerar a aposentadoria que deseja e no prazo que imagina?":
+    "Separa ter estratégia de ter certeza do resultado. A dúvida sobre o prazo abre espaço para a entrevista.",
+  "Você tem 100% de certeza de que a estratégia que utiliza hoje é a melhor disponível para conquistar esse imóvel no menor prazo possível e com o menor custo possível?":
+    "Introduz duas variáveis difíceis de garantir: menor prazo e menor custo. O cliente percebe que nunca comparou.",
+  "Você tem 100% de certeza de que a forma que pretende comprar esse carro é a mais inteligente financeiramente?":
+    "'Mais inteligente financeiramente' obriga comparação. Quase ninguém comparou de verdade.",
+  "Você tem 100% de certeza de que essa viagem acontecerá no prazo desejado mantendo exatamente o que faz hoje?":
+    "Liga o sonho a 'mantendo o que faz hoje'. Expõe a fragilidade do plano sem julgar o cliente.",
+  "Você tem 100% de certeza de que conhece todas as informações financeiras necessárias para tirar esse projeto do papel com segurança?":
+    "Empreendedor não trava por coragem, trava por falta de clareza. A dúvida sobre 'todas as informações' destrava.",
+  "Você tem 100% de certeza de que seu dinheiro está sendo direcionado da forma mais eficiente possível para os seus objetivos?":
+    "Diferencia controlar de otimizar. Quase ninguém tem certeza de que está otimizando.",
+  "Você tem 100% de certeza de que, mantendo exatamente o que faz hoje, conseguirá proporcionar todas as oportunidades que deseja para seus filhos?":
+    "Conecta sonho a número sem confronto. A dúvida sobre 'todas as oportunidades' move o pai a buscar clareza.",
+  "Você tem 100% de certeza de que a estratégia financeira atual é a melhor possível para acelerar os projetos da sua família?":
+    "'A melhor possível' é uma régua impossível de defender. Abre espaço para validação em conjunto.",
+  "Você tem 100% de certeza de que hoje não existe nenhuma estratégia melhor ou oportunidade relevante que ainda não tenha sido considerada?":
+    "Não ataca o assessor. Pergunta se existe algo que ele ainda não viu — e quase sempre existe.",
 
   // Situação chave → contexto que vira gatilho
   "Se dinheiro não fosse um problema, o que você faria imediatamente?":
