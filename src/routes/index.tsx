@@ -1142,18 +1142,20 @@ const GOALS: Goal[] = [
         procurar: ["Sonhos", "Desejos ocultos", "Valores pessoais"],
       },
       problema: {
-        principal: "Hoje seu dinheiro está trabalhando para algum objetivo específico?",
+        principal: "Você tem 100% de certeza de que seu dinheiro hoje está sendo direcionado para construir algo que realmente importa para você?",
+        simLabel: "Se responder SIM",
+        naoLabel: "Se responder NÃO",
         sim: [
-          "Qual objetivo?",
-          "Existe um plano para ele?",
-          "Você acompanha sua evolução?",
+          "O que sustenta essa convicção?",
+          "Existe algum objetivo claro por trás disso?",
+          "Como acompanha essa evolução?",
         ],
         nao: [
-          "Como mede seu progresso financeiro?",
-          "Como sabe se está avançando?",
+          "O que mais gera dúvida?",
+          "Existe alguma direção que gostaria de ter mais clara?",
         ],
-        transicao: "Quem não define um destino normalmente tem dificuldade de medir a evolução.",
-        procurar: ["Falta de direção", "Falta de metas"],
+        transicao: "Ter dinheiro trabalhando é uma coisa. Ter certeza de que ele caminha para um destino é outra.",
+        procurar: ["Falta de destino", "Falta de certeza", "Falta de propósito"],
       },
       implicacao: {
         principal: "E se mais 10 anos passarem da mesma forma?",
