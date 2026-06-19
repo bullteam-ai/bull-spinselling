@@ -278,10 +278,10 @@ const QUADRANTS: { key: Quadrant; emoji: string; label: string; color: string; c
 ];
 
 const SPIN_OBJECTIVES: Record<Quadrant, string> = {
-  situacao: "Entender a realidade atual do cliente.",
-  problema: "Identificar lacunas, dificuldades e ausência de planejamento.",
-  implicacao: "Ampliar o impacto financeiro, emocional e familiar do problema. Esta é a etapa mais importante da metodologia.",
-  necessidade: "Levar o cliente a perceber valor em buscar ajuda especializada.",
+  situacao: "Descobrir a realidade atual do cliente.",
+  problema: "Diagnosticar lacunas, dificuldades e ausência de planejamento.",
+  implicacao: "Ampliar o impacto financeiro, emocional e familiar.",
+  necessidade: "Fazer o cliente desejar a Entrevista Estratégica Financeira.",
 };
 
 const HIGH_CONVERSION_MARKERS = [
@@ -299,47 +299,47 @@ const KILLER_PRINCIPALS = new Set<string>([
   // Independência Financeira
   "Hoje você sente que possui um plano claro para alcançar essa independência?",
   "E se essa independência financeira acontecer 10 anos depois do que você gostaria?",
-  "Faz sentido validar se o caminho atual é realmente o mais eficiente?",
+  "Se você pudesse ter clareza exata de quando alcançará sua independência financeira e o que precisa fazer para chegar lá mais rápido, faria sentido entender isso?",
   // Aposentadoria
   "Hoje você acredita que sua estratégia atual é suficiente para entregar essa aposentadoria?",
   "E se você precisasse trabalhar 10 anos além do que imagina hoje?",
-  "Faria sentido validar se o caminho atual realmente entrega a aposentadoria que você deseja?",
+  "Faria sentido descobrir hoje qual renda você terá no futuro e se ela será suficiente para manter o padrão de vida que deseja?",
   // Compra de Casa
   "Hoje você sente que existe um plano claro para comprar esse imóvel dentro do prazo desejado?",
   "E se essa compra atrasar cinco anos?",
-  "Faz sentido validar se existe uma forma mais eficiente de chegar nesse objetivo?",
+  "Se fosse possível descobrir qual o caminho mais eficiente para conquistar esse imóvel e até antecipar essa conquista, faria sentido entender isso?",
   // Compra de Carro
   "Hoje você já sabe exatamente como pretende viabilizar essa compra?",
   "E se essa compra atrasar mais alguns anos?",
-  "Faz sentido validar se existe uma forma mais eficiente de atingir esse objetivo?",
+  "Faria sentido descobrir a forma mais inteligente de chegar nesse carro sem comprometer seus outros objetivos?",
   // Viagens
   "Hoje você possui um planejamento específico para realizar essa viagem?",
   "E se essa viagem não acontecer nos próximos 5 anos?",
-  "Faz sentido construir uma estratégia para transformar essa viagem em uma meta concreta?",
+  "Faria sentido transformar essa viagem em um plano concreto ao invés de deixá-la depender das circunstâncias?",
   // Empreendedorismo
   "Hoje você já possui clareza financeira sobre o que esse projeto exige?",
   "E se esse projeto continuar parado pelos próximos 5 anos?",
-  "Faz sentido entender qual estrutura financeira seria necessária para transformar esse projeto em realidade?",
+  "Faria sentido descobrir exatamente o que seria necessário para transformar essa ideia em realidade?",
   // Organização Financeira
   "Você sente que o resultado financeiro que possui hoje reflete o esforço que faz?",
   "E se nada mudar nos próximos 10 anos?",
-  "Faz sentido organizar tudo para ter mais clareza e previsibilidade?",
+  "Como seria ter total clareza sobre para onde seu dinheiro está indo e se ele está realmente aproximando você dos seus objetivos?",
   // Cliente Sem Objetivo
   "Se dinheiro não fosse um problema, o que você faria imediatamente?",
   "E se mais 10 anos passarem da mesma forma?",
-  "Faz sentido descobrir quais objetivos realmente fazem sentido para você?",
+  "Faria sentido descobrir quais objetivos realmente fazem sentido para a sua vida e enxergar o caminho mais inteligente para construí-los?",
   // Já Possui Assessor
   "Seu assessor conhece profundamente todos os seus objetivos financeiros?",
   "E se algo importante estivesse desalinhado hoje, como você descobriria?",
-  "Faz sentido validar se tudo continua alinhado aos seus objetivos atuais?",
+  "Faria sentido validar se tudo continua alinhado aos seus objetivos atuais e identificar possíveis oportunidades que ainda não estão sendo aproveitadas?",
   // Futuro dos Filhos
   "Hoje existe algum planejamento específico para ajudar seus filhos a alcançarem esses objetivos?",
   "E se chegar o momento em que seu filho precisar dessa ajuda e ela não estiver disponível?",
-  "Faz sentido entender quanto seria necessário para garantir essas oportunidades aos seus filhos?",
+  "Faria sentido saber exatamente o que precisa ser construído hoje para garantir as oportunidades que deseja oferecer aos seus filhos?",
   // Casamento e Projetos Familiares
   "Hoje vocês possuem um plano financeiro estruturado para alcançar esses objetivos?",
   "E se esses objetivos familiares demorarem muito mais tempo para acontecer?",
-  "Faz sentido validar se vocês estão utilizando a melhor estratégia para alcançar esses objetivos familiares?",
+  "Faria sentido validar se vocês estão utilizando o caminho mais eficiente para construir os sonhos da família?",
 ]);
 const isKiller = (q: string) => KILLER_PRINCIPALS.has(q);
 
@@ -354,7 +354,7 @@ const QUADRANT_EXPLANATION: Record<Quadrant, string> = {
   implicacao:
     "Essa pergunta amplia a percepção do custo de não agir. Tira a decisão do campo puramente racional e a leva para o campo emocional — onde a maioria das decisões realmente acontece.",
   necessidade:
-    "Essa pergunta gera curiosidade e abre espaço para a ajuda. Em vez de oferecer uma solução, convida o cliente a validar algo que talvez nunca tenha analisado profundamente.",
+    "Essa pergunta não explora mais problemas. Ela faz o cliente visualizar ganhos — clareza, previsibilidade, velocidade, segurança e tranquilidade — até desejar participar da Entrevista Estratégica Financeira.",
 };
 
 const EXPLANATIONS: Record<string, string> = {
@@ -379,24 +379,29 @@ const EXPLANATIONS: Record<string, string> = {
     "Cria dúvida sem atacar o assessor. Abre espaço para uma segunda visão.",
 
   // Necessidades → curiosidade e abertura
-  "Faz sentido validar se o caminho atual é realmente o mais eficiente?":
-    "Cria curiosidade sem vender. Convida o cliente a verificar algo que nunca analisou.",
-  "Faria sentido validar se o caminho atual realmente entrega a aposentadoria que você deseja?":
-    "Reposiciona como validação, não crítica. O cliente não precisa admitir erro.",
-  "Faz sentido validar se existe uma forma mais eficiente de chegar nesse objetivo?":
-    "Abre espaço para comparação sem confronto. O cliente descobre que pode existir algo melhor.",
-  "Faz sentido validar se existe uma forma mais eficiente de atingir esse objetivo?":
-    "Oferece clareza sem vender produto. Clareza é irresistível.",
-  "Faz sentido construir uma estratégia para transformar essa viagem em uma meta concreta?":
-    "Tira o sonho do 'um dia' e coloca na agenda. Meta com prazo vira compromisso.",
-  "Faz sentido entender qual estrutura financeira seria necessária para transformar esse projeto em realidade?":
-    "Move o cliente da contemplação para a execução. Troca vontade por número.",
-  "Faz sentido organizar tudo para ter mais clareza e previsibilidade?":
-    "Ninguém recusa clareza. 'Organizar' desarma e abre porta para trabalho profundo.",
-  "Faz sentido descobrir quais objetivos realmente fazem sentido para você?":
-    "O primeiro passo não é investir melhor. É saber para onde ir.",
-  "Faz sentido validar se tudo continua alinhado aos seus objetivos atuais?":
-    "Posiciona a entrevista como complemento, não ameaça. Permite segunda visão.",
+  // Necessidades → desejo pela Entrevista (visualizar ganhos, não explorar problemas)
+  "Se você pudesse ter clareza exata de quando alcançará sua independência financeira e o que precisa fazer para chegar lá mais rápido, faria sentido entender isso?":
+    "Vende o ganho da clareza e a possibilidade de antecipar a liberdade. O cliente sai querendo enxergar o próprio mapa.",
+  "Faria sentido descobrir hoje qual renda você terá no futuro e se ela será suficiente para manter o padrão de vida que deseja?":
+    "Oferece previsibilidade e segurança. Transforma a entrevista em uma forma de evitar surpresas futuras.",
+  "Se fosse possível descobrir qual o caminho mais eficiente para conquistar esse imóvel e até antecipar essa conquista, faria sentido entender isso?":
+    "Conecta o imóvel a velocidade e eficiência. O cliente passa a desejar a entrevista para acelerar a conquista.",
+  "Faria sentido descobrir a forma mais inteligente de chegar nesse carro sem comprometer seus outros objetivos?":
+    "Vende equilíbrio e inteligência financeira. A entrevista vira a forma de decidir sem abrir mão de nada.",
+  "Faria sentido transformar essa viagem em um plano concreto ao invés de deixá-la depender das circunstâncias?":
+    "Substitui esperança por previsibilidade. O sonho ganha data, valor e segurança.",
+  "Faria sentido descobrir exatamente o que seria necessário para transformar essa ideia em realidade?":
+    "Vende clareza e velocidade de execução. O cliente passa a desejar a entrevista para tirar o projeto do papel.",
+  "Como seria ter total clareza sobre para onde seu dinheiro está indo e se ele está realmente aproximando você dos seus objetivos?":
+    "Vende clareza e confiança. Quem visualiza o destino raramente recusa a entrevista que mostra o caminho.",
+  "Faria sentido descobrir quais objetivos realmente fazem sentido para a sua vida e enxergar o caminho mais inteligente para construí-los?":
+    "Vende direção e propósito. A entrevista vira o ponto de partida para parar de andar sem destino.",
+  "Faria sentido validar se tudo continua alinhado aos seus objetivos atuais e identificar possíveis oportunidades que ainda não estão sendo aproveitadas?":
+    "Posiciona a entrevista como ganho — não substituição. Segunda visão que pode revelar oportunidades.",
+  "Faria sentido saber exatamente o que precisa ser construído hoje para garantir as oportunidades que deseja oferecer aos seus filhos?":
+    "Vende tranquilidade e legado. Transforma planejamento em ato de amor mensurável.",
+  "Faria sentido validar se vocês estão utilizando o caminho mais eficiente para construir os sonhos da família?":
+    "Vende união e aceleração. A entrevista vira uma decisão tomada em conjunto, com mais clareza.",
 
   // Problemas → reconhecer lacuna sem confronto
   "Hoje você sente que possui um plano claro para alcançar essa independência?":
@@ -490,7 +495,7 @@ type Script = {
   simLabel?: string;
   naoLabel?: string;
   sim: string[];
-  nao: string[];
+  nao?: string[];
   transicao: string;
   procurar: string[];
 };
@@ -561,19 +566,16 @@ const GOALS: Goal[] = [
         procurar: ["Dor emocional", "Tempo perdido", "Família", "Qualidade de vida", "Oportunidades perdidas"],
       },
       necessidade: {
-        principal: "Faz sentido validar se o caminho atual é realmente o mais eficiente?",
+        principal: "Se você pudesse ter clareza exata de quando alcançará sua independência financeira e o que precisa fazer para chegar lá mais rápido, faria sentido entender isso?",
+        simLabel: "Se responder SIM",
         sim: [
-          "O que gostaria de validar?",
-          "O que mais gera dúvida hoje?",
-          "O que gostaria de enxergar com mais clareza?",
+          "Quanto valor teria para você saber exatamente em que ponto da jornada está hoje?",
+          "Como seria ter a tranquilidade de saber que está no caminho certo?",
+          "Se existisse uma forma de antecipar esse objetivo em alguns anos, isso faria diferença?",
+          "O que mudaria na sua vida ao enxergar um plano claro para alcançar essa liberdade?",
         ],
-        nao: [
-          "Você acredita ter 100% de certeza sobre o caminho atual?",
-          "Existe algum risco em nunca validar?",
-          "O que aconteceria se existisse uma forma melhor e você não conhecesse?",
-        ],
-        transicao: "Por isso acredito que vale a pena colocarmos tudo em números para enxergar exatamente onde você está e qual o caminho mais eficiente.",
-        procurar: ["Curiosidade", "Dúvidas", "Busca por clareza", "Desejo de acelerar resultados"],
+        transicao: "É exatamente isso que buscamos construir durante a entrevista.",
+        procurar: ["Clareza", "Tranquilidade", "Antecipação", "Velocidade"],
       },
     },
   },
@@ -633,19 +635,15 @@ const GOALS: Goal[] = [
         procurar: ["Tempo", "Liberdade", "Família", "Saúde"],
       },
       necessidade: {
-        principal: "Faria sentido validar se o caminho atual realmente entrega a aposentadoria que você deseja?",
+        principal: "Faria sentido descobrir hoje qual renda você terá no futuro e se ela será suficiente para manter o padrão de vida que deseja?",
+        simLabel: "Se responder SIM",
         sim: [
-          "O que mais gostaria de validar?",
-          "O que ainda gera dúvida?",
-          "Existe algum cenário que gostaria de enxergar?",
+          "Quanto valor teria enxergar esse cenário antes de chegar lá?",
+          "Como seria ter segurança sobre o seu futuro financeiro?",
+          "Se pudesse corrigir eventuais desvios agora, faria sentido descobrir isso?",
         ],
-        nao: [
-          "Você acredita ter 100% de certeza dos números?",
-          "Existe algum risco em nunca validar isso?",
-          "O que aconteceria se existisse um caminho melhor?",
-        ],
-        transicao: "Talvez valha a pena colocar tudo em números para ter clareza sobre onde você está e para onde está indo.",
-        procurar: ["Curiosidade", "Clareza", "Segurança", "Validação"],
+        transicao: "A entrevista existe justamente para trazer essa previsibilidade.",
+        procurar: ["Previsibilidade", "Segurança", "Padrão de vida", "Correção de rota"],
       },
     },
   },
@@ -706,18 +704,15 @@ const GOALS: Goal[] = [
         procurar: ["Culpa", "Responsabilidade", "Proteção", "Amor", "Legado"],
       },
       necessidade: {
-        principal: "Faz sentido entender quanto seria necessário para garantir essas oportunidades aos seus filhos?",
+        principal: "Faria sentido saber exatamente o que precisa ser construído hoje para garantir as oportunidades que deseja oferecer aos seus filhos?",
+        simLabel: "Se responder SIM",
         sim: [
-          "O que você gostaria de validar?",
-          "Existe algum prazo importante?",
-          "Gostaria de visualizar cenários?",
+          "Como seria ter a tranquilidade de saber que isso está encaminhado?",
+          "Quanto valor teria enxergar esse futuro em números?",
+          "O que mudaria ao saber que está construindo esse legado da forma correta?",
         ],
-        nao: [
-          "Você acredita que conseguirá construir isso sem planejamento?",
-          "Existe algum risco em não validar esses números?",
-        ],
-        transicao: "Talvez valha a pena colocar esse objetivo em números para garantir que ele não fique apenas no desejo.",
-        procurar: ["Proteção", "Segurança", "Planejamento", "Futuro"],
+        transicao: "É justamente essa tranquilidade que buscamos gerar.",
+        procurar: ["Tranquilidade", "Legado", "Clareza em números", "Proteção"],
       },
     },
   },
@@ -775,18 +770,15 @@ const GOALS: Goal[] = [
         procurar: ["Tempo", "Família", "Sonhos", "Qualidade de vida"],
       },
       necessidade: {
-        principal: "Faz sentido validar se vocês estão utilizando a melhor estratégia para alcançar esses objetivos familiares?",
+        principal: "Faria sentido validar se vocês estão utilizando o caminho mais eficiente para construir os sonhos da família?",
+        simLabel: "Se responder SIM",
         sim: [
-          "O que mais gostariam de validar?",
-          "Existe algum objetivo prioritário?",
-          "Gostariam de visualizar cenários?",
+          "Como seria ter mais clareza sobre os próximos passos?",
+          "Quanto valor teria acelerar alguns desses objetivos?",
+          "O que mudaria para a família se essas conquistas acontecessem antes?",
         ],
-        nao: [
-          "Existe algum risco em continuar sem essa validação?",
-          "Como saberão se estão no melhor caminho?",
-        ],
-        transicao: "Talvez valha a pena colocar esses objetivos em números para trazer mais clareza e previsibilidade.",
-        procurar: ["Clareza", "Planejamento", "União", "Construção familiar"],
+        transicao: "Esse é exatamente o tipo de reflexão que fazemos na entrevista.",
+        procurar: ["Clareza", "Aceleração", "União familiar", "Eficiência"],
       },
     },
   },
@@ -845,18 +837,15 @@ const GOALS: Goal[] = [
         procurar: ["Família", "Sonhos", "Conforto", "Frustração"],
       },
       necessidade: {
-        principal: "Faz sentido validar se existe uma forma mais eficiente de chegar nesse objetivo?",
+        principal: "Se fosse possível descobrir qual o caminho mais eficiente para conquistar esse imóvel e até antecipar essa conquista, faria sentido entender isso?",
+        simLabel: "Se responder SIM",
         sim: [
-          "O que gostaria de validar?",
-          "O que mais gera dúvida?",
-          "Existe algum prazo que gostaria de confirmar?",
+          "O que significaria conquistar esse imóvel antes do previsto?",
+          "Como seria ter clareza sobre o valor exato necessário e o prazo real?",
+          "Quanto valor teria saber que está utilizando a estratégia mais eficiente?",
         ],
-        nao: [
-          "Você acredita que já conhece todas as possibilidades?",
-          "Existe algum risco em não revisar essa estratégia?",
-        ],
-        transicao: "Talvez valha a pena entender se o caminho atual realmente é o mais eficiente.",
-        procurar: ["Curiosidade", "Desejo de acelerar", "Clareza"],
+        transicao: "É exatamente esse tipo de clareza que construímos na entrevista.",
+        procurar: ["Antecipação", "Clareza de valor e prazo", "Estratégia eficiente"],
       },
     },
   },
@@ -912,17 +901,15 @@ const GOALS: Goal[] = [
         procurar: ["Desconforto", "Tempo", "Rotina", "Frustração"],
       },
       necessidade: {
-        principal: "Faz sentido validar se existe uma forma mais eficiente de atingir esse objetivo?",
+        principal: "Faria sentido descobrir a forma mais inteligente de chegar nesse carro sem comprometer seus outros objetivos?",
+        simLabel: "Se responder SIM",
         sim: [
-          "O que gostaria de entender melhor?",
-          "Existe algum cenário que gostaria de comparar?",
+          "Quanto valor teria enxergar diferentes cenários antes de tomar uma decisão?",
+          "Como seria ter segurança de que essa compra está alinhada com seus objetivos maiores?",
+          "Se existisse uma forma mais eficiente, gostaria de conhecê-la?",
         ],
-        nao: [
-          "Você acredita que o caminho atual já é o ideal?",
-          "Existe algum risco em nunca validar isso?",
-        ],
-        transicao: "Talvez valha a pena colocar isso em números para entender todas as possibilidades.",
-        procurar: ["Curiosidade", "Clareza", "Comparação de cenários"],
+        transicao: "A entrevista serve justamente para comparar possibilidades e tomar decisões melhores.",
+        procurar: ["Cenários comparados", "Segurança", "Eficiência", "Equilíbrio entre objetivos"],
       },
     },
   },
@@ -983,18 +970,15 @@ const GOALS: Goal[] = [
         procurar: ["Emoção", "Família", "Tempo", "Experiências perdidas"],
       },
       necessidade: {
-        principal: "Faz sentido construir uma estratégia para transformar essa viagem em uma meta concreta?",
+        principal: "Faria sentido transformar essa viagem em um plano concreto ao invés de deixá-la depender das circunstâncias?",
+        simLabel: "Se responder SIM",
         sim: [
-          "O que gostaria de validar?",
-          "Existe alguma data que gostaria de confirmar?",
-          "Gostaria de entender o valor necessário para isso?",
+          "Como seria saber exatamente quanto precisa acumular?",
+          "Quanto valor teria ter uma data real para essa experiência acontecer?",
+          "O que mudaria ao transformar esse sonho em um projeto estruturado?",
         ],
-        nao: [
-          "Você acredita que ela acontecerá naturalmente?",
-          "Existe algum risco de continuar adiando indefinidamente?",
-        ],
-        transicao: "Talvez valha a pena entender como transformar esse sonho em um plano com prazo e números definidos.",
-        procurar: ["Comprometimento", "Clareza", "Prazo", "Planejamento"],
+        transicao: "É isso que buscamos construir na entrevista.",
+        procurar: ["Plano concreto", "Data real", "Projeto estruturado"],
       },
     },
   },
@@ -1053,18 +1037,15 @@ const GOALS: Goal[] = [
         procurar: ["Arrependimento", "Oportunidade perdida", "Realização pessoal"],
       },
       necessidade: {
-        principal: "Faz sentido entender qual estrutura financeira seria necessária para transformar esse projeto em realidade?",
+        principal: "Faria sentido descobrir exatamente o que seria necessário para transformar essa ideia em realidade?",
+        simLabel: "Se responder SIM",
         sim: [
-          "O que mais gostaria de validar?",
-          "Existe um prazo desejado?",
-          "Gostaria de saber quanto patrimônio precisaria acumular?",
+          "Quanto valor teria ter clareza dos números antes de correr riscos?",
+          "Como seria tomar decisões com mais segurança?",
+          "Se existisse um caminho mais rápido para tirar isso do papel, gostaria de enxergá-lo?",
         ],
-        nao: [
-          "Você acredita que já possui todas as respostas necessárias?",
-          "Existe algum risco em continuar sem essa clareza?",
-        ],
-        transicao: "Talvez valha a pena colocar isso em números para transformar uma ideia em um plano.",
-        procurar: ["Clareza", "Execução", "Planejamento", "Próximo passo"],
+        transicao: "A entrevista existe para trazer essa clareza.",
+        procurar: ["Clareza nos números", "Segurança", "Velocidade de execução"],
       },
     },
   },
@@ -1119,17 +1100,15 @@ const GOALS: Goal[] = [
         procurar: ["Tempo perdido", "Potencial desperdiçado", "Frustração futura"],
       },
       necessidade: {
-        principal: "Faz sentido organizar tudo para ter mais clareza e previsibilidade?",
+        principal: "Como seria ter total clareza sobre para onde seu dinheiro está indo e se ele está realmente aproximando você dos seus objetivos?",
+        simLabel: "Se responder SIM",
         sim: [
-          "O que mais gostaria de entender?",
-          "Onde sente maior necessidade de organização?",
+          "Quanto valor teria enxergar oportunidades que hoje passam despercebidas?",
+          "Como seria tomar decisões financeiras com mais confiança?",
+          "O que mudaria se você tivesse previsibilidade sobre sua evolução financeira?",
         ],
-        nao: [
-          "Existe algum risco em continuar sem essa clareza?",
-          "Como saberá se está evoluindo?",
-        ],
-        transicao: "Talvez valha a pena transformar sua vida financeira em algo mensurável e previsível.",
-        procurar: ["Clareza", "Organização", "Controle"],
+        transicao: "Esse costuma ser um dos maiores ganhos percebidos pelos clientes.",
+        procurar: ["Clareza", "Oportunidades", "Confiança", "Previsibilidade"],
       },
     },
   },
@@ -1183,16 +1162,15 @@ const GOALS: Goal[] = [
         procurar: ["Tempo", "Arrependimento", "Oportunidades"],
       },
       necessidade: {
-        principal: "Faz sentido descobrir quais objetivos realmente fazem sentido para você?",
+        principal: "Faria sentido descobrir quais objetivos realmente fazem sentido para a sua vida e enxergar o caminho mais inteligente para construí-los?",
+        simLabel: "Se responder SIM",
         sim: [
-          "O que gostaria de construir?",
-          "O que seria prioridade?",
+          "Quanto valor teria ter clareza sobre o que você realmente quer construir?",
+          "Como seria começar a investir com um propósito definido?",
+          "O que mudaria ao ter uma direção concreta para seguir?",
         ],
-        nao: [
-          "Como saberá se está evoluindo financeiramente?",
-        ],
-        transicao: "Talvez o primeiro passo não seja investir melhor, mas descobrir para onde quer ir.",
-        procurar: ["Clareza", "Propósito", "Direção"],
+        transicao: "É exatamente esse ponto de partida que construímos na entrevista.",
+        procurar: ["Clareza", "Propósito", "Direção", "Próximos passos"],
       },
     },
   },
@@ -1242,16 +1220,15 @@ const GOALS: Goal[] = [
         procurar: ["Confiança excessiva", "Falta de revisão"],
       },
       necessidade: {
-        principal: "Faz sentido validar se tudo continua alinhado aos seus objetivos atuais?",
+        principal: "Faria sentido validar se tudo continua alinhado aos seus objetivos atuais e identificar possíveis oportunidades que ainda não estão sendo aproveitadas?",
+        simLabel: "Se responder SIM",
         sim: [
-          "O que gostaria de revisar?",
-          "Existe alguma dúvida atual?",
+          "Quanto valor teria receber uma segunda visão especializada?",
+          "Como seria confirmar que tudo está no caminho ideal?",
+          "Se existisse uma melhoria relevante, você gostaria de conhecê-la?",
         ],
-        nao: [
-          "Existe algum risco em nunca buscar uma segunda visão?",
-        ],
-        transicao: "Uma segunda visão não substitui o trabalho atual. Ela ajuda a validar se tudo continua fazendo sentido.",
-        procurar: ["Abertura", "Curiosidade", "Validação"],
+        transicao: "A ideia não é substituir nada. É validar e fortalecer o que já existe.",
+        procurar: ["Segunda visão", "Validação", "Oportunidades", "Alinhamento"],
       },
     },
   },
@@ -1416,7 +1393,7 @@ function Index() {
       const matches: { quadrant: Quadrant; script: Script }[] = [];
       for (const quad of QUADRANTS) {
         const s = g.blocks[quad.key];
-        const haystack = [s.principal, s.transicao, ...s.sim, ...s.nao, ...s.procurar].join(" \n ").toLowerCase();
+        const haystack = [s.principal, s.transicao, ...s.sim, ...(s.nao ?? []), ...s.procurar].join(" \n ").toLowerCase();
         if (titleHit || haystack.includes(q)) {
           matches.push({ quadrant: quad.key, script: s });
         }
@@ -2469,6 +2446,14 @@ function GoalBlocks({
                   <span className="text-muted-foreground font-medium normal-case tracking-normal">· {SPIN_OBJECTIVES[quad.key]}</span>
                 </div>
               )}
+              {!callMode && quad.key === "necessidade" && (
+                <div className="mb-2 rounded-xl border border-[var(--success)]/30 bg-[var(--success)]/5 px-3 py-2 text-[12px] leading-snug text-[var(--navy)]">
+                  <p className="font-bold text-[var(--success)] uppercase tracking-wide text-[11px]">🟢 Regra da Necessidade</p>
+                  <p className="mt-1 font-medium">
+                    Pare de explorar problemas. Faça o cliente <strong>visualizar ganhos</strong>: clareza, previsibilidade, velocidade, segurança e tranquilidade — até desejar a Entrevista Estratégica Financeira.
+                  </p>
+                </div>
+              )}
               <ScriptCard
                 fullKey={key}
                 script={script}
@@ -2636,12 +2621,14 @@ function ScriptCard({
             tone="success"
             callMode={callMode}
           />
-          <ExplorationList
-            label={`❌ ${naoLabel}`}
-            items={script.nao}
-            tone="danger"
-            callMode={callMode}
-          />
+          {script.nao && script.nao.length > 0 && (
+            <ExplorationList
+              label={`❌ ${naoLabel}`}
+              items={script.nao}
+              tone="danger"
+              callMode={callMode}
+            />
+          )}
           <div className="rounded-lg border border-[var(--brand)]/30 p-3" style={{ backgroundColor: "color-mix(in oklab, var(--brand) 8%, white)" }}>
             <p className="text-[11px] font-bold uppercase tracking-wide text-[var(--brand)]">🎤 Transição</p>
             <p className={`mt-1 font-medium text-[var(--navy)] leading-snug ${callMode ? "text-base" : "text-sm"}`}>"{script.transicao}"</p>
