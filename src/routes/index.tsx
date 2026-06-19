@@ -1421,7 +1421,7 @@ function Index() {
       const matches: { quadrant: Quadrant; script: Script }[] = [];
       for (const quad of QUADRANTS) {
         const s = g.blocks[quad.key];
-        const haystack = [s.principal, s.transicao, ...s.sim, ...s.nao, ...s.procurar].join(" \n ").toLowerCase();
+        const haystack = [s.principal, s.transicao, ...s.sim, ...(s.nao ?? []), ...s.procurar].join(" \n ").toLowerCase();
         if (titleHit || haystack.includes(q)) {
           matches.push({ quadrant: quad.key, script: s });
         }
