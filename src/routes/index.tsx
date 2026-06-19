@@ -1623,6 +1623,80 @@ function Index() {
           )}
 
           {!searchResults && (
+            <section id="abertura" aria-labelledby="friend-title" className="scroll-mt-28">
+              <div className="relative overflow-hidden rounded-3xl border-2 border-[var(--brand)] bg-gradient-to-br from-[#0a1733] via-[var(--navy)] to-[#1a2e5c] p-6 sm:p-10 text-white shadow-2xl shadow-[var(--brand)]/20">
+                <div className="pointer-events-none absolute -top-32 -right-20 h-80 w-80 rounded-full bg-[var(--brand)]/30 blur-3xl" />
+                <div className="pointer-events-none absolute -bottom-32 -left-20 h-80 w-80 rounded-full bg-[var(--success)]/15 blur-3xl" />
+                <div className="relative">
+                  <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium tracking-wide text-white/80 backdrop-blur">
+                    <span aria-hidden>🤝</span>
+                    Começo da ligação · antes dos objetivos
+                  </div>
+                  <div className="mt-5 flex items-start gap-4">
+                    <div aria-hidden className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--success)] to-[#3ccf6d] text-[var(--navy)] shadow-lg shadow-[var(--success)]/40">
+                      <Handshake className="h-6 w-6" />
+                    </div>
+                    <div>
+                      <h2 id="friend-title" className="text-2xl sm:text-3xl font-bold tracking-tight">
+                        Ligação para Amigo
+                      </h2>
+                      <p className="mt-2 text-base sm:text-lg text-white/80 leading-snug">
+                        Conduza os primeiros minutos da ligação com naturalidade, autoridade e direcionamento para os objetivos.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="mt-8 relative">
+                    <div aria-hidden className="absolute left-[19px] top-4 bottom-4 w-0.5 bg-gradient-to-b from-[var(--brand)] via-[var(--success)] to-[var(--brand)]/40 sm:left-[23px]" />
+                    <ol className="relative space-y-6">
+                      {FRIEND_CALL_STEPS.map((step, i) => (
+                        <li key={step.id} className="grid grid-cols-[auto_1fr] gap-4 sm:gap-6">
+                          <span className="relative z-10 flex h-10 w-10 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[var(--brand)] to-[#5a8cff] text-sm sm:text-base font-extrabold text-white shadow-lg shadow-[var(--brand)]/40">
+                            {step.number}
+                          </span>
+                          <div className="rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-6 backdrop-blur transition hover:border-[var(--success)]/40 hover:bg-white/10 motion-reduce:transition-none">
+                            <div className="flex flex-col gap-1">
+                              <h3 className="text-lg sm:text-xl font-bold tracking-tight">{step.title}</h3>
+                              {step.subtitle && (
+                                <p className="text-xs sm:text-sm font-semibold uppercase tracking-wide text-[var(--success)]">{step.subtitle}</p>
+                              )}
+                            </div>
+                            {step.quote && (
+                              <blockquote className="mt-4 border-l-4 border-[var(--success)] pl-4 text-sm sm:text-base font-medium leading-relaxed text-white/95 italic">
+                                “{step.quote}”
+                              </blockquote>
+                            )}
+                            {step.bullets && (
+                              <ul className="mt-4 space-y-2">
+                                {step.bullets.map((b, idx) => (
+                                  <li key={idx} className="flex items-start gap-2 text-sm sm:text-base leading-relaxed text-white/85">
+                                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--success)]" />
+                                    <span>{b}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            )}
+                            {step.tip && (
+                              <p className="mt-4 rounded-xl border border-[var(--warn)]/30 bg-[var(--warn)]/10 p-3 text-xs sm:text-sm font-medium text-[var(--warn)]">
+                                💡 {step.tip}
+                              </p>
+                            )}
+                            {step.note && (
+                              <p className="mt-4 rounded-xl border border-[var(--success)]/30 bg-[var(--success)]/10 p-3 text-xs sm:text-sm font-medium text-white/90">
+                                ✅ {step.note}
+                              </p>
+                            )}
+                          </div>
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
+                </div>
+              </div>
+            </section>
+          )}
+
+          {!searchResults && (
             <section id="objetivos" aria-labelledby="goals-title" className="scroll-mt-28">
               <div className="flex items-end justify-between gap-4 mb-6">
                 <div>
