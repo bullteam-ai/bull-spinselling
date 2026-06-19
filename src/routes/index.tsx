@@ -354,7 +354,7 @@ const QUADRANT_EXPLANATION: Record<Quadrant, string> = {
   implicacao:
     "Essa pergunta amplia a percepção do custo de não agir. Tira a decisão do campo puramente racional e a leva para o campo emocional — onde a maioria das decisões realmente acontece.",
   necessidade:
-    "Essa pergunta gera curiosidade e abre espaço para a ajuda. Em vez de oferecer uma solução, convida o cliente a validar algo que talvez nunca tenha analisado profundamente.",
+    "Essa pergunta não explora mais problemas. Ela faz o cliente visualizar ganhos — clareza, previsibilidade, velocidade, segurança e tranquilidade — até desejar participar da Entrevista Estratégica Financeira.",
 };
 
 const EXPLANATIONS: Record<string, string> = {
@@ -379,24 +379,29 @@ const EXPLANATIONS: Record<string, string> = {
     "Cria dúvida sem atacar o assessor. Abre espaço para uma segunda visão.",
 
   // Necessidades → curiosidade e abertura
-  "Faz sentido validar se o caminho atual é realmente o mais eficiente?":
-    "Cria curiosidade sem vender. Convida o cliente a verificar algo que nunca analisou.",
-  "Faria sentido validar se o caminho atual realmente entrega a aposentadoria que você deseja?":
-    "Reposiciona como validação, não crítica. O cliente não precisa admitir erro.",
-  "Faz sentido validar se existe uma forma mais eficiente de chegar nesse objetivo?":
-    "Abre espaço para comparação sem confronto. O cliente descobre que pode existir algo melhor.",
-  "Faz sentido validar se existe uma forma mais eficiente de atingir esse objetivo?":
-    "Oferece clareza sem vender produto. Clareza é irresistível.",
-  "Faz sentido construir uma estratégia para transformar essa viagem em uma meta concreta?":
-    "Tira o sonho do 'um dia' e coloca na agenda. Meta com prazo vira compromisso.",
-  "Faz sentido entender qual estrutura financeira seria necessária para transformar esse projeto em realidade?":
-    "Move o cliente da contemplação para a execução. Troca vontade por número.",
-  "Faz sentido organizar tudo para ter mais clareza e previsibilidade?":
-    "Ninguém recusa clareza. 'Organizar' desarma e abre porta para trabalho profundo.",
-  "Faz sentido descobrir quais objetivos realmente fazem sentido para você?":
-    "O primeiro passo não é investir melhor. É saber para onde ir.",
-  "Faz sentido validar se tudo continua alinhado aos seus objetivos atuais?":
-    "Posiciona a entrevista como complemento, não ameaça. Permite segunda visão.",
+  // Necessidades → desejo pela Entrevista (visualizar ganhos, não explorar problemas)
+  "Se você pudesse ter clareza exata de quando alcançará sua independência financeira e o que precisa fazer para chegar lá mais rápido, faria sentido entender isso?":
+    "Vende o ganho da clareza e a possibilidade de antecipar a liberdade. O cliente sai querendo enxergar o próprio mapa.",
+  "Faria sentido descobrir hoje qual renda você terá no futuro e se ela será suficiente para manter o padrão de vida que deseja?":
+    "Oferece previsibilidade e segurança. Transforma a entrevista em uma forma de evitar surpresas futuras.",
+  "Se fosse possível descobrir qual o caminho mais eficiente para conquistar esse imóvel e até antecipar essa conquista, faria sentido entender isso?":
+    "Conecta o imóvel a velocidade e eficiência. O cliente passa a desejar a entrevista para acelerar a conquista.",
+  "Faria sentido descobrir a forma mais inteligente de chegar nesse carro sem comprometer seus outros objetivos?":
+    "Vende equilíbrio e inteligência financeira. A entrevista vira a forma de decidir sem abrir mão de nada.",
+  "Faria sentido transformar essa viagem em um plano concreto ao invés de deixá-la depender das circunstâncias?":
+    "Substitui esperança por previsibilidade. O sonho ganha data, valor e segurança.",
+  "Faria sentido descobrir exatamente o que seria necessário para transformar essa ideia em realidade?":
+    "Vende clareza e velocidade de execução. O cliente passa a desejar a entrevista para tirar o projeto do papel.",
+  "Como seria ter total clareza sobre para onde seu dinheiro está indo e se ele está realmente aproximando você dos seus objetivos?":
+    "Vende clareza e confiança. Quem visualiza o destino raramente recusa a entrevista que mostra o caminho.",
+  "Faria sentido descobrir quais objetivos realmente fazem sentido para a sua vida e enxergar o caminho mais inteligente para construí-los?":
+    "Vende direção e propósito. A entrevista vira o ponto de partida para parar de andar sem destino.",
+  "Faria sentido validar se tudo continua alinhado aos seus objetivos atuais e identificar possíveis oportunidades que ainda não estão sendo aproveitadas?":
+    "Posiciona a entrevista como ganho — não substituição. Segunda visão que pode revelar oportunidades.",
+  "Faria sentido saber exatamente o que precisa ser construído hoje para garantir as oportunidades que deseja oferecer aos seus filhos?":
+    "Vende tranquilidade e legado. Transforma planejamento em ato de amor mensurável.",
+  "Faria sentido validar se vocês estão utilizando o caminho mais eficiente para construir os sonhos da família?":
+    "Vende união e aceleração. A entrevista vira uma decisão tomada em conjunto, com mais clareza.",
 
   // Problemas → reconhecer lacuna sem confronto
   "Hoje você sente que possui um plano claro para alcançar essa independência?":
