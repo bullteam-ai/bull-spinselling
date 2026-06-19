@@ -1203,17 +1203,20 @@ const GOALS: Goal[] = [
         procurar: ["Planejamento", "Frequência", "Profundidade"],
       },
       problema: {
-        principal: "Hoje você sabe qual a probabilidade de atingir cada um dos seus objetivos?",
+        principal: "Você tem 100% de certeza de que hoje não existe nenhuma estratégia melhor ou oportunidade relevante que ainda não tenha sido considerada?",
+        simLabel: "Se responder SIM",
+        naoLabel: "Se responder NÃO",
         sim: [
-          "Como essa probabilidade foi calculada?",
-          "Quando foi revisada?",
+          "O que sustenta essa convicção?",
+          "Quando foi a última revisão profunda?",
+          "Você costuma buscar uma segunda visão?",
         ],
         nao: [
-          "Como mede se está no caminho certo?",
-          "Existe alguma projeção formal?",
+          "Existe algo que gostaria de validar?",
+          "Existe alguma área que gera dúvida atualmente?",
         ],
-        transicao: "Muitas pessoas possuem investimentos, mas não possuem planejamento.",
-        procurar: ["Falta de projeção", "Falta de acompanhamento"],
+        transicao: "A questão não é ter assessor ou não. A questão é saber se tudo continua alinhado ao cenário atual.",
+        procurar: ["Falta de revisão profunda", "Falta de segunda visão", "Oportunidades não consideradas"],
       },
       implicacao: {
         principal: "E se algo importante estivesse desalinhado hoje, como você descobriria?",
