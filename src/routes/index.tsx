@@ -297,31 +297,31 @@ const isHighConversion = (q: string) =>
 // e gerar desejo de participar da Entrevista Estratégica Financeira.
 const KILLER_PRINCIPALS = new Set<string>([
   // Independência Financeira
-  "Hoje você sente que possui um plano claro para alcançar essa independência?",
+  "Você tem 100% de certeza de que as decisões financeiras e investimentos que está tomando hoje são o caminho mais eficiente para alcançar sua independência financeira?",
   "E se essa independência financeira acontecer 10 anos depois do que você gostaria?",
   "Se você pudesse ter clareza exata de quando alcançará sua independência financeira e o que precisa fazer para chegar lá mais rápido, faria sentido entender isso?",
   // Aposentadoria
-  "Hoje você acredita que sua estratégia atual é suficiente para entregar essa aposentadoria?",
+  "Você tem 100% de certeza de que a estratégia atual vai gerar a aposentadoria que deseja e no prazo que imagina?",
   "E se você precisasse trabalhar 10 anos além do que imagina hoje?",
   "Faria sentido descobrir hoje qual renda você terá no futuro e se ela será suficiente para manter o padrão de vida que deseja?",
   // Compra de Casa
-  "Hoje você sente que existe um plano claro para comprar esse imóvel dentro do prazo desejado?",
+  "Você tem 100% de certeza de que a estratégia que utiliza hoje é a melhor disponível para conquistar esse imóvel no menor prazo possível e com o menor custo possível?",
   "E se essa compra atrasar cinco anos?",
   "Se fosse possível descobrir qual o caminho mais eficiente para conquistar esse imóvel e até antecipar essa conquista, faria sentido entender isso?",
   // Compra de Carro
-  "Hoje você já sabe exatamente como pretende viabilizar essa compra?",
+  "Você tem 100% de certeza de que a forma que pretende comprar esse carro é a mais inteligente financeiramente?",
   "E se essa compra atrasar mais alguns anos?",
   "Faria sentido descobrir a forma mais inteligente de chegar nesse carro sem comprometer seus outros objetivos?",
   // Viagens
-  "Hoje você possui um planejamento específico para realizar essa viagem?",
+  "Você tem 100% de certeza de que essa viagem acontecerá no prazo desejado mantendo exatamente o que faz hoje?",
   "E se essa viagem não acontecer nos próximos 5 anos?",
   "Faria sentido transformar essa viagem em um plano concreto ao invés de deixá-la depender das circunstâncias?",
   // Empreendedorismo
-  "Hoje você já possui clareza financeira sobre o que esse projeto exige?",
+  "Você tem 100% de certeza de que conhece todas as informações financeiras necessárias para tirar esse projeto do papel com segurança?",
   "E se esse projeto continuar parado pelos próximos 5 anos?",
   "Faria sentido descobrir exatamente o que seria necessário para transformar essa ideia em realidade?",
   // Organização Financeira
-  "Você sente que o resultado financeiro que possui hoje reflete o esforço que faz?",
+  "Você tem 100% de certeza de que seu dinheiro está sendo direcionado da forma mais eficiente possível para os seus objetivos?",
   "E se nada mudar nos próximos 10 anos?",
   "Como seria ter total clareza sobre para onde seu dinheiro está indo e se ele está realmente aproximando você dos seus objetivos?",
   // Cliente Sem Objetivo
@@ -332,12 +332,13 @@ const KILLER_PRINCIPALS = new Set<string>([
   "Seu assessor conhece profundamente todos os seus objetivos financeiros?",
   "E se algo importante estivesse desalinhado hoje, como você descobriria?",
   "Faria sentido validar se tudo continua alinhado aos seus objetivos atuais e identificar possíveis oportunidades que ainda não estão sendo aproveitadas?",
+  "Você tem 100% de certeza de que hoje não existe nenhuma estratégia melhor ou oportunidade relevante que ainda não tenha sido considerada?",
   // Futuro dos Filhos
-  "Hoje existe algum planejamento específico para ajudar seus filhos a alcançarem esses objetivos?",
+  "Você tem 100% de certeza de que, mantendo exatamente o que faz hoje, conseguirá proporcionar todas as oportunidades que deseja para seus filhos?",
   "E se chegar o momento em que seu filho precisar dessa ajuda e ela não estiver disponível?",
   "Faria sentido saber exatamente o que precisa ser construído hoje para garantir as oportunidades que deseja oferecer aos seus filhos?",
   // Casamento e Projetos Familiares
-  "Hoje vocês possuem um plano financeiro estruturado para alcançar esses objetivos?",
+  "Você tem 100% de certeza de que a estratégia financeira atual é a melhor possível para acelerar os projetos da sua família?",
   "E se esses objetivos familiares demorarem muito mais tempo para acontecer?",
   "Faria sentido validar se vocês estão utilizando o caminho mais eficiente para construir os sonhos da família?",
 ]);
