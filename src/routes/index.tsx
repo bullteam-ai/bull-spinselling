@@ -279,6 +279,26 @@ const EXPLANATIONS: Record<string, string> = {
     "Força o cliente a sair da rotina mental e desenhar o futuro. Quase sempre, o cenário que ele descreve é diferente do que ele deseja.",
   "Você acredita que está no melhor caminho possível ou apenas no caminho que conhece?":
     "Reduz a resistência natural do cliente. Em vez de confrontar a estratégia atual, cria abertura para novas possibilidades. O cliente não precisa admitir que está errado — apenas considerar que pode existir uma alternativa melhor.",
+
+  // Futuro dos Filhos
+  "Quando você pensa no futuro dos seus filhos, o que mais gostaria de proporcionar para eles?":
+    "Abre a conversa pelo tema mais emocional possível: os filhos. Quando um pai ou mãe verbaliza o que deseja para os filhos, cria um compromisso emocional implícito que torna a continuidade da conversa natural e relevante.",
+  "Hoje existe algum planejamento específico para ajudar seus filhos a alcançarem esses objetivos?":
+    "Diferencia 'desejo' de 'estrutura'. A maioria dos pais tem sonhos, mas poucos têm números. Ao reconhecer essa lacuna, o cliente percebe que amar não basta — é preciso planejar.",
+  "E se chegar o momento em que seu filho precisar dessa ajuda e ela não estiver disponível?":
+    "Ativa a dor da irresponsabilidade percebida. Nenhum pai quer sentir que poderia ter feito mais. A pergunta transforma o planejamento financeiro em ato de amor concreto.",
+  "Faz sentido entender quanto seria necessário para garantir essas oportunidades aos seus filhos?":
+    "Move o sentimento para a matemática. Quando o sonho ganha um número, deixa de ser abstrato e vira meta. O cliente passa a enxergar que proteger o futuro dos filhos é possível e mensurável.",
+
+  // Casamento e Projetos Familiares
+  "Quando você pensa no seu casamento e na sua família, quais são os principais objetivos que gostaria de construir juntos?":
+    "Coloca o casal como protagonista da conversa. Quando ambos compartilham um sonho, a decisão deixar de ser individual e passa a ser familiar — aumentando drasticamente a motivação para agendar.",
+  "Hoje vocês possuem um plano financeiro estruturado para alcançar esses objetivos?":
+    "Expõe a desconexão entre sonhos compartilhados e estratégia compartilhada. Muitos casais conversam sobre o futuro, mas nunca sentaram para planejar juntos. Essa pergunta cria o espaço para isso.",
+  "E se esses objetivos familiares demorarem muito mais tempo para acontecer?":
+    "Conecta o tempo a experiências perdidas. Não é apenas sobre dinheiro — é sobre construir memórias juntos. O atraso financeiro vira atraso de vida, e isso é insuportável para quem ama.",
+  "Faz sentido validar se vocês estão utilizando a melhor estratégia para alcançar esses objetivos familiares?":
+    "Oferece uma oportunidade de união. Em vez de um dos parceiros parecer desorganizado, ambos são convidados a validar juntos — transformando a entrevista em experiência de casal, não em julgamento.",
 };
 
 const getExplanation = (principal: string, quadrant: Quadrant) =>
