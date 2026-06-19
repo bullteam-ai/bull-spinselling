@@ -2162,7 +2162,7 @@ function Index() {
 
                   <div className="mt-8 space-y-6">
                     {/* 1️⃣ Tirar o Doce */}
-                    <div className="rounded-2xl border border-white/10 bg-white/5 p-5 sm:p-6 backdrop-blur">
+                    <div id="fechamento-agendamento" className="scroll-mt-44 rounded-2xl border border-white/10 bg-white/5 p-5 sm:p-6 backdrop-blur">
                       <div className="flex items-center gap-3">
                         <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--brand)] text-lg shadow-lg shadow-[var(--brand)]/30">🍬</span>
                         <div>
@@ -2239,7 +2239,7 @@ function Index() {
                     </div>
 
                     {/* 4️⃣ Agendar com Qualidade */}
-                    <div className="rounded-2xl border border-white/10 bg-white/5 p-5 sm:p-6 backdrop-blur">
+                    <div id="fechamento-compromisso" className="scroll-mt-44 rounded-2xl border border-white/10 bg-white/5 p-5 sm:p-6 backdrop-blur">
                       <div className="flex items-center gap-3">
                         <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--success)] text-lg shadow-lg shadow-[var(--success)]/30">🤝</span>
                         <div>
@@ -2312,7 +2312,7 @@ function Index() {
                     </div>
 
                     {/* 7️⃣ Resumo do Processo */}
-                    <div className="rounded-2xl border border-white/10 bg-white/5 p-5 sm:p-6 backdrop-blur">
+                    <div id="fechamento-comparecimento" className="scroll-mt-44 rounded-2xl border border-white/10 bg-white/5 p-5 sm:p-6 backdrop-blur">
                       <div className="flex items-center gap-3">
                         <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--success)] text-lg shadow-lg shadow-[var(--success)]/30">📋</span>
                         <div>
