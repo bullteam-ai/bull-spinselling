@@ -1314,6 +1314,67 @@ function Index() {
   const toggleQuad = (q: Quadrant) =>
     setActiveQuads((cur) => (cur.includes(q) ? cur.filter((x) => x !== q) : [...cur, q]));
 
+  // Scroll-spy: detect which journey section is currently in view
+  const [activeSection, setActiveSection] = useState<string>("abertura");
+  useEffect(() => {
+    const ids = [
+      "abertura",
+      "objetivos",
+      "sinais",
+      "fechamento-agendamento",
+      "fechamento-compromisso",
+      "fechamento-comparecimento",
+    ];
+    const els = ids
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => Boolean(el));
+    if (els.length === 0) return;
+    const obs = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        if (visible[0]) setActiveSection((visible[0].target as HTMLElement).id);
+      },
+      { rootMargin: "-200px 0px -60% 0px", threshold: 0 }
+    );
+    els.forEach((el) => obs.observe(el));
+    return () => obs.disconnect();
+  }, [openGoal]);
+
+  const activeStages = useMemo<number[]>(() => {
+    switch (activeSection) {
+      case "abertura":
+        return [1, 2];
+      case "objetivos":
+        return openGoal ? [4] : [3];
+      case "sinais":
+        return [5];
+      case "fechamento-agendamento":
+        return [6];
+      case "fechamento-compromisso":
+        return [7];
+      case "fechamento-comparecimento":
+        return [8];
+      default:
+        return [1];
+    }
+  }, [activeSection, openGoal]);
+
+  const jumpToStage = (stage: number) => {
+    const map: Record<number, string> = {
+      1: "abertura",
+      2: "abertura",
+      3: "objetivos",
+      4: "objetivos",
+      5: "sinais",
+      6: "fechamento-agendamento",
+      7: "fechamento-compromisso",
+      8: "fechamento-comparecimento",
+    };
+    scrollToId(map[stage]);
+  };
+
   const toggleGoal = (id: string) => {
     setOpenGoal((cur) => (cur === id ? null : id));
     // Garantir que o roteiro fique visível logo abaixo do card tocado
