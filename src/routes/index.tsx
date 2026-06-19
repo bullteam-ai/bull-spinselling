@@ -1985,36 +1985,6 @@ function Index() {
             </section>
           )}
 
-          {!searchResults && (
-            <section id="agendamento" aria-labelledby="booking-title" className="scroll-mt-28">
-              <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[var(--navy)] to-[#0b1c3a] p-6 sm:p-10 text-white shadow-xl">
-                <div className="pointer-events-none absolute -top-20 -right-20 h-72 w-72 rounded-full bg-[var(--success)]/30 blur-3xl" />
-                <div className="relative">
-                  <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-3 py-1 text-xs font-medium text-white/80 backdrop-blur">
-                    <span className="h-1.5 w-1.5 rounded-full bg-[var(--success)]" /> Fechar agendamento
-                  </div>
-                  <h2 id="booking-title" className="mt-4 text-2xl sm:text-3xl font-bold tracking-tight">
-                    📅 Transição para Agendamento
-                  </h2>
-                  <p className="mt-2 text-white/70 max-w-2xl">
-                    Leia o script abaixo com firmeza e ofereça os dois horários. Não dê espaço para o "vou pensar".
-                  </p>
-                  <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-5 sm:p-6 text-white/90 leading-relaxed whitespace-pre-line">
-                    {SCRIPT}
-                  </div>
-                  <button
-                    type="button"
-                    onClick={copyScript}
-                    aria-live="polite"
-                    className="mt-5 inline-flex min-h-12 items-center gap-2 rounded-xl bg-[var(--success)] px-5 py-3 text-sm font-semibold text-[var(--navy)] shadow-lg shadow-[var(--success)]/25 transition hover:brightness-105 active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100"
-                  >
-                    {copied ? <Check aria-hidden className="h-4 w-4" /> : <ClipboardCopy aria-hidden className="h-4 w-4" />}
-                    {copied ? "Script copiado!" : "📋 Copiar Script"}
-                  </button>
-                </div>
-              </div>
-            </section>
-          )}
         </div>
 
         <aside aria-label="Painel de apoio" className="mt-6 lg:mt-0">
@@ -2069,7 +2039,7 @@ function Index() {
           {[
             { id: "objetivos", icon: Target, label: "Objetivos", emoji: "🏠", action: () => scrollToId("objetivos") },
             { id: "sinais", icon: TrafficCone, label: "Sinais", emoji: "🚦", action: () => scrollToId("sinais") },
-            { id: "agendamento", icon: Sparkles, label: "Agendamento", emoji: "📅", action: () => scrollToId("agendamento") },
+            { id: "fechamento", icon: Sparkles, label: "Agendamento", emoji: "📅", action: () => scrollToId("fechamento") },
             { id: "treinamento", icon: GraduationCap, label: "Treinamento", emoji: "🎓", action: goTraining, highlight: trainingMode },
           ].map((item) => {
             const Icon = item.icon;
