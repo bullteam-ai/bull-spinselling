@@ -1644,7 +1644,7 @@ function Index() {
           )}
 
           {trainingMode && !searchResults && (
-            <section id="treinamento" aria-labelledby="psy-title" className="scroll-mt-28">
+            <section id="treinamento" aria-labelledby="psy-title" className="scroll-mt-44">
               <div className="relative overflow-hidden rounded-3xl border-2 border-[var(--brand)] bg-gradient-to-br from-[#0a1733] via-[var(--navy)] to-[#1a2e5c] p-6 sm:p-10 text-white shadow-2xl shadow-[var(--brand)]/20">
                 <div className="pointer-events-none absolute -top-32 -right-20 h-80 w-80 rounded-full bg-[var(--brand)]/30 blur-3xl" />
                 <div className="pointer-events-none absolute -bottom-32 -left-20 h-80 w-80 rounded-full bg-[var(--success)]/15 blur-3xl" />
@@ -1790,7 +1790,7 @@ function Index() {
           )}
 
           {!searchResults && (
-            <section id="abertura" aria-labelledby="friend-title" className="scroll-mt-28">
+            <section id="abertura" aria-labelledby="friend-title" className="scroll-mt-44">
               <div className="relative overflow-hidden rounded-3xl border-2 border-[var(--brand)] bg-gradient-to-br from-[#0a1733] via-[var(--navy)] to-[#1a2e5c] p-6 sm:p-10 text-white shadow-2xl shadow-[var(--brand)]/20">
                 <div className="pointer-events-none absolute -top-32 -right-20 h-80 w-80 rounded-full bg-[var(--brand)]/30 blur-3xl" />
                 <div className="pointer-events-none absolute -bottom-32 -left-20 h-80 w-80 rounded-full bg-[var(--success)]/15 blur-3xl" />
@@ -1928,7 +1928,7 @@ function Index() {
           )}
 
           {!searchResults && (
-            <section id="objetivos" aria-labelledby="goals-title" className="scroll-mt-28">
+            <section id="objetivos" aria-labelledby="goals-title" className="scroll-mt-44">
               <div className="flex items-end justify-between gap-4 mb-6">
                 <div>
                   <h2 id="goals-title" className="text-2xl sm:text-3xl font-bold tracking-tight text-[var(--navy)]">
@@ -2118,7 +2118,7 @@ function Index() {
           )}
 
           {!searchResults && (
-            <section id="sinais" aria-labelledby="sinais-title" className="scroll-mt-28">
+            <section id="sinais" aria-labelledby="sinais-title" className="scroll-mt-44">
               <div className="rounded-3xl border border-border bg-white p-5 sm:p-7 shadow-sm">
                 <div className="flex items-center gap-3">
                   <div aria-hidden className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--warn)]/15 text-[var(--warn)]">
@@ -2144,7 +2144,7 @@ function Index() {
         )}
 
           {!searchResults && (
-            <section id="fechamento" aria-labelledby="closing-title" className="scroll-mt-28">
+            <section id="fechamento" aria-labelledby="closing-title" className="scroll-mt-44">
               <div className="relative overflow-hidden rounded-3xl border-2 border-[var(--brand)] bg-gradient-to-br from-[var(--navy)] via-[#0e2040] to-[#071225] p-6 sm:p-10 text-white shadow-2xl shadow-[var(--brand)]/20">
                 <div className="pointer-events-none absolute -top-20 -right-20 h-80 w-80 rounded-full bg-[var(--brand)]/25 blur-3xl" />
                 <div className="pointer-events-none absolute -bottom-20 -left-20 h-80 w-80 rounded-full bg-[var(--success)]/20 blur-3xl" />
