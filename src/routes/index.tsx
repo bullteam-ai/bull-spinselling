@@ -1653,8 +1653,8 @@ function Index() {
                 <div className="pointer-events-none absolute -bottom-32 -left-20 h-80 w-80 rounded-full bg-[var(--success)]/15 blur-3xl" />
                 <div className="relative">
                   <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium tracking-wide text-white/80 backdrop-blur">
-                    <span aria-hidden>🤝</span>
-                    Começo da ligação · antes dos objetivos
+                    <span aria-hidden>☎️</span>
+                    Porta de entrada · antes dos objetivos
                   </div>
                   <div className="mt-5 flex items-start gap-4">
                     <div aria-hidden className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--success)] to-[#3ccf6d] text-[var(--navy)] shadow-lg shadow-[var(--success)]/40">
@@ -1662,10 +1662,10 @@ function Index() {
                     </div>
                     <div>
                       <h2 id="friend-title" className="text-2xl sm:text-3xl font-bold tracking-tight">
-                        Ligação para Amigo
+                        Abertura da Ligação
                       </h2>
                       <p className="mt-2 text-base sm:text-lg text-white/80 leading-snug">
-                        Conduza os primeiros minutos da ligação com naturalidade, autoridade e direcionamento para os objetivos.
+                        Roteiro inicial: conexão, autoridade, convite e descoberta — antes de entrar no SPIN.
                       </p>
                     </div>
                   </div>
@@ -1685,25 +1685,89 @@ function Index() {
                                 <p className="text-xs sm:text-sm font-semibold uppercase tracking-wide text-[var(--success)]">{step.subtitle}</p>
                               )}
                             </div>
+                            {step.objective && (
+                              <p className="mt-3 text-sm sm:text-base leading-relaxed text-white/85">
+                                <span className="font-semibold text-white">Objetivo: </span>
+                                {step.objective}
+                              </p>
+                            )}
                             {step.quote && (
                               <blockquote className="mt-4 border-l-4 border-[var(--success)] pl-4 text-sm sm:text-base font-medium leading-relaxed text-white/95 italic">
                                 “{step.quote}”
                               </blockquote>
                             )}
-                            {step.bullets && (
-                              <ul className="mt-4 space-y-2">
-                                {step.bullets.map((b, idx) => (
-                                  <li key={idx} className="flex items-start gap-2 text-sm sm:text-base leading-relaxed text-white/85">
-                                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--success)]" />
-                                    <span>{b}</span>
-                                  </li>
-                                ))}
-                              </ul>
+                            {"doList" in step && step.doList && (
+                              <div className="mt-4">
+                                <p className="text-[11px] font-semibold uppercase tracking-wider text-white/60">❓ O que fazer</p>
+                                <ul className="mt-2 space-y-2">
+                                  {step.doList.map((b, idx) => (
+                                    <li key={idx} className="flex items-start gap-2 text-sm sm:text-base leading-relaxed text-white/85">
+                                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--success)]" />
+                                      <span>{b}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
                             )}
-                            {step.tip && (
-                              <p className="mt-4 rounded-xl border border-[var(--warn)]/30 bg-[var(--warn)]/10 p-3 text-xs sm:text-sm font-medium text-[var(--warn)]">
-                                💡 {step.tip}
-                              </p>
+                            {"goodExamples" in step && step.goodExamples && (
+                              <div className="mt-4 rounded-xl border border-[var(--success)]/30 bg-[var(--success)]/10 p-3">
+                                <p className="text-[11px] font-semibold uppercase tracking-wider text-[var(--success)]">✅ Bons exemplos</p>
+                                <ul className="mt-2 space-y-1.5">
+                                  {step.goodExamples.map((b, idx) => (
+                                    <li key={idx} className="text-sm leading-relaxed text-white/90">“{b}”</li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
+                            {"avoid" in step && step.avoid && (
+                              <div className="mt-3 rounded-xl border border-[var(--danger)]/30 bg-[var(--danger)]/10 p-3">
+                                <p className="text-[11px] font-semibold uppercase tracking-wider text-[var(--danger)]">❌ Evite</p>
+                                <ul className="mt-2 space-y-1.5">
+                                  {step.avoid.map((b, idx) => (
+                                    <li key={idx} className="flex items-start gap-2 text-sm leading-relaxed text-white/90">
+                                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--danger)]" />
+                                      <span>{b}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
+                            {"quickFollowUps" in step && step.quickFollowUps && (
+                              <div className="mt-4">
+                                <p className="text-[11px] font-semibold uppercase tracking-wider text-white/60">⚡ Se responder rapidamente</p>
+                                <ul className="mt-2 space-y-1.5">
+                                  {step.quickFollowUps.map((b, idx) => (
+                                    <li key={idx} className="flex items-start gap-2 text-sm leading-relaxed text-white/85">
+                                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--brand)]" />
+                                      <span>{b}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
+                            {"slowFollowUps" in step && step.slowFollowUps && (
+                              <div className="mt-3">
+                                <p className="text-[11px] font-semibold uppercase tracking-wider text-white/60">🤔 Se não souber responder</p>
+                                <ul className="mt-2 space-y-1.5">
+                                  {step.slowFollowUps.map((b, idx) => (
+                                    <li key={idx} className="flex items-start gap-2 text-sm leading-relaxed text-white/85">
+                                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--warn)]" />
+                                      <span>{b}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
+                            {"transition" in step && step.transition && (
+                              <blockquote className="mt-4 border-l-4 border-[var(--brand)] pl-4 text-sm sm:text-base font-medium leading-relaxed text-white/95 italic">
+                                ➡️ “{step.transition}”
+                              </blockquote>
+                            )}
+                            {step.why && (
+                              <div className="mt-4 rounded-xl border border-white/15 bg-white/5 p-3">
+                                <p className="text-[11px] font-semibold uppercase tracking-wider text-white/60">🎓 Por que essa etapa existe?</p>
+                                <p className="mt-1.5 text-sm leading-relaxed text-white/85">{step.why}</p>
+                              </div>
                             )}
                             {step.note && (
                               <p className="mt-4 rounded-xl border border-[var(--success)]/30 bg-[var(--success)]/10 p-3 text-xs sm:text-sm font-medium text-white/90">
