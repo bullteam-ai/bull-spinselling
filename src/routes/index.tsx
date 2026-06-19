@@ -350,7 +350,7 @@ const QUADRANT_EXPLANATION: Record<Quadrant, string> = {
   situacao:
     "Essa pergunta abre a conversa sem pressão. O objetivo é fazer o cliente verbalizar a própria realidade — aquilo que é dito em voz alta passa a ser percebido com mais clareza por quem fala.",
   problema:
-    "Essa pergunta expõe lacunas sem confrontar. Convida o cliente a perceber sozinho que algo importante pode estar faltando, sem que ele se sinta julgado ou precise defender sua estratégia atual.",
+    "Essa pergunta não tenta provar que o cliente está errado. Ela gera dúvida saudável — leva o cliente a perceber que talvez não tenha 100% de certeza sobre o melhor caminho.",
   implicacao:
     "Essa pergunta amplia a percepção do custo de não agir. Tira a decisão do campo puramente racional e a leva para o campo emocional — onde a maioria das decisões realmente acontece.",
   necessidade:
