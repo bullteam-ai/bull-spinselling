@@ -297,31 +297,31 @@ const isHighConversion = (q: string) =>
 // e gerar desejo de participar da Entrevista Estratégica Financeira.
 const KILLER_PRINCIPALS = new Set<string>([
   // Independência Financeira
-  "Hoje você sente que possui um plano claro para alcançar essa independência?",
+  "Você tem 100% de certeza de que as decisões financeiras e investimentos que está tomando hoje são o caminho mais eficiente para alcançar sua independência financeira?",
   "E se essa independência financeira acontecer 10 anos depois do que você gostaria?",
   "Se você pudesse ter clareza exata de quando alcançará sua independência financeira e o que precisa fazer para chegar lá mais rápido, faria sentido entender isso?",
   // Aposentadoria
-  "Hoje você acredita que sua estratégia atual é suficiente para entregar essa aposentadoria?",
+  "Você tem 100% de certeza de que a estratégia atual vai gerar a aposentadoria que deseja e no prazo que imagina?",
   "E se você precisasse trabalhar 10 anos além do que imagina hoje?",
   "Faria sentido descobrir hoje qual renda você terá no futuro e se ela será suficiente para manter o padrão de vida que deseja?",
   // Compra de Casa
-  "Hoje você sente que existe um plano claro para comprar esse imóvel dentro do prazo desejado?",
+  "Você tem 100% de certeza de que a estratégia que utiliza hoje é a melhor disponível para conquistar esse imóvel no menor prazo possível e com o menor custo possível?",
   "E se essa compra atrasar cinco anos?",
   "Se fosse possível descobrir qual o caminho mais eficiente para conquistar esse imóvel e até antecipar essa conquista, faria sentido entender isso?",
   // Compra de Carro
-  "Hoje você já sabe exatamente como pretende viabilizar essa compra?",
+  "Você tem 100% de certeza de que a forma que pretende comprar esse carro é a mais inteligente financeiramente?",
   "E se essa compra atrasar mais alguns anos?",
   "Faria sentido descobrir a forma mais inteligente de chegar nesse carro sem comprometer seus outros objetivos?",
   // Viagens
-  "Hoje você possui um planejamento específico para realizar essa viagem?",
+  "Você tem 100% de certeza de que essa viagem acontecerá no prazo desejado mantendo exatamente o que faz hoje?",
   "E se essa viagem não acontecer nos próximos 5 anos?",
   "Faria sentido transformar essa viagem em um plano concreto ao invés de deixá-la depender das circunstâncias?",
   // Empreendedorismo
-  "Hoje você já possui clareza financeira sobre o que esse projeto exige?",
+  "Você tem 100% de certeza de que conhece todas as informações financeiras necessárias para tirar esse projeto do papel com segurança?",
   "E se esse projeto continuar parado pelos próximos 5 anos?",
   "Faria sentido descobrir exatamente o que seria necessário para transformar essa ideia em realidade?",
   // Organização Financeira
-  "Você sente que o resultado financeiro que possui hoje reflete o esforço que faz?",
+  "Você tem 100% de certeza de que seu dinheiro está sendo direcionado da forma mais eficiente possível para os seus objetivos?",
   "E se nada mudar nos próximos 10 anos?",
   "Como seria ter total clareza sobre para onde seu dinheiro está indo e se ele está realmente aproximando você dos seus objetivos?",
   // Cliente Sem Objetivo
@@ -332,12 +332,13 @@ const KILLER_PRINCIPALS = new Set<string>([
   "Seu assessor conhece profundamente todos os seus objetivos financeiros?",
   "E se algo importante estivesse desalinhado hoje, como você descobriria?",
   "Faria sentido validar se tudo continua alinhado aos seus objetivos atuais e identificar possíveis oportunidades que ainda não estão sendo aproveitadas?",
+  "Você tem 100% de certeza de que hoje não existe nenhuma estratégia melhor ou oportunidade relevante que ainda não tenha sido considerada?",
   // Futuro dos Filhos
-  "Hoje existe algum planejamento específico para ajudar seus filhos a alcançarem esses objetivos?",
+  "Você tem 100% de certeza de que, mantendo exatamente o que faz hoje, conseguirá proporcionar todas as oportunidades que deseja para seus filhos?",
   "E se chegar o momento em que seu filho precisar dessa ajuda e ela não estiver disponível?",
   "Faria sentido saber exatamente o que precisa ser construído hoje para garantir as oportunidades que deseja oferecer aos seus filhos?",
   // Casamento e Projetos Familiares
-  "Hoje vocês possuem um plano financeiro estruturado para alcançar esses objetivos?",
+  "Você tem 100% de certeza de que a estratégia financeira atual é a melhor possível para acelerar os projetos da sua família?",
   "E se esses objetivos familiares demorarem muito mais tempo para acontecer?",
   "Faria sentido validar se vocês estão utilizando o caminho mais eficiente para construir os sonhos da família?",
 ]);
@@ -350,7 +351,7 @@ const QUADRANT_EXPLANATION: Record<Quadrant, string> = {
   situacao:
     "Essa pergunta abre a conversa sem pressão. O objetivo é fazer o cliente verbalizar a própria realidade — aquilo que é dito em voz alta passa a ser percebido com mais clareza por quem fala.",
   problema:
-    "Essa pergunta expõe lacunas sem confrontar. Convida o cliente a perceber sozinho que algo importante pode estar faltando, sem que ele se sinta julgado ou precise defender sua estratégia atual.",
+    "Essa pergunta não tenta provar que o cliente está errado. Ela gera dúvida saudável — leva o cliente a perceber que talvez não tenha 100% de certeza sobre o melhor caminho.",
   implicacao:
     "Essa pergunta amplia a percepção do custo de não agir. Tira a decisão do campo puramente racional e a leva para o campo emocional — onde a maioria das decisões realmente acontece.",
   necessidade:
@@ -404,20 +405,27 @@ const EXPLANATIONS: Record<string, string> = {
     "Vende união e aceleração. A entrevista vira uma decisão tomada em conjunto, com mais clareza.",
 
   // Problemas → reconhecer lacuna sem confronto
-  "Hoje você sente que possui um plano claro para alcançar essa independência?":
-    "A palavra 'claro' é o gatilho. Quem tem investimentos raramente tem plano claro — e admitir isso abre a próxima etapa.",
-  "Hoje você acredita que sua estratégia atual é suficiente para entregar essa aposentadoria?":
-    "Diferencia 'ter dinheiro' de 'ter estratégia'. A lacuna gera necessidade imediata.",
-  "Hoje você sente que existe um plano claro para comprar esse imóvel dentro do prazo desejado?":
-    "Conecta desejo ao prazo. É no prazo que o plano costuma falhar.",
-  "Hoje você já sabe exatamente como pretende viabilizar essa compra?":
-    "Força a explicação do método. Revela a ausência dele sem confronto.",
-  "Hoje você possui um planejamento específico para realizar essa viagem?":
-    "'Específico' desmascara o 'um dia a gente vai'. Sem data e reserva, não sai do papel.",
-  "Hoje você já possui clareza financeira sobre o que esse projeto exige?":
-    "Empreendedores travam por falta de números, não de coragem. A lacuna gera desejo de clareza.",
-  "Você sente que o resultado financeiro que possui hoje reflete o esforço que faz?":
-    "Toca na frustração de quem ganha bem e não acumula. Expõe o desalinhamento esforço x resultado.",
+  // Problemas → gerar dúvida saudável sem confrontar (Princípio da Incerteza Elegante)
+  "Você tem 100% de certeza de que as decisões financeiras e investimentos que está tomando hoje são o caminho mais eficiente para alcançar sua independência financeira?":
+    "'100% de certeza' é o gatilho. Ninguém responde sim com convicção. O cliente conclui sozinho: 'talvez eu não saiba'.",
+  "Você tem 100% de certeza de que a estratégia atual vai gerar a aposentadoria que deseja e no prazo que imagina?":
+    "Separa ter estratégia de ter certeza do resultado. A dúvida sobre o prazo abre espaço para a entrevista.",
+  "Você tem 100% de certeza de que a estratégia que utiliza hoje é a melhor disponível para conquistar esse imóvel no menor prazo possível e com o menor custo possível?":
+    "Introduz duas variáveis difíceis de garantir: menor prazo e menor custo. O cliente percebe que nunca comparou.",
+  "Você tem 100% de certeza de que a forma que pretende comprar esse carro é a mais inteligente financeiramente?":
+    "'Mais inteligente financeiramente' obriga comparação. Quase ninguém comparou de verdade.",
+  "Você tem 100% de certeza de que essa viagem acontecerá no prazo desejado mantendo exatamente o que faz hoje?":
+    "Liga o sonho a 'mantendo o que faz hoje'. Expõe a fragilidade do plano sem julgar o cliente.",
+  "Você tem 100% de certeza de que conhece todas as informações financeiras necessárias para tirar esse projeto do papel com segurança?":
+    "Empreendedor não trava por coragem, trava por falta de clareza. A dúvida sobre 'todas as informações' destrava.",
+  "Você tem 100% de certeza de que seu dinheiro está sendo direcionado da forma mais eficiente possível para os seus objetivos?":
+    "Diferencia controlar de otimizar. Quase ninguém tem certeza de que está otimizando.",
+  "Você tem 100% de certeza de que, mantendo exatamente o que faz hoje, conseguirá proporcionar todas as oportunidades que deseja para seus filhos?":
+    "Conecta sonho a número sem confronto. A dúvida sobre 'todas as oportunidades' move o pai a buscar clareza.",
+  "Você tem 100% de certeza de que a estratégia financeira atual é a melhor possível para acelerar os projetos da sua família?":
+    "'A melhor possível' é uma régua impossível de defender. Abre espaço para validação em conjunto.",
+  "Você tem 100% de certeza de que hoje não existe nenhuma estratégia melhor ou oportunidade relevante que ainda não tenha sido considerada?":
+    "Não ataca o assessor. Pergunta se existe algo que ele ainda não viu — e quase sempre existe.",
 
   // Situação chave → contexto que vira gatilho
   "Se dinheiro não fosse um problema, o que você faria imediatamente?":
@@ -531,21 +539,23 @@ const GOALS: Goal[] = [
         procurar: ["Sonhos", "Motivações", "Liberdade", "Família", "Qualidade de vida"],
       },
       problema: {
-        principal: "Hoje você sente que possui um plano claro para alcançar essa independência?",
+        principal: "Você tem 100% de certeza de que as decisões financeiras e investimentos que está tomando hoje são o caminho mais eficiente para alcançar sua independência financeira?",
+        simLabel: "Se responder SIM",
+        naoLabel: "Se responder NÃO",
         sim: [
-          "Como esse plano foi construído?",
-          "Existe alguma projeção?",
-          "Você revisa esse plano?",
-          "O que te dá confiança de que ele funcionará?",
-          "É uma certeza ou uma expectativa?",
+          "O que te dá essa convicção?",
+          "Você chegou a comparar estratégias diferentes?",
+          "Quando foi a última vez que revisou esse planejamento?",
+          "Existe alguma projeção formal que valide isso?",
+          "O que poderia fazer esse plano não acontecer?",
         ],
         nao: [
-          "O que acredita que está faltando?",
-          "O que mais gera insegurança?",
-          "Já tentou construir esse plano antes?",
+          "O que mais gera dúvida hoje?",
+          "Onde sente maior insegurança?",
+          "Existe algo que gostaria de entender melhor?",
         ],
-        transicao: "Entendi. Independentemente de existir um plano, vale entender o quanto ele realmente aproxima você desse objetivo.",
-        procurar: ["Falta de validação", "Falta de projeção", "Excesso de confiança", "Falta de clareza"],
+        transicao: "Muitas pessoas possuem uma estratégia. Poucas possuem certeza de que ela é a melhor possível.",
+        procurar: ["Falta de comparação", "Falta de validação", "Falta de revisão", "Falta de certeza"],
       },
       implicacao: {
         principal: "E se essa independência financeira acontecer 10 anos depois do que você gostaria?",
@@ -601,21 +611,21 @@ const GOALS: Goal[] = [
         procurar: ["Qualidade de vida", "Família", "Liberdade", "Segurança"],
       },
       problema: {
-        principal: "Hoje você acredita que sua estratégia atual é suficiente para entregar essa aposentadoria?",
+        principal: "Você tem 100% de certeza de que a estratégia atual vai gerar a aposentadoria que deseja e no prazo que imagina?",
+        simLabel: "Se responder SIM",
+        naoLabel: "Se responder NÃO",
         sim: [
-          "O que te dá essa confiança?",
+          "Como chegou a essa conclusão?",
           "Existe alguma projeção formal?",
-          "Você sabe qual renda terá?",
-          "Já revisou esse planejamento recentemente?",
-          "É uma certeza ou uma expectativa?",
+          "Você sabe exatamente qual renda terá?",
+          "O que sustenta essa confiança?",
         ],
         nao: [
           "O que mais preocupa você?",
-          "O que sente que está faltando?",
-          "Já tentou organizar isso anteriormente?",
+          "Existe alguma dúvida sobre o futuro?",
         ],
-        transicao: "Muitas pessoas possuem patrimônio, mas nunca validaram se ele realmente sustentará o padrão de vida desejado.",
-        procurar: ["Falta de projeção", "Dependência do INSS", "Excesso de confiança", "Falta de validação"],
+        transicao: "Ter uma estratégia é diferente de ter certeza do resultado.",
+        procurar: ["Falta de projeção", "Falta de validação", "Falta de certeza sobre prazo", "Falta de certeza sobre renda"],
       },
       implicacao: {
         principal: "E se você precisasse trabalhar 10 anos além do que imagina hoje?",
@@ -669,21 +679,20 @@ const GOALS: Goal[] = [
         procurar: ["Educação", "Faculdade", "Intercâmbio", "Segurança", "Independência", "Legado"],
       },
       problema: {
-        principal: "Hoje existe algum planejamento específico para ajudar seus filhos a alcançarem esses objetivos?",
+        principal: "Você tem 100% de certeza de que, mantendo exatamente o que faz hoje, conseguirá proporcionar todas as oportunidades que deseja para seus filhos?",
+        simLabel: "Se responder SIM",
+        naoLabel: "Se responder NÃO",
         sim: [
-          "Como esse planejamento foi estruturado?",
-          "Existe um valor definido?",
-          "Você acompanha essa evolução?",
-          "Esse planejamento foi revisado recentemente?",
-          "Você sabe se ele será suficiente?",
+          "Como chegou nessa conclusão?",
+          "Existe algum planejamento estruturado?",
+          "Você sabe exatamente quanto será necessário?",
         ],
         nao: [
-          "O que impede você de começar?",
-          "Já pensou em estruturar isso?",
-          "Existe alguma preocupação em deixar para depois?",
+          "O que mais preocupa você?",
+          "Existe alguma oportunidade que teme não conseguir proporcionar?",
         ],
-        transicao: "Muitas vezes o desejo existe, mas o plano ainda não foi construído.",
-        procurar: ["Falta de planejamento", "Falta de acompanhamento", "Falta de números", "Excesso de confiança"],
+        transicao: "Quase todos os pais possuem sonhos para os filhos. Poucos possuem certeza dos números necessários para realizá-los.",
+        procurar: ["Falta de números", "Falta de planejamento estruturado", "Falta de certeza", "Excesso de confiança"],
       },
       implicacao: {
         principal: "E se chegar o momento em que seu filho precisar dessa ajuda e ela não estiver disponível?",
@@ -738,20 +747,20 @@ const GOALS: Goal[] = [
         procurar: ["Sonhos em comum", "Família", "Imóvel", "Filhos", "Liberdade financeira"],
       },
       problema: {
-        principal: "Hoje vocês possuem um plano financeiro estruturado para alcançar esses objetivos?",
+        principal: "Você tem 100% de certeza de que a estratégia financeira atual é a melhor possível para acelerar os projetos da sua família?",
+        simLabel: "Se responder SIM",
+        naoLabel: "Se responder NÃO",
         sim: [
-          "Como esse plano foi construído?",
-          "Ambos conhecem esse planejamento?",
-          "Existe acompanhamento?",
-          "Vocês revisam esse plano?",
+          "O que sustenta essa confiança?",
+          "Vocês chegaram a comparar alternativas?",
+          "Existe alguma validação externa?",
         ],
         nao: [
-          "O que dificulta esse alinhamento?",
-          "Já tentaram construir algo juntos?",
-          "Existem prioridades diferentes?",
+          "O que mais gera dúvida?",
+          "Existe alguma preocupação sobre o ritmo dessas conquistas?",
         ],
-        transicao: "Muitas famílias possuem objetivos em comum, mas não possuem uma estratégia em comum.",
-        procurar: ["Falta de alinhamento", "Falta de planejamento", "Falta de comunicação"],
+        transicao: "Ter objetivos familiares é comum. Ter certeza de que estão no melhor caminho é raro.",
+        procurar: ["Falta de comparação", "Falta de validação externa", "Falta de certeza"],
       },
       implicacao: {
         principal: "E se esses objetivos familiares demorarem muito mais tempo para acontecer?",
@@ -803,20 +812,21 @@ const GOALS: Goal[] = [
         procurar: ["Realização", "Segurança", "Família", "Conforto"],
       },
       problema: {
-        principal: "Hoje você sente que existe um plano claro para comprar esse imóvel dentro do prazo desejado?",
+        principal: "Você tem 100% de certeza de que a estratégia que utiliza hoje é a melhor disponível para conquistar esse imóvel no menor prazo possível e com o menor custo possível?",
+        simLabel: "Se responder SIM",
+        naoLabel: "Se responder NÃO",
         sim: [
-          "Como esse plano foi construído?",
-          "Existe alguma projeção formal?",
-          "Você acompanha sua evolução?",
-          "O que pode fazer esse plano não acontecer?",
+          "Como chegou nessa conclusão?",
+          "Você comparou alternativas?",
+          "Quando revisou essa estratégia pela última vez?",
+          "O que faz acreditar que não existe uma opção melhor?",
         ],
         nao: [
-          "O que está faltando?",
-          "Qual a maior dificuldade?",
-          "O que impede avançar mais rápido?",
+          "O que mais gera incerteza?",
+          "Existe algum ponto que ainda não está claro?",
         ],
-        transicao: "Então vale entender se o caminho atual realmente leva ao prazo que você deseja.",
-        procurar: ["Falta de planejamento", "Falta de acompanhamento", "Falta de números"],
+        transicao: "Normalmente as pessoas sabem que querem comprar um imóvel. Mas poucas sabem se estão utilizando o caminho mais eficiente.",
+        procurar: ["Falta de comparação", "Falta de revisão", "Falta de certeza sobre prazo e custo"],
       },
       implicacao: {
         principal: "E se essa compra atrasar cinco anos?",
@@ -870,19 +880,20 @@ const GOALS: Goal[] = [
         procurar: ["Necessidade", "Conforto", "Mobilidade", "Status"],
       },
       problema: {
-        principal: "Hoje você já sabe exatamente como pretende viabilizar essa compra?",
+        principal: "Você tem 100% de certeza de que a forma que pretende comprar esse carro é a mais inteligente financeiramente?",
+        simLabel: "Se responder SIM",
+        naoLabel: "Se responder NÃO",
         sim: [
-          "Como estruturou esse plano?",
-          "Existe uma reserva específica?",
-          "O plano depende de algo acontecer?",
+          "O que te dá essa confiança?",
+          "Você comparou outras possibilidades?",
+          "Existe algum cálculo formal sustentando essa decisão?",
         ],
         nao: [
-          "O que falta definir?",
-          "Qual sua principal dúvida?",
-          "Isso já atrasou sua decisão?",
+          "O que mais gera dúvida?",
+          "O que ainda não foi definido?",
         ],
-        transicao: "Muitas compras não atrasam por falta de renda, mas por falta de planejamento.",
-        procurar: ["Falta de clareza", "Dependência de eventos futuros", "Ausência de estratégia"],
+        transicao: "Muitas vezes a decisão parece boa, mas nunca foi comparada com outras alternativas.",
+        procurar: ["Falta de comparação", "Falta de cálculo formal", "Falta de certeza"],
       },
       implicacao: {
         principal: "E se essa compra atrasar mais alguns anos?",
@@ -934,22 +945,20 @@ const GOALS: Goal[] = [
         procurar: ["Família", "Experiências", "Sonhos", "Memórias", "Realização"],
       },
       problema: {
-        principal: "Hoje você possui um planejamento específico para realizar essa viagem?",
+        principal: "Você tem 100% de certeza de que essa viagem acontecerá no prazo desejado mantendo exatamente o que faz hoje?",
+        simLabel: "Se responder SIM",
+        naoLabel: "Se responder NÃO",
         sim: [
-          "Como esse planejamento foi construído?",
-          "Existe uma reserva exclusiva?",
-          "Você sabe exatamente quanto precisará?",
-          "Já revisou os custos recentemente?",
-          "Existe alguma data definida?",
+          "Como chegou a essa conclusão?",
+          "Existe um plano estruturado?",
+          "O que poderia atrasar essa realização?",
         ],
         nao: [
-          "O que normalmente impede essa organização?",
-          "A viagem acaba ficando sempre para depois?",
-          "Isso já aconteceu outras vezes?",
-          "Existe alguma insegurança em relação aos custos?",
+          "O que impede ter essa certeza?",
+          "O que falta para transformar esse sonho em um projeto?",
         ],
-        transicao: "É muito comum que viagens importantes acabem sendo adiadas não pela falta de renda, mas pela ausência de um plano específico.",
-        procurar: ["Falta de organização", "Prioridades conflitantes", "Falta de reserva", "Objetivos adiados"],
+        transicao: "Entre desejar uma viagem e garantir que ela aconteça existe uma grande diferença.",
+        procurar: ["Falta de plano estruturado", "Falta de certeza sobre prazo", "Dependência das circunstâncias"],
       },
       implicacao: {
         principal: "E se essa viagem não acontecer nos próximos 5 anos?",
@@ -1002,21 +1011,20 @@ const GOALS: Goal[] = [
         procurar: ["Sonhos", "Ambição", "Liberdade", "Crescimento"],
       },
       problema: {
-        principal: "Hoje você já possui clareza financeira sobre o que esse projeto exige?",
+        principal: "Você tem 100% de certeza de que conhece todas as informações financeiras necessárias para tirar esse projeto do papel com segurança?",
+        simLabel: "Se responder SIM",
+        naoLabel: "Se responder NÃO",
         sim: [
-          "Como chegou nesses números?",
-          "Já validou esse cálculo?",
-          "Existe margem para imprevistos?",
-          "Considerou capital de giro?",
-          "Existe um plano financeiro para execução?",
+          "Como validou isso?",
+          "Quem ajudou nessa análise?",
+          "Existe algum estudo ou projeção?",
         ],
         nao: [
-          "O que falta descobrir?",
-          "O que mais gera dúvida?",
-          "Isso tem atrasado o início do projeto?",
+          "O que mais gera insegurança?",
+          "Qual a maior dúvida hoje?",
         ],
-        transicao: "Muitas vezes o projeto não fica parado por falta de capacidade, mas pela ausência de clareza financeira.",
-        procurar: ["Falta de números", "Insegurança", "Falta de planejamento"],
+        transicao: "Muitas ideias não ficam paradas por falta de capacidade, mas por falta de clareza.",
+        procurar: ["Falta de números", "Falta de validação externa", "Falta de clareza"],
       },
       implicacao: {
         principal: "E se esse projeto continuar parado pelos próximos 5 anos?",
@@ -1069,19 +1077,20 @@ const GOALS: Goal[] = [
         procurar: ["Organização", "Clareza", "Controle"],
       },
       problema: {
-        principal: "Você sente que o resultado financeiro que possui hoje reflete o esforço que faz?",
+        principal: "Você tem 100% de certeza de que seu dinheiro está sendo direcionado da forma mais eficiente possível para os seus objetivos?",
+        simLabel: "Se responder SIM",
+        naoLabel: "Se responder NÃO",
         sim: [
-          "Como mede esse resultado?",
-          "Está satisfeito com sua evolução?",
-          "Existe algo que gostaria de acelerar?",
+          "Como chegou nessa conclusão?",
+          "Existe alguma análise formal?",
+          "Quando revisou isso pela última vez?",
         ],
         nao: [
-          "O que mais incomoda?",
-          "Tem a sensação de ganhar bem e não acumular?",
-          "Onde acredita que está o problema?",
+          "O que mais gera dúvida?",
+          "Existe alguma área que gostaria de entender melhor?",
         ],
-        transicao: "Muitas pessoas trabalham muito, mas não conseguem transformar renda em patrimônio.",
-        procurar: ["Frustração", "Falta de patrimônio", "Falta de direção"],
+        transicao: "Controlar o dinheiro e otimizar o dinheiro são coisas diferentes.",
+        procurar: ["Falta de análise formal", "Falta de revisão", "Falta de otimização"],
       },
       implicacao: {
         principal: "E se nada mudar nos próximos 10 anos?",
@@ -1133,18 +1142,20 @@ const GOALS: Goal[] = [
         procurar: ["Sonhos", "Desejos ocultos", "Valores pessoais"],
       },
       problema: {
-        principal: "Hoje seu dinheiro está trabalhando para algum objetivo específico?",
+        principal: "Você tem 100% de certeza de que seu dinheiro hoje está sendo direcionado para construir algo que realmente importa para você?",
+        simLabel: "Se responder SIM",
+        naoLabel: "Se responder NÃO",
         sim: [
-          "Qual objetivo?",
-          "Existe um plano para ele?",
-          "Você acompanha sua evolução?",
+          "O que sustenta essa convicção?",
+          "Existe algum objetivo claro por trás disso?",
+          "Como acompanha essa evolução?",
         ],
         nao: [
-          "Como mede seu progresso financeiro?",
-          "Como sabe se está avançando?",
+          "O que mais gera dúvida?",
+          "Existe alguma direção que gostaria de ter mais clara?",
         ],
-        transicao: "Quem não define um destino normalmente tem dificuldade de medir a evolução.",
-        procurar: ["Falta de direção", "Falta de metas"],
+        transicao: "Ter dinheiro trabalhando é uma coisa. Ter certeza de que ele caminha para um destino é outra.",
+        procurar: ["Falta de destino", "Falta de certeza", "Falta de propósito"],
       },
       implicacao: {
         principal: "E se mais 10 anos passarem da mesma forma?",
@@ -1192,17 +1203,20 @@ const GOALS: Goal[] = [
         procurar: ["Planejamento", "Frequência", "Profundidade"],
       },
       problema: {
-        principal: "Hoje você sabe qual a probabilidade de atingir cada um dos seus objetivos?",
+        principal: "Você tem 100% de certeza de que hoje não existe nenhuma estratégia melhor ou oportunidade relevante que ainda não tenha sido considerada?",
+        simLabel: "Se responder SIM",
+        naoLabel: "Se responder NÃO",
         sim: [
-          "Como essa probabilidade foi calculada?",
-          "Quando foi revisada?",
+          "O que sustenta essa convicção?",
+          "Quando foi a última revisão profunda?",
+          "Você costuma buscar uma segunda visão?",
         ],
         nao: [
-          "Como mede se está no caminho certo?",
-          "Existe alguma projeção formal?",
+          "Existe algo que gostaria de validar?",
+          "Existe alguma área que gera dúvida atualmente?",
         ],
-        transicao: "Muitas pessoas possuem investimentos, mas não possuem planejamento.",
-        procurar: ["Falta de projeção", "Falta de acompanhamento"],
+        transicao: "A questão não é ter assessor ou não. A questão é saber se tudo continua alinhado ao cenário atual.",
+        procurar: ["Falta de revisão profunda", "Falta de segunda visão", "Oportunidades não consideradas"],
       },
       implicacao: {
         principal: "E se algo importante estivesse desalinhado hoje, como você descobriria?",
@@ -2452,6 +2466,22 @@ function GoalBlocks({
                   <p className="mt-1 font-medium">
                     Pare de explorar problemas. Faça o cliente <strong>visualizar ganhos</strong>: clareza, previsibilidade, velocidade, segurança e tranquilidade — até desejar a Entrevista Estratégica Financeira.
                   </p>
+                </div>
+              )}
+              {!callMode && quad.key === "problema" && (
+                <div className="mb-2 rounded-xl border border-[var(--warn)]/40 bg-[var(--warn)]/5 px-3 py-2 text-[12px] leading-snug text-[var(--navy)]">
+                  <p className="font-bold uppercase tracking-wide text-[11px] text-[#8a5a00]">🧠 Princípio da Incerteza Elegante</p>
+                  <p className="mt-1 font-medium">
+                    Não tente provar que o cliente está errado. Leve-o a perceber que talvez ele não tenha todas as respostas. A entrevista existe porque pode existir uma forma melhor — não porque ele está errando.
+                  </p>
+                  <p className="mt-2 text-[11px] font-semibold text-[#8a5a00]">As melhores respostas nesta etapa:</p>
+                  <ul className="mt-1 grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-0.5 text-[11px] text-[var(--navy)]">
+                    <li>✅ "Nunca tinha pensado nisso."</li>
+                    <li>✅ "Boa pergunta."</li>
+                    <li>✅ "Não tenho certeza."</li>
+                    <li>✅ "Nunca comparei dessa forma."</li>
+                    <li>✅ "Nunca calculei isso."</li>
+                  </ul>
                 </div>
               )}
               <ScriptCard
