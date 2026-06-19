@@ -2446,6 +2446,14 @@ function GoalBlocks({
                   <span className="text-muted-foreground font-medium normal-case tracking-normal">· {SPIN_OBJECTIVES[quad.key]}</span>
                 </div>
               )}
+              {!callMode && quad.key === "necessidade" && (
+                <div className="mb-2 rounded-xl border border-[var(--success)]/30 bg-[var(--success)]/5 px-3 py-2 text-[12px] leading-snug text-[var(--navy)]">
+                  <p className="font-bold text-[var(--success)] uppercase tracking-wide text-[11px]">🟢 Regra da Necessidade</p>
+                  <p className="mt-1 font-medium">
+                    Pare de explorar problemas. Faça o cliente <strong>visualizar ganhos</strong>: clareza, previsibilidade, velocidade, segurança e tranquilidade — até desejar a Entrevista Estratégica Financeira.
+                  </p>
+                </div>
+              )}
               <ScriptCard
                 fullKey={key}
                 script={script}
