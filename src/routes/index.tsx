@@ -1220,16 +1220,15 @@ const GOALS: Goal[] = [
         procurar: ["Confiança excessiva", "Falta de revisão"],
       },
       necessidade: {
-        principal: "Faz sentido validar se tudo continua alinhado aos seus objetivos atuais?",
+        principal: "Faria sentido validar se tudo continua alinhado aos seus objetivos atuais e identificar possíveis oportunidades que ainda não estão sendo aproveitadas?",
+        simLabel: "Se responder SIM",
         sim: [
-          "O que gostaria de revisar?",
-          "Existe alguma dúvida atual?",
+          "Quanto valor teria receber uma segunda visão especializada?",
+          "Como seria confirmar que tudo está no caminho ideal?",
+          "Se existisse uma melhoria relevante, você gostaria de conhecê-la?",
         ],
-        nao: [
-          "Existe algum risco em nunca buscar uma segunda visão?",
-        ],
-        transicao: "Uma segunda visão não substitui o trabalho atual. Ela ajuda a validar se tudo continua fazendo sentido.",
-        procurar: ["Abertura", "Curiosidade", "Validação"],
+        transicao: "A ideia não é substituir nada. É validar e fortalecer o que já existe.",
+        procurar: ["Segunda visão", "Validação", "Oportunidades", "Alinhamento"],
       },
     },
   },
