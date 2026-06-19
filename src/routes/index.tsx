@@ -1162,16 +1162,15 @@ const GOALS: Goal[] = [
         procurar: ["Tempo", "Arrependimento", "Oportunidades"],
       },
       necessidade: {
-        principal: "Faz sentido descobrir quais objetivos realmente fazem sentido para você?",
+        principal: "Faria sentido descobrir quais objetivos realmente fazem sentido para a sua vida e enxergar o caminho mais inteligente para construí-los?",
+        simLabel: "Se responder SIM",
         sim: [
-          "O que gostaria de construir?",
-          "O que seria prioridade?",
+          "Quanto valor teria ter clareza sobre o que você realmente quer construir?",
+          "Como seria começar a investir com um propósito definido?",
+          "O que mudaria ao ter uma direção concreta para seguir?",
         ],
-        nao: [
-          "Como saberá se está evoluindo financeiramente?",
-        ],
-        transicao: "Talvez o primeiro passo não seja investir melhor, mas descobrir para onde quer ir.",
-        procurar: ["Clareza", "Propósito", "Direção"],
+        transicao: "É exatamente esse ponto de partida que construímos na entrevista.",
+        procurar: ["Clareza", "Propósito", "Direção", "Próximos passos"],
       },
     },
   },
