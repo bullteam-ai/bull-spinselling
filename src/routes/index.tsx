@@ -99,6 +99,85 @@ const IDEAL_FLOW = [
   "Não Vender Nada",
 ];
 
+const JOURNEY_STAGES: { n: number; emoji: string; label: string; desc: string }[] = [
+  { n: 1, emoji: "☎️", label: "Conexão",        desc: "Criação de rapport e conexão com o cliente." },
+  { n: 2, emoji: "🛡️", label: "Autoridade",     desc: "Apresentação da Bull Team e construção de credibilidade." },
+  { n: 3, emoji: "🎯", label: "Objetivo",       desc: "Descoberta do principal objetivo financeiro do cliente." },
+  { n: 4, emoji: "🔍", label: "SPIN",           desc: "Exploração da situação, problemas, implicações e necessidades." },
+  { n: 5, emoji: "🚦", label: "Sinais",         desc: "Identificação de abertura e interesse do cliente." },
+  { n: 6, emoji: "📅", label: "Agendamento",    desc: "Convite para a Entrevista Estratégica Financeira." },
+  { n: 7, emoji: "🤝", label: "Compromisso",    desc: "Confirmação do comparecimento." },
+  { n: 8, emoji: "✅", label: "Comparecimento", desc: "Preparação do cliente para a entrevista." },
+];
+
+function JourneyBar({
+  activeStages,
+  onJump,
+}: {
+  activeStages: number[];
+  onJump: (stage: number) => void;
+}) {
+  const maxActive = activeStages.length ? Math.max(...activeStages) : 0;
+  return (
+    <div className="sticky top-0 z-50 border-b border-border bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80">
+      <div className="mx-auto max-w-7xl px-3 sm:px-6 pt-2 pb-2">
+        <ol
+          aria-label="Jornada da Entrevista Bull Team"
+          className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto scrollbar-thin"
+        >
+          {JOURNEY_STAGES.map((s, i) => {
+            const isActive = activeStages.includes(s.n);
+            const isDone = !isActive && s.n < maxActive;
+            return (
+              <Fragment key={s.n}>
+                <li className="shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => onJump(s.n)}
+                    title={s.desc}
+                    aria-current={isActive ? "step" : undefined}
+                    className={`group relative inline-flex items-center gap-1.5 rounded-full border px-2 sm:px-2.5 py-1 text-[11px] sm:text-xs font-semibold transition motion-reduce:transition-none ${
+                      isActive
+                        ? "border-[var(--brand)] bg-[var(--brand)] text-white shadow-md shadow-[var(--brand)]/30 ring-2 ring-[var(--brand)]/25"
+                        : isDone
+                        ? "border-[var(--success)]/40 bg-[var(--success)]/10 text-[var(--navy)]"
+                        : "border-border bg-white text-muted-foreground hover:text-[var(--navy)]"
+                    }`}
+                  >
+                    <span
+                      aria-hidden
+                      className={`flex h-4 w-4 items-center justify-center rounded-full text-[10px] font-bold ${
+                        isActive
+                          ? "bg-white/20 text-white"
+                          : isDone
+                          ? "bg-[var(--success)] text-white"
+                          : "bg-[var(--surface)] text-muted-foreground"
+                      }`}
+                    >
+                      {isDone ? "✓" : s.n}
+                    </span>
+                    <span aria-hidden>{s.emoji}</span>
+                    <span className="hidden md:inline whitespace-nowrap">{s.label}</span>
+                  </button>
+                </li>
+                {i < JOURNEY_STAGES.length - 1 && (
+                  <span
+                    aria-hidden
+                    className={`h-px w-2 sm:w-4 shrink-0 ${s.n < maxActive ? "bg-[var(--success)]" : "bg-border"}`}
+                  />
+                )}
+              </Fragment>
+            );
+          })}
+        </ol>
+        <p className="mt-1 text-center text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+          Não venda. Conduza. Gere consciência. Agende.
+        </p>
+      </div>
+    </div>
+  );
+}
+
 const FRIEND_CALL_STEPS = [
   {
     id: "small-talk",
