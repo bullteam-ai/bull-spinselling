@@ -495,7 +495,7 @@ type Script = {
   simLabel?: string;
   naoLabel?: string;
   sim: string[];
-  nao: string[];
+  nao?: string[];
   transicao: string;
   procurar: string[];
 };
