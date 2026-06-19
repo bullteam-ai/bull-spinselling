@@ -86,6 +86,9 @@ const KILLER_MISTAKES = [
 const RIGHT_MOVES = ["Descobrir", "Explorar", "Amplificar", "Conscientizar", "Agendar"];
 
 const IDEAL_FLOW = [
+  "Conectar com o cliente",
+  "Apresentar autoridade",
+  "Sondar objetivos",
   "Descobrir Objetivo",
   "Fazer Perguntas de Situação",
   "Encontrar Problemas",
@@ -94,6 +97,52 @@ const IDEAL_FLOW = [
   "Ouvir Sinais de Compra",
   "Agendar Entrevista",
   "Não Vender Nada",
+];
+
+const FRIEND_CALL_STEPS = [
+  {
+    id: "small-talk",
+    number: "1",
+    title: "Small talk",
+    bullets: [
+      "Puxe assunto da relação que você tem com o cliente",
+      "Perguntas abertas: pergunte sobre o passado desde quando você não vê",
+      "Deixe o cliente falar à vontade",
+      "Demonstre interesse genuíno pelo o que o cliente está falando",
+    ],
+    tip: 'Dica: evite as palavras "legal" e "bacana" — elas dão ponto final ao assunto. Termine perguntando sobre o trabalho para fazer o link da entrevista.',
+  },
+  {
+    id: "apresentacao",
+    number: "2",
+    title: "Apresentação do novo trabalho",
+    subtitle: "Autoridade e prova social",
+    quote:
+      "Sou franqueado de uma empresa de planejamento financeiro estratégico focada em objetivos chamada Bull Team, já ouviu falar? Foi construída por profissionais com mais de 10 anos de experiência no mercado financeiro e já aplicamos o método para milhares de famílias. Ajudamos as pessoas a alcançar os seus objetivos financeiros entendendo exatamente o que elas precisam fazer para tomarem a melhor decisão com base no mercado.",
+  },
+  {
+    id: "reunioes",
+    number: "3",
+    title: "Reuniões sem custo",
+    subtitle: "Oferta de valor com critério",
+    quote:
+      "Estou gostando bastante do trabalho e, com base no meu desempenho, meu mentor me liberou 5 reuniões sem custo para oferecer às pessoas que eu acreditasse que fizessem sentido — e eu pensei em você...",
+    bullets: [
+      "Que já se planeja...",
+      "Que ainda não se planeja...",
+      "Que me disse que quer comprar um carro...",
+      "Que me disse que quer comprar uma casa...",
+      "Que me disse que gostaria de pensar em investir no futuro...",
+      "Que é uma pessoa importante para mim...",
+    ],
+  },
+  {
+    id: "sondar",
+    number: "4",
+    title: "Sondar objetivos",
+    quote: "Hoje, quais são os objetivos financeiros que você ainda pretende alcançar?",
+    note: "A partir daqui, escolha o objetivo principal na seção abaixo e siga o roteiro SPIN.",
+  },
 ];
 
 const SCRIPT = `Perfeito. Pelo que você compartilhou comigo, existem alguns pontos que vale a pena analisar com mais profundidade para entender exatamente onde você está hoje e qual o caminho mais eficiente para atingir esse objetivo.
