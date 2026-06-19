@@ -104,44 +104,68 @@ const FRIEND_CALL_STEPS = [
     id: "small-talk",
     number: "1",
     title: "Small talk",
-    bullets: [
-      "Puxe assunto da relação que você tem com o cliente",
-      "Perguntas abertas: pergunte sobre o passado desde quando você não vê",
-      "Deixe o cliente falar à vontade",
-      "Demonstre interesse genuíno pelo o que o cliente está falando",
+    objective: "Criar conexão, gerar conforto e reduzir resistência.",
+    doList: [
+      "Conversar sobre a relação existente",
+      "Perguntar sobre acontecimentos recentes",
+      "Demonstrar interesse genuíno",
+      "Fazer perguntas abertas",
+      "Deixar o cliente falar",
     ],
-    tip: 'Dica: evite as palavras "legal" e "bacana" — elas dão ponto final ao assunto. Termine perguntando sobre o trabalho para fazer o link da entrevista.',
+    goodExamples: [
+      "Como você tem estado?",
+      "O que aconteceu de novo desde a última vez que nos falamos?",
+      "Como estão as coisas no trabalho?",
+      "Como está a família?",
+      "O que tem ocupado mais seu tempo ultimamente?",
+    ],
+    avoid: [
+      "Encerrar assuntos rapidamente",
+      'Responder apenas "legal", "bacana" ou "entendi"',
+      "Ir direto para a venda",
+    ],
+    why: "O cliente compra de pessoas que demonstram interesse genuíno. Antes de falar sobre objetivos financeiros, é preciso criar conexão.",
   },
   {
-    id: "apresentacao",
+    id: "autoridade",
     number: "2",
-    title: "Apresentação do novo trabalho",
-    subtitle: "Autoridade e prova social",
+    title: "Autoridade e prova social",
+    subtitle: "Explicar rapidamente o motivo da ligação",
+    objective: "Gerar credibilidade e contextualizar a chamada em poucos segundos.",
     quote:
-      "Sou franqueado de uma empresa de planejamento financeiro estratégico focada em objetivos chamada Bull Team, já ouviu falar? Foi construída por profissionais com mais de 10 anos de experiência no mercado financeiro e já aplicamos o método para milhares de famílias. Ajudamos as pessoas a alcançar os seus objetivos financeiros entendendo exatamente o que elas precisam fazer para tomarem a melhor decisão com base no mercado.",
+      "Hoje faço parte da Futuro Corp, uma operação especializada em planejamento financeiro estratégico focado em objetivos. Nosso trabalho é ajudar as pessoas a entender exatamente onde estão e qual o caminho mais eficiente para alcançar seus objetivos financeiros.",
+    why: "A autoridade reduz resistência. O cliente precisa entender rapidamente por que vale a pena continuar ouvindo.",
   },
   {
-    id: "reunioes",
+    id: "convite",
     number: "3",
-    title: "Reuniões sem custo",
-    subtitle: "Oferta de valor com critério",
+    title: "Convite para entrevista estratégica",
+    subtitle: "Criar curiosidade e gerar valor",
+    objective: "Posicionar a entrevista como oportunidade relevante, nunca como venda.",
     quote:
-      "Estou gostando bastante do trabalho e, com base no meu desempenho, meu mentor me liberou 5 reuniões sem custo para oferecer às pessoas que eu acreditasse que fizessem sentido — e eu pensei em você...",
-    bullets: [
-      "Que já se planeja...",
-      "Que ainda não se planeja...",
-      "Que me disse que quer comprar um carro...",
-      "Que me disse que quer comprar uma casa...",
-      "Que me disse que gostaria de pensar em investir no futuro...",
-      "Que é uma pessoa importante para mim...",
-    ],
+      "Estou participando de um projeto onde tenho algumas entrevistas estratégicas disponíveis para pessoas que acredito que possam se beneficiar de uma análise financeira mais profunda. E pensando na sua realidade, lembrei de você.",
+    why: "A entrevista deve parecer uma oportunidade relevante e não uma venda.",
   },
   {
-    id: "sondar",
+    id: "descoberta",
     number: "4",
-    title: "Sondar objetivos",
-    quote: "Hoje, quais são os objetivos financeiros que você ainda pretende alcançar?",
-    note: "A partir daqui, escolha o objetivo principal na seção abaixo e siga o roteiro SPIN.",
+    title: "Descoberta do objetivo",
+    subtitle: "Porta de entrada para o SPIN",
+    objective: "Identificar o objetivo principal e direcionar o roteiro abaixo.",
+    quote: "Hoje, quais são os principais objetivos financeiros que você gostaria de conquistar?",
+    quickFollowUps: [
+      "O que torna esse objetivo importante?",
+      "Existe algum prazo?",
+      "Quem mais é impactado por esse objetivo?",
+    ],
+    slowFollowUps: [
+      "Existe algo que gostaria de proporcionar para sua família?",
+      "Existe alguma conquista importante que ainda deseja realizar?",
+      "Se dinheiro não fosse uma preocupação, o que faria?",
+    ],
+    transition:
+      "Perfeito. Vamos explorar um pouco mais esse objetivo para entender exatamente onde você está hoje.",
+    note: "Ao identificar o objetivo, escolha o cartão correspondente na seção abaixo e siga o roteiro SPIN.",
   },
 ];
 
@@ -1629,8 +1653,8 @@ function Index() {
                 <div className="pointer-events-none absolute -bottom-32 -left-20 h-80 w-80 rounded-full bg-[var(--success)]/15 blur-3xl" />
                 <div className="relative">
                   <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium tracking-wide text-white/80 backdrop-blur">
-                    <span aria-hidden>🤝</span>
-                    Começo da ligação · antes dos objetivos
+                    <span aria-hidden>☎️</span>
+                    Porta de entrada · antes dos objetivos
                   </div>
                   <div className="mt-5 flex items-start gap-4">
                     <div aria-hidden className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--success)] to-[#3ccf6d] text-[var(--navy)] shadow-lg shadow-[var(--success)]/40">
@@ -1638,10 +1662,10 @@ function Index() {
                     </div>
                     <div>
                       <h2 id="friend-title" className="text-2xl sm:text-3xl font-bold tracking-tight">
-                        Ligação para Amigo
+                        Abertura da Ligação
                       </h2>
                       <p className="mt-2 text-base sm:text-lg text-white/80 leading-snug">
-                        Conduza os primeiros minutos da ligação com naturalidade, autoridade e direcionamento para os objetivos.
+                        Roteiro inicial: conexão, autoridade, convite e descoberta — antes de entrar no SPIN.
                       </p>
                     </div>
                   </div>
@@ -1661,25 +1685,89 @@ function Index() {
                                 <p className="text-xs sm:text-sm font-semibold uppercase tracking-wide text-[var(--success)]">{step.subtitle}</p>
                               )}
                             </div>
+                            {step.objective && (
+                              <p className="mt-3 text-sm sm:text-base leading-relaxed text-white/85">
+                                <span className="font-semibold text-white">Objetivo: </span>
+                                {step.objective}
+                              </p>
+                            )}
                             {step.quote && (
                               <blockquote className="mt-4 border-l-4 border-[var(--success)] pl-4 text-sm sm:text-base font-medium leading-relaxed text-white/95 italic">
                                 “{step.quote}”
                               </blockquote>
                             )}
-                            {step.bullets && (
-                              <ul className="mt-4 space-y-2">
-                                {step.bullets.map((b, idx) => (
-                                  <li key={idx} className="flex items-start gap-2 text-sm sm:text-base leading-relaxed text-white/85">
-                                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--success)]" />
-                                    <span>{b}</span>
-                                  </li>
-                                ))}
-                              </ul>
+                            {"doList" in step && step.doList && (
+                              <div className="mt-4">
+                                <p className="text-[11px] font-semibold uppercase tracking-wider text-white/60">❓ O que fazer</p>
+                                <ul className="mt-2 space-y-2">
+                                  {step.doList.map((b, idx) => (
+                                    <li key={idx} className="flex items-start gap-2 text-sm sm:text-base leading-relaxed text-white/85">
+                                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--success)]" />
+                                      <span>{b}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
                             )}
-                            {step.tip && (
-                              <p className="mt-4 rounded-xl border border-[var(--warn)]/30 bg-[var(--warn)]/10 p-3 text-xs sm:text-sm font-medium text-[var(--warn)]">
-                                💡 {step.tip}
-                              </p>
+                            {"goodExamples" in step && step.goodExamples && (
+                              <div className="mt-4 rounded-xl border border-[var(--success)]/30 bg-[var(--success)]/10 p-3">
+                                <p className="text-[11px] font-semibold uppercase tracking-wider text-[var(--success)]">✅ Bons exemplos</p>
+                                <ul className="mt-2 space-y-1.5">
+                                  {step.goodExamples.map((b, idx) => (
+                                    <li key={idx} className="text-sm leading-relaxed text-white/90">“{b}”</li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
+                            {"avoid" in step && step.avoid && (
+                              <div className="mt-3 rounded-xl border border-[var(--danger)]/30 bg-[var(--danger)]/10 p-3">
+                                <p className="text-[11px] font-semibold uppercase tracking-wider text-[var(--danger)]">❌ Evite</p>
+                                <ul className="mt-2 space-y-1.5">
+                                  {step.avoid.map((b, idx) => (
+                                    <li key={idx} className="flex items-start gap-2 text-sm leading-relaxed text-white/90">
+                                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--danger)]" />
+                                      <span>{b}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
+                            {"quickFollowUps" in step && step.quickFollowUps && (
+                              <div className="mt-4">
+                                <p className="text-[11px] font-semibold uppercase tracking-wider text-white/60">⚡ Se responder rapidamente</p>
+                                <ul className="mt-2 space-y-1.5">
+                                  {step.quickFollowUps.map((b, idx) => (
+                                    <li key={idx} className="flex items-start gap-2 text-sm leading-relaxed text-white/85">
+                                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--brand)]" />
+                                      <span>{b}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
+                            {"slowFollowUps" in step && step.slowFollowUps && (
+                              <div className="mt-3">
+                                <p className="text-[11px] font-semibold uppercase tracking-wider text-white/60">🤔 Se não souber responder</p>
+                                <ul className="mt-2 space-y-1.5">
+                                  {step.slowFollowUps.map((b, idx) => (
+                                    <li key={idx} className="flex items-start gap-2 text-sm leading-relaxed text-white/85">
+                                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--warn)]" />
+                                      <span>{b}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
+                            {"transition" in step && step.transition && (
+                              <blockquote className="mt-4 border-l-4 border-[var(--brand)] pl-4 text-sm sm:text-base font-medium leading-relaxed text-white/95 italic">
+                                ➡️ “{step.transition}”
+                              </blockquote>
+                            )}
+                            {step.why && (
+                              <div className="mt-4 rounded-xl border border-white/15 bg-white/5 p-3">
+                                <p className="text-[11px] font-semibold uppercase tracking-wider text-white/60">🎓 Por que essa etapa existe?</p>
+                                <p className="mt-1.5 text-sm leading-relaxed text-white/85">{step.why}</p>
+                              </div>
                             )}
                             {step.note && (
                               <p className="mt-4 rounded-xl border border-[var(--success)]/30 bg-[var(--success)]/10 p-3 text-xs sm:text-sm font-medium text-white/90">
