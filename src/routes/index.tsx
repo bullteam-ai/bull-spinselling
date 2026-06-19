@@ -99,6 +99,85 @@ const IDEAL_FLOW = [
   "Não Vender Nada",
 ];
 
+const JOURNEY_STAGES: { n: number; emoji: string; label: string; desc: string }[] = [
+  { n: 1, emoji: "☎️", label: "Conexão",        desc: "Criação de rapport e conexão com o cliente." },
+  { n: 2, emoji: "🛡️", label: "Autoridade",     desc: "Apresentação da Bull Team e construção de credibilidade." },
+  { n: 3, emoji: "🎯", label: "Objetivo",       desc: "Descoberta do principal objetivo financeiro do cliente." },
+  { n: 4, emoji: "🔍", label: "SPIN",           desc: "Exploração da situação, problemas, implicações e necessidades." },
+  { n: 5, emoji: "🚦", label: "Sinais",         desc: "Identificação de abertura e interesse do cliente." },
+  { n: 6, emoji: "📅", label: "Agendamento",    desc: "Convite para a Entrevista Estratégica Financeira." },
+  { n: 7, emoji: "🤝", label: "Compromisso",    desc: "Confirmação do comparecimento." },
+  { n: 8, emoji: "✅", label: "Comparecimento", desc: "Preparação do cliente para a entrevista." },
+];
+
+function JourneyBar({
+  activeStages,
+  onJump,
+}: {
+  activeStages: number[];
+  onJump: (stage: number) => void;
+}) {
+  const maxActive = activeStages.length ? Math.max(...activeStages) : 0;
+  return (
+    <div className="sticky top-0 z-50 border-b border-border bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80">
+      <div className="mx-auto max-w-7xl px-3 sm:px-6 pt-2 pb-2">
+        <ol
+          aria-label="Jornada da Entrevista Bull Team"
+          className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto scrollbar-thin"
+        >
+          {JOURNEY_STAGES.map((s, i) => {
+            const isActive = activeStages.includes(s.n);
+            const isDone = !isActive && s.n < maxActive;
+            return (
+              <Fragment key={s.n}>
+                <li className="shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => onJump(s.n)}
+                    title={s.desc}
+                    aria-current={isActive ? "step" : undefined}
+                    className={`group relative inline-flex items-center gap-1.5 rounded-full border px-2 sm:px-2.5 py-1 text-[11px] sm:text-xs font-semibold transition motion-reduce:transition-none ${
+                      isActive
+                        ? "border-[var(--brand)] bg-[var(--brand)] text-white shadow-md shadow-[var(--brand)]/30 ring-2 ring-[var(--brand)]/25"
+                        : isDone
+                        ? "border-[var(--success)]/40 bg-[var(--success)]/10 text-[var(--navy)]"
+                        : "border-border bg-white text-muted-foreground hover:text-[var(--navy)]"
+                    }`}
+                  >
+                    <span
+                      aria-hidden
+                      className={`flex h-4 w-4 items-center justify-center rounded-full text-[10px] font-bold ${
+                        isActive
+                          ? "bg-white/20 text-white"
+                          : isDone
+                          ? "bg-[var(--success)] text-white"
+                          : "bg-[var(--surface)] text-muted-foreground"
+                      }`}
+                    >
+                      {isDone ? "✓" : s.n}
+                    </span>
+                    <span aria-hidden>{s.emoji}</span>
+                    <span className="hidden md:inline whitespace-nowrap">{s.label}</span>
+                  </button>
+                </li>
+                {i < JOURNEY_STAGES.length - 1 && (
+                  <span
+                    aria-hidden
+                    className={`h-px w-2 sm:w-4 shrink-0 ${s.n < maxActive ? "bg-[var(--success)]" : "bg-border"}`}
+                  />
+                )}
+              </Fragment>
+            );
+          })}
+        </ol>
+        <p className="mt-1 text-center text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+          Não venda. Conduza. Gere consciência. Agende.
+        </p>
+      </div>
+    </div>
+  );
+}
+
 const FRIEND_CALL_STEPS = [
   {
     id: "small-talk",
@@ -1235,6 +1314,67 @@ function Index() {
   const toggleQuad = (q: Quadrant) =>
     setActiveQuads((cur) => (cur.includes(q) ? cur.filter((x) => x !== q) : [...cur, q]));
 
+  // Scroll-spy: detect which journey section is currently in view
+  const [activeSection, setActiveSection] = useState<string>("abertura");
+  useEffect(() => {
+    const ids = [
+      "abertura",
+      "objetivos",
+      "sinais",
+      "fechamento-agendamento",
+      "fechamento-compromisso",
+      "fechamento-comparecimento",
+    ];
+    const els = ids
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => Boolean(el));
+    if (els.length === 0) return;
+    const obs = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        if (visible[0]) setActiveSection((visible[0].target as HTMLElement).id);
+      },
+      { rootMargin: "-200px 0px -60% 0px", threshold: 0 }
+    );
+    els.forEach((el) => obs.observe(el));
+    return () => obs.disconnect();
+  }, [openGoal]);
+
+  const activeStages = useMemo<number[]>(() => {
+    switch (activeSection) {
+      case "abertura":
+        return [1, 2];
+      case "objetivos":
+        return openGoal ? [4] : [3];
+      case "sinais":
+        return [5];
+      case "fechamento-agendamento":
+        return [6];
+      case "fechamento-compromisso":
+        return [7];
+      case "fechamento-comparecimento":
+        return [8];
+      default:
+        return [1];
+    }
+  }, [activeSection, openGoal]);
+
+  const jumpToStage = (stage: number) => {
+    const map: Record<number, string> = {
+      1: "abertura",
+      2: "abertura",
+      3: "objetivos",
+      4: "objetivos",
+      5: "sinais",
+      6: "fechamento-agendamento",
+      7: "fechamento-compromisso",
+      8: "fechamento-comparecimento",
+    };
+    scrollToId(map[stage]);
+  };
+
   const toggleGoal = (id: string) => {
     setOpenGoal((cur) => (cur === id ? null : id));
     // Garantir que o roteiro fique visível logo abaixo do card tocado
@@ -1315,8 +1455,11 @@ function Index() {
           </div>
         </header>
 
+      {/* Sticky journey bar */}
+      <JourneyBar activeStages={activeStages} onJump={jumpToStage} />
+
       {/* Sticky control bar */}
-      <nav aria-label="Controles de navegação" className="sticky top-0 z-40 border-b border-border bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85">
+      <nav aria-label="Controles de navegação" className="sticky top-[68px] sm:top-[72px] z-40 border-b border-border bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85">
         <div className="mx-auto max-w-7xl px-3 sm:px-6 py-3 space-y-3">
           <div className="flex items-center gap-2">
             <div className="relative flex-1 min-w-0">
@@ -1501,7 +1644,7 @@ function Index() {
           )}
 
           {trainingMode && !searchResults && (
-            <section id="treinamento" aria-labelledby="psy-title" className="scroll-mt-28">
+            <section id="treinamento" aria-labelledby="psy-title" className="scroll-mt-44">
               <div className="relative overflow-hidden rounded-3xl border-2 border-[var(--brand)] bg-gradient-to-br from-[#0a1733] via-[var(--navy)] to-[#1a2e5c] p-6 sm:p-10 text-white shadow-2xl shadow-[var(--brand)]/20">
                 <div className="pointer-events-none absolute -top-32 -right-20 h-80 w-80 rounded-full bg-[var(--brand)]/30 blur-3xl" />
                 <div className="pointer-events-none absolute -bottom-32 -left-20 h-80 w-80 rounded-full bg-[var(--success)]/15 blur-3xl" />
@@ -1647,7 +1790,7 @@ function Index() {
           )}
 
           {!searchResults && (
-            <section id="abertura" aria-labelledby="friend-title" className="scroll-mt-28">
+            <section id="abertura" aria-labelledby="friend-title" className="scroll-mt-44">
               <div className="relative overflow-hidden rounded-3xl border-2 border-[var(--brand)] bg-gradient-to-br from-[#0a1733] via-[var(--navy)] to-[#1a2e5c] p-6 sm:p-10 text-white shadow-2xl shadow-[var(--brand)]/20">
                 <div className="pointer-events-none absolute -top-32 -right-20 h-80 w-80 rounded-full bg-[var(--brand)]/30 blur-3xl" />
                 <div className="pointer-events-none absolute -bottom-32 -left-20 h-80 w-80 rounded-full bg-[var(--success)]/15 blur-3xl" />
@@ -1785,7 +1928,7 @@ function Index() {
           )}
 
           {!searchResults && (
-            <section id="objetivos" aria-labelledby="goals-title" className="scroll-mt-28">
+            <section id="objetivos" aria-labelledby="goals-title" className="scroll-mt-44">
               <div className="flex items-end justify-between gap-4 mb-6">
                 <div>
                   <h2 id="goals-title" className="text-2xl sm:text-3xl font-bold tracking-tight text-[var(--navy)]">
@@ -1975,7 +2118,7 @@ function Index() {
           )}
 
           {!searchResults && (
-            <section id="sinais" aria-labelledby="sinais-title" className="scroll-mt-28">
+            <section id="sinais" aria-labelledby="sinais-title" className="scroll-mt-44">
               <div className="rounded-3xl border border-border bg-white p-5 sm:p-7 shadow-sm">
                 <div className="flex items-center gap-3">
                   <div aria-hidden className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--warn)]/15 text-[var(--warn)]">
@@ -2001,7 +2144,7 @@ function Index() {
         )}
 
           {!searchResults && (
-            <section id="fechamento" aria-labelledby="closing-title" className="scroll-mt-28">
+            <section id="fechamento" aria-labelledby="closing-title" className="scroll-mt-44">
               <div className="relative overflow-hidden rounded-3xl border-2 border-[var(--brand)] bg-gradient-to-br from-[var(--navy)] via-[#0e2040] to-[#071225] p-6 sm:p-10 text-white shadow-2xl shadow-[var(--brand)]/20">
                 <div className="pointer-events-none absolute -top-20 -right-20 h-80 w-80 rounded-full bg-[var(--brand)]/25 blur-3xl" />
                 <div className="pointer-events-none absolute -bottom-20 -left-20 h-80 w-80 rounded-full bg-[var(--success)]/20 blur-3xl" />
@@ -2019,7 +2162,7 @@ function Index() {
 
                   <div className="mt-8 space-y-6">
                     {/* 1️⃣ Tirar o Doce */}
-                    <div className="rounded-2xl border border-white/10 bg-white/5 p-5 sm:p-6 backdrop-blur">
+                    <div id="fechamento-agendamento" className="scroll-mt-44 rounded-2xl border border-white/10 bg-white/5 p-5 sm:p-6 backdrop-blur">
                       <div className="flex items-center gap-3">
                         <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--brand)] text-lg shadow-lg shadow-[var(--brand)]/30">🍬</span>
                         <div>
@@ -2096,7 +2239,7 @@ function Index() {
                     </div>
 
                     {/* 4️⃣ Agendar com Qualidade */}
-                    <div className="rounded-2xl border border-white/10 bg-white/5 p-5 sm:p-6 backdrop-blur">
+                    <div id="fechamento-compromisso" className="scroll-mt-44 rounded-2xl border border-white/10 bg-white/5 p-5 sm:p-6 backdrop-blur">
                       <div className="flex items-center gap-3">
                         <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--success)] text-lg shadow-lg shadow-[var(--success)]/30">🤝</span>
                         <div>
@@ -2169,7 +2312,7 @@ function Index() {
                     </div>
 
                     {/* 7️⃣ Resumo do Processo */}
-                    <div className="rounded-2xl border border-white/10 bg-white/5 p-5 sm:p-6 backdrop-blur">
+                    <div id="fechamento-comparecimento" className="scroll-mt-44 rounded-2xl border border-white/10 bg-white/5 p-5 sm:p-6 backdrop-blur">
                       <div className="flex items-center gap-3">
                         <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--success)] text-lg shadow-lg shadow-[var(--success)]/30">📋</span>
                         <div>
