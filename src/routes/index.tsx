@@ -2468,6 +2468,22 @@ function GoalBlocks({
                   </p>
                 </div>
               )}
+              {!callMode && quad.key === "problema" && (
+                <div className="mb-2 rounded-xl border border-[var(--warn)]/40 bg-[var(--warn)]/5 px-3 py-2 text-[12px] leading-snug text-[var(--navy)]">
+                  <p className="font-bold uppercase tracking-wide text-[11px] text-[#8a5a00]">🧠 Princípio da Incerteza Elegante</p>
+                  <p className="mt-1 font-medium">
+                    Não tente provar que o cliente está errado. Leve-o a perceber que talvez ele não tenha todas as respostas. A entrevista existe porque pode existir uma forma melhor — não porque ele está errando.
+                  </p>
+                  <p className="mt-2 text-[11px] font-semibold text-[#8a5a00]">As melhores respostas nesta etapa:</p>
+                  <ul className="mt-1 grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-0.5 text-[11px] text-[var(--navy)]">
+                    <li>✅ "Nunca tinha pensado nisso."</li>
+                    <li>✅ "Boa pergunta."</li>
+                    <li>✅ "Não tenho certeza."</li>
+                    <li>✅ "Nunca comparei dessa forma."</li>
+                    <li>✅ "Nunca calculei isso."</li>
+                  </ul>
+                </div>
+              )}
               <ScriptCard
                 fullKey={key}
                 script={script}
