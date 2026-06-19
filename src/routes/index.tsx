@@ -1455,8 +1455,11 @@ function Index() {
           </div>
         </header>
 
+      {/* Sticky journey bar */}
+      <JourneyBar activeStages={activeStages} onJump={jumpToStage} />
+
       {/* Sticky control bar */}
-      <nav aria-label="Controles de navegação" className="sticky top-0 z-40 border-b border-border bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85">
+      <nav aria-label="Controles de navegação" className="sticky top-[68px] sm:top-[72px] z-40 border-b border-border bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85">
         <div className="mx-auto max-w-7xl px-3 sm:px-6 py-3 space-y-3">
           <div className="flex items-center gap-2">
             <div className="relative flex-1 min-w-0">
