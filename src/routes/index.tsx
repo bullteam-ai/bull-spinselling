@@ -2641,12 +2641,14 @@ function ScriptCard({
             tone="success"
             callMode={callMode}
           />
-          <ExplorationList
-            label={`❌ ${naoLabel}`}
-            items={script.nao}
-            tone="danger"
-            callMode={callMode}
-          />
+          {script.nao && script.nao.length > 0 && (
+            <ExplorationList
+              label={`❌ ${naoLabel}`}
+              items={script.nao}
+              tone="danger"
+              callMode={callMode}
+            />
+          )}
           <div className="rounded-lg border border-[var(--brand)]/30 p-3" style={{ backgroundColor: "color-mix(in oklab, var(--brand) 8%, white)" }}>
             <p className="text-[11px] font-bold uppercase tracking-wide text-[var(--brand)]">🎤 Transição</p>
             <p className={`mt-1 font-medium text-[var(--navy)] leading-snug ${callMode ? "text-base" : "text-sm"}`}>"{script.transicao}"</p>
