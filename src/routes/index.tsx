@@ -278,10 +278,10 @@ const QUADRANTS: { key: Quadrant; emoji: string; label: string; color: string; c
 ];
 
 const SPIN_OBJECTIVES: Record<Quadrant, string> = {
-  situacao: "Entender a realidade atual do cliente.",
-  problema: "Identificar lacunas, dificuldades e ausência de planejamento.",
-  implicacao: "Ampliar o impacto financeiro, emocional e familiar do problema. Esta é a etapa mais importante da metodologia.",
-  necessidade: "Levar o cliente a perceber valor em buscar ajuda especializada.",
+  situacao: "Descobrir a realidade atual do cliente.",
+  problema: "Diagnosticar lacunas, dificuldades e ausência de planejamento.",
+  implicacao: "Ampliar o impacto financeiro, emocional e familiar.",
+  necessidade: "Fazer o cliente desejar a Entrevista Estratégica Financeira.",
 };
 
 const HIGH_CONVERSION_MARKERS = [
@@ -299,47 +299,47 @@ const KILLER_PRINCIPALS = new Set<string>([
   // Independência Financeira
   "Hoje você sente que possui um plano claro para alcançar essa independência?",
   "E se essa independência financeira acontecer 10 anos depois do que você gostaria?",
-  "Faz sentido validar se o caminho atual é realmente o mais eficiente?",
+  "Se você pudesse ter clareza exata de quando alcançará sua independência financeira e o que precisa fazer para chegar lá mais rápido, faria sentido entender isso?",
   // Aposentadoria
   "Hoje você acredita que sua estratégia atual é suficiente para entregar essa aposentadoria?",
   "E se você precisasse trabalhar 10 anos além do que imagina hoje?",
-  "Faria sentido validar se o caminho atual realmente entrega a aposentadoria que você deseja?",
+  "Faria sentido descobrir hoje qual renda você terá no futuro e se ela será suficiente para manter o padrão de vida que deseja?",
   // Compra de Casa
   "Hoje você sente que existe um plano claro para comprar esse imóvel dentro do prazo desejado?",
   "E se essa compra atrasar cinco anos?",
-  "Faz sentido validar se existe uma forma mais eficiente de chegar nesse objetivo?",
+  "Se fosse possível descobrir qual o caminho mais eficiente para conquistar esse imóvel e até antecipar essa conquista, faria sentido entender isso?",
   // Compra de Carro
   "Hoje você já sabe exatamente como pretende viabilizar essa compra?",
   "E se essa compra atrasar mais alguns anos?",
-  "Faz sentido validar se existe uma forma mais eficiente de atingir esse objetivo?",
+  "Faria sentido descobrir a forma mais inteligente de chegar nesse carro sem comprometer seus outros objetivos?",
   // Viagens
   "Hoje você possui um planejamento específico para realizar essa viagem?",
   "E se essa viagem não acontecer nos próximos 5 anos?",
-  "Faz sentido construir uma estratégia para transformar essa viagem em uma meta concreta?",
+  "Faria sentido transformar essa viagem em um plano concreto ao invés de deixá-la depender das circunstâncias?",
   // Empreendedorismo
   "Hoje você já possui clareza financeira sobre o que esse projeto exige?",
   "E se esse projeto continuar parado pelos próximos 5 anos?",
-  "Faz sentido entender qual estrutura financeira seria necessária para transformar esse projeto em realidade?",
+  "Faria sentido descobrir exatamente o que seria necessário para transformar essa ideia em realidade?",
   // Organização Financeira
   "Você sente que o resultado financeiro que possui hoje reflete o esforço que faz?",
   "E se nada mudar nos próximos 10 anos?",
-  "Faz sentido organizar tudo para ter mais clareza e previsibilidade?",
+  "Como seria ter total clareza sobre para onde seu dinheiro está indo e se ele está realmente aproximando você dos seus objetivos?",
   // Cliente Sem Objetivo
   "Se dinheiro não fosse um problema, o que você faria imediatamente?",
   "E se mais 10 anos passarem da mesma forma?",
-  "Faz sentido descobrir quais objetivos realmente fazem sentido para você?",
+  "Faria sentido descobrir quais objetivos realmente fazem sentido para a sua vida e enxergar o caminho mais inteligente para construí-los?",
   // Já Possui Assessor
   "Seu assessor conhece profundamente todos os seus objetivos financeiros?",
   "E se algo importante estivesse desalinhado hoje, como você descobriria?",
-  "Faz sentido validar se tudo continua alinhado aos seus objetivos atuais?",
+  "Faria sentido validar se tudo continua alinhado aos seus objetivos atuais e identificar possíveis oportunidades que ainda não estão sendo aproveitadas?",
   // Futuro dos Filhos
   "Hoje existe algum planejamento específico para ajudar seus filhos a alcançarem esses objetivos?",
   "E se chegar o momento em que seu filho precisar dessa ajuda e ela não estiver disponível?",
-  "Faz sentido entender quanto seria necessário para garantir essas oportunidades aos seus filhos?",
+  "Faria sentido saber exatamente o que precisa ser construído hoje para garantir as oportunidades que deseja oferecer aos seus filhos?",
   // Casamento e Projetos Familiares
   "Hoje vocês possuem um plano financeiro estruturado para alcançar esses objetivos?",
   "E se esses objetivos familiares demorarem muito mais tempo para acontecer?",
-  "Faz sentido validar se vocês estão utilizando a melhor estratégia para alcançar esses objetivos familiares?",
+  "Faria sentido validar se vocês estão utilizando o caminho mais eficiente para construir os sonhos da família?",
 ]);
 const isKiller = (q: string) => KILLER_PRINCIPALS.has(q);
 
