@@ -208,97 +208,97 @@ const QUADRANT_EXPLANATION: Record<Quadrant, string> = {
 const EXPLANATIONS: Record<string, string> = {
   // Implicações de atraso → custo emocional do tempo
   "E se essa independência financeira acontecer 10 anos depois do que você gostaria?":
-    "Essa pergunta existe para ampliar a percepção do custo do atraso. Muitas pessoas enxergam apenas o custo financeiro das decisões. Quando refletimos sobre tempo perdido, experiências adiadas, impacto familiar e oportunidades que não voltam, a decisão passa a ser emocional e não apenas racional. O objetivo não é gerar medo. É gerar consciência.",
+    "Amplia o custo do atraso. Tira a decisão do campo racional e leva para o emocional, onde a maioria das decisões acontece.",
   "E se você precisasse trabalhar 10 anos além do que imagina hoje?":
-    "Transforma um número distante em uma sensação concreta. O cliente sente o peso de adiar a liberdade e percebe que o verdadeiro custo não está em trabalhar, mas em perder a escolha de parar quando quiser.",
+    "Torna o atraso tangível. O cliente sente o peso de perder a liberdade de escolher quando parar.",
   "E se essa compra atrasar cinco anos?":
-    "Conecta o objetivo a algo maior do que o imóvel: rotina familiar, momentos com filhos, conforto. O cliente para de pensar em metros quadrados e passa a pensar em vida.",
+    "Conecta o imóvel à vida real. O cliente passa a pensar em rotina familiar, não em metros quadrados.",
   "E se essa compra atrasar mais alguns anos?":
-    "Faz o cliente perceber que o desconforto atual continua todos os dias enquanto a compra não acontece. O custo invisível da rotina aparece.",
+    "Revela o custo invisível da rotina. O desconforto diário se torna inaceitável.",
   "E se essa viagem não acontecer nos próximos 5 anos?":
-    "Transforma um problema financeiro em um problema de vida. O cliente deixa de pensar em dinheiro e passa a pensar em experiências, tempo e memórias que não voltam.",
+    "Transforma dinheiro em experiências perdidas. Ativa a dor de memórias que não voltam.",
   "E se esse projeto continuar parado pelos próximos 5 anos?":
-    "Ativa o medo do arrependimento. Muitas pessoas temem mais nunca tentar do que tentar e errar. A pergunta faz esse risco ficar visível.",
+    "Ativa o medo do arrependimento. É mais forte que o medo de errar.",
   "E se nada mudar nos próximos 10 anos?":
-    "Tira o cliente da inércia. Quando ele projeta a situação atual no futuro, percebe que ‘continuar como está’ também é uma escolha — e raramente é a melhor.",
+    "Tira o cliente da inércia. Mostra que 'continuar como está' também é uma escolha — e raramente a melhor.",
   "E se mais 10 anos passarem da mesma forma?":
-    "Faz o tempo virar protagonista. O cliente sem objetivo costuma viver no automático; essa pergunta o obriga a olhar para frente e perceber o custo invisível da ausência de direção.",
+    "Obriga o cliente a olhar para frente. O custo invisível da ausência de direção aparece.",
   "E se algo importante estivesse desalinhado hoje, como você descobriria?":
-    "Coloca em xeque a confiança automática no acompanhamento atual sem atacar o assessor. Cria espaço para uma segunda visão sem gerar conflito.",
+    "Cria dúvida sem atacar o assessor. Abre espaço para uma segunda visão.",
 
   // Necessidades → curiosidade e abertura
   "Faz sentido validar se o caminho atual é realmente o mais eficiente?":
-    "Essa pergunta cria curiosidade. Ela não vende uma solução. Ela convida o cliente a verificar algo que talvez nunca tenha analisado profundamente.",
+    "Cria curiosidade sem vender. Convida o cliente a verificar algo que nunca analisou.",
   "Faria sentido validar se o caminho atual realmente entrega a aposentadoria que você deseja?":
-    "Reduz a resistência ao reposicionar a conversa como validação, não como crítica. O cliente não precisa admitir erro — apenas aceitar conferir os números.",
+    "Reposiciona como validação, não crítica. O cliente não precisa admitir erro.",
   "Faz sentido validar se existe uma forma mais eficiente de chegar nesse objetivo?":
-    "Abre espaço para comparação sem confronto. O cliente percebe que pode existir um caminho melhor sem precisar dizer que o atual está errado.",
+    "Abre espaço para comparação sem confronto. O cliente descobre que pode existir algo melhor.",
   "Faz sentido validar se existe uma forma mais eficiente de atingir esse objetivo?":
-    "Convida à curiosidade. Em vez de oferecer produto, oferece clareza — e clareza é algo que ninguém recusa.",
+    "Oferece clareza sem vender produto. Clareza é irresistível.",
   "Faz sentido construir uma estratégia para transformar essa viagem em uma meta concreta?":
-    "Tira o sonho do campo da intenção e leva para o campo do planejamento. Quando algo vira meta com prazo, sai do ‘um dia’ e entra na agenda.",
+    "Tira o sonho do 'um dia' e coloca na agenda. Meta com prazo vira compromisso.",
   "Faz sentido entender qual estrutura financeira seria necessária para transformar esse projeto em realidade?":
-    "Substitui a vaga ideia de ‘empreender um dia’ por uma pergunta concreta de quanto e como. Move o cliente da contemplação para a execução.",
+    "Move o cliente da contemplação para a execução. Troca vontade por número.",
   "Faz sentido organizar tudo para ter mais clareza e previsibilidade?":
-    "Ninguém recusa clareza. A palavra ‘organizar’ é leve e desarma — ao mesmo tempo em que abre porta para um trabalho profundo.",
+    "Ninguém recusa clareza. 'Organizar' desarma e abre porta para trabalho profundo.",
   "Faz sentido descobrir quais objetivos realmente fazem sentido para você?":
-    "Para o cliente sem objetivo claro, o primeiro passo não é investir melhor — é descobrir para onde ir. Essa pergunta entrega exatamente isso.",
+    "O primeiro passo não é investir melhor. É saber para onde ir.",
   "Faz sentido validar se tudo continua alinhado aos seus objetivos atuais?":
-    "Permite uma segunda visão sem competir com o assessor atual. Posiciona a entrevista como complemento, não como ameaça.",
+    "Posiciona a entrevista como complemento, não ameaça. Permite segunda visão.",
 
   // Problemas → reconhecer lacuna sem confronto
   "Hoje você sente que possui um plano claro para alcançar essa independência?":
-    "A palavra ‘claro’ é o gatilho. Mesmo quem tem investimentos raramente tem um plano claro — e ao admitir isso, o cliente abre espaço para a próxima etapa.",
+    "A palavra 'claro' é o gatilho. Quem tem investimentos raramente tem plano claro — e admitir isso abre a próxima etapa.",
   "Hoje você acredita que sua estratégia atual é suficiente para entregar essa aposentadoria?":
-    "Diferencia ‘ter dinheiro guardado’ de ‘ter uma estratégia suficiente’. Quase ninguém validou de fato, e a percepção dessa lacuna gera necessidade.",
+    "Diferencia 'ter dinheiro' de 'ter estratégia'. A lacuna gera necessidade imediata.",
   "Hoje você sente que existe um plano claro para comprar esse imóvel dentro do prazo desejado?":
-    "Conecta o desejo ao prazo. É no prazo que o plano costuma falhar, e admitir isso é o primeiro passo para querer estruturá-lo.",
+    "Conecta desejo ao prazo. É no prazo que o plano costuma falhar.",
   "Hoje você já sabe exatamente como pretende viabilizar essa compra?":
-    "Substitui ‘você se planeja?’ pelo concreto ‘como?’. Forçar a explicação do método revela a ausência dele.",
+    "Força a explicação do método. Revela a ausência dele sem confronto.",
   "Hoje você possui um planejamento específico para realizar essa viagem?":
-    "A palavra ‘específico’ desmascara o ‘um dia a gente vai’. O cliente percebe que sem reserva e data, a viagem dificilmente sai do papel.",
+    "'Específico' desmascara o 'um dia a gente vai'. Sem data e reserva, não sai do papel.",
   "Hoje você já possui clareza financeira sobre o que esse projeto exige?":
-    "Empreendedores travam mais por falta de números do que por falta de coragem. Ao perceber essa lacuna, o cliente passa a desejar a clareza.",
+    "Empreendedores travam por falta de números, não de coragem. A lacuna gera desejo de clareza.",
   "Você sente que o resultado financeiro que possui hoje reflete o esforço que faz?":
-    "Toca direto na frustração de quem ganha bem e não acumula. Conecta esforço a resultado e expõe um desalinhamento que incomoda.",
+    "Toca na frustração de quem ganha bem e não acumula. Expõe o desalinhamento esforço x resultado.",
 
   // Situação chave → contexto que vira gatilho
   "Se dinheiro não fosse um problema, o que você faria imediatamente?":
-    "Revela os verdadeiros desejos do cliente sem pressão. Muitas vezes ele descobre, ali na ligação, o que realmente quer da vida — e isso muda o tom da conversa.",
+    "Revela os desejos reais sem pressão. O cliente frequentemente descobre o que quer ali na ligação.",
   "Seu assessor conhece profundamente todos os seus objetivos financeiros?":
-    "Diferencia ‘ter assessor’ de ‘ter planejamento’. Sem atacar ninguém, expõe que a maior parte do trabalho costuma ser sobre produto, não sobre vida.",
+    "Diferencia 'ter assessor' de 'ter planejamento'. Expõe que o foco costuma ser produto, não vida.",
 
-  // Killer questions referenciadas no topo (também aparecem em busca/favoritos)
+  // Killer questions referenciadas no topo
   "O que acontece se isso não mudar nos próximos 5 anos?":
-    "Coloca o problema no futuro e tira o cliente do conforto do presente. A projeção amplia o desconforto e cria urgência sem precisar empurrar nada.",
+    "Projeta o problema no futuro. Cria urgência sem pressão.",
   "O que está custando para você não resolver isso hoje?":
-    "Transforma indecisão em prejuízo concreto. Quando o custo de não agir fica visível, a inação deixa de parecer neutra.",
+    "Torna o custo da inação visível. Indecisão vira prejuízo concreto.",
   "Como isso impacta sua família?":
-    "Grande parte das decisões financeiras não são tomadas apenas por razões financeiras. Quando conectamos o objetivo a filhos, cônjuge ou pessoas importantes, aumentamos a relevância emocional da conversa.",
+    "Aumenta a relevância emocional. Decisões financeiras são tomadas pelo coração, não pela calculadora.",
   "Se continuar exatamente como está, qual será o cenário daqui a 10 anos?":
-    "Força o cliente a sair da rotina mental e desenhar o futuro. Quase sempre, o cenário que ele descreve é diferente do que ele deseja.",
+    "Obriga o cliente a desenhar o futuro. O cenário real raramente é o desejado.",
   "Você acredita que está no melhor caminho possível ou apenas no caminho que conhece?":
-    "Reduz a resistência natural do cliente. Em vez de confrontar a estratégia atual, cria abertura para novas possibilidades. O cliente não precisa admitir que está errado — apenas considerar que pode existir uma alternativa melhor.",
+    "Reduz resistência. O cliente não precisa admitir erro — apenas considerar alternativas.",
 
   // Futuro dos Filhos
   "Quando você pensa no futuro dos seus filhos, o que mais gostaria de proporcionar para eles?":
-    "Abre a conversa pelo tema mais emocional possível: os filhos. Quando um pai ou mãe verbaliza o que deseja para os filhos, cria um compromisso emocional implícito que torna a continuidade da conversa natural e relevante.",
+    "Abre pela emoção mais forte: os filhos. Verbalizar o desejo cria compromisso imediato com a conversa.",
   "Hoje existe algum planejamento específico para ajudar seus filhos a alcançarem esses objetivos?":
-    "Diferencia 'desejo' de 'estrutura'. A maioria dos pais tem sonhos, mas poucos têm números. Ao reconhecer essa lacuna, o cliente percebe que amar não basta — é preciso planejar.",
+    "Separa desejo de estrutura. A maioria tem sonhos, poucos têm números. O cliente percebe a lacuna.",
   "E se chegar o momento em que seu filho precisar dessa ajuda e ela não estiver disponível?":
-    "Ativa a dor da irresponsabilidade percebida. Nenhum pai quer sentir que poderia ter feito mais. A pergunta transforma o planejamento financeiro em ato de amor concreto.",
+    "Ativa a dor de não ter feito o suficiente. Transforma planejamento em ato de amor.",
   "Faz sentido entender quanto seria necessário para garantir essas oportunidades aos seus filhos?":
-    "Move o sentimento para a matemática. Quando o sonho ganha um número, deixa de ser abstrato e vira meta. O cliente passa a enxergar que proteger o futuro dos filhos é possível e mensurável.",
+    "Move emoção para matemática. Sonho com número vira meta concreta.",
 
   // Casamento e Projetos Familiares
   "Quando você pensa no seu casamento e na sua família, quais são os principais objetivos que gostaria de construir juntos?":
-    "Coloca o casal como protagonista da conversa. Quando ambos compartilham um sonho, a decisão deixar de ser individual e passa a ser familiar — aumentando drasticamente a motivação para agendar.",
+    "Coloca o casal como protagonista. Decisão familiar tem motivação muito maior que individual.",
   "Hoje vocês possuem um plano financeiro estruturado para alcançar esses objetivos?":
-    "Expõe a desconexão entre sonhos compartilhados e estratégia compartilhada. Muitos casais conversam sobre o futuro, mas nunca sentaram para planejar juntos. Essa pergunta cria o espaço para isso.",
+    "Expõe a desconexão entre sonhos e estratégia. Muitos conversam, poucos planejam juntos.",
   "E se esses objetivos familiares demorarem muito mais tempo para acontecer?":
-    "Conecta o tempo a experiências perdidas. Não é apenas sobre dinheiro — é sobre construir memórias juntos. O atraso financeiro vira atraso de vida, e isso é insuportável para quem ama.",
+    "Conecta tempo a memórias perdidas. Atraso financeiro vira atraso de vida.",
   "Faz sentido validar se vocês estão utilizando a melhor estratégia para alcançar esses objetivos familiares?":
-    "Oferece uma oportunidade de união. Em vez de um dos parceiros parecer desorganizado, ambos são convidados a validar juntos — transformando a entrevista em experiência de casal, não em julgamento.",
+    "Convida ambos a validar juntos. Transforma entrevista em experiência de união, não julgamento.",
 };
 
 const getExplanation = (principal: string, quadrant: Quadrant) =>
