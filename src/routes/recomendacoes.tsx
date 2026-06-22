@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ClipboardCopy, Check, Search, Sparkles, GraduationCap, Flame,
   Home as HomeIcon, Headphones, Brain, Crown,
@@ -123,10 +123,10 @@ const LEVEL_UP = [
    ÂNCORAS DA JORNADA
    ========================================= */
 
-type TabKey = "execucao" | "treino";
-type JourneyItem = { id: string; label: string; tab: TabKey };
+export type TabKey = "execucao" | "treino";
+export type JourneyItem = { id: string; label: string; tab: TabKey };
 
-const JOURNEY: JourneyItem[] = [
+export const JOURNEY: JourneyItem[] = [
   { id: "mapa-mental",   label: "Mapa mental",              tab: "execucao" },
   { id: "passo-1",       label: "1 · Convicção",            tab: "execucao" },
   { id: "passo-2",       label: "2 · Pergunta certa",       tab: "execucao" },
@@ -191,6 +191,24 @@ function Recomendacoes() {
     }
   };
 
+  // Sincronizar com hash da URL (#passo-3 etc.) — vindo do menu suspenso global
+  useEffect(() => {
+    const handleHash = () => {
+      const raw = window.location.hash.replace("#", "");
+      if (!raw) return;
+      const item = JOURNEY.find((i) => i.id === raw);
+      if (!item) return;
+      if (item.tab !== tab) setTab(item.tab);
+      requestAnimationFrame(() => {
+        setTimeout(() => scrollToAnchor(item.id), 80);
+      });
+    };
+    handleHash();
+    window.addEventListener("hashchange", handleHash);
+    return () => window.removeEventListener("hashchange", handleHash);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className="min-h-dvh bg-[var(--surface)] text-foreground pb-24">
       {/* HEADER */}
@@ -231,7 +249,7 @@ function Recomendacoes() {
       <MentiraSection />
 
       {/* STICKY TABS */}
-      <nav className="sticky top-0 z-40 border-b border-border bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85">
+      <nav className="sticky top-12 z-40 border-b border-border bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85">
         <div className="mx-auto max-w-7xl px-3 sm:px-6 py-3 flex items-center gap-2 flex-wrap">
           <div role="tablist" className="inline-flex items-center rounded-xl border border-border bg-[var(--surface)] p-1">
             <TabButton active={tab === "execucao"} onClick={() => setTab("execucao")}
