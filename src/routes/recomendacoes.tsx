@@ -249,7 +249,7 @@ function Recomendacoes() {
       <MentiraSection />
 
       {/* STICKY TABS */}
-      <nav className="sticky top-0 z-40 border-b border-border bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85">
+      <nav className="sticky top-12 z-40 border-b border-border bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85">
         <div className="mx-auto max-w-7xl px-3 sm:px-6 py-3 flex items-center gap-2 flex-wrap">
           <div role="tablist" className="inline-flex items-center rounded-xl border border-border bg-[var(--surface)] p-1">
             <TabButton active={tab === "execucao"} onClick={() => setTab("execucao")}
