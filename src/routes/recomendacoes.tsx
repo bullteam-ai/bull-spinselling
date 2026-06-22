@@ -261,6 +261,9 @@ function ExecucaoTab({
         </div>
       </section>
 
+      {/* MAPA MENTAL DA RECOMENDAÇÃO */}
+      <MapaMentalSection />
+
       {/* PASSO 1 */}
       <Step n={1} eyebrow="Passo 1" title="Gerar convicção" subtitle="Antes de pedir qualquer indicação, faça o cliente verbalizar o valor da reunião.">
         <ScriptCard label="Pergunta de abertura" quote='Fulano, olhando para tudo que conversamos hoje, o que mudou na sua visão financeira entre o início da reunião e agora?' />
@@ -287,6 +290,9 @@ function ExecucaoTab({
         </div>
       </Step>
 
+      {/* ESCADA DE PROFUNDIDADE */}
+      <EscadaProfundidadeSection />
+
       {/* PASSO 3 */}
       <Step n={3} eyebrow="Passo 3" title="Método dos 3 nomes" subtitle="Toda categoria segue a mesma estrutura. Meta: 5 a 10 nomes por categoria.">
         <ScriptCard label="Pergunta inicial" quote='Quais são os 3 empresários mais próximos de você?' />
@@ -305,6 +311,7 @@ function ExecucaoTab({
       {/* PASSO 4 — NICHOS PRÓXIMOS */}
       <Step n={4} eyebrow="Passo 4" title="Nichos próximos" subtitle="Comece pela rede de maior proximidade. Memória ativa primeiro.">
         <QuestionGrid items={NICHE_QUESTIONS.filter(i => matches(i.label) || matches(i.q))} />
+        <PerguntaResgateSection />
       </Step>
 
       {/* PASSO 5 — OBJETIVOS */}
@@ -312,9 +319,13 @@ function ExecucaoTab({
         <QuestionGrid items={GOAL_QUESTIONS.filter(i => matches(i.label) || matches(i.q))} />
       </Step>
 
+      {/* MODO ELITE — APROFUNDAMENTO */}
+      <ModoEliteSection />
+
       {/* PASSO 6 — SUBIDA DE NÍVEL */}
       <Step n={6} eyebrow="Passo 6" title="Subida de nível" subtitle="Cliente comum gera cliente comum. Cliente premium gera cliente premium. Sempre subir.">
         <QuestionGrid items={LEVEL_UP.filter(i => matches(i.label) || matches(i.q))} premium />
+        <SubidaNichoInteligenteSection />
       </Step>
 
       {/* PASSO 7 — SUBIDA DE RENDA */}
@@ -334,6 +345,9 @@ function ExecucaoTab({
           <Pill>Por que ele te veio na cabeça?</Pill>
         </div>
       </Step>
+
+      {/* ANATOMIA DE UMA RECOMENDAÇÃO ELITE */}
+      <AnatomiaSection />
 
       {/* PASSO 9 — QUALIFICAÇÃO */}
       <Step n={9} eyebrow="Passo 9" title="Qualificação" subtitle="Para cada indicação, capturar:">
