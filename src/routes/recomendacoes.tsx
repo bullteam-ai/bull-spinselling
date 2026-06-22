@@ -520,6 +520,18 @@ function TreinoTab() {
           1 recomendação = sobrevivência. 10 = padrão. 20+ = quem constrói escala.
         </TrainingNote>
       </Module>
+
+      {/* RADAR DE OPORTUNIDADES */}
+      <RadarOportunidadesSection />
+
+      {/* PSICOLOGIA DA RECOMENDAÇÃO */}
+      <PsicologiaSection />
+
+      {/* O QUE FAZ OS TOP 1% */}
+      <Top1Section />
+
+      {/* MANDAMENTOS DA RECOMENDAÇÃO ELITE */}
+      <MandamentosSection />
     </div>
   );
 }
