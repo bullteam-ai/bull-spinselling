@@ -264,6 +264,7 @@ function Recomendacoes() {
             <span className="hidden sm:inline">{copied ? "Copiado" : "Copiar script completo"}</span>
           </button>
         </div>
+        <JourneyNav tab={tab} onJump={jumpTo} />
       </nav>
 
       <main className="mx-auto max-w-7xl px-3 sm:px-6 py-8 sm:py-12">
