@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ClipboardCopy, Check, Search, Sparkles, GraduationCap, Flame,
   Home as HomeIcon, Headphones, Brain, Crown,
@@ -190,6 +190,24 @@ function Recomendacoes() {
       scrollToAnchor(item.id);
     }
   };
+
+  // Sincronizar com hash da URL (#passo-3 etc.) — vindo do menu suspenso global
+  useEffect(() => {
+    const handleHash = () => {
+      const raw = window.location.hash.replace("#", "");
+      if (!raw) return;
+      const item = JOURNEY.find((i) => i.id === raw);
+      if (!item) return;
+      if (item.tab !== tab) setTab(item.tab);
+      requestAnimationFrame(() => {
+        setTimeout(() => scrollToAnchor(item.id), 80);
+      });
+    };
+    handleHash();
+    window.addEventListener("hashchange", handleHash);
+    return () => window.removeEventListener("hashchange", handleHash);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="min-h-dvh bg-[var(--surface)] text-foreground pb-24">
