@@ -500,7 +500,7 @@ function TreinoTab() {
         </div>
       </section>
 
-      <Module n={1} title='Por que o cliente diz "não lembro de ninguém"' hook="Porque você perguntou errado.">
+      <Module id="mod-1" n={1} title='Por que o cliente diz "não lembro de ninguém"' hook="Porque você perguntou errado.">
         <p className="text-[15px] leading-relaxed text-[var(--navy)]">
           O cérebro não trabalha por busca aberta. Ele trabalha por categoria. Quando você pergunta
           “quem você conhece?”, o cliente entra em loop e não acessa memória.
@@ -514,7 +514,7 @@ function TreinoTab() {
         </TrainingNote>
       </Module>
 
-      <Module n={2} title="Regra dos 30 nomes" hook="Levante 30. Filtre 10.">
+      <Module id="mod-2" n={2} title="Regra dos 30 nomes" hook="Levante 30. Filtre 10.">
         <p className="text-[15px] leading-relaxed text-[var(--navy)]">
           Objetivo da reunião: <strong>30 nomes levantados</strong>. Depois filtrar.
           Nunca tente encontrar apenas 3. Encontre 30. Selecione os melhores 10.
@@ -529,7 +529,7 @@ function TreinoTab() {
         </TrainingNote>
       </Module>
 
-      <Module n={3} title="Não peça indicações. Conduza indicações." hook="Profissionais fracos pedem. Profissionais fortes conduzem.">
+      <Module id="mod-3" n={3} title="Não peça indicações. Conduza indicações." hook="Profissionais fracos pedem. Profissionais fortes conduzem.">
         <div className="grid gap-3 md:grid-cols-2">
           <div className="rounded-2xl border-2 border-[var(--danger)]/40 bg-[var(--danger)]/5 p-5">
             <p className="text-[11px] font-semibold uppercase tracking-wider text-[var(--danger)]">Pedir</p>
@@ -545,7 +545,7 @@ function TreinoTab() {
         </TrainingNote>
       </Module>
 
-      <Module n={4} title="Subida de nicho" hook="Cliente premium gera cliente premium.">
+      <Module id="mod-4" n={4} title="Subida de nicho" hook="Cliente premium gera cliente premium.">
         <p className="text-[15px] leading-relaxed text-[var(--navy)]">
           Sempre subir. Use as profissões de maior renda como ponte natural.
         </p>
@@ -561,7 +561,7 @@ function TreinoTab() {
         </TrainingNote>
       </Module>
 
-      <Module n={5} title="Meta de excelência" hook="O número que separa o sobrevivente do elite.">
+      <Module id="mod-5" n={5} title="Meta de excelência" hook="O número que separa o sobrevivente do elite.">
         <div className="grid gap-3 sm:grid-cols-3">
           <LevelCard emoji="🎯" tier="Reunião comum"  value="10"  label="Recomendações qualificadas" color="var(--brand)" />
           <LevelCard emoji="🏆" tier="Planejador elite" value="20"  label="Recomendações qualificadas" color="var(--success)" />
@@ -1093,7 +1093,7 @@ function RadarOportunidadesSection() {
     { w: "Construtora", e: "🏗️" }, { w: "Patrimônio", e: "💎" },
   ];
   return (
-    <Module n={6} title="Radar de oportunidades" hook="O cliente entrega recomendações sem perceber — você precisa estar ouvindo.">
+    <Module id="mod-6" n={6} title="Radar de oportunidades" hook="O cliente entrega recomendações sem perceber — você precisa estar ouvindo.">
       <p className="text-[15px] leading-relaxed text-[var(--navy)]">
         Durante a reunião, fique atento às palavras-chave abaixo. Cada uma delas é uma porta aberta
         para aprofundar e descobrir mais um nome qualificado.
@@ -1121,7 +1121,7 @@ function PsicologiaSection() {
   const naoIndica = ["Não lembrar.", "Ter medo de incomodar.", "Não enxergar quem poderia se beneficiar.", "Não ter percebido valor suficiente."];
   const indica   = ["Perceber transformação.", "Sentir confiança.", "Entender quem pode ser ajudado.", "Querer compartilhar algo positivo."];
   return (
-    <Module n={7} title="Psicologia da recomendação" hook="Recomendações são construídas durante toda a reunião — não no final.">
+    <Module id="mod-7" n={7} title="Psicologia da recomendação" hook="Recomendações são construídas durante toda a reunião — não no final.">
       <div className="grid gap-3 md:grid-cols-2">
         <div className="rounded-2xl border-2 border-[var(--danger)]/30 bg-[var(--danger)]/5 p-5">
           <p className="text-[11px] font-bold uppercase tracking-wider text-[var(--danger)]">Cliente NÃO indica por</p>
@@ -1156,7 +1156,7 @@ function Top1Section() {
   const comum = ["Pede recomendação.", "Aceita o primeiro não.", "Pega 1 nome.", "Não qualifica.", "Segue para o encerramento."];
   const elite = ["Constrói valor.", "Conduz memória.", "Explora nichos.", "Aprofunda.", "Qualifica.", "Prioriza.", "Sai com 10+ nomes."];
   return (
-    <Module n={8} title="O que faz os Top 1%" hook="A diferença não está na quantidade de reuniões. Está na profundidade.">
+    <Module id="mod-8" n={8} title="O que faz os Top 1%" hook="A diferença não está na quantidade de reuniões. Está na profundidade.">
       <div className="grid gap-3 md:grid-cols-2">
         <div className="rounded-2xl border border-border bg-[var(--surface)] p-5">
           <div className="flex items-center gap-2">
