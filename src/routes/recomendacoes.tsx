@@ -618,16 +618,17 @@ function TabButton({
 }
 
 function Step({
-  n, eyebrow, title, subtitle, children,
+  n, eyebrow, title, subtitle, children, id,
 }: {
   n: number;
   eyebrow: string;
   title: string;
   subtitle?: string;
   children: React.ReactNode;
+  id?: string;
 }) {
   return (
-    <section className="scroll-mt-24">
+    <section id={id} className="scroll-mt-32">
       <header className="mb-4 sm:mb-6 flex items-start gap-3">
         <span className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--brand)] text-white text-sm font-extrabold shadow-md shadow-[var(--brand)]/30">
           {n}
@@ -644,15 +645,16 @@ function Step({
 }
 
 function Module({
-  n, title, hook, children,
+  n, title, hook, children, id,
 }: {
   n: number;
   title: string;
   hook: string;
   children: React.ReactNode;
+  id?: string;
 }) {
   return (
-    <section className="scroll-mt-24">
+    <section id={id} className="scroll-mt-32">
       <header className="mb-4 sm:mb-6 flex items-start gap-3">
         <span className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--brand)] to-[#1a4a8a] text-white text-sm font-extrabold shadow-md shadow-[var(--brand)]/30">
           M{n}
