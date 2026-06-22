@@ -876,7 +876,7 @@ function MapaMentalSection() {
     "Trabalho", "Nichos", "Subida de Nicho", "Subida de Renda", "Top 10 Recomendações", "Priorização",
   ];
   return (
-    <section className="scroll-mt-24">
+    <section id="mapa-mental" className="scroll-mt-32">
       <BonusHeader
         eyebrow="Visão macro"
         title="Mapa mental da recomendação"
@@ -927,7 +927,7 @@ function EscadaProfundidadeSection() {
     "Qual deles mais se beneficiaria de uma conversa como essa?",
   ];
   return (
-    <section className="scroll-mt-24">
+    <section id="escada" className="scroll-mt-32">
       <BonusHeader
         eyebrow="Aprofundamento"
         title="Escada de profundidade"
@@ -1005,7 +1005,7 @@ function ModoEliteSection() {
     "Quanto tempo pretende esperar?",
   ];
   return (
-    <section className="scroll-mt-24">
+    <section id="modo-elite" className="scroll-mt-32">
       <BonusHeader
         eyebrow="Modo Elite"
         title="Aprofundamento"
@@ -1211,7 +1211,7 @@ function AnatomiaSection() {
     "Cliente acredita que ele precisa de ajuda financeira",
   ];
   return (
-    <section className="scroll-mt-24">
+    <section id="anatomia" className="scroll-mt-32">
       <BonusHeader
         eyebrow="Antes da coleta"
         title="Anatomia de uma recomendação elite"
@@ -1262,7 +1262,7 @@ function MandamentosSection() {
     "Conduza oportunidade.",
   ];
   return (
-    <section className="scroll-mt-24">
+    <section id="mandamentos" className="scroll-mt-32">
       <BonusHeader
         eyebrow="Encerramento"
         title="Mandamentos da recomendação elite"
