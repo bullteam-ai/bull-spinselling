@@ -1,10 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import {
-  ArrowRight, ClipboardCopy, Check, Search, Target, Users, Briefcase,
-  Sparkles, GraduationCap, ShieldCheck, Trophy, Flame, AlertTriangle,
-  Quote, ChevronDown, Home as HomeIcon, Headphones, ListOrdered, Brain,
-  Crown, TrendingUp, Star,
+  ClipboardCopy, Check, Search, Sparkles, GraduationCap, Flame,
+  Home as HomeIcon, Headphones, Brain, Crown,
 } from "lucide-react";
 
 export const Route = createFileRoute("/recomendacoes")({
