@@ -6,7 +6,7 @@ import {
 } from "lucide-react";
 import {
   AlertTriangle, ArrowDown, ArrowUp, Layers, LifeBuoy, Microscope, Radar,
-  Users, Trophy, FileSearch, ScrollText,
+  Users, Trophy, FileSearch, ScrollText, ListTree, ChevronRight,
 } from "lucide-react";
 
 export const Route = createFileRoute("/recomendacoes")({
