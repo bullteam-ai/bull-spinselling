@@ -617,6 +617,59 @@ function TabButton({
   );
 }
 
+function JourneyNav({
+  tab, onJump,
+}: { tab: TabKey; onJump: (item: JourneyItem) => void }) {
+  const current = JOURNEY.filter((i) => i.tab === tab);
+  const other   = JOURNEY.filter((i) => i.tab !== tab);
+  const accent  = tab === "execucao" ? "var(--success)" : "var(--brand)";
+  const otherLabel = tab === "execucao" ? "Treinamento" : "Execução";
+  return (
+    <div className="border-t border-border bg-gradient-to-b from-white to-[var(--surface)]/60">
+      <div className="mx-auto max-w-7xl px-3 sm:px-6 py-2.5 flex items-center gap-2">
+        <div className="hidden sm:flex items-center gap-1.5 shrink-0 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+          <ListTree className="h-3.5 w-3.5" style={{ color: accent }} />
+          Jornada
+        </div>
+        <div className="flex-1 min-w-0 overflow-x-auto scrollbar-none">
+          <div className="flex items-center gap-1.5 w-max pr-2">
+            {current.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => onJump(item)}
+                className="shrink-0 inline-flex items-center gap-1 rounded-full border border-border bg-white px-3 py-1.5 text-[11.5px] font-semibold text-[var(--navy)] hover:border-[color:var(--brand)] hover:text-[var(--brand)] hover:-translate-y-px transition"
+              >
+                <span
+                  className="h-1.5 w-1.5 rounded-full"
+                  style={{ background: accent }}
+                  aria-hidden
+                />
+                {item.label}
+              </button>
+            ))}
+            <span className="shrink-0 mx-1 h-5 w-px bg-border" aria-hidden />
+            <span className="shrink-0 text-[10px] font-bold uppercase tracking-wider text-muted-foreground pl-1 pr-1">
+              {otherLabel}
+            </span>
+            {other.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => onJump(item)}
+                className="shrink-0 inline-flex items-center gap-1 rounded-full border border-dashed border-border bg-transparent px-3 py-1.5 text-[11.5px] font-medium text-muted-foreground hover:border-[color:var(--brand)] hover:text-[var(--brand)] hover:bg-white transition"
+              >
+                <ChevronRight className="h-3 w-3" aria-hidden />
+                {item.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function Step({
   n, eyebrow, title, subtitle, children, id,
 }: {
