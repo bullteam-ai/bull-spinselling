@@ -123,10 +123,10 @@ const LEVEL_UP = [
    ÂNCORAS DA JORNADA
    ========================================= */
 
-type TabKey = "execucao" | "treino";
-type JourneyItem = { id: string; label: string; tab: TabKey };
+export type TabKey = "execucao" | "treino";
+export type JourneyItem = { id: string; label: string; tab: TabKey };
 
-const JOURNEY: JourneyItem[] = [
+export const JOURNEY: JourneyItem[] = [
   { id: "mapa-mental",   label: "Mapa mental",              tab: "execucao" },
   { id: "passo-1",       label: "1 · Convicção",            tab: "execucao" },
   { id: "passo-2",       label: "2 · Pergunta certa",       tab: "execucao" },
