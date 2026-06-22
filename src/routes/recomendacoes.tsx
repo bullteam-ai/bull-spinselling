@@ -120,11 +120,50 @@ const LEVEL_UP = [
 ];
 
 /* =========================================
+   ÂNCORAS DA JORNADA
+   ========================================= */
+
+type TabKey = "execucao" | "treino";
+type JourneyItem = { id: string; label: string; tab: TabKey };
+
+const JOURNEY: JourneyItem[] = [
+  { id: "mapa-mental",   label: "Mapa mental",              tab: "execucao" },
+  { id: "passo-1",       label: "1 · Convicção",            tab: "execucao" },
+  { id: "passo-2",       label: "2 · Pergunta certa",       tab: "execucao" },
+  { id: "escada",        label: "Escada de profundidade",   tab: "execucao" },
+  { id: "passo-3",       label: "3 · Método dos 3 nomes",   tab: "execucao" },
+  { id: "passo-4",       label: "4 · Nichos próximos",      tab: "execucao" },
+  { id: "passo-5",       label: "5 · Objetivos",            tab: "execucao" },
+  { id: "modo-elite",    label: "Modo Elite",               tab: "execucao" },
+  { id: "passo-6",       label: "6 · Subida de nível",      tab: "execucao" },
+  { id: "passo-7",       label: "7 · Subida de renda",      tab: "execucao" },
+  { id: "passo-8",       label: "8 · Pessoa de referência", tab: "execucao" },
+  { id: "anatomia",      label: "Anatomia da REC elite",    tab: "execucao" },
+  { id: "passo-9",       label: "9 · Qualificação",         tab: "execucao" },
+  { id: "passo-10",      label: "10 · Priorização",         tab: "execucao" },
+  { id: "passo-11",      label: "Meta final",               tab: "execucao" },
+  { id: "mod-1",         label: "M1 · Não lembro",          tab: "treino"   },
+  { id: "mod-2",         label: "M2 · Regra dos 30",        tab: "treino"   },
+  { id: "mod-3",         label: "M3 · Não peça. Conduza.",  tab: "treino"   },
+  { id: "mod-4",         label: "M4 · Subida de nicho",     tab: "treino"   },
+  { id: "mod-5",         label: "M5 · Meta de excelência",  tab: "treino"   },
+  { id: "mod-6",         label: "M6 · Radar",               tab: "treino"   },
+  { id: "mod-7",         label: "M7 · Psicologia",          tab: "treino"   },
+  { id: "mod-8",         label: "M8 · Top 1%",              tab: "treino"   },
+  { id: "mandamentos",   label: "Mandamentos",              tab: "treino"   },
+];
+
+function scrollToAnchor(id: string) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+/* =========================================
    PÁGINA
    ========================================= */
 
 function Recomendacoes() {
-  const [tab, setTab] = useState<"execucao" | "treino">("execucao");
+  const [tab, setTab] = useState<TabKey>("execucao");
   const [copied, setCopied] = useState(false);
   const [query, setQuery] = useState("");
   const [meetings, setMeetings] = useState(8);
@@ -139,6 +178,18 @@ function Recomendacoes() {
   };
 
   const oportunidades = meetings * recPerMeeting;
+
+  const jumpTo = (item: JourneyItem) => {
+    if (item.tab !== tab) {
+      setTab(item.tab);
+      // aguardar render da aba antes de rolar
+      requestAnimationFrame(() => {
+        setTimeout(() => scrollToAnchor(item.id), 60);
+      });
+    } else {
+      scrollToAnchor(item.id);
+    }
+  };
 
   return (
     <div className="min-h-dvh bg-[var(--surface)] text-foreground pb-24">
