@@ -4,6 +4,10 @@ import {
   ClipboardCopy, Check, Search, Sparkles, GraduationCap, Flame,
   Home as HomeIcon, Headphones, Brain, Crown,
 } from "lucide-react";
+import {
+  AlertTriangle, ArrowDown, ArrowUp, Layers, LifeBuoy, Microscope, Radar,
+  Users, Trophy, FileSearch, ScrollText,
+} from "lucide-react";
 
 export const Route = createFileRoute("/recomendacoes")({
   head: () => ({
@@ -172,6 +176,9 @@ function Recomendacoes() {
         </div>
       </header>
 
+      {/* MÓDULO BÔNUS — A MAIOR MENTIRA SOBRE RECOMENDAÇÕES */}
+      <MentiraSection />
+
       {/* STICKY TABS */}
       <nav className="sticky top-0 z-40 border-b border-border bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85">
         <div className="mx-auto max-w-7xl px-3 sm:px-6 py-3 flex items-center gap-2 flex-wrap">
@@ -254,6 +261,9 @@ function ExecucaoTab({
         </div>
       </section>
 
+      {/* MAPA MENTAL DA RECOMENDAÇÃO */}
+      <MapaMentalSection />
+
       {/* PASSO 1 */}
       <Step n={1} eyebrow="Passo 1" title="Gerar convicção" subtitle="Antes de pedir qualquer indicação, faça o cliente verbalizar o valor da reunião.">
         <ScriptCard label="Pergunta de abertura" quote='Fulano, olhando para tudo que conversamos hoje, o que mudou na sua visão financeira entre o início da reunião e agora?' />
@@ -280,6 +290,9 @@ function ExecucaoTab({
         </div>
       </Step>
 
+      {/* ESCADA DE PROFUNDIDADE */}
+      <EscadaProfundidadeSection />
+
       {/* PASSO 3 */}
       <Step n={3} eyebrow="Passo 3" title="Método dos 3 nomes" subtitle="Toda categoria segue a mesma estrutura. Meta: 5 a 10 nomes por categoria.">
         <ScriptCard label="Pergunta inicial" quote='Quais são os 3 empresários mais próximos de você?' />
@@ -298,6 +311,7 @@ function ExecucaoTab({
       {/* PASSO 4 — NICHOS PRÓXIMOS */}
       <Step n={4} eyebrow="Passo 4" title="Nichos próximos" subtitle="Comece pela rede de maior proximidade. Memória ativa primeiro.">
         <QuestionGrid items={NICHE_QUESTIONS.filter(i => matches(i.label) || matches(i.q))} />
+        <PerguntaResgateSection />
       </Step>
 
       {/* PASSO 5 — OBJETIVOS */}
@@ -305,9 +319,13 @@ function ExecucaoTab({
         <QuestionGrid items={GOAL_QUESTIONS.filter(i => matches(i.label) || matches(i.q))} />
       </Step>
 
+      {/* MODO ELITE — APROFUNDAMENTO */}
+      <ModoEliteSection />
+
       {/* PASSO 6 — SUBIDA DE NÍVEL */}
       <Step n={6} eyebrow="Passo 6" title="Subida de nível" subtitle="Cliente comum gera cliente comum. Cliente premium gera cliente premium. Sempre subir.">
         <QuestionGrid items={LEVEL_UP.filter(i => matches(i.label) || matches(i.q))} premium />
+        <SubidaNichoInteligenteSection />
       </Step>
 
       {/* PASSO 7 — SUBIDA DE RENDA */}
@@ -327,6 +345,9 @@ function ExecucaoTab({
           <Pill>Por que ele te veio na cabeça?</Pill>
         </div>
       </Step>
+
+      {/* ANATOMIA DE UMA RECOMENDAÇÃO ELITE */}
+      <AnatomiaSection />
 
       {/* PASSO 9 — QUALIFICAÇÃO */}
       <Step n={9} eyebrow="Passo 9" title="Qualificação" subtitle="Para cada indicação, capturar:">
@@ -499,6 +520,18 @@ function TreinoTab() {
           1 recomendação = sobrevivência. 10 = padrão. 20+ = quem constrói escala.
         </TrainingNote>
       </Module>
+
+      {/* RADAR DE OPORTUNIDADES */}
+      <RadarOportunidadesSection />
+
+      {/* PSICOLOGIA DA RECOMENDAÇÃO */}
+      <PsicologiaSection />
+
+      {/* O QUE FAZ OS TOP 1% */}
+      <Top1Section />
+
+      {/* MANDAMENTOS DA RECOMENDAÇÃO ELITE */}
+      <MandamentosSection />
     </div>
   );
 }
@@ -710,5 +743,502 @@ function LevelCard({ emoji, tier, value, label, color }: { emoji: string; tier: 
       <p className="mt-3 text-4xl font-extrabold" style={{ color }}>{value}</p>
       <p className="mt-1 text-xs font-semibold text-muted-foreground">{label}</p>
     </div>
+  );
+}
+
+/* =========================================
+   NOVOS MÓDULOS COMPLEMENTARES
+   ========================================= */
+
+function BonusHeader({
+  eyebrow, title, hook, icon, accent = "var(--brand)",
+}: { eyebrow: string; title: string; hook?: string; icon: React.ReactNode; accent?: string }) {
+  return (
+    <header className="mb-4 sm:mb-6 flex items-start gap-3">
+      <span
+        className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-xl text-white shadow-md"
+        style={{ background: accent, boxShadow: `0 8px 24px -8px ${accent}` }}
+      >
+        {icon}
+      </span>
+      <div className="min-w-0">
+        <p className="text-[11px] font-semibold uppercase tracking-wider" style={{ color: accent }}>{eyebrow}</p>
+        <h2 className="mt-0.5 text-xl sm:text-2xl font-bold tracking-tight text-[var(--navy)]">{title}</h2>
+        {hook && <p className="mt-1.5 text-[14.5px] font-semibold text-[var(--navy)]/80">{hook}</p>}
+      </div>
+    </header>
+  );
+}
+
+/* MÓDULO 1 — A MAIOR MENTIRA */
+function MentiraSection() {
+  const pairs = [
+    { wrong: "Quem você conhece que é empresário?", right: "Quais são os 3 empresários mais próximos de você?" },
+    { wrong: "Quem você conhece que é médico?",      right: "Quais são os 3 médicos que vêm primeiro à sua cabeça?" },
+  ];
+  return (
+    <section className="mx-auto max-w-7xl px-3 sm:px-6 pt-8">
+      <div className="rounded-3xl border-2 border-[var(--danger)]/30 bg-gradient-to-br from-white to-[var(--danger)]/5 p-6 sm:p-8 shadow-xl">
+        <BonusHeader
+          eyebrow="Mentalidade"
+          title="A maior mentira sobre recomendações"
+          hook="Profissionais comuns fazem perguntas abertas. Profissionais de elite conduzem a memória."
+          icon={<AlertTriangle className="h-5 w-5" />}
+          accent="var(--danger)"
+        />
+        <p className="text-[15px] leading-relaxed text-[var(--navy)] max-w-3xl">
+          O erro clássico: <em>“Quem você conhece que gostaria do meu trabalho?”</em> — isso obriga o cérebro
+          do cliente a procurar em um universo infinito. Resultado: ele trava.
+        </p>
+        <div className="mt-5 grid gap-3 md:grid-cols-2">
+          {pairs.map((p) => (
+            <div key={p.wrong} className="rounded-2xl border border-border bg-white p-4 sm:p-5">
+              <div className="flex items-center gap-2">
+                <span className="rounded-md bg-[var(--danger)]/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[var(--danger)]">Trocar</span>
+              </div>
+              <p className="mt-2 text-sm text-[var(--navy)]/70 line-through">“{p.wrong}”</p>
+              <div className="mt-3 flex items-center gap-2">
+                <ArrowDown className="h-4 w-4 text-[var(--success)]" />
+                <span className="rounded-md bg-[var(--success)]/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[var(--success)]">Por</span>
+              </div>
+              <p className="mt-2 text-[15px] font-semibold text-[var(--navy)]">“{p.right}”</p>
+            </div>
+          ))}
+        </div>
+        <blockquote className="mt-6 rounded-2xl border-l-4 border-[var(--brand)] bg-[var(--brand)]/5 p-5 text-[var(--navy)]">
+          <p className="font-semibold leading-relaxed">
+            “O problema normalmente não é falta de contatos. É falta de condução.”
+          </p>
+        </blockquote>
+      </div>
+    </section>
+  );
+}
+
+/* MÓDULO 2 — MAPA MENTAL */
+function MapaMentalSection() {
+  const flow = [
+    "Valor percebido", "Cliente verbaliza aprendizado", "Objetivos", "Família", "Amigos",
+    "Trabalho", "Nichos", "Subida de Nicho", "Subida de Renda", "Top 10 Recomendações", "Priorização",
+  ];
+  return (
+    <section className="scroll-mt-24">
+      <BonusHeader
+        eyebrow="Visão macro"
+        title="Mapa mental da recomendação"
+        hook="Não tente encontrar recomendações diretamente. Conduza o cliente por este caminho — as recomendações surgirão naturalmente."
+        icon={<Layers className="h-5 w-5" />}
+      />
+      <div className="rounded-3xl border border-border bg-white p-5 sm:p-7">
+        <ol className="flex flex-col items-center gap-2">
+          {flow.map((step, i) => (
+            <li key={step} className="w-full max-w-md">
+              <div
+                className="flex items-center gap-3 rounded-xl border px-4 py-3 transition"
+                style={{
+                  borderColor: i === flow.length - 1 ? "var(--success)" : "var(--brand)",
+                  background: i === flow.length - 1
+                    ? "color-mix(in oklab, var(--success) 10%, white)"
+                    : "color-mix(in oklab, var(--brand) 6%, white)",
+                }}
+              >
+                <span
+                  className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-[11px] font-extrabold text-white"
+                  style={{ background: i === flow.length - 1 ? "var(--success)" : "var(--brand)" }}
+                >
+                  {i + 1}
+                </span>
+                <span className="text-sm font-semibold text-[var(--navy)]">{step}</span>
+              </div>
+              {i < flow.length - 1 && (
+                <div className="flex justify-center py-1">
+                  <ArrowDown className="h-4 w-4 text-[var(--brand)]/60" aria-hidden />
+                </div>
+              )}
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  );
+}
+
+/* MÓDULO 3 — ESCADA DE PROFUNDIDADE */
+function EscadaProfundidadeSection() {
+  const levels = [
+    "Quem você conhece que é empresário?",
+    "Quais são os 3 empresários mais próximos de você?",
+    "Desses 3, qual mais conversa sobre dinheiro?",
+    "Qual deles mais te pede opinião?",
+    "Qual deles mais se beneficiaria de uma conversa como essa?",
+  ];
+  return (
+    <section className="scroll-mt-24">
+      <BonusHeader
+        eyebrow="Aprofundamento"
+        title="Escada de profundidade"
+        hook="Nunca pare na primeira resposta."
+        icon={<ArrowUp className="h-5 w-5" />}
+        accent="var(--success)"
+      />
+      <div className="grid gap-3 md:grid-cols-5">
+        {levels.map((q, i) => (
+          <article
+            key={i}
+            className="rounded-2xl border-2 p-4 transition hover:-translate-y-0.5"
+            style={{
+              borderColor: `color-mix(in oklab, var(--brand) ${20 + i * 15}%, transparent)`,
+              background: `color-mix(in oklab, var(--brand) ${3 + i * 2}%, white)`,
+            }}
+          >
+            <p className="text-[10px] font-extrabold uppercase tracking-wider text-[var(--brand)]">Nível {i + 1}</p>
+            <p className="mt-2 text-[13.5px] font-semibold text-[var(--navy)] leading-snug">“{q}”</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* MÓDULO 4 — PERGUNTA DE RESGATE */
+function PerguntaResgateSection() {
+  const [open, setOpen] = useState(false);
+  const examples = [
+    "Se você fosse organizar um churrasco no próximo sábado, quem seriam os primeiros convidados?",
+    "Quem são as pessoas que mais aparecem no seu WhatsApp?",
+    "Quem são as pessoas que você encontraria se fosse fazer uma viagem amanhã?",
+    "Quem você ligaria agora se precisasse de ajuda?",
+  ];
+  return (
+    <div className="mt-5 rounded-2xl border-2 border-[var(--warn)]/40 bg-[var(--warn)]/5 overflow-hidden">
+      <button
+        type="button"
+        onClick={() => setOpen(o => !o)}
+        className="w-full flex items-center justify-between gap-3 px-5 py-4 text-left"
+      >
+        <div className="flex items-center gap-3">
+          <LifeBuoy className="h-5 w-5 text-[var(--warn)]" />
+          <div>
+            <p className="text-[10px] font-bold uppercase tracking-wider text-[var(--warn)]">Se o cliente travar</p>
+            <p className="text-sm font-semibold text-[var(--navy)]">Pergunta de resgate — desbloquear memória</p>
+          </div>
+        </div>
+        <span className="text-xs font-bold text-[var(--navy)]/60">{open ? "Fechar −" : "Ver +"}</span>
+      </button>
+      {open && (
+        <div className="border-t border-[var(--warn)]/30 bg-white px-5 py-4">
+          <ul className="grid gap-2 sm:grid-cols-2">
+            {examples.map((e) => (
+              <li key={e} className="rounded-xl border border-border bg-[var(--surface)] px-3 py-2.5 text-[13.5px] text-[var(--navy)]">
+                “{e}”
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* MÓDULO 5 — MODO ELITE / APROFUNDAMENTO */
+function ModoEliteSection() {
+  const questions = [
+    "Quantos anos ele tem?",
+    "É casado?",
+    "Tem filhos?",
+    "Qual imóvel?",
+    "Já está guardando dinheiro?",
+    "Quanto tempo pretende esperar?",
+  ];
+  return (
+    <section className="scroll-mt-24">
+      <BonusHeader
+        eyebrow="Modo Elite"
+        title="Aprofundamento"
+        hook="Toda recomendação superficial gera baixa conversão."
+        icon={<Microscope className="h-5 w-5" />}
+        accent="#c9a84c"
+      />
+      <div className="rounded-3xl border-2 border-[#c9a84c]/40 bg-gradient-to-br from-white to-[#c9a84c]/10 p-6">
+        <div className="rounded-2xl border border-border bg-white p-4">
+          <p className="text-[11px] font-bold uppercase tracking-wider text-[var(--brand)]">Cliente diz</p>
+          <p className="mt-2 text-[15px] font-semibold text-[var(--navy)]">“Meu irmão quer comprar um imóvel.”</p>
+        </div>
+        <div className="mt-4 grid gap-3 md:grid-cols-2">
+          <div className="rounded-2xl border border-[var(--danger)]/30 bg-[var(--danger)]/5 p-4">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-[var(--danger)]">Planejador comum</p>
+            <p className="mt-2 text-sm font-semibold text-[var(--navy)]">Segue em frente.</p>
+          </div>
+          <div className="rounded-2xl border border-[var(--success)]/40 bg-[var(--success)]/10 p-4">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-[var(--success)]">Planejador elite — aprofunda</p>
+            <ul className="mt-2 grid gap-1.5">
+              {questions.map((q) => (
+                <li key={q} className="text-[13.5px] text-[var(--navy)] flex gap-2">
+                  <span className="text-[var(--success)]">→</span> {q}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* MÓDULO 6 — SUBIDA DE NICHO INTELIGENTE */
+function SubidaNichoInteligenteSection() {
+  const levels = [
+    { tier: "Básico",       items: ["Amigos", "Colegas", "Familiares"], color: "var(--brand)" },
+    { tier: "Intermediário", items: ["Profissionais liberais", "Coordenadores", "Gerentes"], color: "var(--warn)" },
+    { tier: "Avançado",     items: ["Empresários", "Médicos", "Dentistas", "Advogados"], color: "var(--success)" },
+    { tier: "Premium",      items: ["Sócios", "Executivos", "Investidores", "Produtores rurais", "Donos de empresas"], color: "#c9a84c" },
+  ];
+  return (
+    <div className="mt-6 rounded-3xl border border-border bg-white p-5 sm:p-6">
+      <div className="flex items-center gap-2">
+        <Crown className="h-4 w-4 text-[var(--brand)]" />
+        <p className="text-[11px] font-bold uppercase tracking-wider text-[var(--brand)]">Subida de nicho inteligente</p>
+      </div>
+      <h3 className="mt-1 text-lg font-bold text-[var(--navy)]">Aumente a qualidade média da rede indicada</h3>
+      <div className="mt-5 grid gap-3 md:grid-cols-4">
+        {levels.map((l, i) => (
+          <div key={l.tier} className="relative">
+            <div
+              className="rounded-2xl border-2 p-4 h-full"
+              style={{ borderColor: l.color, background: `color-mix(in oklab, ${l.color} 6%, white)` }}
+            >
+              <p className="text-[10px] font-extrabold uppercase tracking-wider" style={{ color: l.color }}>
+                Nível {i + 1} · {l.tier}
+              </p>
+              <ul className="mt-3 space-y-1.5">
+                {l.items.map((it) => (
+                  <li key={it} className="text-[13px] font-semibold text-[var(--navy)]">• {it}</li>
+                ))}
+              </ul>
+            </div>
+            {i < levels.length - 1 && (
+              <ArrowDown className="hidden md:block absolute -right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--brand)]/40 rotate-[-90deg]" aria-hidden />
+            )}
+          </div>
+        ))}
+      </div>
+      <p className="mt-5 text-sm font-semibold text-[var(--navy)]/80 italic">
+        “O objetivo não é apenas gerar quantidade. É aumentar a qualidade média da rede indicada.”
+      </p>
+    </div>
+  );
+}
+
+/* MÓDULO 7 — RADAR DE OPORTUNIDADES */
+function RadarOportunidadesSection() {
+  const keywords = [
+    { w: "Sócio", e: "🤝" }, { w: "Empresa", e: "🏢" }, { w: "Funcionário", e: "👥" },
+    { w: "Médico", e: "🩺" }, { w: "Dentista", e: "🦷" }, { w: "Investimento", e: "📈" },
+    { w: "Imóvel", e: "🏠" }, { w: "Herança", e: "💰" }, { w: "Aposentadoria", e: "🌅" },
+    { w: "Filhos", e: "👶" }, { w: "Sociedade", e: "🧩" }, { w: "Clínica", e: "🏥" },
+    { w: "Construtora", e: "🏗️" }, { w: "Patrimônio", e: "💎" },
+  ];
+  return (
+    <Module n={6} title="Radar de oportunidades" hook="O cliente entrega recomendações sem perceber — você precisa estar ouvindo.">
+      <p className="text-[15px] leading-relaxed text-[var(--navy)]">
+        Durante a reunião, fique atento às palavras-chave abaixo. Cada uma delas é uma porta aberta
+        para aprofundar e descobrir mais um nome qualificado.
+      </p>
+      <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5">
+        {keywords.map((k) => (
+          <div key={k.w} className="rounded-xl border border-[var(--brand)]/20 bg-gradient-to-br from-white to-[var(--brand)]/5 px-3 py-2.5 flex items-center gap-2">
+            <span className="text-xl" aria-hidden>{k.e}</span>
+            <span className="text-sm font-semibold text-[var(--navy)]">{k.w}</span>
+          </div>
+        ))}
+      </div>
+      <TrainingNote label="Regra de ouro">
+        <div className="flex items-start gap-2">
+          <Radar className="h-4 w-4 text-[var(--brand)] mt-0.5" />
+          <span>Quando ouvir qualquer uma dessas palavras, <strong>aprofunde imediatamente</strong>.</span>
+        </div>
+      </TrainingNote>
+    </Module>
+  );
+}
+
+/* MÓDULO 8 — PSICOLOGIA */
+function PsicologiaSection() {
+  const naoIndica = ["Não lembrar.", "Ter medo de incomodar.", "Não enxergar quem poderia se beneficiar.", "Não ter percebido valor suficiente."];
+  const indica   = ["Perceber transformação.", "Sentir confiança.", "Entender quem pode ser ajudado.", "Querer compartilhar algo positivo."];
+  return (
+    <Module n={7} title="Psicologia da recomendação" hook="Recomendações são construídas durante toda a reunião — não no final.">
+      <div className="grid gap-3 md:grid-cols-2">
+        <div className="rounded-2xl border-2 border-[var(--danger)]/30 bg-[var(--danger)]/5 p-5">
+          <p className="text-[11px] font-bold uppercase tracking-wider text-[var(--danger)]">Cliente NÃO indica por</p>
+          <ul className="mt-3 space-y-2">
+            {naoIndica.map((r) => (
+              <li key={r} className="text-sm text-[var(--navy)] flex gap-2">
+                <span className="text-[var(--danger)]">✗</span> {r}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="rounded-2xl border-2 border-[var(--success)]/40 bg-[var(--success)]/10 p-5">
+          <p className="text-[11px] font-bold uppercase tracking-wider text-[var(--success)]">Cliente indica por</p>
+          <ul className="mt-3 space-y-2">
+            {indica.map((r) => (
+              <li key={r} className="text-sm text-[var(--navy)] flex gap-2">
+                <span className="text-[var(--success)]">✓</span> {r}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      <TrainingNote label="Princípio">
+        “Recomendações não são conquistadas no final da reunião. Elas são construídas durante toda a reunião.”
+      </TrainingNote>
+    </Module>
+  );
+}
+
+/* MÓDULO 9 — TOP 1% */
+function Top1Section() {
+  const comum = ["Pede recomendação.", "Aceita o primeiro não.", "Pega 1 nome.", "Não qualifica.", "Segue para o encerramento."];
+  const elite = ["Constrói valor.", "Conduz memória.", "Explora nichos.", "Aprofunda.", "Qualifica.", "Prioriza.", "Sai com 10+ nomes."];
+  return (
+    <Module n={8} title="O que faz os Top 1%" hook="A diferença não está na quantidade de reuniões. Está na profundidade.">
+      <div className="grid gap-3 md:grid-cols-2">
+        <div className="rounded-2xl border border-border bg-[var(--surface)] p-5">
+          <div className="flex items-center gap-2">
+            <Users className="h-4 w-4 text-muted-foreground" />
+            <p className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Planejador comum</p>
+          </div>
+          <ul className="mt-3 space-y-2">
+            {comum.map((r) => (
+              <li key={r} className="text-sm text-[var(--navy)]/70 flex gap-2">
+                <span>·</span> {r}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="rounded-2xl border-2 border-[#c9a84c] bg-gradient-to-br from-white to-[#c9a84c]/10 p-5">
+          <div className="flex items-center gap-2">
+            <Trophy className="h-4 w-4 text-[#c9a84c]" />
+            <p className="text-[11px] font-bold uppercase tracking-wider text-[#c9a84c]">Planejador elite</p>
+          </div>
+          <ul className="mt-3 space-y-2">
+            {elite.map((r) => (
+              <li key={r} className="text-sm font-semibold text-[var(--navy)] flex gap-2">
+                <span className="text-[#c9a84c]">★</span> {r}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      <blockquote className="mt-5 rounded-2xl border-l-4 border-[var(--brand)] bg-[var(--brand)]/5 p-5 text-[var(--navy)]">
+        <p className="font-semibold leading-relaxed">
+          “A diferença entre um planejador comum e um planejador de elite não está na quantidade de reuniões que faz.
+          Está na profundidade com que conduz cada reunião.”
+        </p>
+      </blockquote>
+    </Module>
+  );
+}
+
+/* MÓDULO 10 — ANATOMIA DE UMA RECOMENDAÇÃO ELITE */
+function AnatomiaSection() {
+  const fraca = ["João", "Empresário", "Telefone"];
+  const elite = [
+    "João Silva",
+    "42 anos",
+    "Casado",
+    "2 filhos",
+    "Empresário",
+    "Dono de construtora",
+    "Cliente há 10 anos",
+    "Quer vender a empresa em 8 anos",
+    "Preocupação com aposentadoria",
+    "Cliente acredita que ele precisa de ajuda financeira",
+  ];
+  return (
+    <section className="scroll-mt-24">
+      <BonusHeader
+        eyebrow="Antes da coleta"
+        title="Anatomia de uma recomendação elite"
+        hook="Quanto mais informações, maior a chance de conexão, agendamento e fechamento."
+        icon={<FileSearch className="h-5 w-5" />}
+        accent="#c9a84c"
+      />
+      <div className="grid gap-4 md:grid-cols-2">
+        <article className="rounded-3xl border-2 border-[var(--danger)]/30 bg-[var(--danger)]/5 p-5">
+          <p className="text-[11px] font-bold uppercase tracking-wider text-[var(--danger)]">❌ Recomendação fraca</p>
+          <ul className="mt-3 space-y-2">
+            {fraca.map((f) => (
+              <li key={f} className="text-sm text-[var(--navy)]/80">· {f}</li>
+            ))}
+          </ul>
+          <p className="mt-4 text-xs text-muted-foreground italic">3 campos · pouca conversão.</p>
+        </article>
+        <article className="rounded-3xl border-2 border-[#c9a84c] bg-gradient-to-br from-white to-[#c9a84c]/10 p-5 shadow-lg">
+          <p className="text-[11px] font-bold uppercase tracking-wider text-[#c9a84c]">✅ Recomendação elite</p>
+          <ul className="mt-3 space-y-2">
+            {elite.map((f) => (
+              <li key={f} className="text-sm font-semibold text-[var(--navy)] flex gap-2">
+                <span className="text-[#c9a84c]">◆</span> {f}
+              </li>
+            ))}
+          </ul>
+          <p className="mt-4 text-xs font-semibold text-[var(--navy)]/70 italic">
+            10 campos · perfil completo · alto índice de fechamento.
+          </p>
+        </article>
+      </div>
+    </section>
+  );
+}
+
+/* MÓDULO 11 — MANDAMENTOS */
+function MandamentosSection() {
+  const mandamentos = [
+    "Nunca pergunte “Quem você conhece?”",
+    "Sempre peça pelo menos 3 nomes.",
+    "Nunca aceite o primeiro “não lembro”.",
+    "Conduza por nichos.",
+    "Conduza por objetivos.",
+    "Suba o nível da rede.",
+    "Aprofunde cada indicação.",
+    "Priorize antes de encerrar.",
+    "Não peça favor.",
+    "Conduza oportunidade.",
+  ];
+  return (
+    <section className="scroll-mt-24">
+      <BonusHeader
+        eyebrow="Encerramento"
+        title="Mandamentos da recomendação elite"
+        hook="Cole isto no espelho antes de cada reunião."
+        icon={<ScrollText className="h-5 w-5" />}
+        accent="var(--success)"
+      />
+      <div className="grid gap-3 sm:grid-cols-2">
+        {mandamentos.map((m, i) => (
+          <article
+            key={m}
+            className="rounded-2xl border-2 border-[var(--success)]/30 bg-gradient-to-br from-white to-[var(--success)]/5 p-4 flex items-start gap-3 transition hover:-translate-y-0.5"
+          >
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[var(--success)] text-[var(--navy)] text-xs font-extrabold shadow-md">
+              {i + 1}
+            </span>
+            <p className="text-sm font-semibold text-[var(--navy)] leading-snug">{m}</p>
+          </article>
+        ))}
+      </div>
+      <div className="mt-6 rounded-3xl border-2 border-[var(--brand)] bg-gradient-to-br from-[#0a1733] via-[var(--navy)] to-[#1a2e5c] p-6 sm:p-8 text-white shadow-2xl shadow-[var(--brand)]/20">
+        <div className="flex items-center gap-2">
+          <Crown className="h-5 w-5 text-[var(--success)]" />
+          <p className="text-[11px] font-semibold uppercase tracking-wider text-[var(--success)]">Mantra final</p>
+        </div>
+        <p className="mt-3 text-lg sm:text-xl font-bold leading-snug">
+          “Seu objetivo não é sair da reunião com indicações.
+          Seu objetivo é sair da reunião com um <span className="text-[var(--success)]">mapa completo</span> da rede de relacionamentos do cliente.”
+        </p>
+      </div>
+    </section>
   );
 }
