@@ -317,7 +317,7 @@ function ExecucaoTab({
       <MapaMentalSection />
 
       {/* PASSO 1 */}
-      <Step n={1} eyebrow="Passo 1" title="Gerar convicção" subtitle="Antes de pedir qualquer indicação, faça o cliente verbalizar o valor da reunião.">
+      <Step id="passo-1" n={1} eyebrow="Passo 1" title="Gerar convicção" subtitle="Antes de pedir qualquer indicação, faça o cliente verbalizar o valor da reunião.">
         <ScriptCard label="Pergunta de abertura" quote='Fulano, olhando para tudo que conversamos hoje, o que mudou na sua visão financeira entre o início da reunião e agora?' />
         <p className="mt-3 text-sm font-semibold text-muted-foreground">(escuta ativa — deixe o cliente vender o trabalho para ele mesmo)</p>
         <div className="mt-3 grid gap-3 md:grid-cols-2">
@@ -327,7 +327,7 @@ function ExecucaoTab({
       </Step>
 
       {/* PASSO 2 */}
-      <Step n={2} eyebrow="Passo 2" title='Nunca pergunte "Quem você conhece?"' subtitle="Use sempre perguntas fechadas de memória. O cérebro responde a categoria, não a busca aberta.">
+      <Step id="passo-2" n={2} eyebrow="Passo 2" title='Nunca pergunte "Quem você conhece?"' subtitle="Use sempre perguntas fechadas de memória. O cérebro responde a categoria, não a busca aberta.">
         <div className="grid gap-3 md:grid-cols-2">
           <div className="rounded-2xl border-2 border-[var(--danger)]/40 bg-[var(--danger)]/5 p-5">
             <p className="text-[11px] font-semibold uppercase tracking-wider text-[var(--danger)]">❌ Errado</p>
@@ -346,7 +346,7 @@ function ExecucaoTab({
       <EscadaProfundidadeSection />
 
       {/* PASSO 3 */}
-      <Step n={3} eyebrow="Passo 3" title="Método dos 3 nomes" subtitle="Toda categoria segue a mesma estrutura. Meta: 5 a 10 nomes por categoria.">
+      <Step id="passo-3" n={3} eyebrow="Passo 3" title="Método dos 3 nomes" subtitle="Toda categoria segue a mesma estrutura. Meta: 5 a 10 nomes por categoria.">
         <ScriptCard label="Pergunta inicial" quote='Quais são os 3 empresários mais próximos de você?' />
         <div className="mt-3 grid gap-2 sm:grid-cols-3">
           <Pill>E além desses 3?</Pill>
@@ -361,13 +361,13 @@ function ExecucaoTab({
       </Step>
 
       {/* PASSO 4 — NICHOS PRÓXIMOS */}
-      <Step n={4} eyebrow="Passo 4" title="Nichos próximos" subtitle="Comece pela rede de maior proximidade. Memória ativa primeiro.">
+      <Step id="passo-4" n={4} eyebrow="Passo 4" title="Nichos próximos" subtitle="Comece pela rede de maior proximidade. Memória ativa primeiro.">
         <QuestionGrid items={NICHE_QUESTIONS.filter(i => matches(i.label) || matches(i.q))} />
         <PerguntaResgateSection />
       </Step>
 
       {/* PASSO 5 — OBJETIVOS */}
-      <Step n={5} eyebrow="Passo 5" title="Objetivos" subtitle="Use os objetivos da reunião para abrir novas gavetas mentais.">
+      <Step id="passo-5" n={5} eyebrow="Passo 5" title="Objetivos" subtitle="Use os objetivos da reunião para abrir novas gavetas mentais.">
         <QuestionGrid items={GOAL_QUESTIONS.filter(i => matches(i.label) || matches(i.q))} />
       </Step>
 
@@ -375,13 +375,13 @@ function ExecucaoTab({
       <ModoEliteSection />
 
       {/* PASSO 6 — SUBIDA DE NÍVEL */}
-      <Step n={6} eyebrow="Passo 6" title="Subida de nível" subtitle="Cliente comum gera cliente comum. Cliente premium gera cliente premium. Sempre subir.">
+      <Step id="passo-6" n={6} eyebrow="Passo 6" title="Subida de nível" subtitle="Cliente comum gera cliente comum. Cliente premium gera cliente premium. Sempre subir.">
         <QuestionGrid items={LEVEL_UP.filter(i => matches(i.label) || matches(i.q))} premium />
         <SubidaNichoInteligenteSection />
       </Step>
 
       {/* PASSO 7 — SUBIDA DE RENDA */}
-      <Step n={7} eyebrow="Passo 7" title="Subida de renda" subtitle="Filtre pelo topo da rede pessoal do cliente.">
+      <Step id="passo-7" n={7} eyebrow="Passo 7" title="Subida de renda" subtitle="Filtre pelo topo da rede pessoal do cliente.">
         <div className="grid gap-3 md:grid-cols-2">
           <ScriptCard label="Pergunta 1" quote='Pensando nas pessoas que você conhece, quem estaria entre os 5 maiores níveis de renda da sua rede?' />
           <ScriptCard label="Pergunta 2 (após escutar)" quote='Dessas pessoas, quais você acredita que mais se beneficiariam de uma orientação financeira?' />
@@ -389,7 +389,7 @@ function ExecucaoTab({
       </Step>
 
       {/* PASSO 8 — PESSOA DE REFERÊNCIA */}
-      <Step n={8} eyebrow="Passo 8" title="Pessoa de referência" subtitle="O nome mais valioso da rede do cliente geralmente está aqui.">
+      <Step id="passo-8" n={8} eyebrow="Passo 8" title="Pessoa de referência" subtitle="O nome mais valioso da rede do cliente geralmente está aqui.">
         <ScriptCard label="Pergunta principal" quote='Quem é o maior exemplo de sucesso financeiro que você conhece pessoalmente?' />
         <div className="mt-3 grid gap-2 sm:grid-cols-3">
           <Pill>Qual o nome dele?</Pill>
@@ -402,7 +402,7 @@ function ExecucaoTab({
       <AnatomiaSection />
 
       {/* PASSO 9 — QUALIFICAÇÃO */}
-      <Step n={9} eyebrow="Passo 9" title="Qualificação" subtitle="Para cada indicação, capturar:">
+      <Step id="passo-9" n={9} eyebrow="Passo 9" title="Qualificação" subtitle="Para cada indicação, capturar:">
         <div className="rounded-2xl border border-border bg-white p-5">
           <ul className="grid gap-2 sm:grid-cols-3">
             {QUALIFY_FIELDS.map((f, i) => (
@@ -416,7 +416,7 @@ function ExecucaoTab({
       </Step>
 
       {/* PASSO 10 — PRIORIZAÇÃO */}
-      <Step n={10} eyebrow="Passo 10" title="Priorização" subtitle="Defina ordem de abordagem junto com o cliente.">
+      <Step id="passo-10" n={10} eyebrow="Passo 10" title="Priorização" subtitle="Defina ordem de abordagem junto com o cliente.">
         <ScriptCard label="Pergunta de priorização" quote='Se eu pudesse conversar com apenas 3 dessas pessoas primeiro, quais seriam?' />
         <div className="mt-4 grid gap-3 sm:grid-cols-3">
           <PriorityCard tier="Top 3"  emoji="🥇" color="var(--success)" desc="Prioridade máxima · abordar em até 2 dias" />
@@ -426,7 +426,7 @@ function ExecucaoTab({
       </Step>
 
       {/* META FINAL */}
-      <Step n={11} eyebrow="Meta final" title="Quantas recomendações você conduziu hoje?" subtitle="Pense em padrão, não em sorte.">
+      <Step id="passo-11" n={11} eyebrow="Meta final" title="Quantas recomendações você conduziu hoje?" subtitle="Pense em padrão, não em sorte.">
         <div className="grid gap-2 grid-cols-2 lg:grid-cols-4">
           {COUNTER_TIERS.map((t) => (
             <div
