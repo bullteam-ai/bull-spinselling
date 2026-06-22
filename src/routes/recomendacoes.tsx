@@ -4,6 +4,10 @@ import {
   ClipboardCopy, Check, Search, Sparkles, GraduationCap, Flame,
   Home as HomeIcon, Headphones, Brain, Crown,
 } from "lucide-react";
+import {
+  AlertTriangle, ArrowDown, ArrowUp, Layers, LifeBuoy, Microscope, Radar,
+  Users, Trophy, FileSearch, ScrollText,
+} from "lucide-react";
 
 export const Route = createFileRoute("/recomendacoes")({
   head: () => ({
@@ -171,6 +175,9 @@ function Recomendacoes() {
           </div>
         </div>
       </header>
+
+      {/* MÓDULO BÔNUS — A MAIOR MENTIRA SOBRE RECOMENDAÇÕES */}
+      <MentiraSection />
 
       {/* STICKY TABS */}
       <nav className="sticky top-0 z-40 border-b border-border bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85">
