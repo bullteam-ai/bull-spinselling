@@ -21,21 +21,6 @@ export const Route = createFileRoute("/recomendacoes")({
    TIPOS E DADOS
    ============================================================ */
 
-type Step = {
-  n: number;
-  eyebrow: string;
-  title: string;
-  subtitle?: string;
-  body: React.ReactNode;
-};
-
-type Module = {
-  n: number;
-  title: string;
-  hook: string;
-  body: React.ReactNode;
-};
-
 const COUNTER_TIERS = [
   { range: "< 5",   label: "Insuficiente", color: "var(--danger)" },
   { range: "5–9",   label: "Aceitável",    color: "var(--warn)" },
