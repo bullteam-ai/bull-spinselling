@@ -1444,16 +1444,6 @@ function Index() {
             <p className="mt-4 max-w-2xl text-base sm:text-lg text-white/75 leading-relaxed">
               Faça as perguntas certas. Gere consciência. Agende mais entrevistas.
             </p>
-            <div className="mt-6 flex flex-wrap gap-2">
-              <Link
-                to="/recomendacoes"
-                className="inline-flex items-center gap-2 rounded-full border border-[var(--success)]/50 bg-[var(--success)]/15 px-4 py-2 text-sm font-semibold text-white hover:bg-[var(--success)]/25 transition"
-              >
-                <span aria-hidden>🎯</span>
-                Passo a Passo de Recomendações
-                <ArrowRight className="h-4 w-4" aria-hidden />
-              </Link>
-            </div>
           </div>
         </header>
 
