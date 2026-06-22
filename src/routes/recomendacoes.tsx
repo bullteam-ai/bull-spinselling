@@ -6,7 +6,7 @@ import {
 } from "lucide-react";
 import {
   AlertTriangle, ArrowDown, ArrowUp, Layers, LifeBuoy, Microscope, Radar,
-  Users, Trophy, FileSearch, ScrollText,
+  Users, Trophy, FileSearch, ScrollText, ListTree, ChevronRight,
 } from "lucide-react";
 
 export const Route = createFileRoute("/recomendacoes")({
@@ -120,11 +120,50 @@ const LEVEL_UP = [
 ];
 
 /* =========================================
+   ÂNCORAS DA JORNADA
+   ========================================= */
+
+type TabKey = "execucao" | "treino";
+type JourneyItem = { id: string; label: string; tab: TabKey };
+
+const JOURNEY: JourneyItem[] = [
+  { id: "mapa-mental",   label: "Mapa mental",              tab: "execucao" },
+  { id: "passo-1",       label: "1 · Convicção",            tab: "execucao" },
+  { id: "passo-2",       label: "2 · Pergunta certa",       tab: "execucao" },
+  { id: "escada",        label: "Escada de profundidade",   tab: "execucao" },
+  { id: "passo-3",       label: "3 · Método dos 3 nomes",   tab: "execucao" },
+  { id: "passo-4",       label: "4 · Nichos próximos",      tab: "execucao" },
+  { id: "passo-5",       label: "5 · Objetivos",            tab: "execucao" },
+  { id: "modo-elite",    label: "Modo Elite",               tab: "execucao" },
+  { id: "passo-6",       label: "6 · Subida de nível",      tab: "execucao" },
+  { id: "passo-7",       label: "7 · Subida de renda",      tab: "execucao" },
+  { id: "passo-8",       label: "8 · Pessoa de referência", tab: "execucao" },
+  { id: "anatomia",      label: "Anatomia da REC elite",    tab: "execucao" },
+  { id: "passo-9",       label: "9 · Qualificação",         tab: "execucao" },
+  { id: "passo-10",      label: "10 · Priorização",         tab: "execucao" },
+  { id: "passo-11",      label: "Meta final",               tab: "execucao" },
+  { id: "mod-1",         label: "M1 · Não lembro",          tab: "treino"   },
+  { id: "mod-2",         label: "M2 · Regra dos 30",        tab: "treino"   },
+  { id: "mod-3",         label: "M3 · Não peça. Conduza.",  tab: "treino"   },
+  { id: "mod-4",         label: "M4 · Subida de nicho",     tab: "treino"   },
+  { id: "mod-5",         label: "M5 · Meta de excelência",  tab: "treino"   },
+  { id: "mod-6",         label: "M6 · Radar",               tab: "treino"   },
+  { id: "mod-7",         label: "M7 · Psicologia",          tab: "treino"   },
+  { id: "mod-8",         label: "M8 · Top 1%",              tab: "treino"   },
+  { id: "mandamentos",   label: "Mandamentos",              tab: "treino"   },
+];
+
+function scrollToAnchor(id: string) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+/* =========================================
    PÁGINA
    ========================================= */
 
 function Recomendacoes() {
-  const [tab, setTab] = useState<"execucao" | "treino">("execucao");
+  const [tab, setTab] = useState<TabKey>("execucao");
   const [copied, setCopied] = useState(false);
   const [query, setQuery] = useState("");
   const [meetings, setMeetings] = useState(8);
@@ -139,6 +178,18 @@ function Recomendacoes() {
   };
 
   const oportunidades = meetings * recPerMeeting;
+
+  const jumpTo = (item: JourneyItem) => {
+    if (item.tab !== tab) {
+      setTab(item.tab);
+      // aguardar render da aba antes de rolar
+      requestAnimationFrame(() => {
+        setTimeout(() => scrollToAnchor(item.id), 60);
+      });
+    } else {
+      scrollToAnchor(item.id);
+    }
+  };
 
   return (
     <div className="min-h-dvh bg-[var(--surface)] text-foreground pb-24">
@@ -213,6 +264,7 @@ function Recomendacoes() {
             <span className="hidden sm:inline">{copied ? "Copiado" : "Copiar script completo"}</span>
           </button>
         </div>
+        <JourneyNav tab={tab} onJump={jumpTo} />
       </nav>
 
       <main className="mx-auto max-w-7xl px-3 sm:px-6 py-8 sm:py-12">
@@ -265,7 +317,7 @@ function ExecucaoTab({
       <MapaMentalSection />
 
       {/* PASSO 1 */}
-      <Step n={1} eyebrow="Passo 1" title="Gerar convicção" subtitle="Antes de pedir qualquer indicação, faça o cliente verbalizar o valor da reunião.">
+      <Step id="passo-1" n={1} eyebrow="Passo 1" title="Gerar convicção" subtitle="Antes de pedir qualquer indicação, faça o cliente verbalizar o valor da reunião.">
         <ScriptCard label="Pergunta de abertura" quote='Fulano, olhando para tudo que conversamos hoje, o que mudou na sua visão financeira entre o início da reunião e agora?' />
         <p className="mt-3 text-sm font-semibold text-muted-foreground">(escuta ativa — deixe o cliente vender o trabalho para ele mesmo)</p>
         <div className="mt-3 grid gap-3 md:grid-cols-2">
@@ -275,7 +327,7 @@ function ExecucaoTab({
       </Step>
 
       {/* PASSO 2 */}
-      <Step n={2} eyebrow="Passo 2" title='Nunca pergunte "Quem você conhece?"' subtitle="Use sempre perguntas fechadas de memória. O cérebro responde a categoria, não a busca aberta.">
+      <Step id="passo-2" n={2} eyebrow="Passo 2" title='Nunca pergunte "Quem você conhece?"' subtitle="Use sempre perguntas fechadas de memória. O cérebro responde a categoria, não a busca aberta.">
         <div className="grid gap-3 md:grid-cols-2">
           <div className="rounded-2xl border-2 border-[var(--danger)]/40 bg-[var(--danger)]/5 p-5">
             <p className="text-[11px] font-semibold uppercase tracking-wider text-[var(--danger)]">❌ Errado</p>
@@ -294,7 +346,7 @@ function ExecucaoTab({
       <EscadaProfundidadeSection />
 
       {/* PASSO 3 */}
-      <Step n={3} eyebrow="Passo 3" title="Método dos 3 nomes" subtitle="Toda categoria segue a mesma estrutura. Meta: 5 a 10 nomes por categoria.">
+      <Step id="passo-3" n={3} eyebrow="Passo 3" title="Método dos 3 nomes" subtitle="Toda categoria segue a mesma estrutura. Meta: 5 a 10 nomes por categoria.">
         <ScriptCard label="Pergunta inicial" quote='Quais são os 3 empresários mais próximos de você?' />
         <div className="mt-3 grid gap-2 sm:grid-cols-3">
           <Pill>E além desses 3?</Pill>
@@ -309,13 +361,13 @@ function ExecucaoTab({
       </Step>
 
       {/* PASSO 4 — NICHOS PRÓXIMOS */}
-      <Step n={4} eyebrow="Passo 4" title="Nichos próximos" subtitle="Comece pela rede de maior proximidade. Memória ativa primeiro.">
+      <Step id="passo-4" n={4} eyebrow="Passo 4" title="Nichos próximos" subtitle="Comece pela rede de maior proximidade. Memória ativa primeiro.">
         <QuestionGrid items={NICHE_QUESTIONS.filter(i => matches(i.label) || matches(i.q))} />
         <PerguntaResgateSection />
       </Step>
 
       {/* PASSO 5 — OBJETIVOS */}
-      <Step n={5} eyebrow="Passo 5" title="Objetivos" subtitle="Use os objetivos da reunião para abrir novas gavetas mentais.">
+      <Step id="passo-5" n={5} eyebrow="Passo 5" title="Objetivos" subtitle="Use os objetivos da reunião para abrir novas gavetas mentais.">
         <QuestionGrid items={GOAL_QUESTIONS.filter(i => matches(i.label) || matches(i.q))} />
       </Step>
 
@@ -323,13 +375,13 @@ function ExecucaoTab({
       <ModoEliteSection />
 
       {/* PASSO 6 — SUBIDA DE NÍVEL */}
-      <Step n={6} eyebrow="Passo 6" title="Subida de nível" subtitle="Cliente comum gera cliente comum. Cliente premium gera cliente premium. Sempre subir.">
+      <Step id="passo-6" n={6} eyebrow="Passo 6" title="Subida de nível" subtitle="Cliente comum gera cliente comum. Cliente premium gera cliente premium. Sempre subir.">
         <QuestionGrid items={LEVEL_UP.filter(i => matches(i.label) || matches(i.q))} premium />
         <SubidaNichoInteligenteSection />
       </Step>
 
       {/* PASSO 7 — SUBIDA DE RENDA */}
-      <Step n={7} eyebrow="Passo 7" title="Subida de renda" subtitle="Filtre pelo topo da rede pessoal do cliente.">
+      <Step id="passo-7" n={7} eyebrow="Passo 7" title="Subida de renda" subtitle="Filtre pelo topo da rede pessoal do cliente.">
         <div className="grid gap-3 md:grid-cols-2">
           <ScriptCard label="Pergunta 1" quote='Pensando nas pessoas que você conhece, quem estaria entre os 5 maiores níveis de renda da sua rede?' />
           <ScriptCard label="Pergunta 2 (após escutar)" quote='Dessas pessoas, quais você acredita que mais se beneficiariam de uma orientação financeira?' />
@@ -337,7 +389,7 @@ function ExecucaoTab({
       </Step>
 
       {/* PASSO 8 — PESSOA DE REFERÊNCIA */}
-      <Step n={8} eyebrow="Passo 8" title="Pessoa de referência" subtitle="O nome mais valioso da rede do cliente geralmente está aqui.">
+      <Step id="passo-8" n={8} eyebrow="Passo 8" title="Pessoa de referência" subtitle="O nome mais valioso da rede do cliente geralmente está aqui.">
         <ScriptCard label="Pergunta principal" quote='Quem é o maior exemplo de sucesso financeiro que você conhece pessoalmente?' />
         <div className="mt-3 grid gap-2 sm:grid-cols-3">
           <Pill>Qual o nome dele?</Pill>
@@ -350,7 +402,7 @@ function ExecucaoTab({
       <AnatomiaSection />
 
       {/* PASSO 9 — QUALIFICAÇÃO */}
-      <Step n={9} eyebrow="Passo 9" title="Qualificação" subtitle="Para cada indicação, capturar:">
+      <Step id="passo-9" n={9} eyebrow="Passo 9" title="Qualificação" subtitle="Para cada indicação, capturar:">
         <div className="rounded-2xl border border-border bg-white p-5">
           <ul className="grid gap-2 sm:grid-cols-3">
             {QUALIFY_FIELDS.map((f, i) => (
@@ -364,7 +416,7 @@ function ExecucaoTab({
       </Step>
 
       {/* PASSO 10 — PRIORIZAÇÃO */}
-      <Step n={10} eyebrow="Passo 10" title="Priorização" subtitle="Defina ordem de abordagem junto com o cliente.">
+      <Step id="passo-10" n={10} eyebrow="Passo 10" title="Priorização" subtitle="Defina ordem de abordagem junto com o cliente.">
         <ScriptCard label="Pergunta de priorização" quote='Se eu pudesse conversar com apenas 3 dessas pessoas primeiro, quais seriam?' />
         <div className="mt-4 grid gap-3 sm:grid-cols-3">
           <PriorityCard tier="Top 3"  emoji="🥇" color="var(--success)" desc="Prioridade máxima · abordar em até 2 dias" />
@@ -374,7 +426,7 @@ function ExecucaoTab({
       </Step>
 
       {/* META FINAL */}
-      <Step n={11} eyebrow="Meta final" title="Quantas recomendações você conduziu hoje?" subtitle="Pense em padrão, não em sorte.">
+      <Step id="passo-11" n={11} eyebrow="Meta final" title="Quantas recomendações você conduziu hoje?" subtitle="Pense em padrão, não em sorte.">
         <div className="grid gap-2 grid-cols-2 lg:grid-cols-4">
           {COUNTER_TIERS.map((t) => (
             <div
@@ -448,7 +500,7 @@ function TreinoTab() {
         </div>
       </section>
 
-      <Module n={1} title='Por que o cliente diz "não lembro de ninguém"' hook="Porque você perguntou errado.">
+      <Module id="mod-1" n={1} title='Por que o cliente diz "não lembro de ninguém"' hook="Porque você perguntou errado.">
         <p className="text-[15px] leading-relaxed text-[var(--navy)]">
           O cérebro não trabalha por busca aberta. Ele trabalha por categoria. Quando você pergunta
           “quem você conhece?”, o cliente entra em loop e não acessa memória.
@@ -462,7 +514,7 @@ function TreinoTab() {
         </TrainingNote>
       </Module>
 
-      <Module n={2} title="Regra dos 30 nomes" hook="Levante 30. Filtre 10.">
+      <Module id="mod-2" n={2} title="Regra dos 30 nomes" hook="Levante 30. Filtre 10.">
         <p className="text-[15px] leading-relaxed text-[var(--navy)]">
           Objetivo da reunião: <strong>30 nomes levantados</strong>. Depois filtrar.
           Nunca tente encontrar apenas 3. Encontre 30. Selecione os melhores 10.
@@ -477,7 +529,7 @@ function TreinoTab() {
         </TrainingNote>
       </Module>
 
-      <Module n={3} title="Não peça indicações. Conduza indicações." hook="Profissionais fracos pedem. Profissionais fortes conduzem.">
+      <Module id="mod-3" n={3} title="Não peça indicações. Conduza indicações." hook="Profissionais fracos pedem. Profissionais fortes conduzem.">
         <div className="grid gap-3 md:grid-cols-2">
           <div className="rounded-2xl border-2 border-[var(--danger)]/40 bg-[var(--danger)]/5 p-5">
             <p className="text-[11px] font-semibold uppercase tracking-wider text-[var(--danger)]">Pedir</p>
@@ -493,7 +545,7 @@ function TreinoTab() {
         </TrainingNote>
       </Module>
 
-      <Module n={4} title="Subida de nicho" hook="Cliente premium gera cliente premium.">
+      <Module id="mod-4" n={4} title="Subida de nicho" hook="Cliente premium gera cliente premium.">
         <p className="text-[15px] leading-relaxed text-[var(--navy)]">
           Sempre subir. Use as profissões de maior renda como ponte natural.
         </p>
@@ -509,7 +561,7 @@ function TreinoTab() {
         </TrainingNote>
       </Module>
 
-      <Module n={5} title="Meta de excelência" hook="O número que separa o sobrevivente do elite.">
+      <Module id="mod-5" n={5} title="Meta de excelência" hook="O número que separa o sobrevivente do elite.">
         <div className="grid gap-3 sm:grid-cols-3">
           <LevelCard emoji="🎯" tier="Reunião comum"  value="10"  label="Recomendações qualificadas" color="var(--brand)" />
           <LevelCard emoji="🏆" tier="Planejador elite" value="20"  label="Recomendações qualificadas" color="var(--success)" />
@@ -565,17 +617,71 @@ function TabButton({
   );
 }
 
+function JourneyNav({
+  tab, onJump,
+}: { tab: TabKey; onJump: (item: JourneyItem) => void }) {
+  const current = JOURNEY.filter((i) => i.tab === tab);
+  const other   = JOURNEY.filter((i) => i.tab !== tab);
+  const accent  = tab === "execucao" ? "var(--success)" : "var(--brand)";
+  const otherLabel = tab === "execucao" ? "Treinamento" : "Execução";
+  return (
+    <div className="border-t border-border bg-gradient-to-b from-white to-[var(--surface)]/60">
+      <div className="mx-auto max-w-7xl px-3 sm:px-6 py-2.5 flex items-center gap-2">
+        <div className="hidden sm:flex items-center gap-1.5 shrink-0 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+          <ListTree className="h-3.5 w-3.5" style={{ color: accent }} />
+          Jornada
+        </div>
+        <div className="flex-1 min-w-0 overflow-x-auto scrollbar-none">
+          <div className="flex items-center gap-1.5 w-max pr-2">
+            {current.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => onJump(item)}
+                className="shrink-0 inline-flex items-center gap-1 rounded-full border border-border bg-white px-3 py-1.5 text-[11.5px] font-semibold text-[var(--navy)] hover:border-[color:var(--brand)] hover:text-[var(--brand)] hover:-translate-y-px transition"
+              >
+                <span
+                  className="h-1.5 w-1.5 rounded-full"
+                  style={{ background: accent }}
+                  aria-hidden
+                />
+                {item.label}
+              </button>
+            ))}
+            <span className="shrink-0 mx-1 h-5 w-px bg-border" aria-hidden />
+            <span className="shrink-0 text-[10px] font-bold uppercase tracking-wider text-muted-foreground pl-1 pr-1">
+              {otherLabel}
+            </span>
+            {other.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => onJump(item)}
+                className="shrink-0 inline-flex items-center gap-1 rounded-full border border-dashed border-border bg-transparent px-3 py-1.5 text-[11.5px] font-medium text-muted-foreground hover:border-[color:var(--brand)] hover:text-[var(--brand)] hover:bg-white transition"
+              >
+                <ChevronRight className="h-3 w-3" aria-hidden />
+                {item.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function Step({
-  n, eyebrow, title, subtitle, children,
+  n, eyebrow, title, subtitle, children, id,
 }: {
   n: number;
   eyebrow: string;
   title: string;
   subtitle?: string;
   children: React.ReactNode;
+  id?: string;
 }) {
   return (
-    <section className="scroll-mt-24">
+    <section id={id} className="scroll-mt-32">
       <header className="mb-4 sm:mb-6 flex items-start gap-3">
         <span className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--brand)] text-white text-sm font-extrabold shadow-md shadow-[var(--brand)]/30">
           {n}
@@ -592,15 +698,16 @@ function Step({
 }
 
 function Module({
-  n, title, hook, children,
+  n, title, hook, children, id,
 }: {
   n: number;
   title: string;
   hook: string;
   children: React.ReactNode;
+  id?: string;
 }) {
   return (
-    <section className="scroll-mt-24">
+    <section id={id} className="scroll-mt-32">
       <header className="mb-4 sm:mb-6 flex items-start gap-3">
         <span className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--brand)] to-[#1a4a8a] text-white text-sm font-extrabold shadow-md shadow-[var(--brand)]/30">
           M{n}
@@ -822,7 +929,7 @@ function MapaMentalSection() {
     "Trabalho", "Nichos", "Subida de Nicho", "Subida de Renda", "Top 10 Recomendações", "Priorização",
   ];
   return (
-    <section className="scroll-mt-24">
+    <section id="mapa-mental" className="scroll-mt-32">
       <BonusHeader
         eyebrow="Visão macro"
         title="Mapa mental da recomendação"
@@ -873,7 +980,7 @@ function EscadaProfundidadeSection() {
     "Qual deles mais se beneficiaria de uma conversa como essa?",
   ];
   return (
-    <section className="scroll-mt-24">
+    <section id="escada" className="scroll-mt-32">
       <BonusHeader
         eyebrow="Aprofundamento"
         title="Escada de profundidade"
@@ -951,7 +1058,7 @@ function ModoEliteSection() {
     "Quanto tempo pretende esperar?",
   ];
   return (
-    <section className="scroll-mt-24">
+    <section id="modo-elite" className="scroll-mt-32">
       <BonusHeader
         eyebrow="Modo Elite"
         title="Aprofundamento"
@@ -1039,7 +1146,7 @@ function RadarOportunidadesSection() {
     { w: "Construtora", e: "🏗️" }, { w: "Patrimônio", e: "💎" },
   ];
   return (
-    <Module n={6} title="Radar de oportunidades" hook="O cliente entrega recomendações sem perceber — você precisa estar ouvindo.">
+    <Module id="mod-6" n={6} title="Radar de oportunidades" hook="O cliente entrega recomendações sem perceber — você precisa estar ouvindo.">
       <p className="text-[15px] leading-relaxed text-[var(--navy)]">
         Durante a reunião, fique atento às palavras-chave abaixo. Cada uma delas é uma porta aberta
         para aprofundar e descobrir mais um nome qualificado.
@@ -1067,7 +1174,7 @@ function PsicologiaSection() {
   const naoIndica = ["Não lembrar.", "Ter medo de incomodar.", "Não enxergar quem poderia se beneficiar.", "Não ter percebido valor suficiente."];
   const indica   = ["Perceber transformação.", "Sentir confiança.", "Entender quem pode ser ajudado.", "Querer compartilhar algo positivo."];
   return (
-    <Module n={7} title="Psicologia da recomendação" hook="Recomendações são construídas durante toda a reunião — não no final.">
+    <Module id="mod-7" n={7} title="Psicologia da recomendação" hook="Recomendações são construídas durante toda a reunião — não no final.">
       <div className="grid gap-3 md:grid-cols-2">
         <div className="rounded-2xl border-2 border-[var(--danger)]/30 bg-[var(--danger)]/5 p-5">
           <p className="text-[11px] font-bold uppercase tracking-wider text-[var(--danger)]">Cliente NÃO indica por</p>
@@ -1102,7 +1209,7 @@ function Top1Section() {
   const comum = ["Pede recomendação.", "Aceita o primeiro não.", "Pega 1 nome.", "Não qualifica.", "Segue para o encerramento."];
   const elite = ["Constrói valor.", "Conduz memória.", "Explora nichos.", "Aprofunda.", "Qualifica.", "Prioriza.", "Sai com 10+ nomes."];
   return (
-    <Module n={8} title="O que faz os Top 1%" hook="A diferença não está na quantidade de reuniões. Está na profundidade.">
+    <Module id="mod-8" n={8} title="O que faz os Top 1%" hook="A diferença não está na quantidade de reuniões. Está na profundidade.">
       <div className="grid gap-3 md:grid-cols-2">
         <div className="rounded-2xl border border-border bg-[var(--surface)] p-5">
           <div className="flex items-center gap-2">
@@ -1157,7 +1264,7 @@ function AnatomiaSection() {
     "Cliente acredita que ele precisa de ajuda financeira",
   ];
   return (
-    <section className="scroll-mt-24">
+    <section id="anatomia" className="scroll-mt-32">
       <BonusHeader
         eyebrow="Antes da coleta"
         title="Anatomia de uma recomendação elite"
@@ -1208,7 +1315,7 @@ function MandamentosSection() {
     "Conduza oportunidade.",
   ];
   return (
-    <section className="scroll-mt-24">
+    <section id="mandamentos" className="scroll-mt-32">
       <BonusHeader
         eyebrow="Encerramento"
         title="Mandamentos da recomendação elite"
