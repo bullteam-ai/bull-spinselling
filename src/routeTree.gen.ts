@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as RecomendacoesRouteImport } from './routes/recomendacoes'
 import { Route as LigacoesRouteImport } from './routes/ligacoes'
+import { Route as EsquentarRouteImport } from './routes/esquentar'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogComoAplicarSpinSellingRouteImport } from './routes/blog.como-aplicar-spin-selling'
 
@@ -30,6 +31,11 @@ const LigacoesRoute = LigacoesRouteImport.update({
   path: '/ligacoes',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EsquentarRoute = EsquentarRouteImport.update({
+  id: '/esquentar',
+  path: '/esquentar',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -44,6 +50,7 @@ const BlogComoAplicarSpinSellingRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/esquentar': typeof EsquentarRoute
   '/ligacoes': typeof LigacoesRoute
   '/recomendacoes': typeof RecomendacoesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -51,6 +58,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/esquentar': typeof EsquentarRoute
   '/ligacoes': typeof LigacoesRoute
   '/recomendacoes': typeof RecomendacoesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -59,6 +67,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/esquentar': typeof EsquentarRoute
   '/ligacoes': typeof LigacoesRoute
   '/recomendacoes': typeof RecomendacoesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -68,6 +77,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/esquentar'
     | '/ligacoes'
     | '/recomendacoes'
     | '/sitemap.xml'
@@ -75,6 +85,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/esquentar'
     | '/ligacoes'
     | '/recomendacoes'
     | '/sitemap.xml'
@@ -82,6 +93,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/esquentar'
     | '/ligacoes'
     | '/recomendacoes'
     | '/sitemap.xml'
@@ -90,6 +102,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  EsquentarRoute: typeof EsquentarRoute
   LigacoesRoute: typeof LigacoesRoute
   RecomendacoesRoute: typeof RecomendacoesRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -119,6 +132,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LigacoesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/esquentar': {
+      id: '/esquentar'
+      path: '/esquentar'
+      fullPath: '/esquentar'
+      preLoaderRoute: typeof EsquentarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -138,6 +158,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  EsquentarRoute: EsquentarRoute,
   LigacoesRoute: LigacoesRoute,
   RecomendacoesRoute: RecomendacoesRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
