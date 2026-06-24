@@ -238,6 +238,24 @@ function TopNav() {
           Ligações
         </Link>
 
+        <Link
+          to="/esquentar"
+          activeProps={{ className: "text-white bg-white/10" }}
+          inactiveProps={{ className: "text-white/70 hover:text-white" }}
+          className="rounded-md px-2.5 py-1.5 text-xs font-semibold transition"
+        >
+          Esquentar
+        </Link>
+
+        <Link
+          to="/prospeccao"
+          activeProps={{ className: "text-white bg-white/10" }}
+          inactiveProps={{ className: "text-white/70 hover:text-white" }}
+          className="rounded-md px-2.5 py-1.5 text-xs font-semibold transition"
+        >
+          Prospecção
+        </Link>
+
         <div ref={ref} className="relative ml-auto">
           <button
             type="button"
