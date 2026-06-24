@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as RecomendacoesRouteImport } from './routes/recomendacoes'
+import { Route as ProspeccaoRouteImport } from './routes/prospeccao'
 import { Route as LigacoesRouteImport } from './routes/ligacoes'
 import { Route as EsquentarRouteImport } from './routes/esquentar'
 import { Route as IndexRouteImport } from './routes/index'
@@ -24,6 +25,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
 const RecomendacoesRoute = RecomendacoesRouteImport.update({
   id: '/recomendacoes',
   path: '/recomendacoes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProspeccaoRoute = ProspeccaoRouteImport.update({
+  id: '/prospeccao',
+  path: '/prospeccao',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LigacoesRoute = LigacoesRouteImport.update({
@@ -52,6 +58,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/esquentar': typeof EsquentarRoute
   '/ligacoes': typeof LigacoesRoute
+  '/prospeccao': typeof ProspeccaoRoute
   '/recomendacoes': typeof RecomendacoesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/como-aplicar-spin-selling': typeof BlogComoAplicarSpinSellingRoute
@@ -60,6 +67,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/esquentar': typeof EsquentarRoute
   '/ligacoes': typeof LigacoesRoute
+  '/prospeccao': typeof ProspeccaoRoute
   '/recomendacoes': typeof RecomendacoesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/como-aplicar-spin-selling': typeof BlogComoAplicarSpinSellingRoute
@@ -69,6 +77,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/esquentar': typeof EsquentarRoute
   '/ligacoes': typeof LigacoesRoute
+  '/prospeccao': typeof ProspeccaoRoute
   '/recomendacoes': typeof RecomendacoesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/como-aplicar-spin-selling': typeof BlogComoAplicarSpinSellingRoute
@@ -79,6 +88,7 @@ export interface FileRouteTypes {
     | '/'
     | '/esquentar'
     | '/ligacoes'
+    | '/prospeccao'
     | '/recomendacoes'
     | '/sitemap.xml'
     | '/blog/como-aplicar-spin-selling'
@@ -87,6 +97,7 @@ export interface FileRouteTypes {
     | '/'
     | '/esquentar'
     | '/ligacoes'
+    | '/prospeccao'
     | '/recomendacoes'
     | '/sitemap.xml'
     | '/blog/como-aplicar-spin-selling'
@@ -95,6 +106,7 @@ export interface FileRouteTypes {
     | '/'
     | '/esquentar'
     | '/ligacoes'
+    | '/prospeccao'
     | '/recomendacoes'
     | '/sitemap.xml'
     | '/blog/como-aplicar-spin-selling'
@@ -104,6 +116,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   EsquentarRoute: typeof EsquentarRoute
   LigacoesRoute: typeof LigacoesRoute
+  ProspeccaoRoute: typeof ProspeccaoRoute
   RecomendacoesRoute: typeof RecomendacoesRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   BlogComoAplicarSpinSellingRoute: typeof BlogComoAplicarSpinSellingRoute
@@ -123,6 +136,13 @@ declare module '@tanstack/react-router' {
       path: '/recomendacoes'
       fullPath: '/recomendacoes'
       preLoaderRoute: typeof RecomendacoesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/prospeccao': {
+      id: '/prospeccao'
+      path: '/prospeccao'
+      fullPath: '/prospeccao'
+      preLoaderRoute: typeof ProspeccaoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ligacoes': {
@@ -160,6 +180,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   EsquentarRoute: EsquentarRoute,
   LigacoesRoute: LigacoesRoute,
+  ProspeccaoRoute: ProspeccaoRoute,
   RecomendacoesRoute: RecomendacoesRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   BlogComoAplicarSpinSellingRoute: BlogComoAplicarSpinSellingRoute,
