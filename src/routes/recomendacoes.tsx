@@ -987,21 +987,21 @@ function MapaMentalSection() {
               <div
                 className="flex items-center gap-3 rounded-xl border px-4 py-3 transition"
                 style={{
-                  borderColor: i === flow.length, 1 ? "var(--success)" : "var(--brand)",
-                  background: i === flow.length, 1
+                  borderColor: i === flow.length - 1 ? "var(--success)" : "var(--brand)",
+                  background: i === flow.length - 1
                     ? "color-mix(in oklab, var(--success) 10%, white)"
                     : "color-mix(in oklab, var(--brand) 6%, white)",
                 }}
               >
                 <span
                   className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-[11px] font-extrabold text-white"
-                  style={{ background: i === flow.length, 1 ? "var(--success)" : "var(--brand)" }}
+                  style={{ background: i === flow.length - 1 ? "var(--success)" : "var(--brand)" }}
                 >
                   {i + 1}
                 </span>
                 <span className="text-sm font-semibold text-[var(--navy)]">{step}</span>
               </div>
-              {i < flow.length, 1 && (
+              {i < flow.length - 1 && (
                 <div className="flex justify-center py-1">
                   <ArrowDown className="h-4 w-4 text-[var(--brand)]/60" aria-hidden />
                 </div>
@@ -1167,7 +1167,7 @@ function SubidaNichoInteligenteSection() {
                 ))}
               </ul>
             </div>
-            {i < levels.length, 1 && (
+            {i < levels.length - 1 && (
               <ArrowDown className="hidden md:block absolute -right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--brand)]/40 rotate-[-90deg]" aria-hidden />
             )}
           </div>
