@@ -267,6 +267,159 @@ const FRIEND_CALL_STEPS = [
   },
 ];
 
+type StepShape = {
+  id: string;
+  number: string;
+  title: string;
+  subtitle?: string;
+  objective?: string;
+  quote?: string;
+  doList?: string[];
+  goodExamples?: string[];
+  avoid?: string[];
+  quickFollowUps?: string[];
+  slowFollowUps?: string[];
+  transition?: string;
+  why?: string;
+  note?: string;
+  yesFlow?: { items: string[]; transition?: string };
+  noFlow?: { items: string[]; transition?: string };
+};
+
+const RECOMMENDATION_CALL_STEPS: StepShape[] = [
+  {
+    id: "rec-apresentar",
+    number: "1",
+    title: "Apresentar-se com propriedade",
+    subtitle: "Primeiros 15 segundos · gere autoridade",
+    objective:
+      "Transmitir segurança e clareza imediatamente: quem você é, de onde fala e por que está ligando.",
+    quote:
+      "Olá [Nome], aqui é o [Seu Nome], da Bull Team. Tudo bem? Estou ligando porque o(a) [Cliente que indicou] me passou seu contato. Você tem um minuto agora?",
+    doList: [
+      "Falar pausadamente, com voz firme",
+      "Postura ereta, sorriso na voz",
+      "Dizer o nome completo e a empresa",
+      "Citar imediatamente quem indicou",
+      "Perguntar se a pessoa pode falar — sem pedir desculpas",
+    ],
+    avoid: [
+      "Tom hesitante ou voz baixa",
+      "Começar com \"desculpa incomodar\"",
+      "Falar rápido demais por nervosismo",
+      "Soar como telemarketing",
+    ],
+    why:
+      "Autoridade reduz resistência. Os primeiros 15 segundos definem o restante da ligação. Firmeza não é arrogância — é clareza de quem você é, por que está ligando e por que vale a pena continuar ouvindo.",
+  },
+  {
+    id: "rec-avisado",
+    number: "2",
+    title: "Perguntar se foi avisado",
+    subtitle: "Calibrar o ponto de partida",
+    objective:
+      "Descobrir, em uma frase, se a pessoa já está contextualizada — e ajustar o tom da conversa.",
+    quote:
+      "Antes de qualquer coisa: o(a) [Cliente] chegou a comentar com você que passaria seu contato para mim?",
+    yesFlow: {
+      items: [
+        "Ótimo. Então você já deve ter uma ideia do que faço.",
+        "Confirme: \"Ele(a) te contou um pouco do que conversamos na entrevista estratégica?\"",
+        "Reforce: \"Faz sentido. Vou complementar e a gente vê se também faz sentido para você.\"",
+        "Avance direto para a explicação do trabalho — você já tem permissão emocional.",
+      ],
+      transition: "Perfeito. Então deixa eu te contar rapidamente como a gente trabalha…",
+    },
+    noFlow: {
+      items: [
+        "Sem problema — não soe surpreso nem culpe quem indicou.",
+        "Reposicione: \"Tranquilo. Deixa eu te contar rapidamente por que ele(a) me pediu para falar com você.\"",
+        "Vá com calma na próxima etapa: a confiança ainda não foi transferida.",
+        "Dê mais peso à autoridade e à aprovação social antes do convite.",
+      ],
+      transition:
+        "Sem problema. Deixa eu te explicar em 30 segundos o que a gente faz e por que ele(a) lembrou de você…",
+    },
+    why:
+      "Essa pergunta evita o maior erro da ligação de recomendação: assumir contexto que não existe. Em 5 segundos você descobre se está falando com alguém preparado ou com alguém totalmente frio.",
+  },
+  {
+    id: "rec-trabalho",
+    number: "3",
+    title: "Explicar o trabalho",
+    subtitle: "Credibilidade · autoridade · aprovação social",
+    objective:
+      "Posicionar a Bull Team em poucas frases, transmitindo solidez e relevância.",
+    quote:
+      "Eu faço parte da Bull Team, uma operação especializada em planejamento financeiro estratégico focado em objetivos. A gente ajuda pessoas a entender exatamente onde estão hoje e qual o caminho mais eficiente para alcançar os objetivos financeiros que elas têm.",
+    doList: [
+      "Falar com naturalidade — não recite",
+      "Usar a palavra \"estratégico\", não \"vendedor\"",
+      "Mencionar objetivos, não produtos",
+      "Curto: 2 a 3 frases bastam",
+    ],
+    avoid: [
+      "Listar produtos financeiros",
+      "Falar de rentabilidade",
+      "Explicar metodologia em detalhes técnicos",
+      "Soar como pitch decorado",
+    ],
+    why:
+      "O cliente precisa entender em 20 segundos por que vale a pena continuar ouvindo. Autoridade vem do tom, não do volume de informação. Aprovação social vem de você fazer parte de algo maior que você mesmo.",
+  },
+  {
+    id: "rec-exemplo",
+    number: "4",
+    title: "Usar o exemplo do cliente que recomendou",
+    subtitle: "Conexão emocional · ponte de confiança",
+    objective:
+      "Transferir a confiança que o cliente já tem em quem indicou para você — sem expor dados privados.",
+    quote:
+      "O(A) [Cliente] participou de uma entrevista estratégica com a gente e, ao final, falou que faria sentido eu conversar com você. Ele(a) acredita que essa conversa também pode gerar bastante valor para a sua realidade.",
+    doList: [
+      "Personalizar com o nome de quem indicou",
+      "Citar o vínculo (sócio, irmão, amigo de longa data)",
+      "Reforçar o motivo da lembrança, não o produto",
+      "Manter o sigilo do que foi conversado",
+    ],
+    avoid: [
+      "Expor números, dores ou patrimônio de quem indicou",
+      "Sugerir que a pessoa \"precisa\" do serviço",
+      "Soar como se estivesse cobrando um favor",
+    ],
+    why:
+      "Recomendação é transferência de confiança. Quando você cita o exemplo de quem indicou com respeito e propriedade, a pessoa do outro lado relaxa — porque entende que não é um estranho querendo vender, é alguém em quem alguém de confiança apostou.",
+  },
+  {
+    id: "small-talk",
+    number: "5",
+    title: "Small talk",
+    subtitle: "A partir daqui, igual ao fluxo de amigo",
+    objective:
+      "Criar conexão, gerar conforto e reduzir resistência antes de descobrir o objetivo.",
+    doList: [
+      "Perguntar sobre o dia, o trabalho, a rotina",
+      "Demonstrar interesse genuíno",
+      "Fazer perguntas abertas",
+      "Deixar o cliente falar",
+    ],
+    goodExamples: [
+      "Como tem sido sua semana?",
+      "O que tem ocupado mais seu tempo ultimamente?",
+      "Como estão as coisas no trabalho?",
+    ],
+    avoid: [
+      "Encerrar assuntos rapidamente",
+      "Responder apenas \"legal\", \"bacana\" ou \"entendi\"",
+      "Ir direto para a venda",
+    ],
+    transition:
+      "Perfeito. A partir daqui o caminho é exatamente o mesmo da ligação para um amigo: descobrir o objetivo principal e entrar no SPIN.",
+    why:
+      "A partir desta etapa, ambos os fluxos convergem. Pessoas compram de pessoas — e isso vale para recomendação, amigo ou contato frio.",
+  },
+];
+
 const SCRIPT = `Perfeito. Pelo que você compartilhou comigo, existem alguns pontos que vale a pena analisar com mais profundidade para entender exatamente onde você está hoje e qual o caminho mais eficiente para atingir esse objetivo.
 
 O ideal é fazermos uma Entrevista Estratégica Financeira, onde conseguimos colocar tudo isso em números e construir um plano claro.
