@@ -2130,10 +2130,68 @@ function Index() {
                                 ✅ {step.note}
                               </p>
                             )}
+                            {"yesFlow" in step && step.yesFlow && (
+                              <div className="mt-4 rounded-2xl border border-[var(--success)]/30 bg-[var(--success)]/10 p-4">
+                                <p className="text-[11px] font-bold uppercase tracking-wider text-[var(--success)]">✅ Se foi avisado</p>
+                                <ul className="mt-2 space-y-1.5">
+                                  {step.yesFlow.items.map((b, idx) => (
+                                    <li key={idx} className="flex items-start gap-2 text-sm leading-relaxed text-white/90">
+                                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--success)]" />
+                                      <span>{b}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                                {step.yesFlow.transition && (
+                                  <p className="mt-3 border-l-2 border-[var(--success)] pl-3 text-sm italic text-white/90">
+                                    ➡️ “{step.yesFlow.transition}”
+                                  </p>
+                                )}
+                              </div>
+                            )}
+                            {"noFlow" in step && step.noFlow && (
+                              <div className="mt-3 rounded-2xl border border-[var(--warn)]/40 bg-[var(--warn)]/10 p-4">
+                                <p className="text-[11px] font-bold uppercase tracking-wider text-[#8a5a00]">❌ Se NÃO foi avisado</p>
+                                <ul className="mt-2 space-y-1.5">
+                                  {step.noFlow.items.map((b, idx) => (
+                                    <li key={idx} className="flex items-start gap-2 text-sm leading-relaxed text-white/90">
+                                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--warn)]" />
+                                      <span>{b}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                                {step.noFlow.transition && (
+                                  <p className="mt-3 border-l-2 border-[var(--warn)] pl-3 text-sm italic text-white/90">
+                                    ➡️ “{step.noFlow.transition}”
+                                  </p>
+                                )}
+                              </div>
+                            )}
                           </div>
                         </li>
                       ))}
                     </ol>
+
+                    <div key={`converge-${callType}`} className="mt-8 animate-fade-in">
+                      <div className="relative overflow-hidden rounded-2xl border border-[var(--success)]/40 bg-gradient-to-r from-[var(--success)]/15 via-white/5 to-[var(--brand)]/15 p-5 sm:p-6 backdrop-blur">
+                        <div className="pointer-events-none absolute -top-12 -right-12 h-40 w-40 rounded-full bg-[var(--success)]/20 blur-3xl" />
+                        <div className="relative flex flex-col items-center gap-2 text-center sm:flex-row sm:justify-center sm:gap-4">
+                          <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs font-bold text-white/90">
+                            <span aria-hidden>👥</span> Amigo
+                          </span>
+                          <span aria-hidden className="text-white/60">↓</span>
+                          <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs font-bold text-white/90">
+                            <span aria-hidden>🤝</span> Recomendação
+                          </span>
+                          <span aria-hidden className="hidden text-white/60 sm:inline">↓</span>
+                        </div>
+                        <p className="relative mt-3 text-center text-sm sm:text-base font-semibold text-white">
+                          🎯 A partir deste momento, ambos os fluxos usam exatamente o mesmo processo estratégico.
+                        </p>
+                        <p className="relative mt-1 text-center text-xs sm:text-sm text-white/70">
+                          Descoberta de objetivo · SPIN · Sinais · Agendamento · Fechamento
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
