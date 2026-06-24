@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as RecomendacoesRouteImport } from './routes/recomendacoes'
+import { Route as LigacoesRouteImport } from './routes/ligacoes'
 import { Route as IndexRouteImport } from './routes/index'
 
 const RecomendacoesRoute = RecomendacoesRouteImport.update({
   id: '/recomendacoes',
   path: '/recomendacoes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LigacoesRoute = LigacoesRouteImport.update({
+  id: '/ligacoes',
+  path: '/ligacoes',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -25,27 +31,31 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ligacoes': typeof LigacoesRoute
   '/recomendacoes': typeof RecomendacoesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ligacoes': typeof LigacoesRoute
   '/recomendacoes': typeof RecomendacoesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/ligacoes': typeof LigacoesRoute
   '/recomendacoes': typeof RecomendacoesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/recomendacoes'
+  fullPaths: '/' | '/ligacoes' | '/recomendacoes'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/recomendacoes'
-  id: '__root__' | '/' | '/recomendacoes'
+  to: '/' | '/ligacoes' | '/recomendacoes'
+  id: '__root__' | '/' | '/ligacoes' | '/recomendacoes'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  LigacoesRoute: typeof LigacoesRoute
   RecomendacoesRoute: typeof RecomendacoesRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/recomendacoes'
       fullPath: '/recomendacoes'
       preLoaderRoute: typeof RecomendacoesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ligacoes': {
+      id: '/ligacoes'
+      path: '/ligacoes'
+      fullPath: '/ligacoes'
+      preLoaderRoute: typeof LigacoesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -70,18 +87,9 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  LigacoesRoute: LigacoesRoute,
   RecomendacoesRoute: RecomendacoesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

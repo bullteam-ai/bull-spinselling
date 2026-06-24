@@ -205,6 +205,15 @@ function TopNav() {
           Recomendações
         </Link>
 
+        <Link
+          to="/ligacoes"
+          activeProps={{ className: "text-white bg-white/10" }}
+          inactiveProps={{ className: "text-white/70 hover:text-white" }}
+          className="rounded-md px-2.5 py-1.5 text-xs font-semibold transition"
+        >
+          Ligações
+        </Link>
+
         <div ref={ref} className="relative ml-auto">
           <button
             type="button"
