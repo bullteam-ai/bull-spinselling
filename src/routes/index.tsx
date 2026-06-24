@@ -2657,6 +2657,7 @@ function Index() {
       {/* Barra de navegação fixa — sempre visível */}
       <nav
         aria-label="Navegação rápida"
+
         className="fixed inset-x-0 bottom-0 z-50 border-t border-border bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85 shadow-[0_-8px_24px_-12px_rgba(11,28,58,0.18)]"
         style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
       >
