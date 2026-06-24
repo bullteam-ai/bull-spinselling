@@ -2655,6 +2655,81 @@ function Index() {
       </footer>
 
       {/* Barra de navegação fixa — sempre visível */}
+      {showCompare && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="compare-title"
+          className="fixed inset-0 z-[70] flex items-center justify-center bg-[var(--navy)]/70 backdrop-blur-sm p-4 animate-fade-in"
+          onClick={() => setShowCompare(false)}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-3xl border border-border bg-white shadow-2xl animate-scale-in"
+          >
+            <div className="flex items-center justify-between gap-3 border-b border-border px-5 sm:px-6 py-4 sticky top-0 bg-white/95 backdrop-blur">
+              <div className="flex items-center gap-3">
+                <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--brand)]/10 text-[var(--brand)]">
+                  <BarChart3 className="h-4 w-4" aria-hidden />
+                </span>
+                <div>
+                  <h3 id="compare-title" className="text-base sm:text-lg font-bold text-[var(--navy)]">Comparar Fluxos</h3>
+                  <p className="text-xs text-muted-foreground">Só a abertura muda. Do small talk em diante, tudo é igual.</p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowCompare(false)}
+                aria-label="Fechar"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-white text-muted-foreground transition hover:text-[var(--navy)]"
+              >
+                <XCircle className="h-4 w-4" aria-hidden />
+              </button>
+            </div>
+            <div className="p-4 sm:p-6">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="text-left text-[11px] font-bold uppercase tracking-wider text-muted-foreground border-b border-border">
+                    <th className="py-2 pr-3">Etapa</th>
+                    <th className="py-2 px-2">👥 Amigo</th>
+                    <th className="py-2 pl-2">🤝 Recomendação</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    { etapa: "Abertura", a: "Diferente", b: "Diferente", diff: true },
+                    { etapa: "Aprovação social", a: "Não", b: "Sim", diff: true },
+                    { etapa: "Small Talk", a: "Igual", b: "Igual" },
+                    { etapa: "Descoberta de Objetivo", a: "Igual", b: "Igual" },
+                    { etapa: "SPIN", a: "Igual", b: "Igual" },
+                    { etapa: "Ferir / Tirar o Doce", a: "Igual", b: "Igual" },
+                    { etapa: "Agendamento", a: "Igual", b: "Igual" },
+                    { etapa: "Fechamento", a: "Igual", b: "Igual" },
+                  ].map((r) => (
+                    <tr key={r.etapa} className="border-b border-border/60 last:border-0">
+                      <td className="py-2.5 pr-3 font-semibold text-[var(--navy)]">{r.etapa}</td>
+                      <td className="py-2.5 px-2">
+                        <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-bold ${r.diff ? "bg-[var(--warn)]/15 text-[#8a5a00]" : "bg-[var(--success)]/15 text-[var(--success)]"}`}>
+                          {r.a}
+                        </span>
+                      </td>
+                      <td className="py-2.5 pl-2">
+                        <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-bold ${r.diff ? "bg-[var(--warn)]/15 text-[#8a5a00]" : "bg-[var(--success)]/15 text-[var(--success)]"}`}>
+                          {r.b}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <p className="mt-4 rounded-xl border border-[var(--success)]/30 bg-[var(--success)]/10 p-3 text-xs sm:text-sm font-medium text-[var(--navy)]">
+                🎯 Conclusão: apenas a <strong>abertura</strong> e a presença de <strong>aprovação social</strong> mudam entre os fluxos. Todo o restante é um único motor de condução.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       <nav
         aria-label="Navegação rápida"
         className="fixed inset-x-0 bottom-0 z-50 border-t border-border bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85 shadow-[0_-8px_24px_-12px_rgba(11,28,58,0.18)]"
