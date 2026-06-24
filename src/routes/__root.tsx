@@ -100,6 +100,30 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" },
     ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "Bull Team",
+          url: "https://bull-spinselling.lovable.app",
+          logo: "https://bull-spinselling.lovable.app/favicon.ico",
+          description: "Treinamento de alta performance para planejadores financeiros: SPIN Selling, condução de entrevistas, recomendações e ligações.",
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "Bull Team",
+          url: "https://bull-spinselling.lovable.app",
+          inLanguage: "pt-BR",
+          publisher: { "@type": "Organization", name: "Bull Team" },
+        }),
+      },
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,
