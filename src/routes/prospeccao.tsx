@@ -69,236 +69,296 @@ type Etapa = {
 
 const ETAPAS: Etapa[] = [
   {
-    id: "perfil",
+    id: "oportunidades",
     numero: 1,
-    titulo: "Definir o Perfil Ideal de Contato",
-    objetivo: "Saber exatamente quem procurar antes de gastar tempo prospectando.",
-    regra: "Quantidade sem critério não vira lead. Defina o filtro antes de abrir o funil.",
+    titulo: "Identificar Oportunidades",
+    objetivo: "Descobrir, em uma conversa, em qual papel essa pessoa pode entrar dentro do seu sistema de prospecção.",
     icon: <Target className="h-5 w-5" />,
-    bullets: [
-      {
-        eyebrow: "Perfis prioritários",
-        itens: [
-          "Empresários e donos de negócio",
-          "Médicos e dentistas",
-          "Advogados e contadores",
-          "Corretores de imóveis e consultores",
-          "Gestores comerciais e executivos",
-          "Profissionais liberais com boa renda",
-          "Líderes de comunidade e influenciadores locais",
-          "Clientes satisfeitos e pessoas bem relacionadas",
-        ],
-      },
+    queroDescobrir: [
+      "Essa pessoa pode ser cliente?",
+      "Pode ser indicador pontual?",
+      "Pode virar parceiro recorrente?",
+      "Pode ser conector entre você e outros grupos?",
+      "Pode ser influenciador dentro de um nicho?",
+    ],
+    perguntas: [
+      "“Me conta um pouco sobre sua atuação.”",
+      "“Qual público você mais atende hoje?”",
+      "“Como normalmente chegam seus clientes?”",
+      "“O que mais tem tomado seu foco atualmente?”",
+    ],
+    ouvir: [
+      "Profissões e cargos que aparecem.",
+      "Segmentos e nichos atendidos.",
+      "Indícios da rede de relacionamento.",
+      "Sinais de influência no grupo dela.",
+      "Capacidade real de gerar conexões.",
+    ],
+    comoAvancar: [
+      { eyebrow: "Se possui boa rede de contatos", texto: "Seguir para a Etapa 2 e aprofundar a qualidade da rede." },
+      { eyebrow: "Se não possui rede relevante", texto: "Manter relacionamento sem investir tempo em prospecção ativa. Volte quando o contexto mudar." },
     ],
     erros: [
-      "Procurar qualquer pessoa, sem filtro.",
-      "Não ter critério mínimo de renda ou perfil.",
-      "Abordar pessoas sem potencial real de conexão.",
-      "Confundir quantidade de contatos com qualidade de pipeline.",
+      "Decidir o papel da pessoa antes de ouvir.",
+      "Tratar todo contato como potencial parceiro.",
+      "Pular essa etapa e ir direto para o pedido.",
     ],
   },
   {
-    id: "fontes",
+    id: "qualidade-rede",
     numero: 2,
-    titulo: "Mapear Fontes de Prospecção",
-    objetivo: "Criar uma lista organizada de origens recorrentes de contatos.",
-    icon: <Compass className="h-5 w-5" />,
-    bullets: [
-      {
-        eyebrow: "Fontes digitais",
-        itens: ["WhatsApp", "Instagram", "LinkedIn", "Comunidades online"],
-      },
-      {
-        eyebrow: "Fontes presenciais",
-        itens: [
-          "Eventos do setor",
-          "Academias e clubes",
-          "Condomínios e bairros estratégicos",
-          "Associações comerciais",
-          "Grupos de networking",
-        ],
-      },
-      {
-        eyebrow: "Fontes profissionais",
-        itens: [
-          "Escritórios de contabilidade",
-          "Imobiliárias e corretoras",
-          "Empresários locais",
-          "Clientes antigos e atuais",
-          "Amigos e família com bom círculo",
-        ],
-      },
-    ],
-  },
-  {
-    id: "classificar",
-    numero: 3,
-    titulo: "Classificar o Potencial",
-    objetivo: "Separar quem pode gerar lead eventual de quem pode virar parceiro recorrente.",
-    icon: <Radar className="h-5 w-5" />,
-    bullets: [
-      {
-        eyebrow: "Níveis de potencial",
-        itens: [
-          "Contato comum: pode indicar 1 ou 2 pessoas.",
-          "Contato estratégico: conhece pessoas com perfil financeiro interessante.",
-          "Parceiro recorrente: pode gerar contatos todos os meses.",
-          "Parceiro premium: tem autoridade sobre um público qualificado.",
-        ],
-      },
-    ],
-    regra: "Cada nível exige um tipo diferente de relacionamento. Não trate parceiro premium como contato comum nem o contrário.",
-  },
-  {
-    id: "iniciar",
-    numero: 4,
-    titulo: "Iniciar Relacionamento",
-    objetivo: "Criar conexão antes de pedir qualquer coisa.",
-    regra: "Primeiro conversa. Depois sinergia. Só então parceria. Inverter essa ordem queima o contato.",
-    icon: <MessageCircle className="h-5 w-5" />,
-    bullets: [
-      {
-        eyebrow: "Aberturas naturais",
-        itens: [
-          "“Vi que você atua com empresários aqui da região. Achei muito interessante seu trabalho.”",
-          "“Percebi que você atende muitos profissionais liberais. É um público com quem também temos bastante contato.”",
-          "“Gostei da forma como você fala sobre crescimento e organização.”",
-          "“Vi que você é referência em [área]. Como tá o cenário aí no seu segmento?”",
-        ],
-      },
-    ],
-    erros: [
-      "Abrir conversa já propondo parceria.",
-      "Falar de produtos ou da empresa logo de cara.",
-      "Usar mensagens genéricas sem referência ao trabalho da pessoa.",
-    ],
-  },
-  {
-    id: "sinergia",
-    numero: 5,
-    titulo: "Identificar Sinergia",
-    objetivo: "Entender se existe troca real de valor entre os dois lados.",
+    titulo: "Descobrir a Qualidade da Rede",
+    objetivo: "Mapear quem essa pessoa conhece — não em quantidade, mas em qualidade do círculo.",
     icon: <Network className="h-5 w-5" />,
-    bullets: [
-      {
-        eyebrow: "Perguntas para mapear sinergia",
-        itens: [
-          "“Hoje você atende que tipo de cliente?”",
-          "“Qual perfil de pessoa mais procura seu serviço?”",
-          "“Você costuma se relacionar com empresários ou profissionais liberais?”",
-          "“Existe alguma dor financeira que seus clientes costumam comentar?”",
-          "“Você já tem alguém de confiança para direcionar quando aparece esse tipo de demanda?”",
-        ],
-      },
+    queroDescobrir: [
+      "Quem essa pessoa conhece, com que profundidade e com que frequência.",
     ],
-    regra: "Sinergia não se assume. Se confirma com perguntas. Sem sinergia clara, não há parceria sustentável.",
-  },
-  {
-    id: "apresentar",
-    numero: 6,
-    titulo: "Apresentar a Oportunidade de Parceria",
-    objetivo: "Mostrar que a parceria gera valor para os clientes dele, não apenas benefício para você.",
-    icon: <Handshake className="h-5 w-5" />,
-    bullets: [],
-    exemplos: [
-      {
-        eyebrow: "Fala de apresentação",
-        texto:
-          "“Pelo perfil de cliente que você atende, acredito que pode existir uma sinergia interessante. Muitas vezes essas pessoas têm boa renda, empresa, patrimônio ou objetivos importantes, mas não têm clareza se estão organizando tudo da melhor forma. A ideia seria eu te ajudar a entregar mais valor para essas pessoas quando fizer sentido.”",
-      },
+    perguntas: [
+      "“Qual perfil de cliente costuma procurar você?”",
+      "“Você se relaciona mais com empresários ou profissionais liberais?”",
+      "“Quais são as pessoas que mais aparecem no seu dia a dia?”",
+      "“Existe algum nicho que você atende com frequência?”",
+    ],
+    ouvir: [
+      "Empresários e donos de negócio.",
+      "Médicos e dentistas.",
+      "Advogados e contadores.",
+      "Executivos e gestores.",
+      "Investidores e profissionais liberais de alta renda.",
+      "Famílias com patrimônio relevante.",
+    ],
+    comoAvancar: [
+      { eyebrow: "Quanto maior a qualidade do público", texto: "Maior deve ser o investimento de tempo no relacionamento. Trate como ativo estratégico." },
+      { eyebrow: "Quanto menor a aderência ao seu perfil", texto: "Reduza a frequência. Mantenha cordialidade, mas não invista energia desproporcional." },
     ],
     erros: [
-      "Apresentar a parceria pelo seu benefício, não pelo benefício dos clientes dele.",
-      "Usar linguagem comercial agressiva ('quero ter acesso à sua base').",
-      "Prometer comissão sem ter construído relacionamento antes.",
+      "Se animar com quantidade sem entender qualidade.",
+      "Confundir popularidade com poder de indicação.",
+      "Não calibrar investimento de tempo conforme o público real dela.",
     ],
   },
   {
-    id: "pedir",
-    numero: 7,
-    titulo: "Pedir o Primeiro Contato",
-    objetivo: "Tirar a parceria do campo da conversa e gerar ação imediata.",
-    icon: <ArrowUpRight className="h-5 w-5" />,
-    bullets: [],
-    exemplos: [
-      {
-        eyebrow: "Pergunta principal",
-        texto:
-          "“Pensando no seu círculo hoje, quem é uma pessoa que você acredita que poderia se beneficiar de uma conversa mais estratégica sobre organização financeira, patrimônio ou futuro?”",
-      },
-      {
-        eyebrow: "Alternativa mais direta",
-        texto: "“Me fala uma pessoa que você lembrou agora e que faria sentido eu conhecer.”",
-      },
+    id: "problemas",
+    numero: 3,
+    titulo: "Entender os Problemas Desse Público",
+    objetivo: "Mapear quais dores aparecem naturalmente no círculo dela para você saber por onde entrar.",
+    icon: <HelpCircle className="h-5 w-5" />,
+    queroDescobrir: [
+      "Quais dores e preocupações financeiras o público dela enfrenta de fato.",
     ],
-    regra: "Use pergunta específica e gere pausa. Quem pergunta vago recebe resposta vaga.",
+    perguntas: [
+      "“Qual problema você percebe acontecer com frequência?”",
+      "“Existe alguma preocupação recorrente que seus clientes comentam?”",
+      "“Qual assunto gera mais insegurança para eles?”",
+      "“Quais erros você vê acontecendo repetidamente?”",
+    ],
+    ouvir: [
+      "Preocupações financeiras recorrentes.",
+      "Objetivos não estruturados.",
+      "Desorganização patrimonial.",
+      "Falta de planejamento de longo prazo.",
+      "Dificuldade de tomada de decisão.",
+      "Questões de empresa, família ou sucessão.",
+    ],
+    comoAvancar: [
+      { eyebrow: "Quando aparecem dores claras", texto: "Use essas dores como ponte natural para apresentar seu trabalho na Etapa 5." },
+      { eyebrow: "Quando não aparecem dores", texto: "Não force. Volte para Etapa 2 e revise se o público realmente tem aderência." },
+    ],
+    erros: [
+      "Sugerir dores que ela não verbalizou.",
+      "Transformar a pergunta em pitch disfarçado.",
+      "Não anotar o que foi dito — perder o material para usar depois.",
+    ],
   },
   {
-    id: "facilitar",
-    numero: 8,
-    titulo: "Facilitar a Indicação",
-    objetivo: "Evitar que o parceiro trave por não saber como apresentar você.",
+    id: "abertura",
+    numero: 4,
+    titulo: "Testar Abertura",
+    objetivo: "Descobrir se existe espaço real para parceria antes de propor qualquer coisa.",
+    icon: <Radar className="h-5 w-5" />,
+    queroDescobrir: [
+      "Se a pessoa tem disposição cultural e prática para parcerias.",
+    ],
+    perguntas: [
+      "“Hoje você possui parceiros estratégicos?”",
+      "“Você costuma conectar pessoas quando acredita que pode ajudá-las?”",
+      "“Já fez alguma parceria parecida no passado?”",
+      "“Você acredita que seus clientes valorizariam esse tipo de suporte?”",
+    ],
+    comoAvancar: [
+      { eyebrow: "Resposta positiva", texto: "Avançar para Etapa 5. Há espaço aberto — gere curiosidade." },
+      { eyebrow: "Resposta neutra", texto: "Aprofundar relacionamento antes de qualquer pedido. Volte para Etapas 2 e 3 com mais profundidade." },
+      { eyebrow: "Resposta negativa", texto: "Não insistir. Mantenha cordialidade e siga em frente para outras frentes." },
+    ],
+    erros: [
+      "Ignorar sinais negativos por ansiedade.",
+      "Insistir após uma recusa clara.",
+      "Ler resposta neutra como aprovação.",
+    ],
+  },
+  {
+    id: "curiosidade",
+    numero: 5,
+    titulo: "Gerar Curiosidade",
+    objetivo: "Fazer a pessoa enxergar valor no que você faz antes de falar em indicação.",
     icon: <Sparkles className="h-5 w-5" />,
-    bullets: [],
+    queroDescobrir: [
+      "Se a pessoa reage com interesse ao tipo de problema que você resolve.",
+    ],
     exemplos: [
       {
-        eyebrow: "Oferta de facilitação",
+        eyebrow: "Provocação 1",
         texto:
-          "“Para facilitar, posso te mandar uma mensagem pronta e você só encaminha ou me coloca em um grupo com a pessoa.”",
+          "“Uma coisa interessante que temos percebido é que muitas pessoas estão ganhando bem, mas não necessariamente construindo o futuro que imaginam.”",
       },
       {
-        eyebrow: "Mensagem pronta",
+        eyebrow: "Provocação 2",
         texto:
-          "“Fulano, estou te conectando com o [Nome]. Ele trabalha ajudando pessoas a organizarem melhor vida financeira, patrimônio e objetivos futuros. Achei que faria sentido vocês conversarem.”",
+          "“É impressionante a quantidade de empresários que acreditam estar organizados financeiramente até analisarmos o cenário completo.”",
+      },
+      {
+        eyebrow: "Provocação 3",
+        texto:
+          "“Vejo muitos profissionais excelentes tecnicamente, mas que nunca tiveram alguém para ajudá-los a estruturar a parte financeira.”",
       },
     ],
-    regra: "Quanto menor o esforço do parceiro, maior a taxa de conversão. Entregue a apresentação pronta.",
-  },
-  {
-    id: "followup",
-    numero: 9,
-    titulo: "Organizar Follow-up",
-    objetivo: "Não deixar a parceria morrer depois da primeira conversa.",
-    icon: <RefreshCw className="h-5 w-5" />,
-    bullets: [
-      {
-        eyebrow: "Ações de follow-up",
-        itens: [
-          "Registrar o nome do parceiro em CRM ou planilha.",
-          "Registrar o perfil de clientes que ele atende.",
-          "Registrar todos os contatos gerados.",
-          "Marcar a próxima data de follow-up.",
-          "Enviar retorno sobre cada contato indicado.",
-          "Manter relacionamento ativo, mesmo sem novas indicações.",
-        ],
-      },
+    ouvir: [
+      "Reação física e verbal ao ouvir a provocação.",
+      "Frases como 'isso acontece muito', 'conheço alguém assim'.",
+      "Perguntas espontâneas pedindo mais detalhes.",
+    ],
+    comoAvancar: [
+      { eyebrow: "Se a pessoa reagir com interesse", texto: "Avance imediatamente para Etapa 6 com a forma suave do pedido." },
+      { eyebrow: "Se a pessoa reagir com neutralidade", texto: "Volte uma etapa. Aprofunde dores reais do público dela antes de tentar novamente." },
     ],
     erros: [
-      "Sumir após a primeira indicação.",
-      "Não dar retorno sobre o que aconteceu com o contato.",
-      "Confiar na memória em vez de registrar.",
+      "Provocar e emendar pitch sem pausa.",
+      "Falar de produto ou empresa nesse momento.",
+      "Provocações genéricas que não conectam com o público dela.",
     ],
   },
   {
-    id: "nutrir",
-    numero: 10,
-    titulo: "Nutrir o Parceiro",
-    objetivo: "Transformar uma indicação isolada em fonte recorrente de oportunidades.",
-    icon: <Crown className="h-5 w-5" />,
-    bullets: [
+    id: "primeira-oportunidade",
+    numero: 6,
+    titulo: "Pedir a Primeira Oportunidade",
+    objetivo: "Tirar a conversa do campo das ideias e gerar a primeira ação concreta.",
+    icon: <ArrowUpRight className="h-5 w-5" />,
+    queroDescobrir: [
+      "Se já existe um nome específico na cabeça dela neste momento.",
+    ],
+    exemplos: [
       {
-        eyebrow: "Rotina de nutrição",
+        eyebrow: "Forma suave",
+        texto:
+          "“Durante nossa conversa lembrei de algumas pessoas que costumam se beneficiar desse tipo de reflexão.”",
+      },
+      {
+        eyebrow: "Forma direta",
+        texto: "“Quem foi a primeira pessoa que veio na sua cabeça enquanto conversávamos?”",
+      },
+      {
+        eyebrow: "Forma para parceiros",
+        texto: "“Existe alguém que você acredita que deveria ter essa conversa nos próximos meses?”",
+      },
+    ],
+    regra: "Faça a pergunta e gere pausa. Quem fala em seguida perde. O silêncio é parte da técnica.",
+    erros: [
+      "Atropelar a própria pergunta com explicações.",
+      "Aceitar 'vou pensar' como resposta final.",
+      "Pedir sem ter passado pelas etapas anteriores.",
+    ],
+  },
+  {
+    id: "objecoes",
+    numero: 7,
+    titulo: "Contornar Objeções Comuns",
+    objetivo: "Responder com calma e autoridade às três objeções que mais aparecem.",
+    icon: <Shield className="h-5 w-5" />,
+    queroDescobrir: [
+      "Qual é a real natureza da objeção: receio, falta de contexto ou desinteresse genuíno.",
+    ],
+    objecoes: [
+      {
+        q: "Preciso conhecer melhor seu trabalho.",
+        a: "“Perfeito. Parcerias de longo prazo nascem exatamente assim, construindo confiança primeiro. Que tal marcarmos 30min para você entender com profundidade?”",
+      },
+      {
+        q: "Não gosto de indicar.",
+        a: "“Nem deveria. A indicação só faz sentido quando existe percepção real de valor. Por isso primeiro a gente constrói essa percepção — depois a indicação aparece naturalmente, se fizer sentido.”",
+      },
+      {
+        q: "Vou pensar.",
+        a: "“Claro. Inclusive, normalmente quando faz sentido, uma pessoa específica já vem à cabeça naturalmente. Tem alguém que veio agora enquanto falávamos?”",
+      },
+    ],
+    comoAvancar: [
+      { eyebrow: "Objeção de contexto", texto: "Marque uma segunda conversa estruturada para apresentar seu trabalho com mais profundidade." },
+      { eyebrow: "Objeção de princípio", texto: "Reposicione o frame: você não pede indicação, constrói percepção de valor primeiro." },
+      { eyebrow: "Objeção de adiamento", texto: "Use a virada do 'normalmente uma pessoa já vem à cabeça' para tirar do limbo." },
+    ],
+    erros: [
+      "Discutir com a objeção em vez de validar e reposicionar.",
+      "Insistir três vezes seguidas — corrói confiança.",
+      "Tratar 'vou pensar' como sim adiado.",
+    ],
+  },
+  {
+    id: "manutencao",
+    numero: 8,
+    titulo: "Manutenção do Relacionamento",
+    objetivo: "Transformar uma conversa pontual em relacionamento de longo prazo — a maioria das parcerias não nasce na primeira conversa, nasce na consistência.",
+    icon: <Heart className="h-5 w-5" />,
+    queroDescobrir: [
+      "Quais formatos de contato fazem sentido para essa pessoa específica.",
+    ],
+    modulo: [
+      {
+        eyebrow: "Como manter contato sem parecer vendedor",
         itens: [
-          "Enviar conteúdos úteis ao público dele.",
-          "Parabenizar conquistas profissionais e pessoais.",
-          "Compartilhar cases relevantes e aprendizados.",
-          "Atualizar sobre resultados dos contatos indicados.",
-          "Reforçar gratidão de forma genuína e periódica.",
-          "Criar rotina mensal ou trimestral de contato.",
+          "Comente publicações dela com substância, não com clichês.",
+          "Mande mensagens em datas que importam (aniversário, conquistas).",
+          "Evite qualquer cobrança ou cobrança disfarçada de indicação.",
+        ],
+      },
+      {
+        eyebrow: "Como continuar gerando valor",
+        itens: [
+          "Envie artigos relevantes para o público que ela atende.",
+          "Compartilhe insights aplicáveis ao segmento dela.",
+          "Apresente conexões úteis para o trabalho dela.",
+        ],
+      },
+      {
+        eyebrow: "Como permanecer presente",
+        itens: [
+          "Defina uma cadência mínima (mensal ou trimestral).",
+          "Use lembretes ou CRM — não confie na memória.",
+          "Apareça em momentos que não envolvem pedido nenhum.",
+        ],
+      },
+      {
+        eyebrow: "Como fortalecer confiança",
+        itens: [
+          "Dê retorno honesto sobre cada contato indicado.",
+          "Compartilhe resultados, mesmo quando o lead não converte.",
+          "Cumpra absolutamente tudo o que prometeu, em prazo.",
+        ],
+      },
+      {
+        eyebrow: "Como transformar conversa em relacionamento de longo prazo",
+        itens: [
+          "Trate a pessoa como ativo, não como transação.",
+          "Invista anos antes de medir resultado em meses.",
+          "Construa rotina que sobreviva a meses sem indicação alguma.",
         ],
       },
     ],
-    regra: "Parceiro nutrido lembra de você primeiro. Parceiro esquecido indica para o concorrente.",
+    regra: "A maioria das parcerias não morre por incompatibilidade — morre por sumiço. Consistência é o diferencial.",
+    erros: [
+      "Aparecer só quando precisa de algo.",
+      "Cobrar resultados antes de ter investido relacionamento.",
+      "Tratar follow-up como tarefa burocrática em vez de ativo estratégico.",
+    ],
   },
 ];
 
