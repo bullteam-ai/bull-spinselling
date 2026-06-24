@@ -9,11 +9,17 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as RecomendacoesRouteImport } from './routes/recomendacoes'
 import { Route as LigacoesRouteImport } from './routes/ligacoes'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogComoAplicarSpinSellingRouteImport } from './routes/blog.como-aplicar-spin-selling'
 
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RecomendacoesRoute = RecomendacoesRouteImport.update({
   id: '/recomendacoes',
   path: '/recomendacoes',
@@ -40,12 +46,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/ligacoes': typeof LigacoesRoute
   '/recomendacoes': typeof RecomendacoesRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/como-aplicar-spin-selling': typeof BlogComoAplicarSpinSellingRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/ligacoes': typeof LigacoesRoute
   '/recomendacoes': typeof RecomendacoesRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/como-aplicar-spin-selling': typeof BlogComoAplicarSpinSellingRoute
 }
 export interface FileRoutesById {
@@ -53,6 +61,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/ligacoes': typeof LigacoesRoute
   '/recomendacoes': typeof RecomendacoesRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/como-aplicar-spin-selling': typeof BlogComoAplicarSpinSellingRoute
 }
 export interface FileRouteTypes {
@@ -61,14 +70,21 @@ export interface FileRouteTypes {
     | '/'
     | '/ligacoes'
     | '/recomendacoes'
+    | '/sitemap.xml'
     | '/blog/como-aplicar-spin-selling'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/ligacoes' | '/recomendacoes' | '/blog/como-aplicar-spin-selling'
+  to:
+    | '/'
+    | '/ligacoes'
+    | '/recomendacoes'
+    | '/sitemap.xml'
+    | '/blog/como-aplicar-spin-selling'
   id:
     | '__root__'
     | '/'
     | '/ligacoes'
     | '/recomendacoes'
+    | '/sitemap.xml'
     | '/blog/como-aplicar-spin-selling'
   fileRoutesById: FileRoutesById
 }
@@ -76,11 +92,19 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LigacoesRoute: typeof LigacoesRoute
   RecomendacoesRoute: typeof RecomendacoesRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   BlogComoAplicarSpinSellingRoute: typeof BlogComoAplicarSpinSellingRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/recomendacoes': {
       id: '/recomendacoes'
       path: '/recomendacoes'
@@ -116,6 +140,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LigacoesRoute: LigacoesRoute,
   RecomendacoesRoute: RecomendacoesRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   BlogComoAplicarSpinSellingRoute: BlogComoAplicarSpinSellingRoute,
 }
 export const routeTree = rootRouteImport
