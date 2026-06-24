@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://bull-spinselling.lovable.app/sitemap.xml
