@@ -153,6 +153,7 @@ function JourneyBar({
                     type="button"
                     onClick={() => onJump(s.n)}
                     title={s.desc}
+                    aria-label={`Etapa ${s.n}: ${s.label}. ${s.desc}`}
                     aria-current={isActive ? "step" : undefined}
                     className={`group relative inline-flex items-center gap-1.5 rounded-full border px-2 sm:px-2.5 py-1 text-[11px] sm:text-xs font-semibold transition motion-reduce:transition-none ${
                       isActive
