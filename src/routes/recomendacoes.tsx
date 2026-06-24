@@ -17,6 +17,32 @@ export const Route = createFileRoute("/recomendacoes")({
       { property: "og:title", content: "Bull Team | Recomendações Elite" },
       { property: "og:description", content: "De 1 para 10+ recomendações qualificadas por reunião." },
     ],
+    links: [
+      { rel: "canonical", href: "https://bull-spinselling.lovable.app/recomendacoes" },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "HowTo",
+          name: "Passo a Passo de Recomendações Elite",
+          description: "Método Bull Team para sair de cada reunião com 10+ recomendações qualificadas.",
+          step: [
+            { "@type": "HowToStep", position: 1, name: "Convicção", text: "Confirme com o cliente que a conversa gerou valor antes de pedir recomendações." },
+            { "@type": "HowToStep", position: 2, name: "Pergunta certa", text: "Substitua 'Quem você conhece?' por perguntas direcionadas a nichos e objetivos." },
+            { "@type": "HowToStep", position: 3, name: "Método dos 3 nomes", text: "Sempre peça pelo menos 3 nomes por nicho — nunca aceite o primeiro 'não lembro'." },
+            { "@type": "HowToStep", position: 4, name: "Nichos próximos", text: "Explore família, amigos, trabalho, academia e viagens." },
+            { "@type": "HowToStep", position: 5, name: "Objetivos", text: "Conduza por objetivos: imóvel, filhos, investimentos, aposentadoria." },
+            { "@type": "HowToStep", position: 6, name: "Subida de nível", text: "Eleve a rede: empresários, médicos, dentistas, advogados, executivos." },
+            { "@type": "HowToStep", position: 7, name: "Subida de renda", text: "Direcione perguntas para a faixa de renda alvo do planejamento." },
+            { "@type": "HowToStep", position: 8, name: "Pessoa de referência", text: "Identifique conectores naturais da rede do cliente." },
+            { "@type": "HowToStep", position: 9, name: "Qualificação", text: "Levante nome, profissão, idade, família, renda e objetivo provável de cada indicado." },
+            { "@type": "HowToStep", position: 10, name: "Priorização", text: "Filtre 10 contatos prioritários antes de encerrar a reunião." },
+          ],
+        }),
+      },
+    ],
   }),
   component: Recomendacoes,
 });
