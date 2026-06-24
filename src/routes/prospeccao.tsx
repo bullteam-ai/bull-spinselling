@@ -1140,7 +1140,35 @@ function EtapaCard({ etapa, accent }: { etapa: Etapa; accent: string }) {
           </div>
         )}
 
-        {etapa.bullets.map((b, i) => (
+        {etapa.queroDescobrir && (
+          <StructuredList
+            icon={<Target className="h-3.5 w-3.5" />}
+            label="O que quero descobrir"
+            items={etapa.queroDescobrir}
+            color={accent}
+          />
+        )}
+
+        {etapa.perguntas && (
+          <StructuredList
+            icon={<HelpCircle className="h-3.5 w-3.5" />}
+            label="Perguntas recomendadas"
+            items={etapa.perguntas}
+            color={accent}
+            highlight
+          />
+        )}
+
+        {etapa.ouvir && (
+          <StructuredList
+            icon={<Ear className="h-3.5 w-3.5" />}
+            label="O que ouvir"
+            items={etapa.ouvir}
+            color={accent}
+          />
+        )}
+
+        {etapa.bullets?.map((b, i) => (
           <div key={i}>
             <p className="text-[11px] font-semibold uppercase tracking-wider" style={{ color: accent }}>{b.eyebrow}</p>
             <ul className="mt-2 grid gap-1.5 md:grid-cols-2">
@@ -1161,6 +1189,62 @@ function EtapaCard({ etapa, accent }: { etapa: Etapa; accent: string }) {
           </div>
         ))}
 
+        {etapa.objecoes && (
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-wider flex items-center gap-1.5" style={{ color: accent }}>
+              <Shield className="h-3.5 w-3.5" /> Objeções e respostas
+            </p>
+            <div className="mt-2 grid gap-3 md:grid-cols-2">
+              {etapa.objecoes.map((o, i) => (
+                <div key={i} className="rounded-xl border border-border bg-[var(--surface)] p-4">
+                  <p className="text-[11px] font-semibold uppercase tracking-wider text-[var(--danger)] flex items-center gap-1.5">
+                    <AlertTriangle className="h-3.5 w-3.5" /> Objeção
+                  </p>
+                  <p className="mt-1.5 text-sm font-semibold text-[var(--navy)]">“{o.q}”</p>
+                  <p className="mt-3 text-[11px] font-semibold uppercase tracking-wider text-[var(--success)] flex items-center gap-1.5">
+                    <CheckCircle2 className="h-3.5 w-3.5" /> Resposta
+                  </p>
+                  <p className="mt-1.5 text-sm text-[var(--navy)] leading-relaxed">{o.a}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {etapa.modulo && (
+          <div className="space-y-3">
+            {etapa.modulo.map((m, i) => (
+              <div key={i} className="rounded-xl border border-border bg-[var(--surface)] p-4">
+                <p className="text-[11px] font-semibold uppercase tracking-wider" style={{ color: accent }}>{m.eyebrow}</p>
+                <ul className="mt-2 grid gap-1.5 md:grid-cols-2">
+                  {m.itens.map((it, j) => (
+                    <li key={j} className="flex items-start gap-2 text-sm text-[var(--navy)] leading-snug">
+                      <span className="mt-0.5 font-bold" style={{ color: accent }}>•</span>
+                      <span>{it}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {etapa.comoAvancar && (
+          <div className="rounded-xl border border-[var(--success)]/30 bg-[var(--success)]/5 p-4">
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-[var(--success)] flex items-center gap-1.5">
+              <ArrowUpRight className="h-3.5 w-3.5" /> Como avançar
+            </p>
+            <div className="mt-2 grid gap-2 md:grid-cols-2">
+              {etapa.comoAvancar.map((a, i) => (
+                <div key={i} className="rounded-lg border border-border bg-white p-3">
+                  <p className="text-[11px] font-bold uppercase tracking-wider text-[var(--success)]">{a.eyebrow}</p>
+                  <p className="mt-1 text-sm text-[var(--navy)] leading-relaxed">{a.texto}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         {etapa.erros && (
           <div className="rounded-xl border border-[var(--danger)]/30 bg-[var(--danger)]/5 p-4">
             <p className="text-[11px] font-semibold uppercase tracking-wider text-[var(--danger)] flex items-center gap-1.5">
@@ -1177,5 +1261,32 @@ function EtapaCard({ etapa, accent }: { etapa: Etapa; accent: string }) {
         )}
       </div>
     </section>
+  );
+}
+
+function StructuredList({
+  icon, label, items, color, highlight,
+}: { icon: React.ReactNode; label: string; items: string[]; color: string; highlight?: boolean }) {
+  return (
+    <div
+      className="rounded-xl border p-4"
+      style={
+        highlight
+          ? { borderColor: `color-mix(in oklab, ${color} 35%, transparent)`, background: `color-mix(in oklab, ${color} 6%, white)` }
+          : { borderColor: "var(--border)", background: "var(--surface)" }
+      }
+    >
+      <p className="text-[11px] font-semibold uppercase tracking-wider flex items-center gap-1.5" style={{ color }}>
+        {icon} {label}
+      </p>
+      <ul className="mt-2 grid gap-1.5 md:grid-cols-2">
+        {items.map((it, i) => (
+          <li key={i} className="flex items-start gap-2 text-sm text-[var(--navy)] leading-snug">
+            <span className="mt-0.5 font-bold" style={{ color }}>•</span>
+            <span>{it}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
