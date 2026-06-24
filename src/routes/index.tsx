@@ -179,7 +179,7 @@ function JourneyBar({
                     <span className="hidden md:inline whitespace-nowrap">{s.label}</span>
                   </button>
                 </li>
-                {i < JOURNEY_STAGES.length - 1 && (
+                {i < JOURNEY_STAGES.length, 1 && (
                   <span
                     aria-hidden
                     className={`h-px w-2 sm:w-4 shrink-0 ${s.n < maxActive ? "bg-[var(--success)]" : "bg-border"}`}
@@ -301,7 +301,7 @@ const RECOMMENDATION_CALL_STEPS: StepShape[] = [
       "Postura ereta, sorriso na voz",
       "Dizer o nome completo e a empresa",
       "Citar imediatamente quem indicou",
-      "Perguntar se a pessoa pode falar — sem pedir desculpas",
+      "Perguntar se a pessoa pode falar, sem pedir desculpas",
     ],
     avoid: [
       "Tom hesitante ou voz baixa",
@@ -310,7 +310,7 @@ const RECOMMENDATION_CALL_STEPS: StepShape[] = [
       "Soar como telemarketing",
     ],
     why:
-      "Autoridade reduz resistência. Os primeiros 15 segundos definem o restante da ligação. Firmeza não é arrogância — é clareza de quem você é, por que está ligando e por que vale a pena continuar ouvindo.",
+      "Autoridade reduz resistência. Os primeiros 15 segundos definem o restante da ligação. Firmeza não é arrogância, é clareza de quem você é, por que está ligando e por que vale a pena continuar ouvindo.",
   },
   {
     id: "rec-avisado",
@@ -318,7 +318,7 @@ const RECOMMENDATION_CALL_STEPS: StepShape[] = [
     title: "Perguntar se foi avisado",
     subtitle: "Calibrar o ponto de partida",
     objective:
-      "Descobrir, em uma frase, se a pessoa já está contextualizada — e ajustar o tom da conversa.",
+      "Descobrir, em uma frase, se a pessoa já está contextualizada, e ajustar o tom da conversa.",
     quote:
       "Antes de qualquer coisa: o(a) [Cliente] chegou a comentar com você que passaria seu contato para mim?",
     yesFlow: {
@@ -326,13 +326,13 @@ const RECOMMENDATION_CALL_STEPS: StepShape[] = [
         "Ótimo. Então você já deve ter uma ideia do que faço.",
         "Confirme: \"Ele(a) te contou um pouco do que conversamos na entrevista estratégica?\"",
         "Reforce: \"Faz sentido. Vou complementar e a gente vê se também faz sentido para você.\"",
-        "Avance direto para a explicação do trabalho — você já tem permissão emocional.",
+        "Avance direto para a explicação do trabalho, você já tem permissão emocional.",
       ],
       transition: "Perfeito. Então deixa eu te contar rapidamente como a gente trabalha…",
     },
     noFlow: {
       items: [
-        "Sem problema — não soe surpreso nem culpe quem indicou.",
+        "Sem problema, não soe surpreso nem culpe quem indicou.",
         "Reposicione: \"Tranquilo. Deixa eu te contar rapidamente por que ele(a) me pediu para falar com você.\"",
         "Vá com calma na próxima etapa: a confiança ainda não foi transferida.",
         "Dê mais peso à autoridade e à aprovação social antes do convite.",
@@ -353,7 +353,7 @@ const RECOMMENDATION_CALL_STEPS: StepShape[] = [
     quote:
       "Eu faço parte da Bull Team, uma operação especializada em planejamento financeiro estratégico focado em objetivos. A gente ajuda pessoas a entender exatamente onde estão hoje e qual o caminho mais eficiente para alcançar os objetivos financeiros que elas têm.",
     doList: [
-      "Falar com naturalidade — não recite",
+      "Falar com naturalidade, não recite",
       "Usar a palavra \"estratégico\", não \"vendedor\"",
       "Mencionar objetivos, não produtos",
       "Curto: 2 a 3 frases bastam",
@@ -373,7 +373,7 @@ const RECOMMENDATION_CALL_STEPS: StepShape[] = [
     title: "Usar o exemplo do cliente que recomendou",
     subtitle: "Conexão emocional · ponte de confiança",
     objective:
-      "Transferir a confiança que o cliente já tem em quem indicou para você — sem expor dados privados.",
+      "Transferir a confiança que o cliente já tem em quem indicou para você, sem expor dados privados.",
     quote:
       "O(A) [Cliente] participou de uma entrevista estratégica com a gente e, ao final, falou que faria sentido eu conversar com você. Ele(a) acredita que essa conversa também pode gerar bastante valor para a sua realidade.",
     doList: [
@@ -388,7 +388,7 @@ const RECOMMENDATION_CALL_STEPS: StepShape[] = [
       "Soar como se estivesse cobrando um favor",
     ],
     why:
-      "Recomendação é transferência de confiança. Quando você cita o exemplo de quem indicou com respeito e propriedade, a pessoa do outro lado relaxa — porque entende que não é um estranho querendo vender, é alguém em quem alguém de confiança apostou.",
+      "Recomendação é transferência de confiança. Quando você cita o exemplo de quem indicou com respeito e propriedade, a pessoa do outro lado relaxa, porque entende que não é um estranho querendo vender, é alguém em quem alguém de confiança apostou.",
   },
   {
     id: "small-talk",
@@ -416,7 +416,7 @@ const RECOMMENDATION_CALL_STEPS: StepShape[] = [
     transition:
       "Perfeito. A partir daqui o caminho é exatamente o mesmo da ligação para um amigo: descobrir o objetivo principal e entrar no SPIN.",
     why:
-      "A partir desta etapa, ambos os fluxos convergem. Pessoas compram de pessoas — e isso vale para recomendação, amigo ou contato frio.",
+      "A partir desta etapa, ambos os fluxos convergem. Pessoas compram de pessoas, e isso vale para recomendação, amigo ou contato frio.",
   },
 ];
 
@@ -521,13 +521,13 @@ const isKiller = (q: string) => KILLER_PRINCIPALS.has(q);
 // Fallback automático por quadrante quando não houver explicação dedicada.
 const QUADRANT_EXPLANATION: Record<Quadrant, string> = {
   situacao:
-    "Essa pergunta abre a conversa sem pressão. O objetivo é fazer o cliente verbalizar a própria realidade — aquilo que é dito em voz alta passa a ser percebido com mais clareza por quem fala.",
+    "Essa pergunta abre a conversa sem pressão. O objetivo é fazer o cliente verbalizar a própria realidade, aquilo que é dito em voz alta passa a ser percebido com mais clareza por quem fala.",
   problema:
-    "Essa pergunta não tenta provar que o cliente está errado. Ela gera dúvida saudável — leva o cliente a perceber que talvez não tenha 100% de certeza sobre o melhor caminho.",
+    "Essa pergunta não tenta provar que o cliente está errado. Ela gera dúvida saudável, leva o cliente a perceber que talvez não tenha 100% de certeza sobre o melhor caminho.",
   implicacao:
-    "Essa pergunta amplia a percepção do custo de não agir. Tira a decisão do campo puramente racional e a leva para o campo emocional — onde a maioria das decisões realmente acontece.",
+    "Essa pergunta amplia a percepção do custo de não agir. Tira a decisão do campo puramente racional e a leva para o campo emocional, onde a maioria das decisões realmente acontece.",
   necessidade:
-    "Essa pergunta não explora mais problemas. Ela faz o cliente visualizar ganhos — clareza, previsibilidade, velocidade, segurança e tranquilidade — até desejar participar da Entrevista Estratégica Financeira.",
+    "Essa pergunta não explora mais problemas. Ela faz o cliente visualizar ganhos, clareza, previsibilidade, velocidade, segurança e tranquilidade, até desejar participar da Entrevista Estratégica Financeira.",
 };
 
 const EXPLANATIONS: Record<string, string> = {
@@ -545,7 +545,7 @@ const EXPLANATIONS: Record<string, string> = {
   "E se esse projeto continuar parado pelos próximos 5 anos?":
     "Ativa o medo do arrependimento. É mais forte que o medo de errar.",
   "E se nada mudar nos próximos 10 anos?":
-    "Tira o cliente da inércia. Mostra que 'continuar como está' também é uma escolha — e raramente a melhor.",
+    "Tira o cliente da inércia. Mostra que 'continuar como está' também é uma escolha, e raramente a melhor.",
   "E se mais 10 anos passarem da mesma forma?":
     "Obriga o cliente a olhar para frente. O custo invisível da ausência de direção aparece.",
   "E se algo importante estivesse desalinhado hoje, como você descobriria?":
@@ -570,7 +570,7 @@ const EXPLANATIONS: Record<string, string> = {
   "Faria sentido descobrir quais objetivos realmente fazem sentido para a sua vida e enxergar o caminho mais inteligente para construí-los?":
     "Vende direção e propósito. A entrevista vira o ponto de partida para parar de andar sem destino.",
   "Faria sentido validar se tudo continua alinhado aos seus objetivos atuais e identificar possíveis oportunidades que ainda não estão sendo aproveitadas?":
-    "Posiciona a entrevista como ganho — não substituição. Segunda visão que pode revelar oportunidades.",
+    "Posiciona a entrevista como ganho, não substituição. Segunda visão que pode revelar oportunidades.",
   "Faria sentido saber exatamente o que precisa ser construído hoje para garantir as oportunidades que deseja oferecer aos seus filhos?":
     "Vende tranquilidade e legado. Transforma planejamento em ato de amor mensurável.",
   "Faria sentido validar se vocês estão utilizando o caminho mais eficiente para construir os sonhos da família?":
@@ -597,7 +597,7 @@ const EXPLANATIONS: Record<string, string> = {
   "Você tem 100% de certeza de que a estratégia financeira atual é a melhor possível para acelerar os projetos da sua família?":
     "'A melhor possível' é uma régua impossível de defender. Abre espaço para validação em conjunto.",
   "Você tem 100% de certeza de que hoje não existe nenhuma estratégia melhor ou oportunidade relevante que ainda não tenha sido considerada?":
-    "Não ataca o assessor. Pergunta se existe algo que ele ainda não viu — e quase sempre existe.",
+    "Não ataca o assessor. Pergunta se existe algo que ele ainda não viu, e quase sempre existe.",
 
   // Situação chave → contexto que vira gatilho
   "Se dinheiro não fosse um problema, o que você faria imediatamente?":
@@ -615,7 +615,7 @@ const EXPLANATIONS: Record<string, string> = {
   "Se continuar exatamente como está, qual será o cenário daqui a 10 anos?":
     "Obriga o cliente a desenhar o futuro. O cenário real raramente é o desejado.",
   "Você acredita que está no melhor caminho possível ou apenas no caminho que conhece?":
-    "Reduz resistência. O cliente não precisa admitir erro — apenas considerar alternativas.",
+    "Reduz resistência. O cliente não precisa admitir erro, apenas considerar alternativas.",
 
   // Futuro dos Filhos
   "Quando você pensa no futuro dos seus filhos, o que mais gostaria de proporcionar para eles?":
@@ -1498,7 +1498,7 @@ function Index() {
       (entries) => {
         const visible = entries
           .filter((e) => e.isIntersecting)
-          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+          .sort((a, b) => a.boundingClientRect.top, b.boundingClientRect.top);
         if (visible[0]) setActiveSection((visible[0].target as HTMLElement).id);
       },
       { rootMargin: "-200px 0px -60% 0px", threshold: 0 }
@@ -1685,7 +1685,7 @@ function Index() {
                       <span className="flex h-4 w-4 items-center justify-center rounded-full bg-[var(--brand)] text-[10px] font-bold text-white">{i + 1}</span>
                       <span className="font-medium text-[var(--navy)] whitespace-nowrap">{step}</span>
                     </div>
-                    {i < FLOW.length - 1 && <ArrowRight aria-hidden className="h-3.5 w-3.5 text-muted-foreground shrink-0" />}
+                    {i < FLOW.length, 1 && <ArrowRight aria-hidden className="h-3.5 w-3.5 text-muted-foreground shrink-0" />}
                   </li>
                 ))}
               </ol>
@@ -1973,7 +1973,7 @@ function Index() {
                         Abertura da Ligação
                       </h2>
                       <p className="mt-2 text-base sm:text-lg text-white/80 leading-snug">
-                        Roteiro inicial: conexão, autoridade, convite e descoberta — antes de entrar no SPIN.
+                        Roteiro inicial: conexão, autoridade, convite e descoberta, antes de entrar no SPIN.
                       </p>
                     </div>
                   </div>
@@ -2654,7 +2654,7 @@ function Index() {
         </div>
       </footer>
 
-      {/* Barra de navegação fixa — sempre visível */}
+      {/* Barra de navegação fixa, sempre visível */}
       {showCompare && (
         <div
           role="dialog"
@@ -2819,7 +2819,7 @@ function GoalBlocks({
                 <div className="mb-2 rounded-xl border border-[var(--success)]/30 bg-[var(--success)]/5 px-3 py-2 text-[12px] leading-snug text-[var(--navy)]">
                   <p className="font-bold text-[var(--success)] uppercase tracking-wide text-[11px]">🟢 Regra da Necessidade</p>
                   <p className="mt-1 font-medium">
-                    Pare de explorar problemas. Faça o cliente <strong>visualizar ganhos</strong>: clareza, previsibilidade, velocidade, segurança e tranquilidade — até desejar a Entrevista Estratégica Financeira.
+                    Pare de explorar problemas. Faça o cliente <strong>visualizar ganhos</strong>: clareza, previsibilidade, velocidade, segurança e tranquilidade, até desejar a Entrevista Estratégica Financeira.
                   </p>
                 </div>
               )}
@@ -2827,7 +2827,7 @@ function GoalBlocks({
                 <div className="mb-2 rounded-xl border border-[var(--warn)]/40 bg-[var(--warn)]/5 px-3 py-2 text-[12px] leading-snug text-[var(--navy)]">
                   <p className="font-bold uppercase tracking-wide text-[11px] text-[#8a5a00]">🧠 Princípio da Incerteza Elegante</p>
                   <p className="mt-1 font-medium">
-                    Não tente provar que o cliente está errado. Leve-o a perceber que talvez ele não tenha todas as respostas. A entrevista existe porque pode existir uma forma melhor — não porque ele está errando.
+                    Não tente provar que o cliente está errado. Leve-o a perceber que talvez ele não tenha todas as respostas. A entrevista existe porque pode existir uma forma melhor, não porque ele está errando.
                   </p>
                   <p className="mt-2 text-[11px] font-semibold text-[#8a5a00]">As melhores respostas nesta etapa:</p>
                   <ul className="mt-1 grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-0.5 text-[11px] text-[var(--navy)]">

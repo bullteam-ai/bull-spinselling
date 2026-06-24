@@ -62,7 +62,7 @@ type Etapa = {
 };
 
 /* ============================================================
-   CONTEÚDO — ETAPAS (MODO PRÁTICA)
+   CONTEÚDO. ETAPAS (MODO PRÁTICA)
    ============================================================ */
 
 const ETAPAS: Etapa[] = [
@@ -133,7 +133,7 @@ const ETAPAS: Etapa[] = [
         itens: [
           "“Vi sua publicação sobre gestão de equipes. Gostei muito da forma como você abordou esse ponto.”",
           "“Percebi que você atua na área médica. Como está o cenário atualmente?”",
-          "“Vi que você abriu uma nova unidade. Parabéns pela conquista — como foi essa decisão?”",
+          "“Vi que você abriu uma nova unidade. Parabéns pela conquista, como foi essa decisão?”",
           "“Acompanho seus conteúdos sobre [tema]. Tem uma visão muito clara sobre isso.”",
         ],
       },
@@ -191,7 +191,7 @@ const ETAPAS: Etapa[] = [
     ],
     erros: [
       "Enviar conteúdo institucional da empresa.",
-      "Mandar 'venda disfarçada' — material que termina pedindo reunião.",
+      "Mandar 'venda disfarçada', material que termina pedindo reunião.",
       "Enviar conteúdo genérico que não tem relação com o contato.",
       "Cobrar reciprocidade ('viu o que te mandei?').",
     ],
@@ -245,7 +245,7 @@ const ETAPAS: Etapa[] = [
     numero: 8,
     titulo: "Preparar Terreno para a Ligação",
     objetivo: "Criar desejo pela conversa futura sem forçar agendamento.",
-    regra: "Gere curiosidade. Não pressione. Nunca force agenda nessa etapa — a ligação vem como consequência.",
+    regra: "Gere curiosidade. Não pressione. Nunca force agenda nessa etapa, a ligação vem como consequência.",
     icon: <PhoneCall className="h-5 w-5" />,
     bullets: [
       {
@@ -254,7 +254,7 @@ const ETAPAS: Etapa[] = [
           "“Essa situação que você comentou é algo que vejo com frequência.”",
           "“Existem alguns pontos interessantes aí que valeria a pena aprofundar.”",
           "“Numa conversa mais estruturada eu conseguiria te mostrar algumas perspectivas que talvez você ainda não tenha visto.”",
-          "“Tem algumas coisas específicas que normalmente faço junto com pessoas do seu perfil — se você quiser, eu te mostro.”",
+          "“Tem algumas coisas específicas que normalmente faço junto com pessoas do seu perfil, se você quiser, eu te mostro.”",
         ],
       },
     ],
@@ -268,7 +268,7 @@ const ETAPAS: Etapa[] = [
 ];
 
 /* ============================================================
-   CONTEÚDO — CANAIS (com biblioteca de exemplos)
+   CONTEÚDO. CANAIS (com biblioteca de exemplos)
    ============================================================ */
 
 const CHANNELS: Channel[] = [
@@ -285,7 +285,7 @@ const CHANNELS: Channel[] = [
     exemplos: [
       {
         titulo: "Reconexão após indicação",
-        mensagem: "“Olá [Nome], aqui é o [Você]. O [Indicador] me passou seu contato e comentou que você é referência em [tema]. Sem compromisso nenhum — só queria te apresentar e entender melhor o que você tem feito.”",
+        mensagem: "“Olá [Nome], aqui é o [Você]. O [Indicador] me passou seu contato e comentou que você é referência em [tema]. Sem compromisso nenhum, só queria te apresentar e entender melhor o que você tem feito.”",
         quando: "Logo após receber uma indicação, antes de qualquer abordagem comercial.",
         porqueFunciona: "Usa prova social do indicador + reduz pressão ('sem compromisso') + foca no contato, não em você.",
         resposta: "“Oi, tudo bem? O [Indicador] falou de você também. Trabalho com [área], como posso te ajudar?”",
@@ -317,7 +317,7 @@ const CHANNELS: Channel[] = [
       },
       {
         titulo: "Convite para conversa exploratória",
-        mensagem: "“[Nome], pelo que conversamos até aqui, faz sentido a gente sentar 30min e olhar isso com mais calma — sem compromisso, só pra trocar visão. Topa?”",
+        mensagem: "“[Nome], pelo que conversamos até aqui, faz sentido a gente sentar 30min e olhar isso com mais calma, sem compromisso, só pra trocar visão. Topa?”",
         quando: "Quando há sinais verdes: pergunta sobre sua atuação, compartilha preocupação financeira ou objetivo.",
         porqueFunciona: "'Trocar visão' baixa a guarda. 'Sem compromisso' reduz a fricção. 30min é curto e específico.",
         resposta: "“Topo. Pode ser semana que vem?”",
@@ -363,7 +363,7 @@ const CHANNELS: Channel[] = [
       {
         titulo: "Compartilhar conteúdo dele",
         mensagem: "“Compartilhei seu post nos meus stories. Conteúdo muito relevante pro pessoal que me acompanha.”",
-        quando: "Quando o contato publica algo realmente alinhado ao seu público — sem inventar.",
+        quando: "Quando o contato publica algo realmente alinhado ao seu público, sem inventar.",
         porqueFunciona: "Reciprocidade visível. Você está oferecendo audiência antes de pedir tempo.",
         resposta: "“Demais, obrigado!”",
         continuar: "Trocar duas ou três mensagens leves antes de qualquer convite.",
@@ -423,7 +423,7 @@ const CHANNELS: Channel[] = [
     icon: <Users className="h-3.5 w-3.5" />,
     accent: "#c9a84c",
     badge: "Canal · Presencial · Confiança rápida",
-    premissa: "Em eventos, a confiança se constrói em minutos. Mas o esquentamento real acontece DEPOIS — no follow-up dos próximos 7 dias.",
+    premissa: "Em eventos, a confiança se constrói em minutos. Mas o esquentamento real acontece DEPOIS, no follow-up dos próximos 7 dias.",
     ritmo: "Conversa presencial → mensagem em 24h → conteúdo em 5 dias → convite em 10 dias.",
     exemplos: [
       {
@@ -508,7 +508,7 @@ const CHANNELS: Channel[] = [
 ];
 
 /* ============================================================
-   CONTEÚDO — MODO ESTUDO
+   CONTEÚDO. MODO ESTUDO
    ============================================================ */
 
 const ESTUDO_BLOCKS: { id: string; titulo: string; eyebrow: string; texto: string; bullets?: string[]; icon: React.ReactNode }[] = [
@@ -517,7 +517,7 @@ const ESTUDO_BLOCKS: { id: string; titulo: string; eyebrow: string; texto: strin
     eyebrow: "Conceito 01",
     titulo: "A psicologia do contato frio",
     texto:
-      "Desconhecidos naturalmente desconfiam. O cérebro humano é treinado para tratar o que não reconhece como ameaça em potencial. Por isso, qualquer abordagem direta de venda dispara resistência instantânea. A solução não é melhorar o pitch — é eliminar o frio antes da abordagem.",
+      "Desconhecidos naturalmente desconfiam. O cérebro humano é treinado para tratar o que não reconhece como ameaça em potencial. Por isso, qualquer abordagem direta de venda dispara resistência instantânea. A solução não é melhorar o pitch, é eliminar o frio antes da abordagem.",
     bullets: [
       "Resistência inicial é biológica, não pessoal.",
       "Pitches frios reforçam a desconfiança em vez de reduzi-la.",
@@ -543,7 +543,7 @@ const ESTUDO_BLOCKS: { id: string; titulo: string; eyebrow: string; texto: strin
     eyebrow: "Conceito 03",
     titulo: "O efeito reciprocidade",
     texto:
-      "Entregar valor antes de pedir qualquer coisa aumenta drasticamente o engajamento futuro. Não porque a pessoa 'deve' algo — mas porque o cérebro automaticamente classifica quem entrega valor como aliado, não como vendedor.",
+      "Entregar valor antes de pedir qualquer coisa aumenta drasticamente o engajamento futuro. Não porque a pessoa 'deve' algo, mas porque o cérebro automaticamente classifica quem entrega valor como aliado, não como vendedor.",
     bullets: [
       "Reciprocidade só funciona se for genuína e sem cobrança.",
       "Conteúdo institucional não conta como entrega de valor.",
@@ -559,7 +559,7 @@ const ESTUDO_BLOCKS: { id: string; titulo: string; eyebrow: string; texto: strin
     bullets: [
       "Conhecimento: você sabe do que está falando, com profundidade real.",
       "Consistência: aparece sempre, com a mesma qualidade, sem oscilar.",
-      "Credibilidade: cita casos, exemplos, situações reais — não teoria.",
+      "Credibilidade: cita casos, exemplos, situações reais, não teoria.",
       "Prova social: outras pessoas reconhecem você publicamente.",
     ],
     icon: <Award className="h-5 w-5" />,
@@ -569,7 +569,7 @@ const ESTUDO_BLOCKS: { id: string; titulo: string; eyebrow: string; texto: strin
     eyebrow: "Diagnóstico",
     titulo: "Por que a maioria dos planejadores fracassa",
     texto:
-      "Não é falta de técnica. É pressa. A maioria queima as etapas tentando converter contato frio direto em reunião — e gera rejeição em escala. O ciclo do erro é sempre o mesmo:",
+      "Não é falta de técnica. É pressa. A maioria queima as etapas tentando converter contato frio direto em reunião, e gera rejeição em escala. O ciclo do erro é sempre o mesmo:",
     bullets: [
       "Tentam agendar rápido demais, sem reconhecimento prévio.",
       "Tentam vender rápido demais, sem entregar valor antes.",

@@ -55,7 +55,7 @@ export const Route = createFileRoute("/blog/como-aplicar-spin-selling")({
               name: "Como aplicar SPIN Selling em uma reunião?",
               acceptedAnswer: {
                 "@type": "Answer",
-                text: "Conduza a reunião em quatro fases: 1) Situação — colete contexto rápido com perguntas curtas; 2) Problema — identifique 1 a 3 dores reais; 3) Implicação — amplie o custo de não resolver; 4) Necessidade — leve o cliente a verbalizar o valor da solução. Termine confirmando a dor e o ganho com a própria voz do cliente.",
+                text: "Conduza a reunião em quatro fases: 1) Situação, colete contexto rápido com perguntas curtas; 2) Problema, identifique 1 a 3 dores reais; 3) Implicação, amplie o custo de não resolver; 4) Necessidade, leve o cliente a verbalizar o valor da solução. Termine confirmando a dor e o ganho com a própria voz do cliente.",
               },
             },
             {
@@ -91,7 +91,7 @@ const SPIN_STAGES = [
     letter: "S",
     name: "Situação",
     color: "var(--brand)",
-    objetivo: "Mapear contexto rápido — quem é o cliente, como ele opera hoje.",
+    objetivo: "Mapear contexto rápido, quem é o cliente, como ele opera hoje.",
     quando: "Primeiros 5 a 10 minutos da reunião.",
     erro: "Passar tempo demais aqui. Cliente sente entrevista, não consultoria.",
     examples: [
@@ -106,8 +106,8 @@ const SPIN_STAGES = [
     letter: "P",
     name: "Problema",
     color: "#c9a84c",
-    objetivo: "Identificar dores reais — não opiniões, fatos verificáveis.",
-    quando: "Núcleo da reunião — 30 a 40% do tempo.",
+    objetivo: "Identificar dores reais, não opiniões, fatos verificáveis.",
+    quando: "Núcleo da reunião, 30 a 40% do tempo.",
     erro: 'Perguntar "você acredita que está no caminho certo?". Cliente sempre acha que sim.',
     examples: [
       "Quando foi a última vez que alguém revisou sua estratégia com você?",
@@ -130,7 +130,7 @@ const SPIN_STAGES = [
       "O que acontece com a sua família se um imprevisto ocorrer antes de você reorganizar isso?",
     ],
     workbookHint:
-      "A Implicação só funciona quando o cliente faz a conta no próprio cérebro. Faça a pergunta — e pare de falar.",
+      "A Implicação só funciona quando o cliente faz a conta no próprio cérebro. Faça a pergunta, e pare de falar.",
   },
   {
     letter: "N",
@@ -158,7 +158,7 @@ const STEP_BY_STEP = [
   },
   {
     n: 2,
-    title: "Abra com 3 perguntas de Situação — no máximo",
+    title: "Abra com 3 perguntas de Situação, no máximo",
     text:
       'Use as perguntas de Situação como ponte, não como interrogatório. Quando o cliente responde "tenho R$X investido em Y", você ganhou a deixa para entrar em Problema.',
   },
@@ -170,7 +170,7 @@ const STEP_BY_STEP = [
   },
   {
     n: 4,
-    title: "Identifique 1 a 3 problemas — não 10",
+    title: "Identifique 1 a 3 problemas, não 10",
     text:
       "Vendedor iniciante tenta encontrar todos os problemas. Vendedor SPIN escolhe 1 a 3 dores que mais doem e aprofunda. Mais problemas = mais ansiedade = decisão paralisada.",
   },
@@ -184,13 +184,13 @@ const STEP_BY_STEP = [
     n: 6,
     title: "Extraia a Necessidade pela voz do cliente",
     text:
-      'Em vez de dizer "nossa solução te dá segurança patrimonial", pergunte "se você tivesse essa segurança a partir desta semana, o que isso significaria na prática para você?". O cliente verbaliza o valor — você só confirma.',
+      'Em vez de dizer "nossa solução te dá segurança patrimonial", pergunte "se você tivesse essa segurança a partir desta semana, o que isso significaria na prática para você?". O cliente verbaliza o valor, você só confirma.',
   },
   {
     n: 7,
     title: "Feche confirmando a dor + o ganho na voz do cliente",
     text:
-      'Antes de apresentar a proposta, faça um resumo: "Pelo que conversamos, hoje você tem X, isso te custa Y por ano, e resolver isso significa Z para você — está correto?". Quando o cliente diz "sim", a venda já aconteceu.',
+      'Antes de apresentar a proposta, faça um resumo: "Pelo que conversamos, hoje você tem X, isso te custa Y por ano, e resolver isso significa Z para você, está correto?". Quando o cliente diz "sim", a venda já aconteceu.',
   },
 ];
 
@@ -287,7 +287,7 @@ function SpinSellingGuide() {
             O que é SPIN Selling
           </h2>
           <p className="text-[15.5px] leading-relaxed text-[var(--navy)]/90">
-            SPIN Selling é uma metodologia de venda consultiva criada por <strong>Neil Rackham</strong> a partir de 12 anos de pesquisa em mais de 35.000 reuniões comerciais. A descoberta central foi simples: <strong>vendedores que vendem mais não falam mais — perguntam melhor</strong>.
+            SPIN Selling é uma metodologia de venda consultiva criada por <strong>Neil Rackham</strong> a partir de 12 anos de pesquisa em mais de 35.000 reuniões comerciais. A descoberta central foi simples: <strong>vendedores que vendem mais não falam mais, perguntam melhor</strong>.
           </p>
           <p className="text-[15.5px] leading-relaxed text-[var(--navy)]/90">
             Em vez de apresentar argumentos prontos, o vendedor SPIN conduz o cliente por quatro tipos de perguntas em sequência. Cada fase tem um objetivo psicológico claro e prepara o terreno para a próxima:
@@ -310,7 +310,7 @@ function SpinSellingGuide() {
           </ul>
         </section>
 
-        {/* AS 4 FASES — DETALHADO */}
+        {/* AS 4 FASES. DETALHADO */}
         <section className="space-y-8">
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[var(--navy)]">
             As quatro fases na prática
@@ -417,7 +417,7 @@ function SpinSellingGuide() {
             <div>
               <p className="text-[11px] font-semibold uppercase tracking-wider text-[var(--danger)]">Erros comuns</p>
               <h2 className="mt-0.5 text-2xl sm:text-3xl font-bold tracking-tight text-[var(--navy)]">
-                Perguntas que parecem SPIN — mas matam a reunião
+                Perguntas que parecem SPIN, mas matam a reunião
               </h2>
             </div>
           </header>
@@ -480,7 +480,7 @@ function SpinSellingGuide() {
                 Roteiro de aplicação · imprima ou copie
               </h2>
               <p className="mt-3 text-white/80 leading-relaxed max-w-2xl">
-                Use este roteiro como folha de apoio na sua próxima reunião. Marque o que aplicou — e o que ainda escapou.
+                Use este roteiro como folha de apoio na sua próxima reunião. Marque o que aplicou, e o que ainda escapou.
               </p>
             </div>
           </header>
@@ -490,7 +490,7 @@ function SpinSellingGuide() {
               "Antes da reunião: levantei tudo que é público sobre o cliente (LinkedIn, formulário, indicação).",
               "Abertura: usei no máximo 3 perguntas de Situação.",
               "Problema: confrontei o cliente com pelo menos 1 número, comparação ou recorte temporal.",
-              "Identifiquei de 1 a 3 problemas claros — não tentei levantar todos.",
+              "Identifiquei de 1 a 3 problemas claros, não tentei levantar todos.",
               "Implicação: fiz a pergunta, fiquei em silêncio e deixei o cliente fazer a conta.",
               "Necessidade: extraí o valor da solução com a voz do cliente (não apresentei eu mesmo).",
               "Fechei resumindo dor + ganho na voz do cliente e confirmei o 'sim' antes da proposta.",
@@ -533,7 +533,7 @@ function SpinSellingGuide() {
             {[
               {
                 q: "SPIN Selling funciona para vendas B2C ou só B2B?",
-                a: "Funciona melhor em vendas consultivas — independente de B2B ou B2C — quando o ticket é alto, o ciclo é longo e a dor não está consciente para o cliente. Planejamento financeiro, seguros, consultoria, software corporativo e produtos premium são o terreno natural da metodologia.",
+                a: "Funciona melhor em vendas consultivas, independente de B2B ou B2C, quando o ticket é alto, o ciclo é longo e a dor não está consciente para o cliente. Planejamento financeiro, seguros, consultoria, software corporativo e produtos premium são o terreno natural da metodologia.",
               },
               {
                 q: "Quanto tempo leva para dominar SPIN Selling?",
@@ -545,7 +545,7 @@ function SpinSellingGuide() {
               },
               {
                 q: "Como combinar SPIN Selling com recomendações pós-venda?",
-                a: "A própria Necessidade extraída na reunião é o gatilho: quando o cliente verbaliza o valor da solução para ele, pergunte quem mais na vida dele se beneficiaria do mesmo nível de clareza. A recomendação vira extensão natural da venda — não um pedido isolado.",
+                a: "A própria Necessidade extraída na reunião é o gatilho: quando o cliente verbaliza o valor da solução para ele, pergunte quem mais na vida dele se beneficiaria do mesmo nível de clareza. A recomendação vira extensão natural da venda, não um pedido isolado.",
               },
             ].map((f, i) => (
               <details key={i} className="group rounded-2xl border border-border bg-white p-4 sm:p-5 open:shadow-md transition">
