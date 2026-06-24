@@ -1612,7 +1612,7 @@ function Index() {
               <span className="mr-2">🐂</span>Bull Team
             </h1>
             <p className="mt-2 text-lg sm:text-xl text-white/85 font-medium">
-              Guia de Agendamento de Entrevista
+              ☎️ Central de Condução Comercial
             </p>
             <p className="mt-4 max-w-2xl text-base sm:text-lg text-white/75 leading-relaxed">
               Faça as perguntas certas. Gere consciência. Agende mais entrevistas.
