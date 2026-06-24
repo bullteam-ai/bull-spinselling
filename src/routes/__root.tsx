@@ -213,7 +213,7 @@ function TopNav() {
         <Link
           to="/"
           activeOptions={{ exact: true }}
-          activeProps={{ className: "text-white bg-white/10" }}
+          activeProps={{ className: "text-white bg-[var(--success)]/20 ring-1 ring-[var(--success)]/50 shadow-[inset_0_-2px_0_var(--success)]" }}
           inactiveProps={{ className: "text-white/70 hover:text-white" }}
           className="rounded-md px-2.5 py-1.5 text-xs font-semibold transition"
         >
@@ -222,7 +222,7 @@ function TopNav() {
 
         <Link
           to="/recomendacoes"
-          activeProps={{ className: "text-white bg-white/10" }}
+          activeProps={{ className: "text-white bg-[var(--success)]/20 ring-1 ring-[var(--success)]/50 shadow-[inset_0_-2px_0_var(--success)]" }}
           inactiveProps={{ className: "text-white/70 hover:text-white" }}
           className="rounded-md px-2.5 py-1.5 text-xs font-semibold transition"
         >
@@ -231,7 +231,7 @@ function TopNav() {
 
         <Link
           to="/ligacoes"
-          activeProps={{ className: "text-white bg-white/10" }}
+          activeProps={{ className: "text-white bg-[var(--success)]/20 ring-1 ring-[var(--success)]/50 shadow-[inset_0_-2px_0_var(--success)]" }}
           inactiveProps={{ className: "text-white/70 hover:text-white" }}
           className="rounded-md px-2.5 py-1.5 text-xs font-semibold transition"
         >
@@ -240,7 +240,7 @@ function TopNav() {
 
         <Link
           to="/esquentar"
-          activeProps={{ className: "text-white bg-white/10" }}
+          activeProps={{ className: "text-white bg-[var(--success)]/20 ring-1 ring-[var(--success)]/50 shadow-[inset_0_-2px_0_var(--success)]" }}
           inactiveProps={{ className: "text-white/70 hover:text-white" }}
           className="rounded-md px-2.5 py-1.5 text-xs font-semibold transition"
         >
@@ -249,7 +249,7 @@ function TopNav() {
 
         <Link
           to="/prospeccao"
-          activeProps={{ className: "text-white bg-white/10" }}
+          activeProps={{ className: "text-white bg-[var(--success)]/20 ring-1 ring-[var(--success)]/50 shadow-[inset_0_-2px_0_var(--success)]" }}
           inactiveProps={{ className: "text-white/70 hover:text-white" }}
           className="rounded-md px-2.5 py-1.5 text-xs font-semibold transition"
         >
