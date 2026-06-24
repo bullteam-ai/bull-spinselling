@@ -1498,7 +1498,7 @@ function Index() {
       (entries) => {
         const visible = entries
           .filter((e) => e.isIntersecting)
-          .sort((a, b) => a.boundingClientRect.top, b.boundingClientRect.top);
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
         if (visible[0]) setActiveSection((visible[0].target as HTMLElement).id);
       },
       { rootMargin: "-200px 0px -60% 0px", threshold: 0 }
