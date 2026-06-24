@@ -295,7 +295,7 @@ const RECOMMENDATION_CALL_STEPS: StepShape[] = [
     objective:
       "Transmitir segurança e clareza imediatamente: quem você é, de onde fala e por que está ligando.",
     quote:
-      "Olá [Nome], aqui é o [Seu Nome], da Bull Team. Tudo bem? Estou ligando porque o(a) [Cliente que indicou] me passou seu contato. Você tem um minuto agora?",
+      "Olá [Nome], aqui é o [Seu Nome], Planejador da Futuro Corp. Tudo bem? Estou ligando porque o(a) [Cliente que indicou] pediu para eu entrar em contato contigo.",
     doList: [
       "Falar pausadamente, com voz firme",
       "Postura ereta, sorriso na voz",
