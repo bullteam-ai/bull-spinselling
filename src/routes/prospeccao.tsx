@@ -5,7 +5,7 @@ import {
   Briefcase, Stethoscope, Scale, Home as HomeIcon, Building2, Search,
   GraduationCap, Brain, Sparkles, AlertTriangle, CheckCircle2, Quote,
   Lightbulb, Radar, ThermometerSun, ListChecks, BookOpen, Network,
-  ArrowUpRight, RefreshCw, Crown,
+  ArrowUpRight, RefreshCw, Crown, HelpCircle, Ear, Shield, Heart,
 } from "lucide-react";
 
 export const Route = createFileRoute("/prospeccao")({
