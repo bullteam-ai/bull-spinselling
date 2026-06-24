@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as RecomendacoesRouteImport } from './routes/recomendacoes'
 import { Route as LigacoesRouteImport } from './routes/ligacoes'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BlogComoAplicarSpinSellingRouteImport } from './routes/blog.como-aplicar-spin-selling'
 
 const RecomendacoesRoute = RecomendacoesRouteImport.update({
   id: '/recomendacoes',
@@ -28,35 +29,54 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogComoAplicarSpinSellingRoute =
+  BlogComoAplicarSpinSellingRouteImport.update({
+    id: '/blog/como-aplicar-spin-selling',
+    path: '/blog/como-aplicar-spin-selling',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/ligacoes': typeof LigacoesRoute
   '/recomendacoes': typeof RecomendacoesRoute
+  '/blog/como-aplicar-spin-selling': typeof BlogComoAplicarSpinSellingRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/ligacoes': typeof LigacoesRoute
   '/recomendacoes': typeof RecomendacoesRoute
+  '/blog/como-aplicar-spin-selling': typeof BlogComoAplicarSpinSellingRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/ligacoes': typeof LigacoesRoute
   '/recomendacoes': typeof RecomendacoesRoute
+  '/blog/como-aplicar-spin-selling': typeof BlogComoAplicarSpinSellingRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/ligacoes' | '/recomendacoes'
+  fullPaths:
+    | '/'
+    | '/ligacoes'
+    | '/recomendacoes'
+    | '/blog/como-aplicar-spin-selling'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/ligacoes' | '/recomendacoes'
-  id: '__root__' | '/' | '/ligacoes' | '/recomendacoes'
+  to: '/' | '/ligacoes' | '/recomendacoes' | '/blog/como-aplicar-spin-selling'
+  id:
+    | '__root__'
+    | '/'
+    | '/ligacoes'
+    | '/recomendacoes'
+    | '/blog/como-aplicar-spin-selling'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LigacoesRoute: typeof LigacoesRoute
   RecomendacoesRoute: typeof RecomendacoesRoute
+  BlogComoAplicarSpinSellingRoute: typeof BlogComoAplicarSpinSellingRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +102,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/como-aplicar-spin-selling': {
+      id: '/blog/como-aplicar-spin-selling'
+      path: '/blog/como-aplicar-spin-selling'
+      fullPath: '/blog/como-aplicar-spin-selling'
+      preLoaderRoute: typeof BlogComoAplicarSpinSellingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +116,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LigacoesRoute: LigacoesRoute,
   RecomendacoesRoute: RecomendacoesRoute,
+  BlogComoAplicarSpinSellingRoute: BlogComoAplicarSpinSellingRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
