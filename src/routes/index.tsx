@@ -267,6 +267,159 @@ const FRIEND_CALL_STEPS = [
   },
 ];
 
+type StepShape = {
+  id: string;
+  number: string;
+  title: string;
+  subtitle?: string;
+  objective?: string;
+  quote?: string;
+  doList?: string[];
+  goodExamples?: string[];
+  avoid?: string[];
+  quickFollowUps?: string[];
+  slowFollowUps?: string[];
+  transition?: string;
+  why?: string;
+  note?: string;
+  yesFlow?: { items: string[]; transition?: string };
+  noFlow?: { items: string[]; transition?: string };
+};
+
+const RECOMMENDATION_CALL_STEPS: StepShape[] = [
+  {
+    id: "rec-apresentar",
+    number: "1",
+    title: "Apresentar-se com propriedade",
+    subtitle: "Primeiros 15 segundos · gere autoridade",
+    objective:
+      "Transmitir segurança e clareza imediatamente: quem você é, de onde fala e por que está ligando.",
+    quote:
+      "Olá [Nome], aqui é o [Seu Nome], da Bull Team. Tudo bem? Estou ligando porque o(a) [Cliente que indicou] me passou seu contato. Você tem um minuto agora?",
+    doList: [
+      "Falar pausadamente, com voz firme",
+      "Postura ereta, sorriso na voz",
+      "Dizer o nome completo e a empresa",
+      "Citar imediatamente quem indicou",
+      "Perguntar se a pessoa pode falar — sem pedir desculpas",
+    ],
+    avoid: [
+      "Tom hesitante ou voz baixa",
+      "Começar com \"desculpa incomodar\"",
+      "Falar rápido demais por nervosismo",
+      "Soar como telemarketing",
+    ],
+    why:
+      "Autoridade reduz resistência. Os primeiros 15 segundos definem o restante da ligação. Firmeza não é arrogância — é clareza de quem você é, por que está ligando e por que vale a pena continuar ouvindo.",
+  },
+  {
+    id: "rec-avisado",
+    number: "2",
+    title: "Perguntar se foi avisado",
+    subtitle: "Calibrar o ponto de partida",
+    objective:
+      "Descobrir, em uma frase, se a pessoa já está contextualizada — e ajustar o tom da conversa.",
+    quote:
+      "Antes de qualquer coisa: o(a) [Cliente] chegou a comentar com você que passaria seu contato para mim?",
+    yesFlow: {
+      items: [
+        "Ótimo. Então você já deve ter uma ideia do que faço.",
+        "Confirme: \"Ele(a) te contou um pouco do que conversamos na entrevista estratégica?\"",
+        "Reforce: \"Faz sentido. Vou complementar e a gente vê se também faz sentido para você.\"",
+        "Avance direto para a explicação do trabalho — você já tem permissão emocional.",
+      ],
+      transition: "Perfeito. Então deixa eu te contar rapidamente como a gente trabalha…",
+    },
+    noFlow: {
+      items: [
+        "Sem problema — não soe surpreso nem culpe quem indicou.",
+        "Reposicione: \"Tranquilo. Deixa eu te contar rapidamente por que ele(a) me pediu para falar com você.\"",
+        "Vá com calma na próxima etapa: a confiança ainda não foi transferida.",
+        "Dê mais peso à autoridade e à aprovação social antes do convite.",
+      ],
+      transition:
+        "Sem problema. Deixa eu te explicar em 30 segundos o que a gente faz e por que ele(a) lembrou de você…",
+    },
+    why:
+      "Essa pergunta evita o maior erro da ligação de recomendação: assumir contexto que não existe. Em 5 segundos você descobre se está falando com alguém preparado ou com alguém totalmente frio.",
+  },
+  {
+    id: "rec-trabalho",
+    number: "3",
+    title: "Explicar o trabalho",
+    subtitle: "Credibilidade · autoridade · aprovação social",
+    objective:
+      "Posicionar a Bull Team em poucas frases, transmitindo solidez e relevância.",
+    quote:
+      "Eu faço parte da Bull Team, uma operação especializada em planejamento financeiro estratégico focado em objetivos. A gente ajuda pessoas a entender exatamente onde estão hoje e qual o caminho mais eficiente para alcançar os objetivos financeiros que elas têm.",
+    doList: [
+      "Falar com naturalidade — não recite",
+      "Usar a palavra \"estratégico\", não \"vendedor\"",
+      "Mencionar objetivos, não produtos",
+      "Curto: 2 a 3 frases bastam",
+    ],
+    avoid: [
+      "Listar produtos financeiros",
+      "Falar de rentabilidade",
+      "Explicar metodologia em detalhes técnicos",
+      "Soar como pitch decorado",
+    ],
+    why:
+      "O cliente precisa entender em 20 segundos por que vale a pena continuar ouvindo. Autoridade vem do tom, não do volume de informação. Aprovação social vem de você fazer parte de algo maior que você mesmo.",
+  },
+  {
+    id: "rec-exemplo",
+    number: "4",
+    title: "Usar o exemplo do cliente que recomendou",
+    subtitle: "Conexão emocional · ponte de confiança",
+    objective:
+      "Transferir a confiança que o cliente já tem em quem indicou para você — sem expor dados privados.",
+    quote:
+      "O(A) [Cliente] participou de uma entrevista estratégica com a gente e, ao final, falou que faria sentido eu conversar com você. Ele(a) acredita que essa conversa também pode gerar bastante valor para a sua realidade.",
+    doList: [
+      "Personalizar com o nome de quem indicou",
+      "Citar o vínculo (sócio, irmão, amigo de longa data)",
+      "Reforçar o motivo da lembrança, não o produto",
+      "Manter o sigilo do que foi conversado",
+    ],
+    avoid: [
+      "Expor números, dores ou patrimônio de quem indicou",
+      "Sugerir que a pessoa \"precisa\" do serviço",
+      "Soar como se estivesse cobrando um favor",
+    ],
+    why:
+      "Recomendação é transferência de confiança. Quando você cita o exemplo de quem indicou com respeito e propriedade, a pessoa do outro lado relaxa — porque entende que não é um estranho querendo vender, é alguém em quem alguém de confiança apostou.",
+  },
+  {
+    id: "small-talk",
+    number: "5",
+    title: "Small talk",
+    subtitle: "A partir daqui, igual ao fluxo de amigo",
+    objective:
+      "Criar conexão, gerar conforto e reduzir resistência antes de descobrir o objetivo.",
+    doList: [
+      "Perguntar sobre o dia, o trabalho, a rotina",
+      "Demonstrar interesse genuíno",
+      "Fazer perguntas abertas",
+      "Deixar o cliente falar",
+    ],
+    goodExamples: [
+      "Como tem sido sua semana?",
+      "O que tem ocupado mais seu tempo ultimamente?",
+      "Como estão as coisas no trabalho?",
+    ],
+    avoid: [
+      "Encerrar assuntos rapidamente",
+      "Responder apenas \"legal\", \"bacana\" ou \"entendi\"",
+      "Ir direto para a venda",
+    ],
+    transition:
+      "Perfeito. A partir daqui o caminho é exatamente o mesmo da ligação para um amigo: descobrir o objetivo principal e entrar no SPIN.",
+    why:
+      "A partir desta etapa, ambos os fluxos convergem. Pessoas compram de pessoas — e isso vale para recomendação, amigo ou contato frio.",
+  },
+];
+
 const SCRIPT = `Perfeito. Pelo que você compartilhou comigo, existem alguns pontos que vale a pena analisar com mais profundidade para entender exatamente onde você está hoje e qual o caminho mais eficiente para atingir esse objetivo.
 
 O ideal é fazermos uma Entrevista Estratégica Financeira, onde conseguimos colocar tudo isso em números e construir um plano claro.
@@ -1269,6 +1422,8 @@ const GOALS: Goal[] = [
 
 function Index() {
   const [openGoal, setOpenGoal] = useState<string | null>(null);
+  const [callType, setCallType] = useState<"amigo" | "recomendacao">("amigo");
+  const [showCompare, setShowCompare] = useState(false);
   const [copied, setCopied] = useState(false);
   const [copiedClosing, setCopiedClosing] = useState(false);
   const [openObjection, setOpenObjection] = useState<number | null>(0);
@@ -1457,7 +1612,7 @@ function Index() {
               <span className="mr-2">🐂</span>Bull Team
             </h1>
             <p className="mt-2 text-lg sm:text-xl text-white/85 font-medium">
-              Guia de Agendamento de Entrevista
+              ☎️ Central de Condução Comercial
             </p>
             <p className="mt-4 max-w-2xl text-base sm:text-lg text-white/75 leading-relaxed">
               Faça as perguntas certas. Gere consciência. Agende mais entrevistas.
@@ -1823,10 +1978,58 @@ function Index() {
                     </div>
                   </div>
 
+                  <div className="mt-6 flex flex-wrap items-center gap-3">
+                    <div
+                      role="tablist"
+                      aria-label="Tipo de ligação"
+                      className="inline-flex items-center rounded-2xl border border-white/15 bg-white/5 p-1 backdrop-blur"
+                    >
+                      <button
+                        type="button"
+                        role="tab"
+                        aria-selected={callType === "amigo"}
+                        onClick={() => setCallType("amigo")}
+                        className={`inline-flex min-h-10 items-center gap-2 rounded-xl px-3.5 sm:px-4 text-sm font-bold transition-all motion-reduce:transition-none ${
+                          callType === "amigo"
+                            ? "bg-[var(--brand)] text-white shadow-lg shadow-[var(--brand)]/40 scale-[1.02]"
+                            : "text-white/70 hover:text-white"
+                        }`}
+                      >
+                        <span aria-hidden>👥</span>
+                        <span>Amigo</span>
+                      </button>
+                      <button
+                        type="button"
+                        role="tab"
+                        aria-selected={callType === "recomendacao"}
+                        onClick={() => setCallType("recomendacao")}
+                        className={`inline-flex min-h-10 items-center gap-2 rounded-xl px-3.5 sm:px-4 text-sm font-bold transition-all motion-reduce:transition-none ${
+                          callType === "recomendacao"
+                            ? "bg-[var(--brand)] text-white shadow-lg shadow-[var(--brand)]/40 scale-[1.02]"
+                            : "text-white/70 hover:text-white"
+                        }`}
+                      >
+                        <span aria-hidden>🤝</span>
+                        <span>Recomendação</span>
+                      </button>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setShowCompare(true)}
+                      className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-white/20 bg-white/5 px-3.5 text-sm font-semibold text-white/90 backdrop-blur transition hover:border-[var(--success)]/60 hover:bg-white/10 hover:text-white motion-reduce:transition-none"
+                    >
+                      <BarChart3 aria-hidden className="h-4 w-4" />
+                      <span>Comparar Fluxos</span>
+                    </button>
+                    <span className="text-xs font-medium text-white/60">
+                      Só a abertura muda. Do small talk em diante, tudo é igual.
+                    </span>
+                  </div>
+
                   <div className="mt-8 relative">
                     <div aria-hidden className="absolute left-[19px] top-4 bottom-4 w-0.5 bg-gradient-to-b from-[var(--brand)] via-[var(--success)] to-[var(--brand)]/40 sm:left-[23px]" />
-                    <ol className="relative space-y-6">
-                      {FRIEND_CALL_STEPS.map((step, i) => (
+                    <ol key={callType} className="relative space-y-6 animate-fade-in">
+                      {(callType === "amigo" ? FRIEND_CALL_STEPS : RECOMMENDATION_CALL_STEPS).map((step) => (
                         <li key={step.id} className="grid grid-cols-[auto_1fr] gap-4 sm:gap-6">
                           <span className="relative z-10 flex h-10 w-10 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[var(--brand)] to-[#5a8cff] text-sm sm:text-base font-extrabold text-white shadow-lg shadow-[var(--brand)]/40">
                             {step.number}
@@ -1927,10 +2130,68 @@ function Index() {
                                 ✅ {step.note}
                               </p>
                             )}
+                            {"yesFlow" in step && step.yesFlow && (
+                              <div className="mt-4 rounded-2xl border border-[var(--success)]/30 bg-[var(--success)]/10 p-4">
+                                <p className="text-[11px] font-bold uppercase tracking-wider text-[var(--success)]">✅ Se foi avisado</p>
+                                <ul className="mt-2 space-y-1.5">
+                                  {step.yesFlow.items.map((b, idx) => (
+                                    <li key={idx} className="flex items-start gap-2 text-sm leading-relaxed text-white/90">
+                                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--success)]" />
+                                      <span>{b}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                                {step.yesFlow.transition && (
+                                  <p className="mt-3 border-l-2 border-[var(--success)] pl-3 text-sm italic text-white/90">
+                                    ➡️ “{step.yesFlow.transition}”
+                                  </p>
+                                )}
+                              </div>
+                            )}
+                            {"noFlow" in step && step.noFlow && (
+                              <div className="mt-3 rounded-2xl border border-[var(--warn)]/40 bg-[var(--warn)]/10 p-4">
+                                <p className="text-[11px] font-bold uppercase tracking-wider text-[#8a5a00]">❌ Se NÃO foi avisado</p>
+                                <ul className="mt-2 space-y-1.5">
+                                  {step.noFlow.items.map((b, idx) => (
+                                    <li key={idx} className="flex items-start gap-2 text-sm leading-relaxed text-white/90">
+                                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--warn)]" />
+                                      <span>{b}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                                {step.noFlow.transition && (
+                                  <p className="mt-3 border-l-2 border-[var(--warn)] pl-3 text-sm italic text-white/90">
+                                    ➡️ “{step.noFlow.transition}”
+                                  </p>
+                                )}
+                              </div>
+                            )}
                           </div>
                         </li>
                       ))}
                     </ol>
+
+                    <div key={`converge-${callType}`} className="mt-8 animate-fade-in">
+                      <div className="relative overflow-hidden rounded-2xl border border-[var(--success)]/40 bg-gradient-to-r from-[var(--success)]/15 via-white/5 to-[var(--brand)]/15 p-5 sm:p-6 backdrop-blur">
+                        <div className="pointer-events-none absolute -top-12 -right-12 h-40 w-40 rounded-full bg-[var(--success)]/20 blur-3xl" />
+                        <div className="relative flex flex-col items-center gap-2 text-center sm:flex-row sm:justify-center sm:gap-4">
+                          <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs font-bold text-white/90">
+                            <span aria-hidden>👥</span> Amigo
+                          </span>
+                          <span aria-hidden className="text-white/60">↓</span>
+                          <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs font-bold text-white/90">
+                            <span aria-hidden>🤝</span> Recomendação
+                          </span>
+                          <span aria-hidden className="hidden text-white/60 sm:inline">↓</span>
+                        </div>
+                        <p className="relative mt-3 text-center text-sm sm:text-base font-semibold text-white">
+                          🎯 A partir deste momento, ambos os fluxos usam exatamente o mesmo processo estratégico.
+                        </p>
+                        <p className="relative mt-1 text-center text-xs sm:text-sm text-white/70">
+                          Descoberta de objetivo · SPIN · Sinais · Agendamento · Fechamento
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -2394,6 +2655,81 @@ function Index() {
       </footer>
 
       {/* Barra de navegação fixa — sempre visível */}
+      {showCompare && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="compare-title"
+          className="fixed inset-0 z-[70] flex items-center justify-center bg-[var(--navy)]/70 backdrop-blur-sm p-4 animate-fade-in"
+          onClick={() => setShowCompare(false)}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-3xl border border-border bg-white shadow-2xl animate-scale-in"
+          >
+            <div className="flex items-center justify-between gap-3 border-b border-border px-5 sm:px-6 py-4 sticky top-0 bg-white/95 backdrop-blur">
+              <div className="flex items-center gap-3">
+                <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--brand)]/10 text-[var(--brand)]">
+                  <BarChart3 className="h-4 w-4" aria-hidden />
+                </span>
+                <div>
+                  <h3 id="compare-title" className="text-base sm:text-lg font-bold text-[var(--navy)]">Comparar Fluxos</h3>
+                  <p className="text-xs text-muted-foreground">Só a abertura muda. Do small talk em diante, tudo é igual.</p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowCompare(false)}
+                aria-label="Fechar"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-white text-muted-foreground transition hover:text-[var(--navy)]"
+              >
+                <XCircle className="h-4 w-4" aria-hidden />
+              </button>
+            </div>
+            <div className="p-4 sm:p-6">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="text-left text-[11px] font-bold uppercase tracking-wider text-muted-foreground border-b border-border">
+                    <th className="py-2 pr-3">Etapa</th>
+                    <th className="py-2 px-2">👥 Amigo</th>
+                    <th className="py-2 pl-2">🤝 Recomendação</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    { etapa: "Abertura", a: "Diferente", b: "Diferente", diff: true },
+                    { etapa: "Aprovação social", a: "Não", b: "Sim", diff: true },
+                    { etapa: "Small Talk", a: "Igual", b: "Igual" },
+                    { etapa: "Descoberta de Objetivo", a: "Igual", b: "Igual" },
+                    { etapa: "SPIN", a: "Igual", b: "Igual" },
+                    { etapa: "Ferir / Tirar o Doce", a: "Igual", b: "Igual" },
+                    { etapa: "Agendamento", a: "Igual", b: "Igual" },
+                    { etapa: "Fechamento", a: "Igual", b: "Igual" },
+                  ].map((r) => (
+                    <tr key={r.etapa} className="border-b border-border/60 last:border-0">
+                      <td className="py-2.5 pr-3 font-semibold text-[var(--navy)]">{r.etapa}</td>
+                      <td className="py-2.5 px-2">
+                        <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-bold ${r.diff ? "bg-[var(--warn)]/15 text-[#8a5a00]" : "bg-[var(--success)]/15 text-[var(--success)]"}`}>
+                          {r.a}
+                        </span>
+                      </td>
+                      <td className="py-2.5 pl-2">
+                        <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-bold ${r.diff ? "bg-[var(--warn)]/15 text-[#8a5a00]" : "bg-[var(--success)]/15 text-[var(--success)]"}`}>
+                          {r.b}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <p className="mt-4 rounded-xl border border-[var(--success)]/30 bg-[var(--success)]/10 p-3 text-xs sm:text-sm font-medium text-[var(--navy)]">
+                🎯 Conclusão: apenas a <strong>abertura</strong> e a presença de <strong>aprovação social</strong> mudam entre os fluxos. Todo o restante é um único motor de condução.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       <nav
         aria-label="Navegação rápida"
         className="fixed inset-x-0 bottom-0 z-50 border-t border-border bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85 shadow-[0_-8px_24px_-12px_rgba(11,28,58,0.18)]"
