@@ -17,6 +17,23 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "Bull Team | Agendamento de Entrevista" },
       { property: "og:description", content: "Roteiros conversacionais por objetivo financeiro. Conduza, não pergunte." },
     ],
+    links: [
+      { rel: "canonical", href: "https://bull-spinselling.lovable.app/" },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: [
+            { "@type": "Question", name: "Preciso pensar", acceptedAnswer: { "@type": "Answer", text: "Perfeito. E normalmente quando alguém me diz isso, é porque ainda não conseguiu visualizar completamente o impacto ou o caminho para resolver. O que especificamente você gostaria de analisar melhor?" } },
+            { "@type": "Question", name: "Não tenho tempo", acceptedAnswer: { "@type": "Answer", text: "Justamente por isso faz sentido conversarmos. A entrevista existe para economizar tempo e evitar decisões no escuro." } },
+            { "@type": "Question", name: "Já tenho assessor", acceptedAnswer: { "@type": "Answer", text: "Excelente. Inclusive é por isso que faz sentido validar se tudo continua alinhado com seus objetivos atuais." } },
+          ],
+        }),
+      },
+    ],
   }),
   component: Index,
 });
