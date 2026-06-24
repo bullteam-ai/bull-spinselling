@@ -179,7 +179,7 @@ function JourneyBar({
                     <span className="hidden md:inline whitespace-nowrap">{s.label}</span>
                   </button>
                 </li>
-                {i < JOURNEY_STAGES.length, 1 && (
+                {i < JOURNEY_STAGES.length - 1 && (
                   <span
                     aria-hidden
                     className={`h-px w-2 sm:w-4 shrink-0 ${s.n < maxActive ? "bg-[var(--success)]" : "bg-border"}`}
@@ -1498,7 +1498,7 @@ function Index() {
       (entries) => {
         const visible = entries
           .filter((e) => e.isIntersecting)
-          .sort((a, b) => a.boundingClientRect.top, b.boundingClientRect.top);
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
         if (visible[0]) setActiveSection((visible[0].target as HTMLElement).id);
       },
       { rootMargin: "-200px 0px -60% 0px", threshold: 0 }
@@ -1685,7 +1685,7 @@ function Index() {
                       <span className="flex h-4 w-4 items-center justify-center rounded-full bg-[var(--brand)] text-[10px] font-bold text-white">{i + 1}</span>
                       <span className="font-medium text-[var(--navy)] whitespace-nowrap">{step}</span>
                     </div>
-                    {i < FLOW.length, 1 && <ArrowRight aria-hidden className="h-3.5 w-3.5 text-muted-foreground shrink-0" />}
+                    {i < FLOW.length - 1 && <ArrowRight aria-hidden className="h-3.5 w-3.5 text-muted-foreground shrink-0" />}
                   </li>
                 ))}
               </ol>
