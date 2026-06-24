@@ -1978,10 +1978,58 @@ function Index() {
                     </div>
                   </div>
 
+                  <div className="mt-6 flex flex-wrap items-center gap-3">
+                    <div
+                      role="tablist"
+                      aria-label="Tipo de ligação"
+                      className="inline-flex items-center rounded-2xl border border-white/15 bg-white/5 p-1 backdrop-blur"
+                    >
+                      <button
+                        type="button"
+                        role="tab"
+                        aria-selected={callType === "amigo"}
+                        onClick={() => setCallType("amigo")}
+                        className={`inline-flex min-h-10 items-center gap-2 rounded-xl px-3.5 sm:px-4 text-sm font-bold transition-all motion-reduce:transition-none ${
+                          callType === "amigo"
+                            ? "bg-[var(--brand)] text-white shadow-lg shadow-[var(--brand)]/40 scale-[1.02]"
+                            : "text-white/70 hover:text-white"
+                        }`}
+                      >
+                        <span aria-hidden>👥</span>
+                        <span>Amigo</span>
+                      </button>
+                      <button
+                        type="button"
+                        role="tab"
+                        aria-selected={callType === "recomendacao"}
+                        onClick={() => setCallType("recomendacao")}
+                        className={`inline-flex min-h-10 items-center gap-2 rounded-xl px-3.5 sm:px-4 text-sm font-bold transition-all motion-reduce:transition-none ${
+                          callType === "recomendacao"
+                            ? "bg-[var(--brand)] text-white shadow-lg shadow-[var(--brand)]/40 scale-[1.02]"
+                            : "text-white/70 hover:text-white"
+                        }`}
+                      >
+                        <span aria-hidden>🤝</span>
+                        <span>Recomendação</span>
+                      </button>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setShowCompare(true)}
+                      className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-white/20 bg-white/5 px-3.5 text-sm font-semibold text-white/90 backdrop-blur transition hover:border-[var(--success)]/60 hover:bg-white/10 hover:text-white motion-reduce:transition-none"
+                    >
+                      <BarChart3 aria-hidden className="h-4 w-4" />
+                      <span>Comparar Fluxos</span>
+                    </button>
+                    <span className="text-xs font-medium text-white/60">
+                      Só a abertura muda. Do small talk em diante, tudo é igual.
+                    </span>
+                  </div>
+
                   <div className="mt-8 relative">
                     <div aria-hidden className="absolute left-[19px] top-4 bottom-4 w-0.5 bg-gradient-to-b from-[var(--brand)] via-[var(--success)] to-[var(--brand)]/40 sm:left-[23px]" />
-                    <ol className="relative space-y-6">
-                      {FRIEND_CALL_STEPS.map((step, i) => (
+                    <ol key={callType} className="relative space-y-6 animate-fade-in">
+                      {(callType === "amigo" ? FRIEND_CALL_STEPS : RECOMMENDATION_CALL_STEPS).map((step) => (
                         <li key={step.id} className="grid grid-cols-[auto_1fr] gap-4 sm:gap-6">
                           <span className="relative z-10 flex h-10 w-10 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[var(--brand)] to-[#5a8cff] text-sm sm:text-base font-extrabold text-white shadow-lg shadow-[var(--brand)]/40">
                             {step.number}
