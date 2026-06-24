@@ -18,6 +18,7 @@ export const Route = createFileRoute("/sitemap.xml")({
           { path: "/recomendacoes", changefreq: "weekly", priority: "0.9" },
           { path: "/ligacoes", changefreq: "weekly", priority: "0.9" },
           { path: "/esquentar", changefreq: "weekly", priority: "0.9" },
+          { path: "/prospeccao", changefreq: "weekly", priority: "0.9" },
           { path: "/blog/como-aplicar-spin-selling", changefreq: "monthly", priority: "0.8" },
         ];
 

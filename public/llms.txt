@@ -8,6 +8,7 @@
 - [Passo a Passo de Recomendações Elite](/recomendacoes): Roteiro com modo Execução e modo Treinamento Elite para gerar 10+ recomendações qualificadas por reunião.
 - [Ligações Elite](/ligacoes): Scripts e treinamento para ligações de confirmação, reagendamento, recuperação e captação de recomendações.
 - [Passo a Passo para Esquentar Contato](/esquentar): Método em 8 etapas para transformar contatos frios em quentes através de WhatsApp, Instagram, LinkedIn, networking e parceiros.
+- [Prospecção de Contatos e Parcerias](/prospeccao): Método em 10 etapas para construir fontes recorrentes de leads qualificados através de contatos e parcerias estratégicas.
 
 ## Blog
 
