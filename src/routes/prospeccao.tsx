@@ -14,7 +14,7 @@ export const Route = createFileRoute("/prospeccao")({
       { title: "Bull Team | Prospecção de Contatos e Parcerias" },
       { name: "description", content: "Como encontrar, abordar e desenvolver fontes recorrentes de contatos qualificados e parcerias estratégicas." },
       { property: "og:title", content: "Bull Team | Prospecção de Contatos e Parcerias" },
-      { property: "og:description", content: "Método em 10 etapas para construir uma rede de prospecção que gera leads qualificados de forma recorrente — não pedindo indicação, construindo fontes." },
+      { property: "og:description", content: "Método em 10 etapas para construir uma rede de prospecção que gera leads qualificados de forma recorrente, não pedindo indicação, construindo fontes." },
     ],
   }),
   component: Prospeccao,
@@ -108,7 +108,7 @@ const ETAPAS: Etapa[] = [
     id: "qualidade-rede",
     numero: 2,
     titulo: "Descobrir a Qualidade da Rede",
-    objetivo: "Mapear quem essa pessoa conhece — não em quantidade, mas em qualidade do círculo.",
+    objetivo: "Mapear quem essa pessoa conhece, não em quantidade, mas em qualidade do círculo.",
     icon: <Network className="h-5 w-5" />,
     queroDescobrir: [
       "Quem essa pessoa conhece, com que profundidade e com que frequência.",
@@ -167,7 +167,7 @@ const ETAPAS: Etapa[] = [
     erros: [
       "Sugerir dores que ela não verbalizou.",
       "Transformar a pergunta em pitch disfarçado.",
-      "Não anotar o que foi dito — perder o material para usar depois.",
+      "Não anotar o que foi dito, perder o material para usar depois.",
     ],
   },
   {
@@ -186,7 +186,7 @@ const ETAPAS: Etapa[] = [
       "“Você acredita que seus clientes valorizariam esse tipo de suporte?”",
     ],
     comoAvancar: [
-      { eyebrow: "Resposta positiva", texto: "Avançar para Etapa 5. Há espaço aberto — gere curiosidade." },
+      { eyebrow: "Resposta positiva", texto: "Avançar para Etapa 5. Há espaço aberto, gere curiosidade." },
       { eyebrow: "Resposta neutra", texto: "Aprofundar relacionamento antes de qualquer pedido. Volte para Etapas 2 e 3 com mais profundidade." },
       { eyebrow: "Resposta negativa", texto: "Não insistir. Mantenha cordialidade e siga em frente para outras frentes." },
     ],
@@ -284,7 +284,7 @@ const ETAPAS: Etapa[] = [
       },
       {
         q: "Não gosto de indicar.",
-        a: "“Nem deveria. A indicação só faz sentido quando existe percepção real de valor. Por isso primeiro a gente constrói essa percepção — depois a indicação aparece naturalmente, se fizer sentido.”",
+        a: "“Nem deveria. A indicação só faz sentido quando existe percepção real de valor. Por isso primeiro a gente constrói essa percepção, depois a indicação aparece naturalmente, se fizer sentido.”",
       },
       {
         q: "Vou pensar.",
@@ -298,7 +298,7 @@ const ETAPAS: Etapa[] = [
     ],
     erros: [
       "Discutir com a objeção em vez de validar e reposicionar.",
-      "Insistir três vezes seguidas — corrói confiança.",
+      "Insistir três vezes seguidas, corrói confiança.",
       "Tratar 'vou pensar' como sim adiado.",
     ],
   },
@@ -306,7 +306,7 @@ const ETAPAS: Etapa[] = [
     id: "manutencao",
     numero: 8,
     titulo: "Manutenção do Relacionamento",
-    objetivo: "Transformar uma conversa pontual em relacionamento de longo prazo — a maioria das parcerias não nasce na primeira conversa, nasce na consistência.",
+    objetivo: "Transformar uma conversa pontual em relacionamento de longo prazo, a maioria das parcerias não nasce na primeira conversa, nasce na consistência.",
     icon: <Heart className="h-5 w-5" />,
     queroDescobrir: [
       "Quais formatos de contato fazem sentido para essa pessoa específica.",
@@ -332,7 +332,7 @@ const ETAPAS: Etapa[] = [
         eyebrow: "Como permanecer presente",
         itens: [
           "Defina uma cadência mínima (mensal ou trimestral).",
-          "Use lembretes ou CRM — não confie na memória.",
+          "Use lembretes ou CRM, não confie na memória.",
           "Apareça em momentos que não envolvem pedido nenhum.",
         ],
       },
@@ -353,7 +353,7 @@ const ETAPAS: Etapa[] = [
         ],
       },
     ],
-    regra: "A maioria das parcerias não morre por incompatibilidade — morre por sumiço. Consistência é o diferencial.",
+    regra: "A maioria das parcerias não morre por incompatibilidade, morre por sumiço. Consistência é o diferencial.",
     erros: [
       "Aparecer só quando precisa de algo.",
       "Cobrar resultados antes de ter investido relacionamento.",
@@ -468,7 +468,7 @@ const AUDIENCES: Audience[] = [
       },
       {
         titulo: "Conversa de profundidade",
-        mensagem: "“[Nome], tenho ajudado mais pessoas com perfil parecido com o seu. Pensando no seu círculo — amigos, familiares, sócios — quem é alguém que talvez também esteja precisando dessa clareza?”",
+        mensagem: "“[Nome], tenho ajudado mais pessoas com perfil parecido com o seu. Pensando no seu círculo, amigos, familiares, sócios, quem é alguém que talvez também esteja precisando dessa clareza?”",
         quando: "Em reuniões periódicas com cliente engajado, fora do momento de venda.",
         porqueFunciona: "Frame de cuidado mútuo. Cliente sente que está ajudando os outros, não te dando comissão.",
         continuar: "Listar nomes em conjunto. Combinar abordagem facilitada.",
@@ -515,7 +515,7 @@ const AUDIENCES: Audience[] = [
     exemplos: [
       {
         titulo: "Abordagem técnica",
-        mensagem: "“[Nome], acompanho o trabalho de vocês com [área]. Tenho atuado muito com clientes que precisam de planejamento financeiro e patrimonial estruturado — área que conversa muito com o que vocês fazem. Faria sentido conversarmos sobre como nossos atendimentos podem se complementar?”",
+        mensagem: "“[Nome], acompanho o trabalho de vocês com [área]. Tenho atuado muito com clientes que precisam de planejamento financeiro e patrimonial estruturado, área que conversa muito com o que vocês fazem. Faria sentido conversarmos sobre como nossos atendimentos podem se complementar?”",
         quando: "Após identificar advogados que atendem alta renda.",
         porqueFunciona: "Linguagem técnica + complementaridade evidente.",
         continuar: "Marcar reunião de alinhamento. Levar exemplos de caso conjunto.",
@@ -669,7 +669,7 @@ const ESTUDO_BLOCKS: { id: string; eyebrow: string; titulo: string; texto: strin
       "Não dar retorno sobre os contatos indicados.",
       "Sumir depois da primeira indicação.",
       "Ser genérico, sem mostrar entendimento do público dele.",
-      "Não organizar follow-up — confiar na memória.",
+      "Não organizar follow-up, confiar na memória.",
     ],
     icon: <AlertTriangle className="h-5 w-5" />,
   },
@@ -758,7 +758,7 @@ function Prospeccao() {
             Passo a Passo para <span className="text-[var(--success)]">Prospecção de Contatos e Parcerias</span>
           </h1>
           <p className="mt-5 max-w-3xl text-base sm:text-lg text-white/80 leading-relaxed">
-            Prospecção de contatos e parcerias não é pedir indicação de forma desesperada. É construir fontes recorrentes de oportunidade — pessoas e parceiros que geram leads qualificados todo mês.
+            Prospecção de contatos e parcerias não é pedir indicação de forma desesperada. É construir fontes recorrentes de oportunidade, pessoas e parceiros que geram leads qualificados todo mês.
           </p>
           <div className="mt-8 grid grid-cols-2 lg:grid-cols-4 gap-3">
             {[

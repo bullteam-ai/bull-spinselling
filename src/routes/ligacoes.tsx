@@ -122,7 +122,7 @@ const CALL_TYPES: CallType[] = [
         id: "verdade",
         label: "Verdade incômoda",
         intent: "Plantar o medo construtivo de continuar sem revisar decisões.",
-        trigger: "Aversão à perda. Não decidir já é uma decisão — e custa caro.",
+        trigger: "Aversão à perda. Não decidir já é uma decisão, e custa caro.",
         tone: "autoritario",
         script: "Acompanhando milhares de famílias, os maiores erros financeiros não acontecem por fazer algo errado. Acontecem por não parar para analisar se existe uma alternativa melhor. Isso costuma custar centenas de milhares de reais ao longo dos anos.",
       },
@@ -147,10 +147,10 @@ const CALL_TYPES: CallType[] = [
         { name: "Pressuposição", explica: "Encerramento assume a presença, não pede." },
       ],
       errosComuns: [
-        "Falar 'só ligando para confirmar' — abre brecha para o cliente desmarcar.",
-        "Perguntar 'tudo certo para amanhã?' — convida o 'não'.",
+        "Falar 'só ligando para confirmar', abre brecha para o cliente desmarcar.",
+        "Perguntar 'tudo certo para amanhã?', convida o 'não'.",
         "Falar de produtos ou empresa nesse contato.",
-        "Tom de cobrança ou ansiedade — diminui autoridade.",
+        "Tom de cobrança ou ansiedade, diminui autoridade.",
       ],
       indicadores: [
         "Cliente responde com 'faz sentido' ou 'pode contar comigo'.",
@@ -166,7 +166,7 @@ const CALL_TYPES: CallType[] = [
   },
 
   /* ============================================================
-     2) CONFIRMAÇÃO PREMIUM — ALTA RENDA
+     2) CONFIRMAÇÃO PREMIUM. ALTA RENDA
      ============================================================ */
   {
     id: "confirmacao-premium",
@@ -226,10 +226,10 @@ const CALL_TYPES: CallType[] = [
         intent: "Encerrar com a ideia de rentabilidade da própria conversa.",
         trigger: "Pressuposição de presença + valor financeiro implícito.",
         tone: "autoritario",
-        script: "Preserve esse espaço na sua agenda. Existe uma grande chance de que essa seja uma das conversas mais rentáveis que você terá este ano — não pelo que será vendido, mas pela clareza que ela pode gerar. Nos vemos em breve.",
+        script: "Preserve esse espaço na sua agenda. Existe uma grande chance de que essa seja uma das conversas mais rentáveis que você terá este ano, não pelo que será vendido, mas pela clareza que ela pode gerar. Nos vemos em breve.",
       },
     ],
-    fechamento: "Tom firme, frases curtas e densas. Cliente premium não responde a entusiasmo — responde a precisão.",
+    fechamento: "Tom firme, frases curtas e densas. Cliente premium não responde a entusiasmo, responde a precisão.",
     treino: {
       porqueExiste: "Cliente de alta renda já é abordado por bancos privados, corretoras e gestores. A ligação precisa se diferenciar pela densidade da fala e pelo enquadramento de igual-para-igual.",
       gatilhos: [
@@ -239,7 +239,7 @@ const CALL_TYPES: CallType[] = [
         { name: "Especificidade", explica: "'Sua realidade, seu patrimônio, seus objetivos.'" },
       ],
       errosComuns: [
-        "Falar muito — cliente premium corta o que parece script.",
+        "Falar muito, cliente premium corta o que parece script.",
         "Adjetivos genéricos ('muito legal', 'super bacana').",
         "Tom de admiração ou subordinação.",
         "Pedir confirmação. Cliente premium não gosta de ser cobrado.",
@@ -270,13 +270,13 @@ const CALL_TYPES: CallType[] = [
     objetivo: "Resgatar a reunião perdida reativando o motivo original que levou o cliente a aceitar.",
     duracao: "3 a 5 minutos",
     publico: "Cliente que não compareceu ou cancelou",
-    premissa: "O cliente não rejeitou a reunião. Ele rejeitou o horário. O objetivo original ainda existe — basta reativá-lo.",
+    premissa: "O cliente não rejeitou a reunião. Ele rejeitou o horário. O objetivo original ainda existe, basta reativá-lo.",
     blocks: [
       {
         id: "abertura",
         label: "Abertura sem cobrança",
         intent: "Não constranger. Abrir espaço de conversa, não de justificativa.",
-        trigger: "Não-julgamento. O cliente já está em culpa baixa — não amplifique.",
+        trigger: "Não-julgamento. O cliente já está em culpa baixa, não amplifique.",
         tone: "empatico",
         script: "Olá, [Nome], tudo bem? Estou te ligando porque vi que não conseguimos realizar nossa reunião conforme planejado e eu queria falar contigo por um motivo muito importante.",
         dontSay: ["'Você sumiu'", "'Combinamos e você não apareceu'"],
@@ -301,7 +301,7 @@ const CALL_TYPES: CallType[] = [
         id: "persistencia",
         label: "Persistência do objetivo",
         intent: "Mostrar que o objetivo continua existindo, só foi adiado.",
-        trigger: "Verdade incômoda. O problema não desapareceu — apenas foi postergado.",
+        trigger: "Verdade incômoda. O problema não desapareceu, apenas foi postergado.",
         tone: "autoritario",
         script: "E a verdade é que esse objetivo continua existindo hoje.",
       },
@@ -344,7 +344,7 @@ const CALL_TYPES: CallType[] = [
     ],
     fechamento: "Reagendamento não é 'pedir mais uma chance'. É reativar o motivo original e oferecer um novo encaixe.",
     treino: {
-      porqueExiste: "No-show não é desinteresse — é prioridade temporariamente trocada. A janela de 24-48h preserva o valor percebido da reunião antes que ele esfrie.",
+      porqueExiste: "No-show não é desinteresse, é prioridade temporariamente trocada. A janela de 24-48h preserva o valor percebido da reunião antes que ele esfrie.",
       gatilhos: [
         { name: "Auto-consistência", explica: "Lembrar o cliente do 'sim' anterior dele." },
         { name: "Reativação do objetivo", explica: "Listar motivos vivos reativa a urgência." },
@@ -353,9 +353,9 @@ const CALL_TYPES: CallType[] = [
       ],
       errosComuns: [
         "Cobrar o cliente pelo no-show.",
-        "Aceitar 'depois eu te falo' — perde o cliente.",
+        "Aceitar 'depois eu te falo', perde o cliente.",
         "Perguntar 'quando seria bom?' em vez de propor 2 horários.",
-        "Ligar 7+ dias depois — janela já fechou.",
+        "Ligar 7+ dias depois, janela já fechou.",
       ],
       indicadores: [
         "Cliente justifica espontaneamente e demonstra culpa leve.",
@@ -371,7 +371,7 @@ const CALL_TYPES: CallType[] = [
   },
 
   /* ============================================================
-     4) REAGENDAMENTO PREMIUM — ALTA RENDA
+     4) REAGENDAMENTO PREMIUM. ALTA RENDA
      ============================================================ */
   {
     id: "reagendamento-premium",
@@ -404,7 +404,7 @@ const CALL_TYPES: CallType[] = [
       {
         id: "decisoes-continuam",
         label: "Decisões continuam acontecendo",
-        intent: "Mostrar que o tempo correu — e custou.",
+        intent: "Mostrar que o tempo correu, e custou.",
         trigger: "Custo de oportunidade. O patrimônio se move mesmo sem revisão.",
         tone: "autoritario",
         script: "Independente da correria, essas decisões continuam acontecendo. Você continua investindo. Continua pagando impostos. Continua tomando decisões sobre patrimônio, aposentadoria, proteção familiar e construção de riqueza.",
@@ -452,7 +452,7 @@ const CALL_TYPES: CallType[] = [
     ],
     fechamento: "Cliente premium reagenda quando percebe custo de oportunidade. Toda fala precisa carregar densidade de patrimônio.",
     treino: {
-      porqueExiste: "Cliente de alta renda raramente cancela por desinteresse — cancela por sobreposição de prioridades. O reagendamento precisa lembrar que o patrimônio dele decide sozinho enquanto ele não revisa.",
+      porqueExiste: "Cliente de alta renda raramente cancela por desinteresse, cancela por sobreposição de prioridades. O reagendamento precisa lembrar que o patrimônio dele decide sozinho enquanto ele não revisa.",
       gatilhos: [
         { name: "Custo de oportunidade", explica: "Decisões financeiras estão acontecendo mesmo sem reunião." },
         { name: "Clareza × piloto automático", explica: "Provoca auto-percepção sem confronto." },
@@ -474,7 +474,7 @@ const CALL_TYPES: CallType[] = [
     },
     objections: [
       { q: "Não tenho tempo agora.", a: "Justamente. Quanto menos tempo você tem, mais caro fica decidir sem revisar. Posso te oferecer um horário fora do expediente, ainda essa semana ou início da próxima?" },
-      { q: "Tenho assessor / banco privado.", a: "Perfeito. Inclusive por isso essa conversa costuma render — é o único momento em que ninguém precisa te vender nada. É análise pura, com olhar externo." },
+      { q: "Tenho assessor / banco privado.", a: "Perfeito. Inclusive por isso essa conversa costuma render, é o único momento em que ninguém precisa te vender nada. É análise pura, com olhar externo." },
     ],
   },
 
@@ -491,7 +491,7 @@ const CALL_TYPES: CallType[] = [
     objetivo: "Validar a experiência, reforçar valor percebido e extrair recomendações qualificadas em linha de forma consultiva.",
     duracao: "5 a 8 minutos",
     publico: "Cliente que já participou da reunião",
-    premissa: "Indicação não se pede — se conduz. A janela ideal é logo após a reunião, quando o valor ainda está fresco.",
+    premissa: "Indicação não se pede, se conduz. A janela ideal é logo após a reunião, quando o valor ainda está fresco.",
     blocks: [
       {
         id: "abertura",
@@ -500,14 +500,14 @@ const CALL_TYPES: CallType[] = [
         trigger: "Autoridade + baixa pressão. 'Não é comercial.'",
         tone: "consultivo",
         script: "Olá, [Nome], tudo bem? Aqui é o [Nome do Líder], da Futuro. Fica tranquilo que essa não é uma ligação comercial. Estou entrando em contato porque acompanho o trabalho da equipe e gosto de conversar com algumas pessoas que participaram das reuniões para entender como foi a experiência. Você tem 2 minutinhos?",
-        doSay: ["Falar o cargo: 'líder', 'gestor', 'diretor'", "Pedir 2 minutos — não a tarde toda"],
+        doSay: ["Falar o cargo: 'líder', 'gestor', 'diretor'", "Pedir 2 minutos, não a tarde toda"],
         dontSay: ["'Estou ligando para te oferecer'", "'É sobre indicações'"],
       },
       {
         id: "nota",
         label: "Validação por nota (0 a 10)",
         intent: "Trazer o cliente para a zona de feedback objetivo e abrir o canal emocional.",
-        trigger: "Compromisso público. Quem dá nota alta precisa explicar — e explicar reforça o valor.",
+        trigger: "Compromisso público. Quem dá nota alta precisa explicar, e explicar reforça o valor.",
         tone: "consultivo",
         script: "De 0 a 10, qual nota você daria para a reunião que teve com o [Nome do Planejador]?",
         doSay: ["Anotar a nota. Se for 8+, seguir. Se for 6-7, aprofundar antes de pedir REC."],
@@ -515,7 +515,7 @@ const CALL_TYPES: CallType[] = [
       {
         id: "aprofundamento",
         label: "Aprofundamento da experiência",
-        intent: "Fazer o cliente verbalizar o valor — quem verbaliza, vende para si mesmo.",
+        intent: "Fazer o cliente verbalizar o valor, quem verbaliza, vende para si mesmo.",
         trigger: "Auto-persuasão. O cliente passa a defender a própria experiência.",
         tone: "consultivo",
         script: "O que mais te chamou atenção durante a conversa? Teve algum momento, orientação ou reflexão que fez você enxergar sua situação financeira de uma forma diferente? Qual foi o principal aprendizado que você leva daquela reunião?",
@@ -541,7 +541,7 @@ const CALL_TYPES: CallType[] = [
       {
         id: "primeiro-nome",
         label: "Extração do primeiro nome",
-        intent: "Capturar o primeiro nome que vem na cabeça — o mais quente.",
+        intent: "Capturar o primeiro nome que vem na cabeça, o mais quente.",
         trigger: "Memória episódica. A pergunta certa é fechada e direta.",
         tone: "autoritario",
         script: "Perfeito. E quem foi a primeira pessoa que veio na sua cabeça quando eu fiz essa pergunta?",
@@ -576,7 +576,7 @@ const CALL_TYPES: CallType[] = [
       {
         id: "encerramento",
         label: "Encerramento de elevação",
-        intent: "Elevar o cliente — ele acabou de fazer algo importante para alguém.",
+        intent: "Elevar o cliente, ele acabou de fazer algo importante para alguém.",
         trigger: "Identidade de pessoa generosa + segurança da abordagem.",
         tone: "empatico",
         script: "[Nome], obrigado pela confiança. Você está proporcionando para essas pessoas a oportunidade de ter a mesma clareza que você teve na sua reunião. Pode ficar tranquilo: nossa equipe fará uma abordagem profissional, respeitosa e sem qualquer compromisso. Obrigado pelo seu tempo e conte conosco.",
@@ -589,15 +589,15 @@ const CALL_TYPES: CallType[] = [
         { name: "Compromisso público", explica: "Dar nota alta gera coerência. Cliente passa a defender a experiência." },
         { name: "Auto-persuasão", explica: "Verbalizar o aprendizado fortalece o valor para o próprio cliente." },
         { name: "Pergunta projetiva", explica: "'Se um amigo seu...' tira o peso do pedido direto." },
-        { name: "Memória fechada", explica: "Pergunte pelo PRIMEIRO nome — não por uma lista." },
+        { name: "Memória fechada", explica: "Pergunte pelo PRIMEIRO nome, não por uma lista." },
         { name: "Pressuposição", explica: "Pedir o telefone como passo natural, sem pedir autorização." },
       ],
       errosComuns: [
-        "Começar pedindo recomendação — antes de validar a experiência.",
+        "Começar pedindo recomendação, antes de validar a experiência.",
         "Perguntar 'tem alguém pra indicar?' (aberta = vazia).",
         "Pedir telefone antes de coletar todos os nomes.",
-        "Pedir autorização ('posso falar com ele?') — abre brecha para 'eu falo antes'.",
-        "Ligar 7+ dias depois da reunião — o valor já esfriou.",
+        "Pedir autorização ('posso falar com ele?'), abre brecha para 'eu falo antes'.",
+        "Ligar 7+ dias depois da reunião, o valor já esfriou.",
       ],
       indicadores: [
         "Nota 8 ou superior.",
@@ -608,8 +608,8 @@ const CALL_TYPES: CallType[] = [
       mantra: "Você não está pedindo um favor. Está oferecendo às pessoas certas a mesma clareza que o cliente teve.",
     },
     objections: [
-      { q: "Não consigo lembrar de ninguém agora.", a: "Sem problemas. Pensando em amigos, familiares, colegas de trabalho ou empresários que você conhece — quem normalmente conversa com você sobre dinheiro, investimentos, aposentadoria ou planejamento financeiro?" },
-      { q: "Prefiro não passar contato.", a: "Sem problema algum. Inclusive, o mais importante já aconteceu — você lembrou dessas pessoas. Quem você acredita que mais teria valor nessa conversa?" },
+      { q: "Não consigo lembrar de ninguém agora.", a: "Sem problemas. Pensando em amigos, familiares, colegas de trabalho ou empresários que você conhece, quem normalmente conversa com você sobre dinheiro, investimentos, aposentadoria ou planejamento financeiro?" },
+      { q: "Prefiro não passar contato.", a: "Sem problema algum. Inclusive, o mais importante já aconteceu, você lembrou dessas pessoas. Quem você acredita que mais teria valor nessa conversa?" },
       { q: "Posso falar com eles antes?", a: "Claro. Inclusive isso costuma funcionar muito bem. O número deles que vou adicionar aqui é para registro, e todos terão uma condição especial se fizer sentido. Qual o nome deles para eu registrar? O número é qual?" },
     ],
   },

@@ -31,7 +31,7 @@ export const Route = createFileRoute("/recomendacoes")({
           step: [
             { "@type": "HowToStep", position: 1, name: "Convicção", text: "Confirme com o cliente que a conversa gerou valor antes de pedir recomendações." },
             { "@type": "HowToStep", position: 2, name: "Pergunta certa", text: "Substitua 'Quem você conhece?' por perguntas direcionadas a nichos e objetivos." },
-            { "@type": "HowToStep", position: 3, name: "Método dos 3 nomes", text: "Sempre peça pelo menos 3 nomes por nicho — nunca aceite o primeiro 'não lembro'." },
+            { "@type": "HowToStep", position: 3, name: "Método dos 3 nomes", text: "Sempre peça pelo menos 3 nomes por nicho, nunca aceite o primeiro 'não lembro'." },
             { "@type": "HowToStep", position: 4, name: "Nichos próximos", text: "Explore família, amigos, trabalho, academia e viagens." },
             { "@type": "HowToStep", position: 5, name: "Objetivos", text: "Conduza por objetivos: imóvel, filhos, investimentos, aposentadoria." },
             { "@type": "HowToStep", position: 6, name: "Subida de nível", text: "Eleve a rede: empresários, médicos, dentistas, advogados, executivos." },
@@ -70,56 +70,56 @@ const QUALIFY_FIELDS = [
   "Renda aproximada", "Objetivo provável", "Relação com o cliente", "Prioridade",
 ];
 
-const FULL_SCRIPT = `[PASSO 1 — GERAR CONVICÇÃO]
+const FULL_SCRIPT = `[PASSO 1. GERAR CONVICÇÃO]
 Fulano, olhando para tudo que conversamos hoje, o que mudou na sua visão financeira entre o início da reunião e agora?
 (escutar)
 Então podemos dizer que essa conversa teve valor para você?
 (se sim) Perfeito. Então provavelmente existem outras pessoas próximas a você que também se beneficiariam dessa oportunidade.
 
-[PASSO 2 — NUNCA PERGUNTE "QUEM VOCÊ CONHECE?"]
+[PASSO 2. NUNCA PERGUNTE "QUEM VOCÊ CONHECE?"]
 Use sempre perguntas fechadas de memória.
 ERRADO: Quem você conhece que é médico?
 CERTO:  Dos médicos que você conhece, quais são os 3 primeiros nomes que vêm na sua cabeça?
 
-[PASSO 3 — MÉTODO DOS 3 NOMES]
+[PASSO 3. MÉTODO DOS 3 NOMES]
 Quais são os 3 empresários mais próximos de você?
 E além desses 3? Quem seria o quarto? Quem mais?
 (meta: 5 a 10 nomes por categoria)
 
-[PASSO 4 — NICHOS PRÓXIMOS]
+[PASSO 4. NICHOS PRÓXIMOS]
 Família:   Quais são as 3 pessoas da sua família com quem você mais conversa?
 Amigos:    Quem são os 3 amigos que mais participam da sua vida hoje?
 Trabalho:  Quais são as 3 pessoas com quem você mais conversa no trabalho?
 Academia:  Quem são as 3 pessoas que você mais encontra na academia?
 Viagens:   Quais são os 3 amigos com quem você gostaria de viajar mais?
 
-[PASSO 5 — OBJETIVOS]
+[PASSO 5. OBJETIVOS]
 Imóvel:         Quais são as 3 pessoas que você acredita que gostariam de comprar um imóvel nos próximos anos?
 Filhos:         Quais são os 3 pais ou mães mais preocupados com o futuro dos filhos que você conhece?
 Investimentos:  Quem são as 3 pessoas que ganham bem mas poderiam investir melhor?
 Aposentadoria:  Quem são as 3 pessoas que não deveriam depender apenas do INSS?
 
-[PASSO 6 — SUBIDA DE NÍVEL]
+[PASSO 6. SUBIDA DE NÍVEL]
 Empresários: Quais são os 3 empresários mais bem sucedidos que você conhece pessoalmente?
 Médicos:     Quais são os 3 médicos mais respeitados que você conhece?
 Dentistas:   Quais são os 3 dentistas que mais cresceram profissionalmente nos últimos anos?
 Advogados:   Quais são os 3 advogados mais bem posicionados da sua rede?
 Engenheiros: Quais são os 3 engenheiros que você acredita que possuem maior potencial financeiro?
 
-[PASSO 7 — SUBIDA DE RENDA]
+[PASSO 7. SUBIDA DE RENDA]
 Pensando nas pessoas que você conhece, quem estaria entre os 5 maiores níveis de renda da sua rede?
 Dessas pessoas, quais você acredita que mais se beneficiariam de uma orientação financeira?
 
-[PASSO 8 — PESSOA DE REFERÊNCIA]
+[PASSO 8. PESSOA DE REFERÊNCIA]
 Quem é o maior exemplo de sucesso financeiro que você conhece pessoalmente?
 Qual o nome dele? Qual profissão? Por que ele te veio na cabeça?
 
-[PASSO 10 — PRIORIZAÇÃO]
+[PASSO 10. PRIORIZAÇÃO]
 Se eu pudesse conversar com apenas 3 dessas pessoas primeiro, quais seriam?
 (Top 3 · Top 5 · Top 10)`;
 
 /* =========================================
-   PASSOS DA ABA 1 — EXECUÇÃO
+   PASSOS DA ABA 1. EXECUÇÃO
    ========================================= */
 
 const NICHE_QUESTIONS = [
@@ -217,7 +217,7 @@ function Recomendacoes() {
     }
   };
 
-  // Sincronizar com hash da URL (#passo-3 etc.) — vindo do menu suspenso global
+  // Sincronizar com hash da URL (#passo-3 etc.), vindo do menu suspenso global
   useEffect(() => {
     const handleHash = () => {
       const raw = window.location.hash.replace("#", "");
@@ -271,7 +271,7 @@ function Recomendacoes() {
         </div>
       </header>
 
-      {/* MÓDULO BÔNUS — A MAIOR MENTIRA SOBRE RECOMENDAÇÕES */}
+      {/* MÓDULO BÔNUS. A MAIOR MENTIRA SOBRE RECOMENDAÇÕES */}
       <MentiraSection />
 
       {/* STICKY TABS */}
@@ -324,7 +324,7 @@ function Recomendacoes() {
 }
 
 /* =========================================
-   ABA 1 — EXECUÇÃO
+   ABA 1. EXECUÇÃO
    ========================================= */
 
 function ExecucaoTab({
@@ -363,7 +363,7 @@ function ExecucaoTab({
       {/* PASSO 1 */}
       <Step id="passo-1" n={1} eyebrow="Passo 1" title="Gerar convicção" subtitle="Antes de pedir qualquer indicação, faça o cliente verbalizar o valor da reunião.">
         <ScriptCard label="Pergunta de abertura" quote='Fulano, olhando para tudo que conversamos hoje, o que mudou na sua visão financeira entre o início da reunião e agora?' />
-        <p className="mt-3 text-sm font-semibold text-muted-foreground">(escuta ativa — deixe o cliente vender o trabalho para ele mesmo)</p>
+        <p className="mt-3 text-sm font-semibold text-muted-foreground">(escuta ativa, deixe o cliente vender o trabalho para ele mesmo)</p>
         <div className="mt-3 grid gap-3 md:grid-cols-2">
           <ScriptCard label="Confirmação" quote='Então podemos dizer que essa conversa teve valor para você?' />
           <ScriptCard label="Ponte (se SIM)" quote='Perfeito. Então provavelmente existem outras pessoas próximas a você que também se beneficiariam dessa oportunidade.' />
@@ -404,27 +404,27 @@ function ExecucaoTab({
         </div>
       </Step>
 
-      {/* PASSO 4 — NICHOS PRÓXIMOS */}
+      {/* PASSO 4. NICHOS PRÓXIMOS */}
       <Step id="passo-4" n={4} eyebrow="Passo 4" title="Nichos próximos" subtitle="Comece pela rede de maior proximidade. Memória ativa primeiro.">
         <QuestionGrid items={NICHE_QUESTIONS.filter(i => matches(i.label) || matches(i.q))} />
         <PerguntaResgateSection />
       </Step>
 
-      {/* PASSO 5 — OBJETIVOS */}
+      {/* PASSO 5. OBJETIVOS */}
       <Step id="passo-5" n={5} eyebrow="Passo 5" title="Objetivos" subtitle="Use os objetivos da reunião para abrir novas gavetas mentais.">
         <QuestionGrid items={GOAL_QUESTIONS.filter(i => matches(i.label) || matches(i.q))} />
       </Step>
 
-      {/* MODO ELITE — APROFUNDAMENTO */}
+      {/* MODO ELITE. APROFUNDAMENTO */}
       <ModoEliteSection />
 
-      {/* PASSO 6 — SUBIDA DE NÍVEL */}
+      {/* PASSO 6. SUBIDA DE NÍVEL */}
       <Step id="passo-6" n={6} eyebrow="Passo 6" title="Subida de nível" subtitle="Cliente comum gera cliente comum. Cliente premium gera cliente premium. Sempre subir.">
         <QuestionGrid items={LEVEL_UP.filter(i => matches(i.label) || matches(i.q))} premium />
         <SubidaNichoInteligenteSection />
       </Step>
 
-      {/* PASSO 7 — SUBIDA DE RENDA */}
+      {/* PASSO 7. SUBIDA DE RENDA */}
       <Step id="passo-7" n={7} eyebrow="Passo 7" title="Subida de renda" subtitle="Filtre pelo topo da rede pessoal do cliente.">
         <div className="grid gap-3 md:grid-cols-2">
           <ScriptCard label="Pergunta 1" quote='Pensando nas pessoas que você conhece, quem estaria entre os 5 maiores níveis de renda da sua rede?' />
@@ -432,7 +432,7 @@ function ExecucaoTab({
         </div>
       </Step>
 
-      {/* PASSO 8 — PESSOA DE REFERÊNCIA */}
+      {/* PASSO 8. PESSOA DE REFERÊNCIA */}
       <Step id="passo-8" n={8} eyebrow="Passo 8" title="Pessoa de referência" subtitle="O nome mais valioso da rede do cliente geralmente está aqui.">
         <ScriptCard label="Pergunta principal" quote='Quem é o maior exemplo de sucesso financeiro que você conhece pessoalmente?' />
         <div className="mt-3 grid gap-2 sm:grid-cols-3">
@@ -445,7 +445,7 @@ function ExecucaoTab({
       {/* ANATOMIA DE UMA RECOMENDAÇÃO ELITE */}
       <AnatomiaSection />
 
-      {/* PASSO 9 — QUALIFICAÇÃO */}
+      {/* PASSO 9. QUALIFICAÇÃO */}
       <Step id="passo-9" n={9} eyebrow="Passo 9" title="Qualificação" subtitle="Para cada indicação, capturar:">
         <div className="rounded-2xl border border-border bg-white p-5">
           <ul className="grid gap-2 sm:grid-cols-3">
@@ -459,7 +459,7 @@ function ExecucaoTab({
         </div>
       </Step>
 
-      {/* PASSO 10 — PRIORIZAÇÃO */}
+      {/* PASSO 10. PRIORIZAÇÃO */}
       <Step id="passo-10" n={10} eyebrow="Passo 10" title="Priorização" subtitle="Defina ordem de abordagem junto com o cliente.">
         <ScriptCard label="Pergunta de priorização" quote='Se eu pudesse conversar com apenas 3 dessas pessoas primeiro, quais seriam?' />
         <div className="mt-4 grid gap-3 sm:grid-cols-3">
@@ -523,7 +523,7 @@ function ExecucaoTab({
 }
 
 /* =========================================
-   ABA 2 — TREINAMENTO ELITE
+   ABA 2. TREINAMENTO ELITE
    ========================================= */
 
 function TreinoTab() {
@@ -921,7 +921,7 @@ function BonusHeader({
   );
 }
 
-/* MÓDULO 1 — A MAIOR MENTIRA */
+/* MÓDULO 1. A MAIOR MENTIRA */
 function MentiraSection() {
   const pairs = [
     { wrong: "Quem você conhece que é empresário?", right: "Quais são os 3 empresários mais próximos de você?" },
@@ -938,7 +938,7 @@ function MentiraSection() {
           accent="var(--danger)"
         />
         <p className="text-[15px] leading-relaxed text-[var(--navy)] max-w-3xl">
-          O erro clássico: <em>“Quem você conhece que gostaria do meu trabalho?”</em> — isso obriga o cérebro
+          O erro clássico: <em>“Quem você conhece que gostaria do meu trabalho?”</em>, isso obriga o cérebro
           do cliente a procurar em um universo infinito. Resultado: ele trava.
         </p>
         <div className="mt-5 grid gap-3 md:grid-cols-2">
@@ -966,7 +966,7 @@ function MentiraSection() {
   );
 }
 
-/* MÓDULO 2 — MAPA MENTAL */
+/* MÓDULO 2. MAPA MENTAL */
 function MapaMentalSection() {
   const flow = [
     "Valor percebido", "Cliente verbaliza aprendizado", "Objetivos", "Família", "Amigos",
@@ -977,7 +977,7 @@ function MapaMentalSection() {
       <BonusHeader
         eyebrow="Visão macro"
         title="Mapa mental da recomendação"
-        hook="Não tente encontrar recomendações diretamente. Conduza o cliente por este caminho — as recomendações surgirão naturalmente."
+        hook="Não tente encontrar recomendações diretamente. Conduza o cliente por este caminho, as recomendações surgirão naturalmente."
         icon={<Layers className="h-5 w-5" />}
       />
       <div className="rounded-3xl border border-border bg-white p-5 sm:p-7">
@@ -987,21 +987,21 @@ function MapaMentalSection() {
               <div
                 className="flex items-center gap-3 rounded-xl border px-4 py-3 transition"
                 style={{
-                  borderColor: i === flow.length - 1 ? "var(--success)" : "var(--brand)",
-                  background: i === flow.length - 1
+                  borderColor: i === flow.length, 1 ? "var(--success)" : "var(--brand)",
+                  background: i === flow.length, 1
                     ? "color-mix(in oklab, var(--success) 10%, white)"
                     : "color-mix(in oklab, var(--brand) 6%, white)",
                 }}
               >
                 <span
                   className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-[11px] font-extrabold text-white"
-                  style={{ background: i === flow.length - 1 ? "var(--success)" : "var(--brand)" }}
+                  style={{ background: i === flow.length, 1 ? "var(--success)" : "var(--brand)" }}
                 >
                   {i + 1}
                 </span>
                 <span className="text-sm font-semibold text-[var(--navy)]">{step}</span>
               </div>
-              {i < flow.length - 1 && (
+              {i < flow.length, 1 && (
                 <div className="flex justify-center py-1">
                   <ArrowDown className="h-4 w-4 text-[var(--brand)]/60" aria-hidden />
                 </div>
@@ -1014,7 +1014,7 @@ function MapaMentalSection() {
   );
 }
 
-/* MÓDULO 3 — ESCADA DE PROFUNDIDADE */
+/* MÓDULO 3. ESCADA DE PROFUNDIDADE */
 function EscadaProfundidadeSection() {
   const levels = [
     "Quem você conhece que é empresário?",
@@ -1051,7 +1051,7 @@ function EscadaProfundidadeSection() {
   );
 }
 
-/* MÓDULO 4 — PERGUNTA DE RESGATE */
+/* MÓDULO 4. PERGUNTA DE RESGATE */
 function PerguntaResgateSection() {
   const [open, setOpen] = useState(false);
   const examples = [
@@ -1071,7 +1071,7 @@ function PerguntaResgateSection() {
           <LifeBuoy className="h-5 w-5 text-[var(--warn)]" />
           <div>
             <p className="text-[10px] font-bold uppercase tracking-wider text-[var(--warn)]">Se o cliente travar</p>
-            <p className="text-sm font-semibold text-[var(--navy)]">Pergunta de resgate — desbloquear memória</p>
+            <p className="text-sm font-semibold text-[var(--navy)]">Pergunta de resgate, desbloquear memória</p>
           </div>
         </div>
         <span className="text-xs font-bold text-[var(--navy)]/60">{open ? "Fechar −" : "Ver +"}</span>
@@ -1091,7 +1091,7 @@ function PerguntaResgateSection() {
   );
 }
 
-/* MÓDULO 5 — MODO ELITE / APROFUNDAMENTO */
+/* MÓDULO 5. MODO ELITE / APROFUNDAMENTO */
 function ModoEliteSection() {
   const questions = [
     "Quantos anos ele tem?",
@@ -1121,7 +1121,7 @@ function ModoEliteSection() {
             <p className="mt-2 text-sm font-semibold text-[var(--navy)]">Segue em frente.</p>
           </div>
           <div className="rounded-2xl border border-[var(--success)]/40 bg-[var(--success)]/10 p-4">
-            <p className="text-[10px] font-bold uppercase tracking-wider text-[var(--success)]">Planejador elite — aprofunda</p>
+            <p className="text-[10px] font-bold uppercase tracking-wider text-[var(--success)]">Planejador elite, aprofunda</p>
             <ul className="mt-2 grid gap-1.5">
               {questions.map((q) => (
                 <li key={q} className="text-[13.5px] text-[var(--navy)] flex gap-2">
@@ -1136,7 +1136,7 @@ function ModoEliteSection() {
   );
 }
 
-/* MÓDULO 6 — SUBIDA DE NICHO INTELIGENTE */
+/* MÓDULO 6. SUBIDA DE NICHO INTELIGENTE */
 function SubidaNichoInteligenteSection() {
   const levels = [
     { tier: "Básico",       items: ["Amigos", "Colegas", "Familiares"], color: "var(--brand)" },
@@ -1167,7 +1167,7 @@ function SubidaNichoInteligenteSection() {
                 ))}
               </ul>
             </div>
-            {i < levels.length - 1 && (
+            {i < levels.length, 1 && (
               <ArrowDown className="hidden md:block absolute -right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--brand)]/40 rotate-[-90deg]" aria-hidden />
             )}
           </div>
@@ -1180,7 +1180,7 @@ function SubidaNichoInteligenteSection() {
   );
 }
 
-/* MÓDULO 7 — RADAR DE OPORTUNIDADES */
+/* MÓDULO 7. RADAR DE OPORTUNIDADES */
 function RadarOportunidadesSection() {
   const keywords = [
     { w: "Sócio", e: "🤝" }, { w: "Empresa", e: "🏢" }, { w: "Funcionário", e: "👥" },
@@ -1190,7 +1190,7 @@ function RadarOportunidadesSection() {
     { w: "Construtora", e: "🏗️" }, { w: "Patrimônio", e: "💎" },
   ];
   return (
-    <Module id="mod-6" n={6} title="Radar de oportunidades" hook="O cliente entrega recomendações sem perceber — você precisa estar ouvindo.">
+    <Module id="mod-6" n={6} title="Radar de oportunidades" hook="O cliente entrega recomendações sem perceber, você precisa estar ouvindo.">
       <p className="text-[15px] leading-relaxed text-[var(--navy)]">
         Durante a reunião, fique atento às palavras-chave abaixo. Cada uma delas é uma porta aberta
         para aprofundar e descobrir mais um nome qualificado.
@@ -1213,12 +1213,12 @@ function RadarOportunidadesSection() {
   );
 }
 
-/* MÓDULO 8 — PSICOLOGIA */
+/* MÓDULO 8. PSICOLOGIA */
 function PsicologiaSection() {
   const naoIndica = ["Não lembrar.", "Ter medo de incomodar.", "Não enxergar quem poderia se beneficiar.", "Não ter percebido valor suficiente."];
   const indica   = ["Perceber transformação.", "Sentir confiança.", "Entender quem pode ser ajudado.", "Querer compartilhar algo positivo."];
   return (
-    <Module id="mod-7" n={7} title="Psicologia da recomendação" hook="Recomendações são construídas durante toda a reunião — não no final.">
+    <Module id="mod-7" n={7} title="Psicologia da recomendação" hook="Recomendações são construídas durante toda a reunião, não no final.">
       <div className="grid gap-3 md:grid-cols-2">
         <div className="rounded-2xl border-2 border-[var(--danger)]/30 bg-[var(--danger)]/5 p-5">
           <p className="text-[11px] font-bold uppercase tracking-wider text-[var(--danger)]">Cliente NÃO indica por</p>
@@ -1248,7 +1248,7 @@ function PsicologiaSection() {
   );
 }
 
-/* MÓDULO 9 — TOP 1% */
+/* MÓDULO 9. TOP 1% */
 function Top1Section() {
   const comum = ["Pede recomendação.", "Aceita o primeiro não.", "Pega 1 nome.", "Não qualifica.", "Segue para o encerramento."];
   const elite = ["Constrói valor.", "Conduz memória.", "Explora nichos.", "Aprofunda.", "Qualifica.", "Prioriza.", "Sai com 10+ nomes."];
@@ -1292,7 +1292,7 @@ function Top1Section() {
   );
 }
 
-/* MÓDULO 10 — ANATOMIA DE UMA RECOMENDAÇÃO ELITE */
+/* MÓDULO 10. ANATOMIA DE UMA RECOMENDAÇÃO ELITE */
 function AnatomiaSection() {
   const fraca = ["João", "Empresário", "Telefone"];
   const elite = [
@@ -1344,7 +1344,7 @@ function AnatomiaSection() {
   );
 }
 
-/* MÓDULO 11 — MANDAMENTOS */
+/* MÓDULO 11. MANDAMENTOS */
 function MandamentosSection() {
   const mandamentos = [
     "Nunca pergunte “Quem você conhece?”",
