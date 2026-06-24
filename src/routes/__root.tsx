@@ -159,7 +159,9 @@ function RootComponent() {
 
 function TopNav() {
   const [open, setOpen] = useState(false);
+  const [navOpen, setNavOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const navRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -175,6 +177,24 @@ function TopNav() {
       document.removeEventListener("keydown", handleKey);
     };
   }, [open]);
+
+  useEffect(() => {
+    if (!navOpen) return;
+    const handleClick = (e: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(e.target as Node)) setNavOpen(false);
+    };
+    const handleKey = (e: KeyboardEvent) => { if (e.key === "Escape") setNavOpen(false); };
+    document.addEventListener("mousedown", handleClick);
+    document.addEventListener("keydown", handleKey);
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+      document.removeEventListener("keydown", handleKey);
+    };
+  }, [navOpen]);
+
+  useEffect(() => {
+    setNavOpen(false);
+  }, [router.state.location.pathname]);
 
   const goToAnchor = (item: JourneyItem) => {
     setOpen(false);
@@ -197,6 +217,17 @@ function TopNav() {
     treino:   JOURNEY.filter((i) => i.tab === "treino"),
   };
 
+  const NAV_LINKS: Array<{ to: string; label: string; exact?: boolean }> = [
+    { to: "/", label: "Guia da Ligação", exact: true },
+    { to: "/recomendacoes", label: "Recomendações" },
+    { to: "/ligacoes", label: "Ligações" },
+    { to: "/esquentar", label: "Esquentar" },
+    { to: "/prospeccao", label: "Prospecção" },
+  ];
+
+  const desktopActive = "text-white bg-[var(--success)]/20 ring-1 ring-[var(--success)]/50 shadow-[inset_0_-2px_0_var(--success)]";
+  const mobileActive = "text-white bg-[var(--success)]/20 ring-1 ring-[var(--success)]/50 border-l-2 border-[var(--success)]";
+
   return (
     <div className="sticky top-0 z-[60] w-full border-b border-white/10 bg-[var(--navy)]/95 backdrop-blur supports-[backdrop-filter]:bg-[var(--navy)]/80 text-white">
       <div className="mx-auto max-w-7xl px-3 sm:px-6 h-12 flex items-center gap-3">
@@ -208,53 +239,22 @@ function TopNav() {
           <span className="hidden sm:inline">Bull Team</span>
         </Link>
 
-        <span className="hidden sm:block h-5 w-px bg-white/15" aria-hidden />
+        <span className="hidden md:block h-5 w-px bg-white/15" aria-hidden />
 
-        <Link
-          to="/"
-          activeOptions={{ exact: true }}
-          activeProps={{ className: "text-white bg-[var(--success)]/20 ring-1 ring-[var(--success)]/50 shadow-[inset_0_-2px_0_var(--success)]" }}
-          inactiveProps={{ className: "text-white/70 hover:text-white" }}
-          className="rounded-md px-2.5 py-1.5 text-xs font-semibold transition"
-        >
-          Guia da Ligação
-        </Link>
-
-        <Link
-          to="/recomendacoes"
-          activeProps={{ className: "text-white bg-[var(--success)]/20 ring-1 ring-[var(--success)]/50 shadow-[inset_0_-2px_0_var(--success)]" }}
-          inactiveProps={{ className: "text-white/70 hover:text-white" }}
-          className="rounded-md px-2.5 py-1.5 text-xs font-semibold transition"
-        >
-          Recomendações
-        </Link>
-
-        <Link
-          to="/ligacoes"
-          activeProps={{ className: "text-white bg-[var(--success)]/20 ring-1 ring-[var(--success)]/50 shadow-[inset_0_-2px_0_var(--success)]" }}
-          inactiveProps={{ className: "text-white/70 hover:text-white" }}
-          className="rounded-md px-2.5 py-1.5 text-xs font-semibold transition"
-        >
-          Ligações
-        </Link>
-
-        <Link
-          to="/esquentar"
-          activeProps={{ className: "text-white bg-[var(--success)]/20 ring-1 ring-[var(--success)]/50 shadow-[inset_0_-2px_0_var(--success)]" }}
-          inactiveProps={{ className: "text-white/70 hover:text-white" }}
-          className="rounded-md px-2.5 py-1.5 text-xs font-semibold transition"
-        >
-          Esquentar
-        </Link>
-
-        <Link
-          to="/prospeccao"
-          activeProps={{ className: "text-white bg-[var(--success)]/20 ring-1 ring-[var(--success)]/50 shadow-[inset_0_-2px_0_var(--success)]" }}
-          inactiveProps={{ className: "text-white/70 hover:text-white" }}
-          className="rounded-md px-2.5 py-1.5 text-xs font-semibold transition"
-        >
-          Prospecção
-        </Link>
+        <nav className="hidden md:flex items-center gap-3">
+          {NAV_LINKS.map((l) => (
+            <Link
+              key={l.to}
+              to={l.to}
+              activeOptions={l.exact ? { exact: true } : undefined}
+              activeProps={{ className: desktopActive }}
+              inactiveProps={{ className: "text-white/70 hover:text-white" }}
+              className="rounded-md px-2.5 py-1.5 text-xs font-semibold transition"
+            >
+              {l.label}
+            </Link>
+          ))}
+        </nav>
 
         <div ref={ref} className="relative ml-auto">
           <button
@@ -293,6 +293,48 @@ function TopNav() {
                 items={grouped.treino}
                 onPick={goToAnchor}
               />
+            </div>
+          )}
+        </div>
+
+        <div ref={navRef} className="relative md:hidden">
+          <button
+            type="button"
+            aria-label="Abrir menu"
+            aria-haspopup="menu"
+            aria-expanded={navOpen}
+            onClick={() => setNavOpen((o) => !o)}
+            className="inline-flex items-center justify-center rounded-md border border-white/15 bg-white/5 p-2 text-white hover:bg-white/10 transition"
+          >
+            <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden>
+              {navOpen ? (
+                <path fillRule="evenodd" d="M4.3 4.3a1 1 0 011.4 0L10 8.6l4.3-4.3a1 1 0 111.4 1.4L11.4 10l4.3 4.3a1 1 0 01-1.4 1.4L10 11.4l-4.3 4.3a1 1 0 01-1.4-1.4L8.6 10 4.3 5.7a1 1 0 010-1.4z" clipRule="evenodd" />
+              ) : (
+                <path fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm1 4a1 1 0 100 2h12a1 1 0 100-2H4z" clipRule="evenodd" />
+              )}
+            </svg>
+          </button>
+
+          {navOpen && (
+            <div
+              role="menu"
+              className="absolute right-0 mt-2 w-[min(85vw,18rem)] overflow-hidden rounded-2xl border border-white/10 bg-[var(--navy)] text-white shadow-2xl ring-1 ring-black/40"
+            >
+              <nav className="flex flex-col py-2">
+                {NAV_LINKS.map((l) => (
+                  <Link
+                    key={l.to}
+                    to={l.to}
+                    activeOptions={l.exact ? { exact: true } : undefined}
+                    onClick={() => setNavOpen(false)}
+                    activeProps={{ className: mobileActive }}
+                    inactiveProps={{ className: "text-white/80 hover:bg-white/5 border-l-2 border-transparent" }}
+                    className="px-4 py-2.5 text-sm font-semibold transition"
+                  >
+                    {l.label}
+                  </Link>
+                ))}
+              </nav>
             </div>
           )}
         </div>
