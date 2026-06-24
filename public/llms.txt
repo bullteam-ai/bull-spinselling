@@ -1,0 +1,13 @@
+# Bull Team — Passo a Passo Elite
+
+> Plataforma de treinamento e execução para planejadores financeiros: scripts de ligação, condução de recomendações e metodologia SPIN Selling aplicada a reuniões de alta performance.
+
+## Pages
+
+- [Home](/): Visão geral do guia Bull Team e acesso rápido aos módulos de execução e treinamento.
+- [Passo a Passo de Recomendações Elite](/recomendacoes): Roteiro com modo Execução e modo Treinamento Elite para gerar 10+ recomendações qualificadas por reunião.
+- [Ligações Elite](/ligacoes): Scripts e treinamento para ligações de confirmação, reagendamento, recuperação e captação de recomendações.
+
+## Blog
+
+- [Como Aplicar SPIN Selling: Guia Prático](/blog/como-aplicar-spin-selling): Guia passo a passo da metodologia SPIN aplicada a reuniões de planejamento financeiro, com exemplos, erros comuns e workbook.
