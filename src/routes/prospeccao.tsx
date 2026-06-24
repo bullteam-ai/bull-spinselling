@@ -51,9 +51,15 @@ type Etapa = {
   titulo: string;
   objetivo: string;
   regra?: string;
-  bullets: { eyebrow: string; itens: string[] }[];
-  erros?: string[];
+  bullets?: { eyebrow: string; itens: string[] }[];
+  queroDescobrir?: string[];
+  perguntas?: string[];
+  ouvir?: string[];
+  comoAvancar?: { eyebrow: string; texto: string }[];
   exemplos?: { eyebrow: string; texto: string }[];
+  objecoes?: { q: string; a: string }[];
+  modulo?: { eyebrow: string; itens: string[] }[];
+  erros?: string[];
   icon: React.ReactNode;
 };
 
