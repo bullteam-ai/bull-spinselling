@@ -1422,6 +1422,8 @@ const GOALS: Goal[] = [
 
 function Index() {
   const [openGoal, setOpenGoal] = useState<string | null>(null);
+  const [callType, setCallType] = useState<"amigo" | "recomendacao">("amigo");
+  const [showCompare, setShowCompare] = useState(false);
   const [copied, setCopied] = useState(false);
   const [copiedClosing, setCopiedClosing] = useState(false);
   const [openObjection, setOpenObjection] = useState<number | null>(0);
