@@ -14,6 +14,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { JOURNEY, type JourneyItem } from "./recomendacoes";
 import { FocusMode } from "../components/FocusMode";
 import { ContentProvider, useContent } from "../lib/content/ContentContext";
+import { UniversalEdit } from "../lib/content/UniversalEdit";
 
 function NotFoundComponent() {
   return (
@@ -157,6 +158,7 @@ function RootComponent() {
         {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
         <Outlet />
         <FocusMode />
+        <UniversalEdit />
       </ContentProvider>
     </QueryClientProvider>
   );
