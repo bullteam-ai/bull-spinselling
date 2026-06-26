@@ -13,6 +13,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { JOURNEY, type JourneyItem } from "./recomendacoes";
 import { FocusMode } from "../components/FocusMode";
+import { ContentProvider, useContent } from "../lib/content/ContentContext";
 
 function NotFoundComponent() {
   return (
@@ -151,10 +152,12 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <TopNav />
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
-      <FocusMode />
+      <ContentProvider>
+        <TopNav />
+        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+        <Outlet />
+        <FocusMode />
+      </ContentProvider>
     </QueryClientProvider>
   );
 }

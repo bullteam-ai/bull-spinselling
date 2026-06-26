@@ -13,6 +13,7 @@ import { Route as RecomendacoesRouteImport } from './routes/recomendacoes'
 import { Route as ProspeccaoRouteImport } from './routes/prospeccao'
 import { Route as LigacoesRouteImport } from './routes/ligacoes'
 import { Route as EsquentarRouteImport } from './routes/esquentar'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogComoAplicarSpinSellingRouteImport } from './routes/blog.como-aplicar-spin-selling'
 
@@ -36,6 +37,11 @@ const EsquentarRoute = EsquentarRouteImport.update({
   path: '/esquentar',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -50,6 +56,7 @@ const BlogComoAplicarSpinSellingRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/esquentar': typeof EsquentarRoute
   '/ligacoes': typeof LigacoesRoute
   '/prospeccao': typeof ProspeccaoRoute
@@ -58,6 +65,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/esquentar': typeof EsquentarRoute
   '/ligacoes': typeof LigacoesRoute
   '/prospeccao': typeof ProspeccaoRoute
@@ -67,6 +75,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/esquentar': typeof EsquentarRoute
   '/ligacoes': typeof LigacoesRoute
   '/prospeccao': typeof ProspeccaoRoute
@@ -77,6 +86,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/auth'
     | '/esquentar'
     | '/ligacoes'
     | '/prospeccao'
@@ -85,6 +95,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/auth'
     | '/esquentar'
     | '/ligacoes'
     | '/prospeccao'
@@ -93,6 +104,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/auth'
     | '/esquentar'
     | '/ligacoes'
     | '/prospeccao'
@@ -102,6 +114,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRoute: typeof AuthRoute
   EsquentarRoute: typeof EsquentarRoute
   LigacoesRoute: typeof LigacoesRoute
   ProspeccaoRoute: typeof ProspeccaoRoute
@@ -139,6 +152,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EsquentarRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -158,6 +178,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRoute: AuthRoute,
   EsquentarRoute: EsquentarRoute,
   LigacoesRoute: LigacoesRoute,
   ProspeccaoRoute: ProspeccaoRoute,
