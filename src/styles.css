@@ -159,6 +159,58 @@
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 
+  /* Smooth scroll + offset so sticky TopNav/sub-nav don't cover anchor targets */
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 96px;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* Prevent horizontal overflow on small screens */
+  html, body {
+    overflow-x: hidden;
+  }
+
+  /* Momentum scrolling for any horizontal chip bars / overflow containers */
+  .overflow-x-auto,
+  [class*="overflow-x-auto"] {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    overscroll-behavior-x: contain;
+  }
+
+  /* Mobile: enforce minimum 44x44 tap targets on interactive elements
+     (Apple HIG / WCAG 2.5.5). Scoped to coarse pointers so desktop UI is untouched. */
+  @media (max-width: 768px) and (pointer: coarse) {
+    button,
+    a[role="button"],
+    [role="button"],
+    summary,
+    label[for],
+    select,
+    input[type="button"],
+    input[type="submit"],
+    input[type="reset"],
+    input[type="checkbox"],
+    input[type="radio"] {
+      min-height: 44px;
+    }
+
+    /* Inputs comfortable on touch and avoid iOS zoom on focus (font < 16px triggers zoom) */
+    input:not([type="checkbox"]):not([type="radio"]),
+    select,
+    textarea {
+      font-size: 16px;
+      min-height: 44px;
+    }
+
+    /* Slightly larger tap area for nav links / chips */
+    nav a,
+    nav button {
+      padding-block: 0.5rem;
+    }
+  }
+
   /* Global keyboard focus ring — visible on every interactive element */
   :where(a, button, [role="button"], input, select, textarea, summary, [tabindex]):focus-visible {
     outline: 2px solid var(--brand);
