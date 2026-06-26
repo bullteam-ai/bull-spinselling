@@ -363,44 +363,6 @@ function TopNav() {
             <span className="hidden sm:inline">{videoCall ? "Video Call ON" : "Modo Video Call"}</span>
             <span className="sm:hidden">{videoCall ? "ON" : "VC"}</span>
           </button>
-          <button
-            type="button"
-            aria-haspopup="menu"
-            aria-expanded={open}
-            onClick={() => setOpen((o) => !o)}
-            className="inline-flex items-center gap-2 rounded-full border border-[var(--success)]/40 bg-[var(--success)]/15 px-3 py-1.5 text-xs font-semibold text-white hover:bg-[var(--success)]/25 transition"
-          >
-            <span aria-hidden>🎯</span>
-            <span className="hidden sm:inline">Passo a Passo de Recomendações</span>
-            <span className="sm:hidden">Passo a Passo</span>
-            <svg
-              className={`h-3.5 w-3.5 transition-transform ${open ? "rotate-180" : ""}`}
-              viewBox="0 0 20 20" fill="currentColor" aria-hidden
-            >
-              <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clipRule="evenodd" />
-            </svg>
-          </button>
-
-          {open && (
-            <div
-              role="menu"
-              className="absolute right-0 mt-2 w-[min(92vw,28rem)] max-h-[70vh] overflow-y-auto rounded-2xl border border-border bg-white text-[var(--navy)] shadow-2xl ring-1 ring-black/5"
-            >
-              <DropdownGroup
-                label="Execução"
-                accent="var(--success)"
-                items={grouped.execucao}
-                onPick={goToAnchor}
-              />
-              <div className="border-t border-border" />
-              <DropdownGroup
-                label="Treinamento Elite"
-                accent="var(--brand)"
-                items={grouped.treino}
-                onPick={goToAnchor}
-              />
-            </div>
-          )}
         </div>
 
         <div ref={navRef} className="relative md:hidden">
