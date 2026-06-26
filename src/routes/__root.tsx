@@ -160,9 +160,28 @@ function RootComponent() {
 function TopNav() {
   const [open, setOpen] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
+  const [videoCall, setVideoCall] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const navRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+
+  // Hydrate Modo Video Call from localStorage and reflect on <html>
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("bt:video-call") === "1";
+      setVideoCall(saved);
+      document.documentElement.classList.toggle("video-call", saved);
+    } catch {}
+  }, []);
+
+  const toggleVideoCall = () => {
+    setVideoCall((v) => {
+      const next = !v;
+      try { localStorage.setItem("bt:video-call", next ? "1" : "0"); } catch {}
+      document.documentElement.classList.toggle("video-call", next);
+      return next;
+    });
+  };
 
   useEffect(() => {
     if (!open) return;
@@ -257,6 +276,21 @@ function TopNav() {
         </nav>
 
         <div ref={ref} className="relative ml-auto">
+          <button
+            type="button"
+            onClick={toggleVideoCall}
+            aria-pressed={videoCall}
+            title="Modo Video Call: tipografia maior, menos distrações"
+            className={`mr-2 inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1.5 text-xs font-semibold transition ${
+              videoCall
+                ? "border-[var(--success)] bg-[var(--success)]/25 text-white"
+                : "border-white/15 bg-white/5 text-white/80 hover:bg-white/10"
+            }`}
+          >
+            <span aria-hidden>{videoCall ? "🟢" : "🎥"}</span>
+            <span className="hidden sm:inline">{videoCall ? "Video Call ON" : "Modo Video Call"}</span>
+            <span className="sm:hidden">{videoCall ? "ON" : "VC"}</span>
+          </button>
           <button
             type="button"
             aria-haspopup="menu"

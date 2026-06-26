@@ -230,3 +230,64 @@
     }
   }
 }
+
+/* =========================================================
+   MODO VIDEO CALL
+   Toggled by adding class "video-call" on <html> (TopNav button).
+   Goal: limpar a tela durante a ligação — tipografia maior,
+   menos cromo decorativo, foco no roteiro.
+   ========================================================= */
+.video-call {
+  font-size: 18px; /* eleva o rem base: tudo escala junto */
+}
+
+@media (min-width: 1024px) {
+  .video-call {
+    font-size: 19px;
+  }
+}
+
+.video-call body {
+  line-height: 1.65;
+  letter-spacing: 0.005em;
+}
+
+/* Headings com mais respiro */
+.video-call h1 { line-height: 1.15; letter-spacing: -0.01em; }
+.video-call h2, .video-call h3 { line-height: 1.25; }
+
+/* Hide decorative / non-essential elements explicitly opted-in via data attr */
+.video-call [data-vc-hide],
+.video-call [data-decorative="true"] {
+  display: none !important;
+}
+
+/* Reduzir ruído visual: gradientes/animations decorativas mais discretas */
+.video-call .animate-pulse,
+.video-call .animate-bounce,
+.video-call .animate-spin:not([role]) {
+  animation: none !important;
+}
+
+/* Foco em conteúdo: ampliar containers principais (max-w-3xl/4xl viram mais generosos) */
+.video-call main,
+.video-call [role="main"] {
+  font-size: 1.02em;
+}
+
+/* Code/Quote blocks (scripts de ligação) ganham destaque */
+.video-call blockquote,
+.video-call .script-block,
+.video-call [data-vc-emphasize] {
+  font-size: 1.08em;
+  line-height: 1.6;
+}
+
+/* TopNav fica mais compacto para liberar espaço vertical */
+.video-call .sticky.top-0 nav a,
+.video-call .sticky.top-0 nav button { padding-block: 0.25rem; }
+
+/* Imprimir/exportar: nunca incluir o estado do modo na rota */
+@media print {
+  .video-call { font-size: 16px; }
+}
