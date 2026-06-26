@@ -2220,7 +2220,6 @@ function Index() {
                       onClick={() => toggleGoal(g.id)}
                       aria-expanded={open}
                       aria-controls={panelId}
-                      data-no-edit
                       className={`group relative flex min-h-[120px] sm:min-h-[152px] flex-col items-start justify-between gap-3 overflow-hidden rounded-3xl border p-4 sm:p-6 text-left transition-all motion-reduce:transition-none ${
                         open
                           ? "border-[var(--brand)] bg-gradient-to-br from-[var(--brand)]/10 via-white to-[var(--brand)]/5 shadow-xl shadow-[var(--brand)]/15 ring-1 ring-[var(--brand)]/30"
