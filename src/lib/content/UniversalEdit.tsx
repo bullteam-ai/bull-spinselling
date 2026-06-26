@@ -96,10 +96,11 @@ export function UniversalEdit() {
           el.style.outline = "1px dashed rgba(59,130,246,0.6)";
           if (newText && newText !== original) {
             try { await save(id, newText); el.setAttribute("data-edit-original", newText); }
-            catch (err) {
-              const msg = err instanceof Error ? err.message : String(err);
+            catch (err: unknown) {
+              const e = err as { message?: string; details?: string; hint?: string; code?: string };
+              const msg = e?.message || e?.details || e?.hint || JSON.stringify(err);
               console.error("[universal-edit] save failed", err);
-              alert("Erro ao salvar: " + msg);
+              alert("Erro ao salvar: " + msg + (e?.code ? ` (code ${e.code})` : ""));
               el.textContent = original;
             }
           } else if (!newText) {
