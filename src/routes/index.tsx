@@ -2555,7 +2555,30 @@ function Index() {
                       </div>
                     </div>
 
-                    {/* 6️⃣ Reforço de Valor */}
+                    {/* 6️⃣ O Que Acontece Agora */}
+                    <div id="fechamento-comparecimento" className="scroll-mt-44 rounded-2xl border border-white/10 bg-white/5 p-5 sm:p-6 backdrop-blur">
+                      <div className="flex items-center gap-3">
+                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--success)] text-lg shadow-lg shadow-[var(--success)]/30">📋</span>
+                        <div>
+                          <h3 className="text-lg font-bold">O Que Acontece Agora</h3>
+                          <p className="text-xs text-white/60">Deixar o cliente animado para a reunião</p>
+                        </div>
+                      </div>
+                      <div className="mt-4 rounded-xl border border-white/10 bg-white/5 p-5 text-white/90 leading-relaxed whitespace-pre-line">
+                        {CLOSING_SCRIPT}
+                      </div>
+                      <button
+                        type="button"
+                        onClick={copyClosingScript}
+                        aria-live="polite"
+                        className="mt-5 inline-flex min-h-12 items-center gap-2 rounded-xl bg-[var(--success)] px-5 py-3 text-sm font-semibold text-[var(--navy)] shadow-lg shadow-[var(--success)]/25 transition hover:brightness-105 active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100"
+                      >
+                        {copiedClosing ? <Check aria-hidden className="h-4 w-4" /> : <ClipboardCopy aria-hidden className="h-4 w-4" />}
+                        {copiedClosing ? "Script copiado!" : "📌 Copiar Script"}
+                      </button>
+                    </div>
+
+                    {/* 7️⃣ Reforço de Valor */}
                     <div className="rounded-2xl border border-white/10 bg-white/5 p-5 sm:p-6 backdrop-blur">
                       <div className="flex items-center gap-3">
                         <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--warn)] text-[var(--navy)] text-lg shadow-lg shadow-[var(--warn)]/30">💎</span>
@@ -2580,29 +2603,6 @@ function Index() {
                       <p className="mt-4 rounded-xl border border-[var(--warn)]/30 bg-[var(--warn)]/10 p-4 text-sm font-semibold text-white/95 text-center">
                         &ldquo;O cliente deve encerrar a ligação acreditando que essa pode ser uma das reuniões mais importantes da vida financeira dele.&rdquo;
                       </p>
-                    </div>
-
-                    {/* 7️⃣ Resumo do Processo */}
-                    <div id="fechamento-comparecimento" className="scroll-mt-44 rounded-2xl border border-white/10 bg-white/5 p-5 sm:p-6 backdrop-blur">
-                      <div className="flex items-center gap-3">
-                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--success)] text-lg shadow-lg shadow-[var(--success)]/30">📋</span>
-                        <div>
-                          <h3 className="text-lg font-bold">O Que Acontece Agora</h3>
-                          <p className="text-xs text-white/60">Deixar o cliente animado para a reunião</p>
-                        </div>
-                      </div>
-                      <div className="mt-4 rounded-xl border border-white/10 bg-white/5 p-5 text-white/90 leading-relaxed whitespace-pre-line">
-                        {CLOSING_SCRIPT}
-                      </div>
-                      <button
-                        type="button"
-                        onClick={copyClosingScript}
-                        aria-live="polite"
-                        className="mt-5 inline-flex min-h-12 items-center gap-2 rounded-xl bg-[var(--success)] px-5 py-3 text-sm font-semibold text-[var(--navy)] shadow-lg shadow-[var(--success)]/25 transition hover:brightness-105 active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100"
-                      >
-                        {copiedClosing ? <Check aria-hidden className="h-4 w-4" /> : <ClipboardCopy aria-hidden className="h-4 w-4" />}
-                        {copiedClosing ? "Script copiado!" : "📌 Copiar Script"}
-                      </button>
                     </div>
                   </div>
                 </div>
