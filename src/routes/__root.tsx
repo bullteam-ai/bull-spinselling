@@ -12,6 +12,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { JOURNEY, type JourneyItem } from "./recomendacoes";
+import { FocusMode } from "../components/FocusMode";
 
 function NotFoundComponent() {
   return (
@@ -153,6 +154,7 @@ function RootComponent() {
       <TopNav />
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
+      <FocusMode />
     </QueryClientProvider>
   );
 }
@@ -161,6 +163,7 @@ function TopNav() {
   const [open, setOpen] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
   const [videoCall, setVideoCall] = useState(false);
+  const [focusActive, setFocusActive] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const navRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -173,6 +176,20 @@ function TopNav() {
       document.documentElement.classList.toggle("video-call", saved);
     } catch {}
   }, []);
+
+  // Reflect FocusMode active state broadcast by the component
+  useEffect(() => {
+    const onState = (e: Event) => {
+      const ce = e as CustomEvent<{ active: boolean }>;
+      setFocusActive(!!ce.detail?.active);
+    };
+    window.addEventListener("bt:focus-state", onState as EventListener);
+    return () => window.removeEventListener("bt:focus-state", onState as EventListener);
+  }, []);
+
+  const toggleFocus = () => {
+    window.dispatchEvent(new CustomEvent("bt:focus-toggle"));
+  };
 
   const toggleVideoCall = () => {
     setVideoCall((v) => {
@@ -276,6 +293,21 @@ function TopNav() {
         </nav>
 
         <div ref={ref} className="relative ml-auto">
+          <button
+            type="button"
+            onClick={toggleFocus}
+            aria-pressed={focusActive}
+            title="Modo Foco: mostra só o passo atual do roteiro"
+            className={`mr-2 inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1.5 text-xs font-semibold transition ${
+              focusActive
+                ? "border-[var(--success)] bg-[var(--success)]/25 text-white"
+                : "border-white/15 bg-white/5 text-white/80 hover:bg-white/10"
+            }`}
+          >
+            <span aria-hidden>{focusActive ? "🎯" : "🔎"}</span>
+            <span className="hidden sm:inline">{focusActive ? "Foco ON" : "Modo Foco"}</span>
+            <span className="sm:hidden">{focusActive ? "ON" : "Foco"}</span>
+          </button>
           <button
             type="button"
             onClick={toggleVideoCall}

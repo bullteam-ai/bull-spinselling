@@ -291,3 +291,41 @@
 @media print {
   .video-call { font-size: 16px; }
 }
+
+/* =========================================================
+   MODO FOCO
+   Toggled by class "focus-mode" on <html>. Esconde tudo,
+   exceto a <section> do passo atual no <main>. Sticky bars
+   (TopNav, sub-navs) também somem para liberar a tela.
+   ========================================================= */
+.focus-mode main > section[id][data-focus-hidden="true"] {
+  display: none !important;
+}
+
+/* Esconde elementos sticky/decorativos durante a chamada */
+.focus-mode .sticky:not([data-focus-keep]) {
+  position: static !important;
+  /* TopNav é o pai do FocusMode também — usamos data-focus-keep abaixo */
+}
+
+/* Mantém o TopNav (necessário para o botão de sair) discreto e fixo */
+.focus-mode > body > div.sticky.top-0,
+.focus-mode body > div.sticky.top-0 {
+  position: sticky !important;
+  top: 0 !important;
+}
+
+/* Reserva espaço inferior para a barra de controles flutuante */
+.focus-mode main {
+  padding-bottom: 7rem !important;
+}
+
+/* Esconde sidebars / colunas auxiliares (qualquer aside dentro do main) */
+.focus-mode main aside {
+  display: none !important;
+}
+
+/* Quando Video Call também está ativo, dá ainda mais respiro */
+.focus-mode.video-call main > section[id]:not([data-focus-hidden="true"]) {
+  font-size: 1.04em;
+}
