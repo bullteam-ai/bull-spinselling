@@ -72,6 +72,10 @@ export function UniversalEdit() {
         const el = node as HTMLElement;
         if (el.dataset.editActive === "1") return;
         if (el.closest("[data-no-edit]")) return;
+        // Skip interactive elements so their click handlers (toggle, navigate) keep working.
+        // Their inner text leaves (p, span, etc.) remain editable.
+        const tag = el.tagName.toLowerCase();
+        if (tag === "button" || tag === "a" || tag === "summary") return;
         if (!isLeafText(el)) return;
         const original = el.getAttribute("data-edit-original") ?? (el.textContent ?? "").trim();
         if (!original) return;
