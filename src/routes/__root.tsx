@@ -13,6 +13,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { JOURNEY, type JourneyItem } from "./recomendacoes";
 import { FocusMode } from "../components/FocusMode";
+import { ContentProvider, useContent } from "../lib/content/ContentContext";
 
 function NotFoundComponent() {
   return (
@@ -151,10 +152,12 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <TopNav />
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
-      <FocusMode />
+      <ContentProvider>
+        <TopNav />
+        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+        <Outlet />
+        <FocusMode />
+      </ContentProvider>
     </QueryClientProvider>
   );
 }
@@ -164,6 +167,7 @@ function TopNav() {
   const [navOpen, setNavOpen] = useState(false);
   const [videoCall, setVideoCall] = useState(false);
   const [focusActive, setFocusActive] = useState(false);
+  const { session, isAdmin, editMode, toggleEditMode, signOut } = useContent();
   const ref = useRef<HTMLDivElement>(null);
   const navRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -293,6 +297,42 @@ function TopNav() {
         </nav>
 
         <div ref={ref} className="relative ml-auto">
+          {isAdmin && (
+            <button
+              type="button"
+              onClick={toggleEditMode}
+              aria-pressed={editMode}
+              title="Modo Edição: clique nos textos para editar"
+              className={`mr-2 inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1.5 text-xs font-semibold transition ${
+                editMode
+                  ? "border-yellow-400 bg-yellow-400/25 text-white"
+                  : "border-white/15 bg-white/5 text-white/80 hover:bg-white/10"
+              }`}
+            >
+              <span aria-hidden>✏️</span>
+              <span className="hidden sm:inline">{editMode ? "Editando" : "Modo Edição"}</span>
+              <span className="sm:hidden">{editMode ? "EDIT" : "Edit"}</span>
+            </button>
+          )}
+          {session ? (
+            <button
+              type="button"
+              onClick={signOut}
+              title={session.user.email ?? "Sair"}
+              className="mr-2 inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-2.5 py-1.5 text-xs font-semibold text-white/80 hover:bg-white/10 transition"
+            >
+              <span aria-hidden>🚪</span>
+              <span className="hidden sm:inline">Sair</span>
+            </button>
+          ) : (
+            <Link
+              to="/auth"
+              className="mr-2 inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-2.5 py-1.5 text-xs font-semibold text-white/80 hover:bg-white/10 transition"
+            >
+              <span aria-hidden>🔐</span>
+              <span className="hidden sm:inline">Entrar</span>
+            </Link>
+          )}
           <button
             type="button"
             onClick={toggleFocus}
