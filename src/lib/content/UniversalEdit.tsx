@@ -62,7 +62,22 @@ export function UniversalEdit() {
     const r1 = requestAnimationFrame(apply);
     const t1 = setTimeout(apply, 250);
     const t2 = setTimeout(apply, 1000);
-    return () => { cancelled = true; cancelAnimationFrame(r1); clearTimeout(t1); clearTimeout(t2); };
+    // Watch for dynamically mounted nodes (expanding cards, tab switches, etc.)
+    const root = document.querySelector("main") ?? document.body;
+    let scheduled = false;
+    const observer = new MutationObserver(() => {
+      if (scheduled) return;
+      scheduled = true;
+      requestAnimationFrame(() => { scheduled = false; apply(); });
+    });
+    observer.observe(root, { childList: true, subtree: true });
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(r1);
+      clearTimeout(t1);
+      clearTimeout(t2);
+      observer.disconnect();
+    };
   }, [pathname, get]);
 
   // Toggle contentEditable when in edit mode
