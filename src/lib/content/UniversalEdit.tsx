@@ -12,7 +12,13 @@ function hash(str: string): string {
 const LEAF_SELECTOR =
   "h1,h2,h3,h4,h5,h6,p,li,button,a,span,strong,em,td,th,blockquote,label,figcaption,summary";
 
+const EDITABLE_TEXT_SELECTOR = `${LEAF_SELECTOR},[data-editable-text]`;
+
 function isLeafText(el: Element): boolean {
+  if (el.hasAttribute("data-editable-text")) {
+    const t = (el.textContent ?? "").trim();
+    return t.length >= 2 && t.length <= 5000;
+  }
   // No child element with own text (only text nodes inside)
   for (const c of Array.from(el.children)) {
     if (c.matches(LEAF_SELECTOR)) return false;
@@ -37,7 +43,7 @@ export function UniversalEdit() {
     const apply = () => {
       if (cancelled) return;
       const root = document.querySelector("main") ?? document.body;
-      const els = root.querySelectorAll(LEAF_SELECTOR);
+      const els = root.querySelectorAll(EDITABLE_TEXT_SELECTOR);
       els.forEach((el) => {
         if (el.closest("[data-no-edit]")) return;
         if (!isLeafText(el)) return;
@@ -67,7 +73,7 @@ export function UniversalEdit() {
     const cleanups: Array<() => void> = [];
     const activate = () => {
       const root = document.querySelector("main") ?? document.body;
-      const els = root.querySelectorAll(LEAF_SELECTOR);
+      const els = root.querySelectorAll(EDITABLE_TEXT_SELECTOR);
       els.forEach((node) => {
         const el = node as HTMLElement;
         if (el.dataset.editActive === "1") return;

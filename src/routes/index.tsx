@@ -2564,7 +2564,7 @@ function Index() {
                           <p className="text-xs text-white/60">Deixar o cliente animado para a reunião</p>
                         </div>
                       </div>
-                      <div className="mt-4 rounded-xl border border-white/10 bg-white/5 p-5 text-white/90 leading-relaxed whitespace-pre-line">
+                      <div data-editable-text className="mt-4 rounded-xl border border-white/10 bg-white/5 p-5 text-white/90 leading-relaxed whitespace-pre-line">
                         {CLOSING_SCRIPT}
                       </div>
                       <button
