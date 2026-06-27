@@ -112,25 +112,39 @@ export function UniversalEdit() {
         el.style.cursor = "text";
 
         const onFocus = () => { el.style.outline = "2px solid rgba(59,130,246,1)"; };
+        let debounceTimer: ReturnType<typeof setTimeout> | null = null;
+        let lastSaved = original;
+        const persist = async (newText: string) => {
+          if (!newText || newText === lastSaved) return;
+          try {
+            await save(id, newText);
+            lastSaved = newText;
+            el.setAttribute("data-edit-original", newText);
+          } catch (err: unknown) {
+            const e = err as { message?: string; details?: string; hint?: string; code?: string };
+            const msg = e?.message || e?.details || e?.hint || JSON.stringify(err);
+            console.error("[universal-edit] save failed", err);
+            alert("Erro ao salvar: " + msg + (e?.code ? ` (code ${e.code})` : ""));
+          }
+        };
+        const onInput = () => {
+          if (debounceTimer) clearTimeout(debounceTimer);
+          const snapshot = (el.textContent ?? "").trim();
+          debounceTimer = setTimeout(() => { void persist(snapshot); }, 600);
+        };
         const onBlurOrEnter = async () => {
           const newText = (el.textContent ?? "").trim();
           el.style.outline = "1px dashed rgba(59,130,246,0.6)";
-          if (newText && newText !== original) {
-            try { await save(id, newText); el.setAttribute("data-edit-original", newText); }
-            catch (err: unknown) {
-              const e = err as { message?: string; details?: string; hint?: string; code?: string };
-              const msg = e?.message || e?.details || e?.hint || JSON.stringify(err);
-              console.error("[universal-edit] save failed", err);
-              alert("Erro ao salvar: " + msg + (e?.code ? ` (code ${e.code})` : ""));
-              el.textContent = original;
-            }
-          } else if (!newText) {
-            el.textContent = original;
+          if (debounceTimer) { clearTimeout(debounceTimer); debounceTimer = null; }
+          if (newText) {
+            await persist(newText);
+          } else {
+            el.textContent = lastSaved;
           }
         };
         const onKey = (ev: KeyboardEvent) => {
           if (ev.key === "Enter" && !ev.shiftKey) { ev.preventDefault(); el.blur(); }
-          if (ev.key === "Escape") { el.textContent = el.getAttribute("data-edit-original") ?? ""; el.blur(); }
+          if (ev.key === "Escape") { el.textContent = lastSaved; el.blur(); }
         };
         const onClick = (ev: MouseEvent) => {
           // Prevent navigation when editing links/buttons
@@ -139,11 +153,14 @@ export function UniversalEdit() {
         };
         el.addEventListener("focus", onFocus);
         el.addEventListener("blur", onBlurOrEnter);
+        el.addEventListener("input", onInput);
         el.addEventListener("keydown", onKey);
         el.addEventListener("click", onClick, true);
         cleanups.push(() => {
+          if (debounceTimer) clearTimeout(debounceTimer);
           el.removeEventListener("focus", onFocus);
           el.removeEventListener("blur", onBlurOrEnter);
+          el.removeEventListener("input", onInput);
           el.removeEventListener("keydown", onKey);
           el.removeEventListener("click", onClick, true);
           el.removeAttribute("contenteditable");
