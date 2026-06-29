@@ -37,6 +37,25 @@ type Block = {
 
 type Objection = { q: string; a: string };
 
+/**
+ * Quebra um script longo em parágrafos visuais.
+ * Insere quebras antes de marcadores como "Opção N", "Gatilho:",
+ * "Gatilho ativado", além de respeitar \n já existentes.
+ */
+function formatScript(raw: string): string {
+  if (!raw) return raw;
+  let s = raw.replace(/\r\n/g, "\n");
+  // dupla quebra antes de "Opção N"
+  s = s.replace(/\s*(Opção\s*\d+[^)]*\))/g, "\n\n$1");
+  // quebra antes de "Gatilho:" ou "Gatilho ativado"
+  s = s.replace(/\s*(Gatilho(?:\s+ativado)?\s*:?)/g, "\n$1");
+  // quebra antes de tópicos com bullets curtos tipo "Empatia.", "Aversão à perda"
+  s = s.replace(/\.(\s*)(Aversão à perda|Valor da reunião|Fechamento assumido|Empatia)/g, ".\n• $2");
+  // colapsa 3+ quebras
+  s = s.replace(/\n{3,}/g, "\n\n").trim();
+  return s;
+}
+
 type CallType = {
   id: string;
   label: string;
