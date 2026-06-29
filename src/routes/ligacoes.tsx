@@ -44,15 +44,40 @@ type Objection = { q: string; a: string };
  */
 function formatScript(raw: string): string {
   if (!raw) return raw;
-  let s = raw.replace(/\r\n/g, "\n");
-  // dupla quebra antes de "Opção N"
-  s = s.replace(/\s*(Opção\s*\d+[^)]*\))/g, "\n\n$1");
-  // quebra antes de "Gatilho:" ou "Gatilho ativado"
-  s = s.replace(/\s*(Gatilho(?:\s+ativado)?\s*:?)/g, "\n$1");
-  // quebra antes de tópicos com bullets curtos tipo "Empatia.", "Aversão à perda"
-  s = s.replace(/\.(\s*)(Aversão à perda|Valor da reunião|Fechamento assumido|Empatia)/g, ".\n• $2");
-  // colapsa 3+ quebras
-  s = s.replace(/\n{3,}/g, "\n\n").trim();
+  let s = raw.replace(/\r\n/g, "\n").trim();
+
+  // Garante quebra dupla antes de "Opção N (…)" — novo bloco.
+  s = s.replace(/\s*(Opção\s*\d+[^\n]*?\))\s*/g, "\n\n$1\n");
+
+  // Após o título "Opção N (…)", se vier aspas abrindo um script, mantém na linha de baixo.
+  s = s.replace(/(Opção\s*\d+[^\n]*?\))\n+([“"])/g, "$1\n$2");
+
+  // Quebra antes de "Gatilho:" e "Gatilho ativado" — sempre em linha própria.
+  s = s.replace(/\s*(Gatilho(?:\s+ativado)?\s*:?)/g, "\n\n$1 ");
+
+  // Bullets para marcadores finais comuns ("Empatia.", "Aversão à perda (…).", "Valor…", "Fechamento…").
+  const bulletTerms = [
+    "Empatia",
+    "Aversão à perda",
+    "Valor da reunião",
+    "Fechamento assumido",
+    "Urgência",
+    "Autoridade",
+    "Contraste",
+    "Projeção de futuro",
+    "Quebra da procrastinação",
+    "Medo do arrependimento",
+  ];
+  for (const term of bulletTerms) {
+    const re = new RegExp(`(?:^|[.\\s])(${term}(?:[^\\n.]{0,80}\\.)?)`, "g");
+    s = s.replace(re, (match, g1) => `\n• ${g1.trim()}`);
+  }
+
+  // Fecha aspas com quebra para destacar o final de cada opção.
+  s = s.replace(/([”"])\s*(?=Gatilho|Opção|\n|$)/g, "$1\n");
+
+  // Normaliza: tira espaços antes de \n, colapsa 3+ quebras.
+  s = s.replace(/[ \t]+\n/g, "\n").replace(/\n{3,}/g, "\n\n").trim();
   return s;
 }
 
