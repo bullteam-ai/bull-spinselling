@@ -1103,8 +1103,11 @@ function BlockCard({
             {copied ? "Copiado" : "Copiar"}
           </button>
         </div>
-        <blockquote className="mt-2 text-[15px] sm:text-base leading-relaxed text-[var(--navy)]">
-          “{block.script}”
+        <blockquote
+          data-editable-text
+          className="mt-2 text-[15px] sm:text-base leading-relaxed text-[var(--navy)] whitespace-pre-line"
+        >
+          {`“${formatScript(block.script)}”`}
         </blockquote>
 
         {/* GATILHO */}
