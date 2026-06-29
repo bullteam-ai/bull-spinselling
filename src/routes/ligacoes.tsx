@@ -1107,6 +1107,79 @@ function SectionHeader({
   );
 }
 
+/**
+ * Bloco do script editável com prévia ao vivo do formatScript.
+ * Quando o admin está em Modo Edição, mostra um painel abaixo do
+ * blockquote com o resultado formatado em tempo real (debounced).
+ */
+function ScriptEditable({ script, accent }: { script: string; accent: string }) {
+  const { isAdmin, editMode } = useContent();
+  const ref = useRef<HTMLQuoteElement | null>(null);
+  const initial = useMemo(() => `“${formatScript(script)}”`, [script]);
+  const [preview, setPreview] = useState(initial);
+  const [showPreview, setShowPreview] = useState(true);
+
+  useEffect(() => { setPreview(initial); }, [initial]);
+
+  useEffect(() => {
+    if (!isAdmin || !editMode) return;
+    const el = ref.current;
+    if (!el) return;
+    let t: ReturnType<typeof setTimeout> | null = null;
+    const handler = () => {
+      if (t) clearTimeout(t);
+      t = setTimeout(() => {
+        const raw = (el.textContent ?? "").replace(/^[“"]\s*/, "").replace(/\s*[”"]$/, "");
+        setPreview(`“${formatScript(raw)}”`);
+      }, 180);
+    };
+    el.addEventListener("input", handler);
+    return () => {
+      if (t) clearTimeout(t);
+      el.removeEventListener("input", handler);
+    };
+  }, [isAdmin, editMode]);
+
+  return (
+    <>
+      <blockquote
+        ref={ref}
+        data-editable-text
+        className="mt-2 text-[15px] sm:text-base leading-relaxed text-[var(--navy)] whitespace-pre-line"
+      >
+        {initial}
+      </blockquote>
+      {isAdmin && editMode && (
+        <div
+          className="mt-3 rounded-xl border border-dashed p-4"
+          style={{ borderColor: `color-mix(in oklab, ${accent} 50%, transparent)`, background: `color-mix(in oklab, ${accent} 5%, white)` }}
+        >
+          <div className="flex items-center justify-between gap-3">
+            <p className="text-[11px] font-semibold uppercase tracking-wider flex items-center gap-1.5" style={{ color: accent }}>
+              <Eye className="h-3.5 w-3.5" /> Prévia ao vivo (formatScript)
+            </p>
+            <button
+              type="button"
+              onClick={() => setShowPreview((v) => !v)}
+              className="shrink-0 inline-flex items-center gap-1.5 rounded-lg border border-border bg-white px-2.5 py-1 text-[11px] font-semibold text-[var(--navy)] hover:bg-[var(--surface)] transition"
+            >
+              {showPreview ? "Ocultar" : "Mostrar"}
+            </button>
+          </div>
+          {showPreview && (
+            <pre className="mt-2 whitespace-pre-wrap break-words font-sans text-[14.5px] leading-relaxed text-[var(--navy)]">
+              {preview}
+            </pre>
+          )}
+          <p className="mt-2 text-[11px] text-muted-foreground">
+            Atualiza enquanto você edita. As quebras de “Opção N”, “Gatilho:” e listas aparecem aqui antes de salvar.
+          </p>
+        </div>
+      )}
+    </>
+  );
+}
+
 function BlockCard({
   n, block, accent, onCopy, copied,
 }: { n: number; block: Block; accent: string; onCopy: () => void; copied: boolean }) {
