@@ -1129,7 +1129,9 @@ function ScriptEditable({ script, accent }: { script: string; accent: string }) 
     const handler = () => {
       if (t) clearTimeout(t);
       t = setTimeout(() => {
-        const raw = (el.textContent ?? "").replace(/^[“"]\s*/, "").replace(/\s*[”"]$/, "");
+        const raw = ((el as HTMLElement).innerText ?? el.textContent ?? "")
+          .replace(/^[“"]\s*/, "")
+          .replace(/\s*[”"]$/, "");
         setPreview(`“${formatScript(raw)}”`);
       }, 180);
     };
