@@ -28,7 +28,10 @@ function isLeafText(el: Element): boolean {
 }
 
 function computeId(pathname: string, el: Element, originalText: string): string {
-  return `auto::${pathname}::${el.tagName.toLowerCase()}::${hash(originalText).slice(0, 10)}`;
+  const scopeEl = el.closest("[data-edit-scope]");
+  const scope = scopeEl?.getAttribute("data-edit-scope") ?? "";
+  const scopePart = scope ? `::${scope}` : "";
+  return `auto::${pathname}${scopePart}::${el.tagName.toLowerCase()}::${hash(originalText).slice(0, 10)}`;
 }
 
 export function UniversalEdit() {
