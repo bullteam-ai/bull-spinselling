@@ -24,7 +24,7 @@ function isLeafText(el: Element): boolean {
     if (c.matches(LEAF_SELECTOR)) return false;
   }
   const t = (el.textContent ?? "").trim();
-  return t.length >= 2 && t.length <= 1500;
+  return t.length >= 2 && t.length <= 8000;
 }
 
 function computeId(pathname: string, el: Element, originalText: string): string {
