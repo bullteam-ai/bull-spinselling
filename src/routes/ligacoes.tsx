@@ -1111,6 +1111,7 @@ function BlockCard({
   n, block, accent, onCopy, copied,
 }: { n: number; block: Block; accent: string; onCopy: () => void; copied: boolean }) {
   const tone = block.tone ? TONE_STYLE[block.tone] : null;
+  void ScriptEditable;
   return (
     <section id={block.id} className="scroll-mt-32">
       <header className="mb-4 flex items-start gap-3">
