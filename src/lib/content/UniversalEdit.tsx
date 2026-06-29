@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "@tanstack/react-router";
 import { useContent } from "./ContentContext";
 
@@ -38,6 +38,31 @@ export function UniversalEdit() {
   const { isAdmin, editMode, get, save } = useContent();
   const router = useRouter();
   const pathname = router.state.location.pathname;
+
+  // Floating Save button state
+  const [focused, setFocused] = useState<HTMLElement | null>(null);
+  const [pos, setPos] = useState<{ top: number; left: number } | null>(null);
+  const [dirty, setDirty] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [savedFlash, setSavedFlash] = useState(false);
+  const focusedRef = useRef<HTMLElement | null>(null);
+  focusedRef.current = focused;
+
+  // Reposition the floating button when scrolling/resizing
+  useEffect(() => {
+    if (!focused) { setPos(null); return; }
+    const update = () => {
+      const r = focused.getBoundingClientRect();
+      setPos({ top: Math.max(8, r.top - 40), left: Math.min(window.innerWidth - 160, r.left) });
+    };
+    update();
+    window.addEventListener("scroll", update, true);
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update, true);
+      window.removeEventListener("resize", update);
+    };
+  }, [focused]);
 
   // Apply overrides whenever path or overrides change (runs always, not only in edit mode)
   useEffect(() => {
@@ -114,48 +139,60 @@ export function UniversalEdit() {
         el.style.borderRadius = "4px";
         el.style.cursor = "text";
 
-        const onFocus = () => { el.style.outline = "2px solid rgba(59,130,246,1)"; };
-        let debounceTimer: ReturnType<typeof setTimeout> | null = null;
         let lastSaved = original;
-        const persist = async (newText: string) => {
-          if (!newText || newText === lastSaved) return;
-          try {
-            await save(id, newText);
-            lastSaved = newText;
-            el.setAttribute("data-edit-original", newText);
-          } catch (err: unknown) {
-            const e = err as { message?: string; details?: string; hint?: string; code?: string };
-            const msg = e?.message || e?.details || e?.hint || JSON.stringify(err);
-            console.error("[universal-edit] save failed", err);
-            alert("Erro ao salvar: " + msg + (e?.code ? ` (code ${e.code})` : ""));
-          }
-        };
         const readText = () => {
           // innerText converts <br> and block boundaries into \n; textContent doesn't.
           // Required to preserve line breaks the user types with Enter/Shift+Enter.
           const raw = (el as HTMLElement).innerText ?? el.textContent ?? "";
           return raw.replace(/\r\n?/g, "\n").replace(/\n{3,}/g, "\n\n").trim();
         };
-        const onInput = () => {
-          if (debounceTimer) clearTimeout(debounceTimer);
-          const snapshot = readText();
-          debounceTimer = setTimeout(() => { void persist(snapshot); }, 600);
-        };
-        const onBlurOrEnter = async () => {
+        const persistNow = async (): Promise<boolean> => {
           const newText = readText();
-          el.style.outline = "1px dashed rgba(59,130,246,0.6)";
-          if (debounceTimer) { clearTimeout(debounceTimer); debounceTimer = null; }
-          if (newText) {
-            await persist(newText);
-          } else {
-            el.textContent = lastSaved;
+          if (!newText) { el.innerText = lastSaved; setDirty(false); return false; }
+          if (newText === lastSaved) { setDirty(false); return true; }
+          setSaving(true);
+          try {
+            await save(id, newText);
+            lastSaved = newText;
+            el.setAttribute("data-edit-original", newText);
+            setDirty(false);
+            setSavedFlash(true);
+            setTimeout(() => setSavedFlash(false), 1200);
+            return true;
+          } catch (err: unknown) {
+            const e = err as { message?: string; details?: string; hint?: string; code?: string };
+            const msg = e?.message || e?.details || e?.hint || JSON.stringify(err);
+            console.error("[universal-edit] save failed", err);
+            alert("Erro ao salvar: " + msg + (e?.code ? ` (code ${e.code})` : ""));
+            return false;
+          } finally {
+            setSaving(false);
           }
         };
+        // Expose persist for the floating button via dataset reference
+        (el as HTMLElement & { __persist?: () => Promise<boolean> }).__persist = persistNow;
+
+        const onFocus = () => {
+          el.style.outline = "2px solid rgba(59,130,246,1)";
+          setFocused(el);
+          setDirty(readText() !== lastSaved);
+        };
+        const onInput = () => {
+          setDirty(readText() !== lastSaved);
+        };
         const onKey = (ev: KeyboardEvent) => {
-          // Allow Enter to insert line breaks (we save innerText, so they persist).
-          // Use Ctrl/Cmd+Enter to commit and blur.
-          if (ev.key === "Enter" && (ev.ctrlKey || ev.metaKey)) { ev.preventDefault(); el.blur(); }
-          if (ev.key === "Escape") { el.textContent = lastSaved; el.blur(); }
+          if (ev.key === "Enter" && (ev.ctrlKey || ev.metaKey)) {
+            ev.preventDefault();
+            void persistNow();
+          }
+          if (ev.key === "Escape") {
+            el.innerText = lastSaved;
+            setDirty(false);
+            el.blur();
+          }
+        };
+        const onBlur = () => {
+          el.style.outline = "1px dashed rgba(59,130,246,0.6)";
         };
         const onClick = (ev: MouseEvent) => {
           // Prevent navigation when editing links/buttons
@@ -163,14 +200,13 @@ export function UniversalEdit() {
           ev.stopPropagation();
         };
         el.addEventListener("focus", onFocus);
-        el.addEventListener("blur", onBlurOrEnter);
+        el.addEventListener("blur", onBlur);
         el.addEventListener("input", onInput);
         el.addEventListener("keydown", onKey);
         el.addEventListener("click", onClick, true);
         cleanups.push(() => {
-          if (debounceTimer) clearTimeout(debounceTimer);
           el.removeEventListener("focus", onFocus);
-          el.removeEventListener("blur", onBlurOrEnter);
+          el.removeEventListener("blur", onBlur);
           el.removeEventListener("input", onInput);
           el.removeEventListener("keydown", onKey);
           el.removeEventListener("click", onClick, true);
@@ -179,6 +215,7 @@ export function UniversalEdit() {
           el.style.outlineOffset = "";
           el.style.cursor = "";
           delete el.dataset.editActive;
+          delete (el as HTMLElement & { __persist?: unknown }).__persist;
         });
       });
     };
@@ -195,8 +232,37 @@ export function UniversalEdit() {
       clearTimeout(t2);
       clearInterval(interval);
       cleanups.forEach((c) => c());
+      setFocused(null);
     };
   }, [isAdmin, editMode, pathname, save]);
 
-  return null;
+  if (!isAdmin || !editMode || !focused || !pos) return null;
+
+  const onSaveClick = async (ev: React.MouseEvent) => {
+    ev.preventDefault();
+    ev.stopPropagation();
+    const target = focusedRef.current as (HTMLElement & { __persist?: () => Promise<boolean> }) | null;
+    if (!target?.__persist) return;
+    await target.__persist();
+  };
+
+  return (
+    <div
+      style={{ position: "fixed", top: pos.top, left: pos.left, zIndex: 9999 }}
+      onMouseDown={(e) => e.preventDefault()} // keep focus on the editable element
+    >
+      <button
+        type="button"
+        onClick={onSaveClick}
+        disabled={saving || (!dirty && !savedFlash)}
+        className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold shadow-lg transition disabled:opacity-60"
+        style={{
+          background: savedFlash ? "#16a34a" : dirty ? "#2563eb" : "#64748b",
+          color: "white",
+        }}
+      >
+        {saving ? "Salvando…" : savedFlash ? "✓ Salvo" : dirty ? "Salvar (Ctrl+Enter)" : "Sem alterações"}
+      </button>
+    </div>
+  );
 }
