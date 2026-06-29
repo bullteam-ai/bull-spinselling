@@ -1,10 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Phone, PhoneCall, Headphones, GraduationCap, Brain, Crown,
   Home as HomeIcon, ClipboardCopy, Check, Sparkles, AlertTriangle,
-  CheckCircle2, Target, Quote, RefreshCw, Repeat, Star, Shield,
+  CheckCircle2, Target, Quote, RefreshCw, Repeat, Star, Shield, Eye,
 } from "lucide-react";
+import { useContent } from "@/lib/content/ContentContext";
 
 export const Route = createFileRoute("/ligacoes")({
   head: () => ({
