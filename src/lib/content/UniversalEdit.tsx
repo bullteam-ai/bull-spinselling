@@ -127,13 +127,19 @@ export function UniversalEdit() {
             alert("Erro ao salvar: " + msg + (e?.code ? ` (code ${e.code})` : ""));
           }
         };
+        const readText = () => {
+          // innerText converts <br> and block boundaries into \n; textContent doesn't.
+          // Required to preserve line breaks the user types with Enter/Shift+Enter.
+          const raw = (el as HTMLElement).innerText ?? el.textContent ?? "";
+          return raw.replace(/\r\n?/g, "\n").replace(/\n{3,}/g, "\n\n").trim();
+        };
         const onInput = () => {
           if (debounceTimer) clearTimeout(debounceTimer);
-          const snapshot = (el.textContent ?? "").trim();
+          const snapshot = readText();
           debounceTimer = setTimeout(() => { void persist(snapshot); }, 600);
         };
         const onBlurOrEnter = async () => {
-          const newText = (el.textContent ?? "").trim();
+          const newText = readText();
           el.style.outline = "1px dashed rgba(59,130,246,0.6)";
           if (debounceTimer) { clearTimeout(debounceTimer); debounceTimer = null; }
           if (newText) {
@@ -143,7 +149,9 @@ export function UniversalEdit() {
           }
         };
         const onKey = (ev: KeyboardEvent) => {
-          if (ev.key === "Enter" && !ev.shiftKey) { ev.preventDefault(); el.blur(); }
+          // Allow Enter to insert line breaks (we save innerText, so they persist).
+          // Use Ctrl/Cmd+Enter to commit and blur.
+          if (ev.key === "Enter" && (ev.ctrlKey || ev.metaKey)) { ev.preventDefault(); el.blur(); }
           if (ev.key === "Escape") { el.textContent = lastSaved; el.blur(); }
         };
         const onClick = (ev: MouseEvent) => {
