@@ -814,9 +814,7 @@ function PraticaMode({ channel }: { channel: Channel }) {
                 Exemplo {i + 1}
               </p>
               <h3 className="mt-1 text-lg font-bold text-[var(--navy)] leading-snug">{ex.titulo}</h3>
-              <blockquote className="mt-3 rounded-xl border border-border bg-[var(--surface)] p-4 text-sm text-[var(--navy)] leading-relaxed">
-                {ex.mensagem}
-              </blockquote>
+              <blockquote className="fala-script">{ex.mensagem}</blockquote>
               <dl className="mt-4 space-y-3 text-sm">
                 <div>
                   <dt className="text-[11px] font-semibold uppercase tracking-wider text-[var(--brand)]">Quando usar</dt>

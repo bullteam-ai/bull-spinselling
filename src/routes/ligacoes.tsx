@@ -908,12 +908,12 @@ function LigacaoMode({
       )}
 
       {/* SELO FINAL */}
-      <blockquote className="rounded-2xl border-l-4 bg-white p-5 text-[var(--navy)]" style={{ borderColor: call.accent }}>
-        <p className="text-[11px] font-semibold uppercase tracking-wider" style={{ color: call.accent }}>
+      <div>
+        <p className="mb-1 text-[11px] font-semibold uppercase tracking-wider" style={{ color: call.accent }}>
           Fechamento
         </p>
-        <p className="mt-2 font-semibold leading-relaxed">{call.fechamento}</p>
-      </blockquote>
+        <blockquote className="fala-script">“{call.fechamento}”</blockquote>
+      </div>
     </div>
   );
 }
@@ -1147,7 +1147,7 @@ function ScriptEditable({ script, accent }: { script: string; accent: string }) 
       <blockquote
         ref={ref}
         data-editable-text
-        className="mt-2 text-[15px] sm:text-base leading-relaxed text-[var(--navy)] whitespace-pre-line"
+        className="fala-script"
       >
         {initial}
       </blockquote>

@@ -909,9 +909,7 @@ function PraticaMode({ audience }: { audience: Audience }) {
                 Abordagem {i + 1}
               </p>
               <h3 className="mt-1 text-lg font-bold text-[var(--navy)] leading-snug">{ex.titulo}</h3>
-              <blockquote className="mt-3 rounded-xl border border-border bg-[var(--surface)] p-4 text-sm text-[var(--navy)] leading-relaxed">
-                {ex.mensagem}
-              </blockquote>
+              <blockquote className="fala-script">{ex.mensagem}</blockquote>
               <dl className="mt-4 space-y-3 text-sm">
                 <div>
                   <dt className="text-[11px] font-semibold uppercase tracking-wider text-[var(--brand)]">Quando usar</dt>
@@ -1183,9 +1181,9 @@ function EtapaCard({ etapa, accent }: { etapa: Etapa; accent: string }) {
         ))}
 
         {etapa.exemplos && etapa.exemplos.map((ex, i) => (
-          <div key={i} className="rounded-xl border border-border bg-[var(--surface)] p-4">
-            <p className="text-[11px] font-semibold uppercase tracking-wider" style={{ color: accent }}>{ex.eyebrow}</p>
-            <blockquote className="mt-2 text-[15px] text-[var(--navy)] leading-relaxed">{ex.texto}</blockquote>
+          <div key={i}>
+            <p className="mb-1 text-[11px] font-semibold uppercase tracking-wider" style={{ color: accent }}>{ex.eyebrow}</p>
+            <blockquote className="fala-script">{ex.texto}</blockquote>
           </div>
         ))}
 
