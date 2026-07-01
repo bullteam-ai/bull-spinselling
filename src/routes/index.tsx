@@ -2048,7 +2048,7 @@ function Index() {
                               </p>
                             )}
                             {step.quote && (
-                              <blockquote className="mt-4 border-l-4 border-[var(--success)] pl-4 text-sm sm:text-base font-medium leading-relaxed text-white/95 italic">
+                              <blockquote className="fala-script">
                                 “{step.quote}”
                               </blockquote>
                             )}
@@ -2115,8 +2115,8 @@ function Index() {
                               </div>
                             )}
                             {"transition" in step && step.transition && (
-                              <blockquote className="mt-4 border-l-4 border-[var(--brand)] pl-4 text-sm sm:text-base font-medium leading-relaxed text-white/95 italic">
-                                ➡️ “{step.transition}”
+                              <blockquote className="fala-script fala-transicao">
+                                “{step.transition}”
                               </blockquote>
                             )}
                             {step.why && (
