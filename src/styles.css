@@ -329,3 +329,74 @@
 .focus-mode.video-call main > section[id]:not([data-focus-hidden="true"]) {
   font-size: 1.04em;
 }
+
+/* =========================================================
+   FALA PARA O CLIENTE — callout padronizado para scripts falados
+   Objetivo: destacar visivelmente o trecho que o profissional
+   deve LER em voz alta durante a ligação, diferenciando de
+   objetivos, dicas, gatilhos e observações.
+   Funciona sobre fundo claro OU escuro (tem fundo próprio).
+   ========================================================= */
+.fala-script {
+  position: relative;
+  display: block;
+  margin-top: 0.75rem;
+  padding: 2.1rem 1.25rem 1.15rem;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  border-left: 6px solid #f59e0b;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #fff7de 0%, #ffeeb8 100%);
+  color: #0a2540;
+  font-family: inherit;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.02rem;
+  line-height: 1.65;
+  letter-spacing: 0.005em;
+  white-space: pre-line;
+  box-shadow: 0 8px 24px -14px rgba(245, 158, 11, 0.55);
+}
+.fala-script::before {
+  content: "🎙️ FALE ISTO";
+  position: absolute;
+  top: 0.55rem;
+  left: 1rem;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #78350f;
+  background: #fde68a;
+  border: 1px solid rgba(120, 53, 15, 0.25);
+  padding: 2px 8px;
+  border-radius: 999px;
+  line-height: 1.4;
+}
+.fala-script p {
+  color: inherit;
+}
+@media (min-width: 640px) {
+  .fala-script { font-size: 1.08rem; padding: 2.3rem 1.5rem 1.35rem; }
+}
+
+/* Variante "transição" (fala de passagem entre etapas) — azul */
+.fala-script.fala-transicao {
+  border-left-color: #3b82f6;
+  border-color: rgba(59, 130, 246, 0.3);
+  background: linear-gradient(180deg, #e8f1ff 0%, #d3e4ff 100%);
+  box-shadow: 0 8px 24px -14px rgba(59, 130, 246, 0.55);
+}
+.fala-script.fala-transicao::before {
+  content: "➡️ FALE PARA AVANÇAR";
+  color: #1e3a8a;
+  background: #dbeafe;
+  border-color: rgba(30, 58, 138, 0.25);
+}
+
+/* Modo Video Call amplia a fala para leitura à distância */
+.video-call .fala-script {
+  font-size: 1.18rem;
+  line-height: 1.72;
+  padding: 2.4rem 1.5rem 1.4rem;
+}
+.video-call .fala-script::before { font-size: 11px; }
