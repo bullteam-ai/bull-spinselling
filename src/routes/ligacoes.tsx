@@ -1147,7 +1147,7 @@ function ScriptEditable({ script, accent }: { script: string; accent: string }) 
       <blockquote
         ref={ref}
         data-editable-text
-        className="mt-2 text-[15px] sm:text-base leading-relaxed text-[var(--navy)] whitespace-pre-line"
+        className="fala-script"
       >
         {initial}
       </blockquote>
