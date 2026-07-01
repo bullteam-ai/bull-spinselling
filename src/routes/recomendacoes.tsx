@@ -769,11 +769,11 @@ function Module({
 
 function ScriptCard({ quote, label, className }: { quote: string; label?: string; className?: string }) {
   return (
-    <figure className={`rounded-2xl border border-border bg-white p-4 sm:p-5 ${className ?? ""}`}>
+    <figure className={className}>
       {label && (
-        <figcaption className="text-[11px] font-semibold uppercase tracking-wider text-[var(--brand)]">{label}</figcaption>
+        <figcaption className="mb-1 text-[11px] font-semibold uppercase tracking-wider text-[var(--brand)]">{label}</figcaption>
       )}
-      <blockquote className={`${label ? "mt-2" : ""} text-[15px] sm:text-base leading-relaxed text-[var(--navy)]`}>
+      <blockquote className="fala-script">
         “{quote}”
       </blockquote>
     </figure>
