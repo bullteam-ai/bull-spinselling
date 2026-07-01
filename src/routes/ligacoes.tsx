@@ -894,26 +894,37 @@ function LigacaoMode({
             {call.objections.map((o, i) => (
               <div key={i} className="rounded-2xl border border-border bg-[var(--surface)] p-5">
                 <p className="text-[11px] font-semibold uppercase tracking-wider text-[var(--danger)] flex items-center gap-1.5">
-                  <AlertTriangle className="h-3.5 w-3.5" /> Objeção
+                  <AlertTriangle className="h-3.5 w-3.5" /> Objeção do cliente
                 </p>
-                <p className="mt-1.5 text-sm font-semibold text-[var(--navy)]">“{o.q}”</p>
-                <p className="mt-3 text-[11px] font-semibold uppercase tracking-wider text-[var(--success)] flex items-center gap-1.5">
-                  <CheckCircle2 className="h-3.5 w-3.5" /> Resposta
-                </p>
-                <p className="mt-1.5 text-sm text-[var(--navy)] leading-relaxed">“{o.a}”</p>
+                <p className="mt-1.5 text-sm font-semibold italic text-[var(--navy)]/80">“{o.q}”</p>
+                <blockquote className="fala-script mt-3">“{o.a}”</blockquote>
               </div>
             ))}
           </div>
         </section>
       )}
 
-      {/* SELO FINAL */}
-      <div>
-        <p className="mb-1 text-[11px] font-semibold uppercase tracking-wider" style={{ color: call.accent }}>
-          Fechamento
-        </p>
+      {/* SELO FINAL — Fechamento e agendamento */}
+      <section className="rounded-3xl border border-border bg-white p-6 sm:p-8">
+        <header className="mb-4 flex items-start gap-3">
+          <span
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-white"
+            style={{ background: call.accent, boxShadow: `0 8px 24px -8px ${call.accent}` }}
+          >
+            <CheckCircle2 className="h-5 w-5" />
+          </span>
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-wider" style={{ color: call.accent }}>
+              Fechamento e agendamento
+            </p>
+            <h3 className="mt-0.5 text-xl sm:text-2xl font-bold text-[var(--navy)]">Selar o compromisso</h3>
+            <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed">
+              Frase de encerramento para reforçar o motivo da ligação e travar o próximo passo com o cliente.
+            </p>
+          </div>
+        </header>
         <blockquote className="fala-script">“{call.fechamento}”</blockquote>
-      </div>
+      </section>
     </div>
   );
 }
