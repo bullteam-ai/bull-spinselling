@@ -2441,7 +2441,7 @@ function Index() {
                           <p className="text-xs text-white/60">Aumentar valor percebido da entrevista</p>
                         </div>
                       </div>
-                      <p className="mt-4 text-[15px] leading-relaxed text-white/85">
+                      <p className="fala-script mt-4 text-[15px] leading-relaxed">
                         &ldquo;Hoje muitas pessoas querem melhorar a aposentadoria, comprar um imóvel com mais eficiência, investir melhor, organizar a vida financeira ou conquistar independência financeira.
                         <br /><br />
                         Por isso a procura por planejamento financeiro aumentou muito.
@@ -2498,12 +2498,12 @@ function Index() {
                           <p className="text-xs text-white/60">Assumir o controle da agenda</p>
                         </div>
                       </div>
-                      <div className="mt-4 rounded-xl border border-[var(--brand)]/30 bg-[var(--brand)]/10 p-5">
-                        <p className="text-sm text-white/70 mb-3">Ao invés de perguntar:</p>
-                        <p className="text-base font-medium text-white/90">&ldquo;Quando você pode?&rdquo;</p>
-                        <div className="my-3 h-px bg-white/10" />
-                        <p className="text-sm text-white/70 mb-3">Utilizar:</p>
-                        <p className="text-base font-bold text-white">
+                      <div className="mt-4 space-y-3">
+                        <div className="rounded-xl border border-white/10 bg-white/5 p-4">
+                          <p className="text-xs uppercase tracking-wide text-white/60 mb-1">Ao invés de perguntar</p>
+                          <p className="text-sm text-white/70 line-through">&ldquo;Quando você pode?&rdquo;</p>
+                        </div>
+                        <p className="fala-script text-[15px] leading-relaxed">
                           &ldquo;Tenho disponibilidade na terça às 19h ou quarta às 18h. Qual funciona melhor para você?&rdquo;
                         </p>
                       </div>
@@ -2531,7 +2531,7 @@ function Index() {
                           </div>
                         ))}
                       </div>
-                      <p className="mt-4 rounded-xl border border-[var(--brand)]/30 bg-[var(--brand)]/10 p-3 text-xs font-medium text-white/90 text-center">
+                      <p className="fala-script fala-transicao mt-4 text-sm leading-relaxed">
                         &ldquo;O objetivo não é pressionar. É garantir comprometimento.&rdquo;
                       </p>
                     </div>
@@ -2545,11 +2545,15 @@ function Index() {
                           <p className="text-xs text-white/60">Coletar os dados de forma natural</p>
                         </div>
                       </div>
-                      <div className="mt-4 rounded-xl border border-[var(--brand)]/30 bg-[var(--brand)]/10 p-5">
-                        <p className="text-sm text-white/70 mb-3">Ao invés de pedir autorização:</p>
-                        <p className="text-base font-bold text-white">&ldquo;Qual o seu melhor e-mail?&rdquo;</p>
-                        <div className="my-3 h-px bg-white/10" />
-                        <p className="text-xs text-white/60 italic">
+                      <div className="mt-4 space-y-3">
+                        <div className="rounded-xl border border-white/10 bg-white/5 p-4">
+                          <p className="text-xs uppercase tracking-wide text-white/60 mb-1">Ao invés de pedir autorização</p>
+                          <p className="text-sm text-white/70 line-through">&ldquo;Qual o seu melhor e-mail?&rdquo;</p>
+                        </div>
+                        <p className="fala-script text-[15px] leading-relaxed">
+                          &ldquo;Qual o seu melhor e-mail?&rdquo;
+                        </p>
+                        <p className="text-xs text-white/60 italic text-center">
                           &ldquo;O e-mail serve para formalizar a reunião e não para confirmar interesse.&rdquo;
                         </p>
                       </div>
@@ -2564,7 +2568,7 @@ function Index() {
                           <p className="text-xs text-white/60">Deixar o cliente animado para a reunião</p>
                         </div>
                       </div>
-                      <div data-editable-text className="mt-4 rounded-xl border border-white/10 bg-white/5 p-5 text-white/90 leading-relaxed whitespace-pre-line">
+                      <div data-editable-text className="fala-script mt-4 leading-relaxed whitespace-pre-line">
                         {CLOSING_SCRIPT}
                       </div>
                       <button
@@ -2600,7 +2604,7 @@ function Index() {
                           </div>
                         ))}
                       </div>
-                      <p className="mt-4 rounded-xl border border-[var(--warn)]/30 bg-[var(--warn)]/10 p-4 text-sm font-semibold text-white/95 text-center">
+                      <p className="fala-script fala-transicao mt-4 text-[15px] leading-relaxed">
                         &ldquo;O cliente deve encerrar a ligação acreditando que essa pode ser uma das reuniões mais importantes da vida financeira dele.&rdquo;
                       </p>
                     </div>
