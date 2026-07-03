@@ -8,6 +8,7 @@ import {
   AlertTriangle, ArrowDown, ArrowUp, Layers, LifeBuoy, Microscope, Radar,
   Users, Trophy, FileSearch, ScrollText, ListTree, ChevronRight,
 } from "lucide-react";
+import { CentralInteligencia } from "@/components/central-inteligencia/CentralInteligencia";
 
 export const Route = createFileRoute("/recomendacoes")({
   head: () => ({
@@ -273,6 +274,9 @@ function Recomendacoes() {
 
       {/* MÓDULO BÔNUS. A MAIOR MENTIRA SOBRE RECOMENDAÇÕES */}
       <MentiraSection />
+
+      {/* CENTRAL DE INTELIGÊNCIA — QUEBRA DE OBJEÇÕES */}
+      <CentralInteligencia />
 
       {/* STICKY TABS */}
       <nav className="sticky top-12 z-40 border-b border-border bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85">
