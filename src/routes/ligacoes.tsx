@@ -875,6 +875,7 @@ function LigacaoMode({
           accent={call.accent}
           onCopy={() => copy(b.script, `${call.id}-${b.id}`)}
           copied={copied === `${call.id}-${b.id}`}
+          variant={b.id === "fechamento" ? "transicao" : "fala"}
         />
       ))}
 
@@ -923,7 +924,7 @@ function LigacaoMode({
             </p>
           </div>
         </header>
-        <blockquote className="fala-script">“{call.fechamento}”</blockquote>
+        <blockquote className="fala-script fala-transicao">“{call.fechamento}”</blockquote>
       </section>
     </div>
   );
@@ -1123,7 +1124,7 @@ function SectionHeader({
  * Quando o admin está em Modo Edição, mostra um painel abaixo do
  * blockquote com o resultado formatado em tempo real (debounced).
  */
-function ScriptEditable({ script, accent }: { script: string; accent: string }) {
+function ScriptEditable({ script, accent, variant = "fala" }: { script: string; accent: string; variant?: "fala" | "transicao" }) {
   const { isAdmin, editMode } = useContent();
   const ref = useRef<HTMLQuoteElement | null>(null);
   const initial = useMemo(() => `“${formatScript(script)}”`, [script]);
@@ -1158,7 +1159,7 @@ function ScriptEditable({ script, accent }: { script: string; accent: string }) 
       <blockquote
         ref={ref}
         data-editable-text
-        className="fala-script"
+        className={variant === "transicao" ? "fala-script fala-transicao" : "fala-script"}
       >
         {initial}
       </blockquote>
@@ -1194,8 +1195,8 @@ function ScriptEditable({ script, accent }: { script: string; accent: string }) 
 }
 
 function BlockCard({
-  n, block, accent, onCopy, copied,
-}: { n: number; block: Block; accent: string; onCopy: () => void; copied: boolean }) {
+  n, block, accent, onCopy, copied, variant = "fala",
+}: { n: number; block: Block; accent: string; onCopy: () => void; copied: boolean; variant?: "fala" | "transicao" }) {
   const tone = block.tone ? TONE_STYLE[block.tone] : null;
   return (
     <section id={block.id} className="scroll-mt-32">
@@ -1234,7 +1235,7 @@ function BlockCard({
             {copied ? "Copiado" : "Copiar"}
           </button>
         </div>
-        <ScriptEditable script={block.script} accent={accent} />
+        <ScriptEditable script={block.script} accent={accent} variant={variant} />
 
         {/* GATILHO */}
         <div className="mt-4 rounded-xl border border-[var(--brand)]/30 bg-[var(--brand)]/5 p-4">
