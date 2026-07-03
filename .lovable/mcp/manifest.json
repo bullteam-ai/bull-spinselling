@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "sdk_version": "0.20.0",
+  "path": "/mcp",
+  "auth": {
+    "type": "none"
+  },
+  "mcp": {
+    "server": {
+      "name": "bull-team-mcp",
+      "version": "0.1.0",
+      "title": "Bull Team · SPIN Selling"
+    },
+    "tools": [
+      {
+        "name": "list_pages",
+        "title": "List pages",
+        "description": "Lista as páginas principais do Bull Team (SPIN Selling) com um resumo de cada seção.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_call_types",
+        "title": "List call types",
+        "description": "Lista os tipos de ligação disponíveis no Bull Team (confirmação, reagendamento, pós-reunião) com objetivo, duração e público.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
