@@ -13,8 +13,8 @@ const InputSchema = z.object({
   messages: z.array(MessageSchema),
 });
 
-const GATEWAY_URL = "https://ai.gateway.lovable.dev/v1/chat/completions";
-const MODEL = "google/gemini-3-flash-preview";
+const GATEWAY_URL = "https://api.x.ai/v1/chat/completions";
+const MODEL = "grok-4-fast-non-reasoning";
 
 function systemPromptChat(objecao: string, dificuldade: string) {
   const nivel =
@@ -58,8 +58,8 @@ Nada além do JSON.`;
 export const runObjecaoTrainer = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => InputSchema.parse(input))
   .handler(async ({ data }) => {
-    const key = process.env.LOVABLE_API_KEY;
-    if (!key) throw new Error("LOVABLE_API_KEY ausente");
+    const key = process.env.XAI_API_KEY;
+    if (!key) throw new Error("XAI_API_KEY ausente");
 
     const system =
       data.mode === "chat"
@@ -78,16 +78,16 @@ export const runObjecaoTrainer = createServerFn({ method: "POST" })
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Lovable-API-Key": key,
+        Authorization: `Bearer ${key}`,
       },
       body: JSON.stringify(body),
     });
 
     if (!res.ok) {
       const text = await res.text().catch(() => "");
-      if (res.status === 429) throw new Error("Limite de uso da IA atingido. Tente em alguns segundos.");
-      if (res.status === 402) throw new Error("Créditos de IA esgotados no workspace.");
-      throw new Error(`Erro na IA (${res.status}): ${text.slice(0, 200)}`);
+      if (res.status === 429) throw new Error("Limite de uso do Grok atingido. Tente em alguns segundos.");
+      if (res.status === 401) throw new Error("XAI_API_KEY inválida.");
+      throw new Error(`Erro no Grok (${res.status}): ${text.slice(0, 200)}`);
     }
 
     const json = (await res.json()) as {
