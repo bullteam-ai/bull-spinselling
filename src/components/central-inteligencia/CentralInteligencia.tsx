@@ -3,8 +3,9 @@ import { useServerFn } from "@tanstack/react-start";
 import {
   Brain, ChevronDown, ChevronUp, Sparkles, Radar as RadarIcon,
   Shield, Target, TrendingUp, MessageCircle, Zap, XCircle, Trophy,
-  Send, RotateCcw, Loader2,
+  Send, RotateCcw, Loader2, BookOpen, X,
 } from "lucide-react";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { runObjecaoTrainer } from "@/lib/objecao-trainer.functions";
 import { MEDOS, ESCADA, OBJECOES, RADAR, FRASES, ERROS, type Objecao } from "./data";
 
@@ -22,6 +23,7 @@ export function CentralInteligencia() {
   const [open, setOpen] = useState(false);
 
   return (
+    <>
     <section id="central-inteligencia" className="mx-auto max-w-7xl px-3 sm:px-6 mt-10">
       <button
         type="button"
@@ -68,6 +70,8 @@ export function CentralInteligencia() {
         </div>
       )}
     </section>
+    {open && <FloatingBiblioteca />}
+    </>
   );
 }
 
@@ -184,6 +188,20 @@ function Bloco2() {
    BLOCO 3 — Biblioteca de Objeções
    ============================================ */
 function Bloco3() {
+  return (
+    <div>
+      <BlocoHeader
+        eyebrow="Bloco 3"
+        icon={<MessageCircle className="h-5 w-5" />}
+        title="Biblioteca Inteligente de Objeções"
+        subtitle="Clique em uma objeção para abrir o playbook completo."
+      />
+      <BibliotecaObjecoesLista />
+    </div>
+  );
+}
+
+function BibliotecaObjecoesLista() {
   const [openId, setOpenId] = useState<string | null>(null);
   const [q, setQ] = useState("");
 
@@ -196,15 +214,8 @@ function Bloco3() {
   }, [q]);
 
   return (
-    <div>
-      <BlocoHeader
-        eyebrow="Bloco 3"
-        icon={<MessageCircle className="h-5 w-5" />}
-        title="Biblioteca Inteligente de Objeções"
-        subtitle="Clique em uma objeção para abrir o playbook completo."
-      />
-
-      <div className="mt-4">
+    <>
+      <div className="mt-4 sticky top-0 z-10 bg-background/95 backdrop-blur pb-2">
         <input
           value={q}
           onChange={(e) => setQ(e.target.value)}
@@ -212,8 +223,7 @@ function Bloco3() {
           className="w-full rounded-xl border border-border bg-white px-4 py-3 text-sm text-[var(--navy)] outline-none focus:border-[var(--brand)]"
         />
       </div>
-
-      <div className="mt-4 space-y-3">
+      <div className="mt-2 space-y-3">
         {filtered.map((o) => (
           <ObjecaoCard
             key={o.id}
@@ -222,8 +232,73 @@ function Bloco3() {
             onToggle={() => setOpenId(openId === o.id ? null : o.id)}
           />
         ))}
+        {filtered.length === 0 && (
+          <p className="text-sm text-muted-foreground text-center py-8">
+            Nenhuma objeção encontrada para “{q}”.
+          </p>
+        )}
       </div>
-    </div>
+    </>
+  );
+}
+
+/* ============================================
+   FLOATING — Biblioteca sempre acessível
+   ============================================ */
+function FloatingBiblioteca() {
+  const [visible, setVisible] = useState(false);
+  const [openSheet, setOpenSheet] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setVisible(window.scrollY > 500);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <>
+      <button
+        type="button"
+        onClick={() => setOpenSheet(true)}
+        aria-label="Abrir biblioteca de objeções"
+        className={`fixed z-40 bottom-6 right-6 group flex items-center gap-2 rounded-full pl-4 pr-5 py-3 text-white font-semibold text-sm shadow-2xl shadow-[var(--brand)]/40 border border-white/10 bg-gradient-to-br from-[var(--brand)] via-[#2a5cff] to-[var(--success)] hover:scale-105 active:scale-95 transition-all duration-300 ${
+          visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6 pointer-events-none"
+        }`}
+      >
+        <span className="grid place-items-center h-7 w-7 rounded-full bg-white/20 backdrop-blur">
+          <BookOpen className="h-4 w-4" />
+        </span>
+        <span className="hidden sm:inline">Biblioteca de Objeções</span>
+        <span className="sm:hidden">Objeções</span>
+      </button>
+
+      <Sheet open={openSheet} onOpenChange={setOpenSheet}>
+        <SheetContent
+          side="right"
+          className="w-full sm:max-w-2xl overflow-y-auto bg-gradient-to-b from-[var(--surface)] to-background p-0"
+        >
+          <div className="sticky top-0 z-20 bg-gradient-to-br from-[var(--navy)] to-[#0f1e42] text-white px-6 py-5 border-b border-white/10">
+            <SheetHeader className="text-left space-y-1 p-0">
+              <div className="flex items-center gap-2">
+                <div className="grid place-items-center h-9 w-9 rounded-xl bg-[var(--brand)]/30 border border-[var(--brand)]/40">
+                  <BookOpen className="h-4 w-4 text-[var(--success)]" />
+                </div>
+                <SheetTitle className="text-white text-lg font-extrabold">
+                  Biblioteca de Objeções
+                </SheetTitle>
+              </div>
+              <SheetDescription className="text-white/70 text-xs">
+                Consulte respostas prontas de qualquer parte da página.
+              </SheetDescription>
+            </SheetHeader>
+          </div>
+          <div className="px-4 sm:px-6 pb-8">
+            <BibliotecaObjecoesLista />
+          </div>
+        </SheetContent>
+      </Sheet>
+    </>
   );
 }
 
