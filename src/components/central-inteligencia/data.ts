@@ -141,7 +141,7 @@ export const OBJECOES: Objecao[] = [
     significado: "Medo de exposição e de LGPD/privacidade.",
     objetivo: "Gerar segurança sobre o uso do contato e propor caminho alternativo.",
     resposta:
-      "Faz sentido esse cuidado, cada vez mais importante. Não precisa passar número hoje. O que faz mais sentido para você: você mesmo(a) faz a ponte com a pessoa, ou combinamos de você me enviar depois só quando ela autorizar?",
+      "Faz sentido esse cuidado, cada vez mais importante. Tanto que não irei entrar em contato com a pessoa sem você ter avisado ela primeiro, não faço telemarketing, esse contato é porque se fizer sentido para essa pessoa, como você deu a oportunidade para ele(a), eu irei separar o meu tempo para realmente dar atenção a essa pessoa, porque minha agenda hoje é muito concorrida e isso me ajuda a fazer a gestão para realmente ajudar as pessoas da melhor forma, pode ficar tranquilo(a), hoje essa (nome da rec) mora (cita a cidade) qual o ddd de lá? ddd xx 9 e o que?",
     escalada:
       "Se te deixar mais tranquilo(a), o contato só é usado para um convite. Se ela não quiser, o assunto morre ali — sem insistência.",
     ultimaCartada:
