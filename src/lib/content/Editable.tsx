@@ -32,7 +32,7 @@ export function Editable({ id, children, as, multiline, className }: Props) {
       <Tag
         className={`${className ?? ""} relative inline-block cursor-pointer rounded outline-dashed outline-1 outline-[var(--brand)]/60 outline-offset-2 hover:outline-[var(--brand)] hover:bg-[var(--brand)]/5`}
         onClick={(e: React.MouseEvent) => { e.stopPropagation(); setDraft(value); setEditing(true); }}
-        title={`Editar (${id})${overridden ? " — modificado" : ""}`}
+        title={`Editar (${id})${overridden ? ", modificado" : ""}`}
       >
         {value}
         <span className="ml-1 text-[10px] align-top">✏️</span>

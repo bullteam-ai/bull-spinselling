@@ -5,8 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
+    "check:em-dash": "node scripts/check-em-dash.mjs",
+    "prebuild": "node scripts/check-em-dash.mjs",
     "build": "vite build",
-    "build:dev": "vite build --mode development",
+    "build:dev": "node scripts/check-em-dash.mjs && vite build --mode development",
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write ."
