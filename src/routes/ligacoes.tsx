@@ -805,8 +805,9 @@ function Ligacoes() {
       </nav>
 
       <main className="mx-auto max-w-7xl px-3 sm:px-6 py-8 sm:py-12" data-edit-scope={`ligacoes:${call.id}`}>
+        <div key={`${call.id}-${mode}`} className="animate-fade-in">
         {/* CABEÇALHO DO MODELO ATIVO */}
-        <section className="rounded-3xl border-2 p-6 sm:p-8 text-white shadow-2xl bg-gradient-to-br from-[#0a1733] via-[var(--navy)] to-[#1a2e5c]"
+        <section className="rounded-3xl border-2 p-6 sm:p-8 text-white shadow-2xl bg-gradient-to-br from-[#0a1733] via-[var(--navy)] to-[#1a2e5c] transition-all duration-300"
           style={{ borderColor: call.accent, boxShadow: `0 30px 80px -40px ${call.accent}` }}
         >
           <div className="flex items-start gap-3 flex-wrap">
@@ -838,6 +839,7 @@ function Ligacoes() {
           ) : (
             <TreinoMode call={call} />
           )}
+        </div>
         </div>
       </main>
     </div>
