@@ -256,7 +256,10 @@ function FloatingBiblioteca() {
         type="button"
         onClick={() => setOpenSheet(true)}
         aria-label="Abrir biblioteca de objeções"
-        className="fixed z-40 bottom-5 right-5 sm:bottom-6 sm:right-6 group flex items-center gap-2 rounded-full pl-3 pr-4 sm:pl-4 sm:pr-5 py-3 text-white font-semibold text-sm shadow-2xl shadow-[var(--brand)]/40 border border-white/10 bg-gradient-to-br from-[var(--brand)] via-[#2a5cff] to-[var(--success)] hover:scale-105 active:scale-95 transition-all duration-300 animate-fade-in"
+        aria-haspopup="dialog"
+        aria-expanded={openSheet}
+        aria-controls="biblioteca-objecoes-sheet"
+        className="fixed z-40 bottom-5 right-5 sm:bottom-6 sm:right-6 group flex items-center gap-2 rounded-full pl-3 pr-4 sm:pl-4 sm:pr-5 py-3 text-white font-semibold text-sm shadow-2xl shadow-[var(--brand)]/40 border border-white/10 bg-gradient-to-br from-[var(--brand)] via-[#2a5cff] to-[var(--success)] hover:scale-105 active:scale-95 transition-all duration-300 animate-fade-in min-h-11 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[var(--brand)]/50"
       >
         <span className="grid place-items-center h-7 w-7 rounded-full bg-white/20 backdrop-blur">
           <BookOpen className="h-4 w-4" />
@@ -267,6 +270,9 @@ function FloatingBiblioteca() {
 
       <Sheet open={openSheet} onOpenChange={setOpenSheet}>
         <SheetContent
+          id="biblioteca-objecoes-sheet"
+          aria-labelledby="biblioteca-objecoes-title"
+          aria-describedby="biblioteca-objecoes-desc"
           side={isMobile ? "bottom" : "right"}
           className={
             isMobile
@@ -285,11 +291,11 @@ function FloatingBiblioteca() {
                 <div className="grid place-items-center h-9 w-9 rounded-xl bg-[var(--brand)]/30 border border-[var(--brand)]/40">
                   <BookOpen className="h-4 w-4 text-[var(--success)]" />
                 </div>
-                <SheetTitle className="text-white text-lg font-extrabold">
+                <SheetTitle id="biblioteca-objecoes-title" className="text-white text-lg font-extrabold">
                   Biblioteca de Objeções
                 </SheetTitle>
               </div>
-              <SheetDescription className="text-white/70 text-xs">
+              <SheetDescription id="biblioteca-objecoes-desc" className="text-white/70 text-xs">
                 Consulte respostas prontas de qualquer parte da página.
               </SheetDescription>
             </SheetHeader>

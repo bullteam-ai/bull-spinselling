@@ -8,6 +8,7 @@ import {
   Search, Star, Pin, Headphones, Filter, Sparkles, GraduationCap, Brain, Quote,
   Baby, Heart,
 } from "lucide-react";
+import { copyToClipboard } from "@/lib/copy-to-clipboard";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -1552,22 +1553,22 @@ function Index() {
   };
 
   const copyScript = async () => {
-    try {
-      await navigator.clipboard.writeText(SCRIPT);
+    const ok = await copyToClipboard(SCRIPT);
+    if (ok) {
       setCopied(true);
       setTimeout(() => setCopied(false), 2200);
-    } catch {
-      // ignore
+    } else {
+      alert("Não foi possível copiar automaticamente. Selecione o texto manualmente.");
     }
   };
 
   const copyClosingScript = async () => {
-    try {
-      await navigator.clipboard.writeText(CLOSING_SCRIPT);
+    const ok = await copyToClipboard(CLOSING_SCRIPT);
+    if (ok) {
       setCopiedClosing(true);
       setTimeout(() => setCopiedClosing(false), 2200);
-    } catch {
-      // ignore
+    } else {
+      alert("Não foi possível copiar automaticamente. Selecione o texto manualmente.");
     }
   };
 
