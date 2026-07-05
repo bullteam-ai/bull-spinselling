@@ -917,9 +917,13 @@ function ReconhecimentoStep() {
           </span>
           <span className="text-[11px] font-semibold uppercase tracking-wider text-white/60">Encerramento emocional</span>
         </div>
-        <blockquote className="mt-5 space-y-3 text-[15px] sm:text-[16px] leading-relaxed text-white/90">
-          {RECONHECIMENTO_FALE_ISTO.split("\n\n").map((p, i) => (
-            <p key={i}>{`“${p}”`.replace(/^““|””$/g, "”").replace(/^“/, i === 0 ? "“" : "").replace(/”$/, i === RECONHECIMENTO_FALE_ISTO.split("\n\n").length - 1 ? "”" : "")}</p>
+        <blockquote className="mt-5 space-y-3 text-[15px] sm:text-[16px] leading-relaxed text-white/90 border-l-4 border-[var(--success)]/70 pl-4">
+          {RECONHECIMENTO_FALE_ISTO.split("\n\n").map((p, i, arr) => (
+            <p key={i}>
+              {i === 0 ? "“" : ""}
+              {p}
+              {i === arr.length - 1 ? "”" : ""}
+            </p>
           ))}
         </blockquote>
       </section>
