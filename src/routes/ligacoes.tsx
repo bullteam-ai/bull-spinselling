@@ -6,6 +6,7 @@ import {
   CheckCircle2, Target, Quote, RefreshCw, Repeat, Star, Shield, Eye,
 } from "lucide-react";
 import { useContent } from "@/lib/content/ContentContext";
+import { copyToClipboard } from "@/lib/copy-to-clipboard";
 
 export const Route = createFileRoute("/ligacoes")({
   head: () => ({
@@ -677,11 +678,13 @@ function Ligacoes() {
   );
 
   const copy = async (text: string, id: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
+    const ok = await copyToClipboard(text);
+    if (ok) {
       setCopied(id);
       setTimeout(() => setCopied(null), 1800);
-    } catch {}
+    } else {
+      alert("Não foi possível copiar automaticamente. Selecione o texto manualmente.");
+    }
   };
 
   const fullScript = useMemo(() => {
