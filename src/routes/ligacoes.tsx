@@ -688,11 +688,40 @@ function Ligacoes() {
   const [activeId, setActiveId] = useState<string>(CALL_TYPES[0].id);
   const [mode, setMode] = useState<Mode>("ligacao");
   const [copied, setCopied] = useState<string | null>(null);
+  const [guidedOpen, setGuidedOpen] = useState(false);
 
   const call = useMemo(
     () => CALL_TYPES.find((c) => c.id === activeId) ?? CALL_TYPES[0],
     [activeId]
   );
+
+  // Publica etapas para o Modo Foco (teleprompter) a partir do call atual.
+  useEffect(() => {
+    const steps: FocusStep[] = call.blocks.map((b) => ({
+      id: b.id,
+      label: b.label,
+      pergunta: b.script,
+      sim: b.doSay,
+      nao: b.dontSay,
+      transicao: b.trigger,
+    }));
+    steps.push({
+      id: "fechamento-final",
+      label: "Fechamento",
+      pergunta: call.fechamento,
+      transicao: "Encerre firme, sem pedir confirmação.",
+    });
+    window.__btFocusSteps = steps;
+    window.dispatchEvent(
+      new CustomEvent("bt:focus-steps", { detail: { steps } }),
+    );
+    return () => {
+      delete window.__btFocusSteps;
+      window.dispatchEvent(
+        new CustomEvent("bt:focus-steps", { detail: { steps: [] } }),
+      );
+    };
+  }, [call]);
 
   const copy = async (text: string, id: string) => {
     const ok = await copyToClipboard(text);
