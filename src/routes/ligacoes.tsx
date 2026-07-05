@@ -48,13 +48,13 @@ function formatScript(raw: string): string {
   if (!raw) return raw;
   let s = raw.replace(/\r\n/g, "\n").trim();
 
-  // Garante quebra dupla antes de "Opção N (…)" — novo bloco.
+  // Garante quebra dupla antes de "Opção N (…)", novo bloco.
   s = s.replace(/\s*(Opção\s*\d+[^\n]*?\))\s*/g, "\n\n$1\n");
 
   // Após o título "Opção N (…)", se vier aspas abrindo um script, mantém na linha de baixo.
   s = s.replace(/(Opção\s*\d+[^\n]*?\))\n+([“"])/g, "$1\n$2");
 
-  // Quebra antes de "Gatilho:" e "Gatilho ativado" — sempre em linha própria.
+  // Quebra antes de "Gatilho:" e "Gatilho ativado", sempre em linha própria.
   s = s.replace(/\s*(Gatilho(?:\s+ativado)?\s*:?)/g, "\n\n$1 ");
 
   // Bullets para marcadores finais comuns ("Empatia.", "Aversão à perda (…).", "Valor…", "Fechamento…").
@@ -910,7 +910,7 @@ function LigacaoMode({
         </section>
       )}
 
-      {/* SELO FINAL — Fechamento e agendamento */}
+      {/* SELO FINAL, Fechamento e agendamento */}
       <section className="rounded-3xl border border-border bg-white p-6 sm:p-8">
         <header className="mb-4 flex items-start gap-3">
           <span
