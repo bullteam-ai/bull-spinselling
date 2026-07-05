@@ -45,7 +45,7 @@ export function CentralInteligencia() {
               🧠 Quando o Cliente Hesita
             </h2>
             <p className="mt-2 text-sm sm:text-base text-white/70 max-w-2xl">
-              Playbook completo de quebra de objeções em recomendações — medos, método,
+              Playbook completo de quebra de objeções em recomendações, medos, método,
               biblioteca de scripts, radar de pessoas, frases de bolso e simulador com IA.
             </p>
           </div>
@@ -77,7 +77,7 @@ export function CentralInteligencia() {
 }
 
 /* ============================================
-   BLOCO 1 — Entenda a objeção
+   BLOCO 1, Entenda a objeção
    ============================================ */
 function Bloco1() {
   return (
@@ -100,7 +100,7 @@ function Bloco1() {
             <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Exemplo</p>
             <p className="mt-2 text-sm"><strong>Cliente:</strong> “Quero pensar.”</p>
             <p className="mt-2 text-sm text-danger">Vendedor comum: responde imediatamente.</p>
-            <p className="mt-1 text-sm text-[var(--brand)]"><strong>Especialista:</strong> “Ele ainda não se sente seguro.” — e passa a reduzir o risco percebido.</p>
+            <p className="mt-1 text-sm text-[var(--brand)]"><strong>Especialista:</strong> “Ele ainda não se sente seguro.”, e passa a reduzir o risco percebido.</p>
           </div>
         </div>
 
@@ -111,7 +111,7 @@ function Bloco1() {
             que o cliente se sinta confortável para agir.
           </p>
           <p className="mt-4 text-sm text-foreground/70">
-            Toda objeção normalmente nasce de poucos medos. Identifique qual é — o resto se torna simples.
+            Toda objeção normalmente nasce de poucos medos. Identifique qual é, o resto se torna simples.
           </p>
         </div>
       </div>
@@ -139,7 +139,7 @@ function Bloco1() {
 }
 
 /* ============================================
-   BLOCO 2 — Método Elite
+   BLOCO 2, Método Elite
    ============================================ */
 function Bloco2() {
   return (
@@ -186,7 +186,7 @@ function Bloco2() {
 }
 
 /* ============================================
-   BLOCO 3 — Biblioteca de Objeções
+   BLOCO 3, Biblioteca de Objeções
    ============================================ */
 function Bloco3() {
   return (
@@ -244,7 +244,7 @@ function BibliotecaObjecoesLista() {
 }
 
 /* ============================================
-   FLOATING — Biblioteca sempre acessível
+   FLOATING, Biblioteca sempre acessível
    ============================================ */
 function FloatingBiblioteca() {
   const [openSheet, setOpenSheet] = useState(false);
@@ -362,7 +362,7 @@ function MiniBox({ label, text, tone }: { label: string; text: string; tone?: "b
   );
 }
 
-/* Radar de pessoas — dentro da objeção "não lembro" */
+/* Radar de pessoas, dentro da objeção "não lembro" */
 function RadarPessoas() {
   const cats = Object.keys(RADAR);
   const [sel, setSel] = useState<string | null>(null);
@@ -392,7 +392,7 @@ function RadarPessoas() {
       {sel && (
         <div className="mt-4 rounded-xl bg-white border border-border p-4">
           <p className="text-[11px] font-bold uppercase tracking-wider text-[var(--brand)]">
-            Perguntas para ativar memória — {sel}
+            Perguntas para ativar memória, {sel}
           </p>
           <ul className="mt-2 space-y-1.5 text-sm text-foreground/85 list-disc pl-5">
             {RADAR[sel].map((p, i) => <li key={i}>{p}</li>)}
@@ -404,7 +404,7 @@ function RadarPessoas() {
 }
 
 /* ============================================
-   BLOCO 4 — Frases de bolso
+   BLOCO 4, Frases de bolso
    ============================================ */
 function Bloco4() {
   return (
@@ -435,7 +435,7 @@ function Bloco4() {
 }
 
 /* ============================================
-   BLOCO 5 — Erros
+   BLOCO 5, Erros
    ============================================ */
 function Bloco5() {
   return (
@@ -461,7 +461,7 @@ function Bloco5() {
 }
 
 /* ============================================
-   BLOCO FINAL — Mentalidade
+   BLOCO FINAL, Mentalidade
    ============================================ */
 function BlocoFinal() {
   return (
@@ -482,7 +482,7 @@ function BlocoFinal() {
         </p>
         <p className="mt-4 max-w-3xl text-white/70 leading-relaxed italic">
           A melhor quebra de objeção é aquela em que o cliente sente que a decisão continua
-          totalmente nas mãos dele — apenas com informações suficientes para agir com confiança.
+          totalmente nas mãos dele, apenas com informações suficientes para agir com confiança.
         </p>
       </div>
     </div>

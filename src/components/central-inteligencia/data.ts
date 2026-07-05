@@ -113,9 +113,9 @@ export const OBJECOES: Objecao[] = [
     significado: "Medo de julgamento e de responsabilidade. Ele ainda não se sente seguro.",
     objetivo: "Reduzir o risco percebido e devolver o controle antes de pedir novamente.",
     resposta:
-      "Faz total sentido. Pensar antes é sinal de cuidado. Só quero deixar claro: ninguém será pressionado — o convite é só para uma conversa como a nossa, e a decisão continua sendo dela. Enquanto a gente pensa, qual foi a primeira pessoa que veio à sua cabeça?",
+      "Faz total sentido. Pensar antes é sinal de cuidado. Só quero deixar claro: ninguém será pressionado, o convite é só para uma conversa como a nossa, e a decisão continua sendo dela. Enquanto a gente pensa, qual foi a primeira pessoa que veio à sua cabeça?",
     escalada:
-      "Entendi. Se te ajudar, posso te mostrar exatamente como eu faço o primeiro contato — nada invasivo, só um convite. Aí você me diz se faz sentido.",
+      "Entendi. Se te ajudar, posso te mostrar exatamente como eu faço o primeiro contato, nada invasivo, só um convite. Aí você me diz se faz sentido.",
     ultimaCartada:
       "Sem problema. Só uma coisa: o ‘pensar depois’ normalmente vira ‘nunca’. Se hoje você lembra de alguém que talvez se beneficie, prefere segurar essa oportunidade só para você ou permitir que ela também tenha essa clareza que você teve?",
     fraseBolso: "A decisão continua sendo dela. Você só está abrindo a porta.",
@@ -127,7 +127,7 @@ export const OBJECOES: Objecao[] = [
     significado: "Medo de perder controle e de expor a amizade.",
     objetivo: "Mostrar que o processo respeita a relação e devolver o controle.",
     resposta:
-      "Perfeito, é assim que deve ser mesmo. Aliás, funciona melhor quando você fala antes — a pessoa fica mais aberta. Combinamos assim: você me passa 2 ou 3 nomes agora, fala com eles hoje ou amanhã, e só depois eu entro em contato. Combinado?",
+      "Perfeito, é assim que deve ser mesmo. Aliás, funciona melhor quando você fala antes, a pessoa fica mais aberta. Combinamos assim: você me passa 2 ou 3 nomes agora, fala com eles hoje ou amanhã, e só depois eu entro em contato. Combinado?",
     escalada:
       "Se preferir, posso te mandar um textinho pronto para você adaptar e enviar. Assim fica natural e você tem controle total do que é dito.",
     ultimaCartada:
@@ -143,7 +143,7 @@ export const OBJECOES: Objecao[] = [
     resposta:
       "Faz sentido esse cuidado, cada vez mais importante. Tanto que não irei entrar em contato com a pessoa sem você ter avisado ela primeiro, não faço telemarketing, esse contato é porque se fizer sentido para essa pessoa, como você deu a oportunidade para ele(a), eu irei separar o meu tempo para realmente dar atenção a essa pessoa, porque minha agenda hoje é muito concorrida e isso me ajuda a fazer a gestão para realmente ajudar as pessoas da melhor forma, pode ficar tranquilo(a), hoje essa (nome da rec) mora (cita a cidade) qual o ddd de lá? ddd xx 9 e o que?",
     escalada:
-      "Se te deixar mais tranquilo(a), o contato só é usado para um convite. Se ela não quiser, o assunto morre ali — sem insistência.",
+      "Se te deixar mais tranquilo(a), o contato só é usado para um convite. Se ela não quiser, o assunto morre ali, sem insistência.",
     ultimaCartada:
       "Certo. Então vamos fazer diferente: me diz só o primeiro nome e como você a conhece. Você conversa com ela e me confirma depois. Quem vem primeiro na sua cabeça?",
     fraseBolso: "Nome primeiro. Contato só quando ela autorizar.",
@@ -166,12 +166,12 @@ export const OBJECOES: Objecao[] = [
   {
     id: "nao-lembro",
     frase: "Não lembro de ninguém agora",
-    significado: "Falta de gatilho de memória. Não é falta de rede — é falta de estímulo.",
+    significado: "Falta de gatilho de memória. Não é falta de rede, é falta de estímulo.",
     objetivo: "Ativar categorias específicas com o Radar de Pessoas.",
     resposta:
       "Normal, o cérebro trava quando a pergunta é ampla. Vamos por categorias: dos AMIGOS que você mais convive hoje, quais são os 3 primeiros nomes que vêm à sua cabeça?",
     escalada:
-      "E pensando nas pessoas do seu trabalho / academia / igreja — quem aparece primeiro? Não precisa filtrar ainda, só me diz os nomes.",
+      "E pensando nas pessoas do seu trabalho / academia / igreja, quem aparece primeiro? Não precisa filtrar ainda, só me diz os nomes.",
     ultimaCartada:
       "Vou te ajudar: quem casou recentemente, teve filho, comprou imóvel ou fala em aposentadoria? Pode ser mais de um.",
     fraseBolso: "Não é falta de gente. É falta de gatilho.",
@@ -183,7 +183,7 @@ export const OBJECOES: Objecao[] = [
     significado: "Medo de responsabilidade pela decisão do outro.",
     objetivo: "Devolver a responsabilidade à pessoa indicada.",
     resposta:
-      "Justamente por isso o convite é da pessoa, não seu. Você só abre a porta — quem decide entrar é ela. Quem seria a primeira pessoa que você acha que MERECE receber esse convite, mesmo que depois ela diga que não é o momento?",
+      "Justamente por isso o convite é da pessoa, não seu. Você só abre a porta, quem decide entrar é ela. Quem seria a primeira pessoa que você acha que MERECE receber esse convite, mesmo que depois ela diga que não é o momento?",
     escalada:
       "Se ela não quiser, o assunto termina ali. Nada muda entre vocês. O único risco real é ela não receber a oportunidade.",
     ultimaCartada:
@@ -197,21 +197,21 @@ export const OBJECOES: Objecao[] = [
     significado: "Projeção do próprio julgamento. Ele decide pela outra pessoa.",
     objetivo: "Retirar o filtro. A escolha é dela.",
     resposta:
-      "Boa reflexão. Só que essa é exatamente a pergunta que ela precisa se fazer — não a gente. O convite é uma conversa, sem custo, sem compromisso. Quem, mesmo que hoje não pareça ‘o momento’, você acha que merece pelo menos ter essa chance de escolher?",
+      "Boa reflexão. Só que essa é exatamente a pergunta que ela precisa se fazer, não a gente. O convite é uma conversa, sem custo, sem compromisso. Quem, mesmo que hoje não pareça ‘o momento’, você acha que merece pelo menos ter essa chance de escolher?",
     escalada:
       "Muitas vezes as pessoas nem sabem que existe esse tipo de conversa. Talvez a maior contribuição seja simplesmente apresentar.",
     ultimaCartada:
-      "Se você tivesse que apostar em 3 pessoas que talvez se beneficiassem — mesmo sem certeza — quem seriam?",
+      "Se você tivesse que apostar em 3 pessoas que talvez se beneficiassem, mesmo sem certeza, quem seriam?",
     fraseBolso: "Você não decide por ela. Só abre a porta.",
     erroComum: "Deixar o vendedor filtrar por ele mesmo.",
   },
   {
     id: "cansado",
     frase: "Estou cansado / minha cabeça já deu",
-    significado: "Fadiga real da reunião. Não é objeção — é limite.",
+    significado: "Fadiga real da reunião. Não é objeção, é limite.",
     objetivo: "Respeitar o momento sem perder a REC. Reduzir esforço.",
     resposta:
-      "Entendo, foi uma conversa densa mesmo. Vamos facilitar: em vez de nomes, me diz só categorias — família, trabalho, amigos, empresários. Quais dessas categorias primeiro vem à sua cabeça?",
+      "Entendo, foi uma conversa densa mesmo. Vamos facilitar: em vez de nomes, me diz só categorias, família, trabalho, amigos, empresários. Quais dessas categorias primeiro vem à sua cabeça?",
     escalada:
       "Se preferir, marcamos 10 minutos amanhã só para isso. Sua cabeça vai estar mais fresca e você vai me trazer o triplo de nomes.",
     ultimaCartada:
@@ -225,7 +225,7 @@ export const OBJECOES: Objecao[] = [
     significado: "Restrição real de tempo. Precisa ser rápido e respeitoso.",
     objetivo: "Salvar a REC em 60 segundos.",
     resposta:
-      "Sem problema, respeito seu tempo. Em 1 minuto: me diz os 3 primeiros nomes que vierem — sem filtro, sem contexto. Ganho de tempo pra nós dois. Pode ir.",
+      "Sem problema, respeito seu tempo. Em 1 minuto: me diz os 3 primeiros nomes que vierem, sem filtro, sem contexto. Ganho de tempo pra nós dois. Pode ir.",
     escalada:
       "Se rolar 1 nome só agora, já ajuda. O resto você me manda por mensagem hoje à noite.",
     ultimaCartada:
@@ -253,9 +253,9 @@ export const OBJECOES: Objecao[] = [
     significado: "Medo de contaminar a relação com dinheiro.",
     objetivo: "Separar ‘conversa’ de ‘venda’.",
     resposta:
-      "Entendo. Aliás, é justamente o contrário: quem menos deveria ficar de fora dessa conversa é quem você mais ama. Não é sobre vender nada — é sobre garantir que quem está perto de você tenha a mesma clareza que você teve hoje.",
+      "Entendo. Aliás, é justamente o contrário: quem menos deveria ficar de fora dessa conversa é quem você mais ama. Não é sobre vender nada, é sobre garantir que quem está perto de você tenha a mesma clareza que você teve hoje.",
     escalada:
-      "Se preferir, começamos pelas pessoas menos próximas — colegas, conhecidos — e depois você decide se faz sentido incluir família.",
+      "Se preferir, começamos pelas pessoas menos próximas, colegas, conhecidos, e depois você decide se faz sentido incluir família.",
     ultimaCartada:
       "Pensa comigo: o que estraga uma amizade é dinheiro mal falado, não uma boa conversa. Você confia em como conversamos hoje?",
     fraseBolso: "Quem você ama merece a mesma clareza que você teve.",
@@ -295,7 +295,7 @@ export const OBJECOES: Objecao[] = [
     significado: "Barreira operacional real. Nada emocional aqui.",
     objetivo: "Não pedir número agora. Pedir nome + contexto.",
     resposta:
-      "Tranquilo, número quase ninguém sabe de cabeça hoje em dia. Me passa só o nome e como vocês se conhecem — quando você falar com ela, aí você me manda o contato.",
+      "Tranquilo, número quase ninguém sabe de cabeça hoje em dia. Me passa só o nome e como vocês se conhecem, quando você falar com ela, aí você me manda o contato.",
     escalada:
       "Se preferir, abre a agenda do celular na hora e pesquisa. Leva 10 segundos.",
     ultimaCartada:
@@ -323,7 +323,7 @@ export const OBJECOES: Objecao[] = [
     significado: "Confusão comum: assessor de investimentos ≠ planejamento financeiro.",
     objetivo: "Diferenciar sem desqualificar o outro profissional.",
     resposta:
-      "Ótimo, mostra que ela já se preocupa. Só que o que fazemos aqui é diferente — assessor cuida dos investimentos, a gente cuida do PLANEJAMENTO como um todo: proteção, aposentadoria, filhos, sucessão. Um complementa o outro. Faz sentido apresentar?",
+      "Ótimo, mostra que ela já se preocupa. Só que o que fazemos aqui é diferente, assessor cuida dos investimentos, a gente cuida do PLANEJAMENTO como um todo: proteção, aposentadoria, filhos, sucessão. Um complementa o outro. Faz sentido apresentar?",
     escalada:
       "Ela pode manter o assessor 100%. Nossa conversa é sobre estratégia de vida financeira, não sobre produto.",
     ultimaCartada:
@@ -338,7 +338,7 @@ export const OBJECOES: Objecao[] = [
     objetivo: "Reforçar que o processo é 100% remoto.",
     resposta:
       "Sem problema nenhum, tudo é feito por vídeo, como já fazemos hoje. Inclusive muitos clientes moram fora. Qual o nome dela?",
-    escalada: "Fuso, cidade, país — não faz diferença. Basta ela ter internet.",
+    escalada: "Fuso, cidade, país, não faz diferença. Basta ela ter internet.",
     ultimaCartada:
       "Se preferir, marcamos um horário adaptado à cidade dela.",
     fraseBolso: "Distância deixou de existir.",
@@ -361,12 +361,12 @@ export const OBJECOES: Objecao[] = [
   {
     id: "ocupada",
     frase: "Ela é muito ocupada",
-    significado: "Mais uma projeção — o cliente decide pela agenda do outro.",
+    significado: "Mais uma projeção, o cliente decide pela agenda do outro.",
     objetivo: "Devolver a decisão pra pessoa indicada.",
     resposta:
       "Justo pessoas ocupadas são as que mais precisam de clareza financeira, porque não têm tempo pra arrumar depois. A conversa é curta e ela mesma decide se vale. Qual o nome?",
     escalada:
-      "Marcamos no horário que ela puder. Manhã cedo, fim do dia, sábado — o que for melhor pra ela.",
+      "Marcamos no horário que ela puder. Manhã cedo, fim do dia, sábado, o que for melhor pra ela.",
     ultimaCartada:
       "Se ela topar 30 minutos, ótimo. Se não, ela mesma diz. Você só apresenta.",
     fraseBolso: "Quem é ocupado precisa mais, não menos.",
@@ -378,7 +378,7 @@ export const OBJECOES: Objecao[] = [
     significado: "Medo de exposição + de parecer vendedor.",
     objetivo: "Reposicionar como serviço, não incômodo.",
     resposta:
-      "Entendo, mas repara: o que é incomodar? É oferecer algo que a pessoa não pediu e que não agrega. Aqui é o oposto — você está oferecendo uma conversa que trouxe clareza pra você. Isso não é incômodo, é generosidade.",
+      "Entendo, mas repara: o que é incomodar? É oferecer algo que a pessoa não pediu e que não agrega. Aqui é o oposto, você está oferecendo uma conversa que trouxe clareza pra você. Isso não é incômodo, é generosidade.",
     escalada:
       "Se ela achar chato, é só dizer não. Nada muda entre vocês.",
     ultimaCartada:
@@ -392,7 +392,7 @@ export const OBJECOES: Objecao[] = [
     significado: "Medo de julgamento social.",
     objetivo: "Retirar o peso emocional. Normalizar.",
     resposta:
-      "Muita gente sente isso no começo. Mas indicar não é ‘vender’ — é apenas dizer ‘conheci uma conversa que fez sentido pra mim, e talvez faça pra você’. Simples assim. Quem você chamaria primeiro se essa vergonha não existisse?",
+      "Muita gente sente isso no começo. Mas indicar não é ‘vender’, é apenas dizer ‘conheci uma conversa que fez sentido pra mim, e talvez faça pra você’. Simples assim. Quem você chamaria primeiro se essa vergonha não existisse?",
     escalada:
       "Se preferir, você só me apresenta e eu explico o resto. Você não precisa vender nada.",
     ultimaCartada:
@@ -408,7 +408,7 @@ export const OBJECOES: Objecao[] = [
     resposta:
       "Entendo. Só pra ter certeza: você acha melhor deixar quieto pra você ou pras pessoas que talvez se beneficiassem? Porque nem toda oportunidade cabe no silêncio.",
     escalada:
-      "Se quiser, começamos com apenas 1 nome — aquele mais óbvio. E aí você decide o resto depois.",
+      "Se quiser, começamos com apenas 1 nome, aquele mais óbvio. E aí você decide o resto depois.",
     ultimaCartada:
       "Se essa porta ficar fechada agora, provavelmente não abre depois. Vale abrir uma frestinha?",
     fraseBolso: "Nem toda oportunidade cabe no silêncio.",
@@ -437,7 +437,7 @@ export const OBJECOES: Objecao[] = [
       "Ótimo, gente cética costuma virar os melhores clientes porque quando entendem, entendem de verdade. Deixa ela decidir se acredita ou não depois de UMA conversa. Qual o nome?",
     escalada: "O convite é justamente uma conversa sem compromisso. Ela julga depois.",
     ultimaCartada:
-      "Se ela não acreditar, ótimo — você respeitou a opinião dela. Se acreditar, você abriu uma porta.",
+      "Se ela não acreditar, ótimo, você respeitou a opinião dela. Se acreditar, você abriu uma porta.",
     fraseBolso: "Cético informado > entusiasta sem base.",
     erroComum: "Concordar com a projeção.",
   },

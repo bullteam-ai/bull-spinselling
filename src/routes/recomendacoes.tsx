@@ -280,7 +280,7 @@ function Recomendacoes() {
       {/* MÓDULO BÔNUS. A MAIOR MENTIRA SOBRE RECOMENDAÇÕES */}
       <MentiraSection />
 
-      {/* CENTRAL DE INTELIGÊNCIA — QUEBRA DE OBJEÇÕES */}
+      {/* CENTRAL DE INTELIGÊNCIA, QUEBRA DE OBJEÇÕES */}
       <CentralInteligencia />
 
       {/* STICKY TABS */}
@@ -849,7 +849,7 @@ function PriorityCard({ tier, emoji, color, desc }: { tier: string; emoji: strin
 }
 
 /* =========================================
-   PASSO 11 — RECONHECIMENTO
+   PASSO 11, RECONHECIMENTO
    ========================================= */
 
 const RECONHECIMENTO_FALE_ISTO = `Antes de encerrarmos, quero te agradecer pela confiança e pela atitude que você teve agora.
@@ -907,7 +907,7 @@ function ReconhecimentoStep() {
       title="Reconhecimento"
       subtitle="Valorize a atitude do cliente e fortaleça seu compromisso com as pessoas que ele indicou."
     >
-      {/* CARD PRINCIPAL — FALE ISTO */}
+      {/* CARD PRINCIPAL, FALE ISTO */}
       <section
         className="rounded-3xl border-2 border-[var(--success)] bg-gradient-to-br from-[#0a1733] via-[var(--navy)] to-[#1a2e5c] p-6 sm:p-8 text-white shadow-2xl shadow-[var(--success)]/20"
       >
@@ -937,7 +937,7 @@ function ReconhecimentoStep() {
             Quando uma pessoa é reconhecida por uma atitude positiva, ela tende a reforçar esse comportamento como parte da própria identidade.
           </p>
           <p className="mt-2 text-sm text-foreground/85 leading-relaxed">
-            Ao elogiar a decisão de pensar em pessoas importantes da vida dela — e não simplesmente agradecer pelas recomendações — você faz com que o cliente se enxergue como alguém que gera impacto positivo na vida de outras pessoas.
+            Ao elogiar a decisão de pensar em pessoas importantes da vida dela, e não simplesmente agradecer pelas recomendações, você faz com que o cliente se enxergue como alguém que gera impacto positivo na vida de outras pessoas.
           </p>
           <p className="mt-3 text-[11px] font-bold uppercase tracking-wider text-[var(--success)]">Isso aumenta significativamente</p>
           <ul className="mt-2 space-y-1.5 text-sm text-foreground/85 list-disc pl-5">
@@ -971,7 +971,7 @@ function ReconhecimentoStep() {
         </article>
       </div>
 
-      {/* FRASES ALTERNATIVAS — CARD LARANJA */}
+      {/* FRASES ALTERNATIVAS, CARD LARANJA */}
       <article className="mt-6 rounded-2xl border-2 border-amber-300 bg-gradient-to-br from-amber-50 to-white p-5 sm:p-6">
         <p className="text-[11px] font-bold uppercase tracking-wider text-amber-700">💬 Frases alternativas</p>
         <h3 className="mt-1 text-lg font-bold text-[var(--navy)]">Adapte o tom sem perder a essência</h3>
@@ -985,7 +985,7 @@ function ReconhecimentoStep() {
         </div>
       </article>
 
-      {/* ERROS PARA EVITAR — CARD VERMELHO */}
+      {/* ERROS PARA EVITAR, CARD VERMELHO */}
       <article className="mt-6 rounded-2xl border-2 border-red-300 bg-gradient-to-br from-red-50 to-white p-5 sm:p-6">
         <p className="text-[11px] font-bold uppercase tracking-wider text-red-700">⚠️ Erros para evitar</p>
         <h3 className="mt-1 text-lg font-bold text-[var(--navy)]">O que <em>nunca</em> dizer no encerramento</h3>
@@ -1002,7 +1002,7 @@ function ReconhecimentoStep() {
         </ul>
       </article>
 
-      {/* ACCORDION — POR QUE FUNCIONA */}
+      {/* ACCORDION, POR QUE FUNCIONA */}
       <details className="mt-6 group rounded-2xl border border-border bg-white shadow-sm open:shadow-md transition">
         <summary className="cursor-pointer list-none flex items-center gap-3 px-5 py-4 rounded-2xl select-none">
           <span className="grid place-items-center h-9 w-9 shrink-0 rounded-xl bg-[var(--brand)]/10 text-[var(--brand)]">
