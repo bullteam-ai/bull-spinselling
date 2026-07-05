@@ -938,7 +938,7 @@ function LigacaoMode({
         />
       ))}
 
-      {/* OBJEÇÕES */}
+      {/* OBJEÇÕES DESTA LIGAÇÃO */}
       {call.objections && call.objections.length > 0 && (
         <section className="rounded-3xl border border-border bg-white p-6 sm:p-8">
           <header className="mb-5 flex items-start gap-3">
@@ -948,21 +948,44 @@ function LigacaoMode({
             <div>
               <p className="text-[11px] font-semibold uppercase tracking-wider text-[var(--warn)]">Contorno de objeções</p>
               <h3 className="mt-0.5 text-xl sm:text-2xl font-bold text-[var(--navy)]">Respostas prontas</h3>
+              <p className="mt-1 text-sm text-muted-foreground">Toque em cada card para ver intenção, resposta e escalada.</p>
             </div>
           </header>
           <div className="grid gap-3 md:grid-cols-2">
             {call.objections.map((o, i) => (
-              <div key={i} className="rounded-2xl border border-border bg-[var(--surface)] p-5">
-                <p className="text-[11px] font-semibold uppercase tracking-wider text-[var(--danger)] flex items-center gap-1.5">
-                  <AlertTriangle className="h-3.5 w-3.5" /> Objeção do cliente
-                </p>
-                <p className="mt-1.5 text-sm font-semibold italic text-[var(--navy)]/80">“{o.q}”</p>
-                <blockquote className="fala-script mt-3">“{o.a}”</blockquote>
-              </div>
+              <ObjectionCard
+                key={i}
+                o={{
+                  q: o.q,
+                  resposta: o.a,
+                  intencao: o.intencao,
+                  escalada: o.escalada,
+                  categoria: o.categoria,
+                }}
+              />
             ))}
           </div>
         </section>
       )}
+
+      {/* OBJEÇÕES UNIVERSAIS */}
+      <section className="rounded-3xl border border-border bg-white p-6 sm:p-8">
+        <header className="mb-5 flex items-start gap-3">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--brand)]/15 text-[var(--brand)]">
+            <Shield className="h-5 w-5" />
+          </span>
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-[var(--brand)]">Objeções universais</p>
+            <h3 className="mt-0.5 text-xl sm:text-2xl font-bold text-[var(--navy)]">Respostas para as objeções mais comuns</h3>
+            <p className="mt-1 text-sm text-muted-foreground">Use em qualquer tipo de ligação. Cada card traz intenção, resposta e escalada.</p>
+          </div>
+        </header>
+        <div className="grid gap-3 md:grid-cols-2">
+          {SHARED_OBJECTIONS.map((o, i) => (
+            <ObjectionCard key={i} o={o} />
+          ))}
+        </div>
+      </section>
 
       {/* SELO FINAL, Fechamento e agendamento */}
       <section className="rounded-3xl border border-border bg-white p-6 sm:p-8">
