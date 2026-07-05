@@ -3,10 +3,14 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Phone, PhoneCall, Headphones, GraduationCap, Brain, Crown,
   Home as HomeIcon, ClipboardCopy, Check, Sparkles, AlertTriangle,
-  CheckCircle2, Target, Quote, RefreshCw, Repeat, Star, Shield, Eye,
+  CheckCircle2, Target, Quote, RefreshCw, Repeat, Star, Shield, Eye, Rocket,
 } from "lucide-react";
 import { useContent } from "@/lib/content/ContentContext";
 import { copyToClipboard } from "@/lib/copy-to-clipboard";
+import { GuidedCall } from "@/components/GuidedCall";
+import { ObjectionCard } from "@/components/ObjectionCard";
+import { SHARED_OBJECTIONS } from "@/data/objecoes";
+import type { FocusStep } from "@/components/FocusMode";
 
 export const Route = createFileRoute("/ligacoes")({
   head: () => ({
