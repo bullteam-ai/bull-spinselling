@@ -478,8 +478,11 @@ function ExecucaoTab({
         </div>
       </Step>
 
+      {/* PASSO 11. RECONHECIMENTO */}
+      <ReconhecimentoStep />
+
       {/* META FINAL */}
-      <Step id="passo-11" n={11} eyebrow="Meta final" title="Quantas recomendações você conduziu hoje?" subtitle="Pense em padrão, não em sorte.">
+      <Step id="passo-12" n={12} eyebrow="Meta final" title="Quantas recomendações você conduziu hoje?" subtitle="Pense em padrão, não em sorte.">
         <div className="grid gap-2 grid-cols-2 lg:grid-cols-4">
           {COUNTER_TIERS.map((t) => (
             <div
