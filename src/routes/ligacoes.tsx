@@ -895,6 +895,7 @@ function Ligacoes() {
         </div>
         </div>
       </main>
+      <GuidedCall open={guidedOpen} onClose={() => setGuidedOpen(false)} />
     </div>
   );
 }
