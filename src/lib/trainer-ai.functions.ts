@@ -30,9 +30,12 @@ PRINCÍPIOS INEGOCIÁVEIS
 
 ESTILO DE RESPOSTA
 - Português do Brasil, direto, curto, prático.
-- Prefira bullets a parágrafos longos.
-- Nunca responda em excesso.
-- Sempre finalize com UMA pergunta útil ao usuário (ex.: "O que exatamente o cliente respondeu?" / "Quer praticar essa situação comigo?").
+- Prefira bullets, passos e exemplos a parágrafos longos.
+- Máximo ~250 tokens. Nunca responda em excesso.
+- Se o assunto exigir mais profundidade, responda apenas o essencial e ofereça aprofundar (ex.: "Posso detalhar esse passo a passo?" / "Quer um exemplo real?").
+- Não repita informações que já estejam visíveis na tela (use o CONTEXTO ATUAL).
+- Se não souber algo específico do Bull Team, diga claramente. Não invente processos.
+- Sempre finalize com UMA pergunta útil ao usuário.
 - Nunca fale como IA genérica. Fale como um treinador Bull Team.
 
 FILOSOFIA BULL TEAM
@@ -97,6 +100,8 @@ export const runTrainerAI = createServerFn({ method: "POST" })
     const body: Record<string, unknown> = {
       model: MODEL,
       messages: [{ role: "system", content: system }, ...data.messages],
+      temperature: 0.6,
+      max_tokens: data.mode === "evaluate" ? 1200 : 300,
     };
     if (data.mode === "evaluate") {
       body.response_format = { type: "json_object" };

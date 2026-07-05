@@ -231,6 +231,7 @@ export function TrainerAI() {
         messages: [
           ...nextMessages
             .filter((m) => m.content)
+            .slice(-6)
             .map((m) => ({ role: m.role, content: m.content })),
           ...(silent ? [{ role: "user" as const, content: trimmed }] : []),
         ],
@@ -259,6 +260,7 @@ export function TrainerAI() {
         context: window.__btTrainerContext ?? undefined,
         messages: messages
           .filter((m) => m.content)
+          .slice(-20)
           .map((m) => ({ role: m.role, content: m.content })),
       };
       const res: any = await runAI({ data: payload });
