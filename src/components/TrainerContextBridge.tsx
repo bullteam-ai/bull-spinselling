@@ -24,7 +24,7 @@ const PAGE_CONTEXT: Record<
       "Melhor momento para pedir indicação na EF",
       "Script para pedir 5 REC CL sem soar forçado",
       "Como pedir REC PN (profissional) de forma natural",
-      "Cliente disse 'não tenho ninguém pra indicar' — o que respondo?",
+      "Cliente disse 'não tenho ninguém pra indicar', o que respondo?",
     ],
   },
   "/ligacoes": {
