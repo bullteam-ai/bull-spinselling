@@ -75,11 +75,24 @@ export function UniversalEdit() {
       els.forEach((el) => {
         if (el.closest("[data-no-edit]")) return;
         if (!isLeafText(el)) return;
-        const original = (el.getAttribute("data-edit-original") ?? el.textContent ?? "").trim();
-        if (!original) return;
+        const currentText = (el.textContent ?? "").trim();
+        if (!currentText) return;
+        const storedOriginal = el.getAttribute("data-edit-original");
+        const original = storedOriginal ?? currentText;
         const id = computeId(pathname, el, original);
         const value = get(id, original);
-        if (!el.getAttribute("data-edit-original")) {
+        const hasOverride = value !== original;
+
+        // React re-rendered new default text (e.g. tab/prop change) and the user
+        // never saved an override for the previous baseline — rebaseline to the
+        // new React text instead of reverting it back.
+        if (!hasOverride && storedOriginal && currentText !== storedOriginal) {
+          el.setAttribute("data-edit-original", currentText);
+          el.setAttribute("data-edit-id", computeId(pathname, el, currentText));
+          return;
+        }
+
+        if (!storedOriginal) {
           el.setAttribute("data-edit-original", original);
         }
         el.setAttribute("data-edit-id", id);
