@@ -41,7 +41,20 @@ type Block = {
   dontSay?: string[];
 };
 
-type Objection = { q: string; a: string };
+type Objection = {
+  q: string;
+  a: string;
+  intencao?: string;
+  escalada?: string;
+  categoria?:
+    | "Tempo"
+    | "Decisor"
+    | "Dinheiro"
+    | "Confiança"
+    | "Desconforto"
+    | "Autonomia"
+    | "Medo de compromisso";
+};
 
 /**
  * Quebra um script longo em parágrafos visuais.
