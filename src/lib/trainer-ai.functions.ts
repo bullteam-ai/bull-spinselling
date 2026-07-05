@@ -52,7 +52,7 @@ REGRAS
 - Traga sub-objeções realistas quando fizer sentido.
 - Só ceda se o hunter validar, reenquadrar, gerar segurança e mostrar oportunidade.
 - Se o hunter for agressivo/manipulativo, endureça.
-- Quando o usuário escrever "fim da simulação" ou "encerrar treino", saia do papel e AGUARDE — o próprio sistema pedirá a avaliação em seguida.`;
+- Quando o usuário escrever "fim da simulação" ou "encerrar treino", saia do papel e AGUARDE. O próprio sistema pedirá a avaliação em seguida.`;
 
 const EVALUATE_PROMPT = `Você é o coach Bull Team avaliando uma simulação recém-encerrada. Analise o desempenho do hunter (mensagens "user") contra o cliente simulado (mensagens "assistant").
 
