@@ -16,6 +16,7 @@ import { FocusMode } from "../components/FocusMode";
 import { ContentProvider, useContent } from "../lib/content/ContentContext";
 import { UniversalEdit } from "../lib/content/UniversalEdit";
 import { TrainerAI } from "../components/TrainerAI";
+import { TrainerContextBridge } from "../components/TrainerContextBridge";
 
 function NotFoundComponent() {
   return (
@@ -160,6 +161,7 @@ function RootComponent() {
         <Outlet />
         <FocusMode />
         <UniversalEdit />
+        <TrainerContextBridge />
         <TrainerAI />
       </ContentProvider>
     </QueryClientProvider>
