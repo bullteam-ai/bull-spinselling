@@ -3,10 +3,14 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Phone, PhoneCall, Headphones, GraduationCap, Brain, Crown,
   Home as HomeIcon, ClipboardCopy, Check, Sparkles, AlertTriangle,
-  CheckCircle2, Target, Quote, RefreshCw, Repeat, Star, Shield, Eye,
+  CheckCircle2, Target, Quote, RefreshCw, Repeat, Star, Shield, Eye, Rocket,
 } from "lucide-react";
 import { useContent } from "@/lib/content/ContentContext";
 import { copyToClipboard } from "@/lib/copy-to-clipboard";
+import { GuidedCall } from "@/components/GuidedCall";
+import { ObjectionCard } from "@/components/ObjectionCard";
+import { SHARED_OBJECTIONS } from "@/data/objecoes";
+import type { FocusStep } from "@/components/FocusMode";
 
 export const Route = createFileRoute("/ligacoes")({
   head: () => ({
@@ -37,7 +41,20 @@ type Block = {
   dontSay?: string[];
 };
 
-type Objection = { q: string; a: string };
+type Objection = {
+  q: string;
+  a: string;
+  intencao?: string;
+  escalada?: string;
+  categoria?:
+    | "Tempo"
+    | "Decisor"
+    | "Dinheiro"
+    | "Confiança"
+    | "Desconforto"
+    | "Autonomia"
+    | "Medo de compromisso";
+};
 
 /**
  * Quebra um script longo em parágrafos visuais.
@@ -671,11 +688,40 @@ function Ligacoes() {
   const [activeId, setActiveId] = useState<string>(CALL_TYPES[0].id);
   const [mode, setMode] = useState<Mode>("ligacao");
   const [copied, setCopied] = useState<string | null>(null);
+  const [guidedOpen, setGuidedOpen] = useState(false);
 
   const call = useMemo(
     () => CALL_TYPES.find((c) => c.id === activeId) ?? CALL_TYPES[0],
     [activeId]
   );
+
+  // Publica etapas para o Modo Foco (teleprompter) a partir do call atual.
+  useEffect(() => {
+    const steps: FocusStep[] = call.blocks.map((b) => ({
+      id: b.id,
+      label: b.label,
+      pergunta: b.script,
+      sim: b.doSay,
+      nao: b.dontSay,
+      transicao: b.trigger,
+    }));
+    steps.push({
+      id: "fechamento-final",
+      label: "Fechamento",
+      pergunta: call.fechamento,
+      transicao: "Encerre firme, sem pedir confirmação.",
+    });
+    window.__btFocusSteps = steps;
+    window.dispatchEvent(
+      new CustomEvent("bt:focus-steps", { detail: { steps } }),
+    );
+    return () => {
+      delete window.__btFocusSteps;
+      window.dispatchEvent(
+        new CustomEvent("bt:focus-steps", { detail: { steps: [] } }),
+      );
+    };
+  }, [call]);
 
   const copy = async (text: string, id: string) => {
     const ok = await copyToClipboard(text);
@@ -719,6 +765,13 @@ function Ligacoes() {
             <span className="inline-flex items-center gap-2 rounded-full border border-[var(--success)]/30 bg-[var(--success)]/10 px-3 py-1 text-xs font-semibold tracking-wide text-[var(--success)] backdrop-blur">
               <PhoneCall className="h-3.5 w-3.5" /> Modo Ligação
             </span>
+            <button
+              type="button"
+              onClick={() => setGuidedOpen(true)}
+              className="ml-auto inline-flex items-center gap-1.5 rounded-full bg-[var(--success)] px-3.5 py-1.5 text-xs font-bold text-[var(--navy)] shadow-lg shadow-[var(--success)]/30 hover:brightness-110 transition"
+            >
+              <Rocket className="h-3.5 w-3.5" /> Iniciar Ligação Guiada
+            </button>
           </div>
           <h1 className="mt-5 text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight">
             Passo a Passo de <span className="text-[var(--success)]">Ligações Elite</span>
@@ -842,6 +895,7 @@ function Ligacoes() {
         </div>
         </div>
       </main>
+      <GuidedCall open={guidedOpen} onClose={() => setGuidedOpen(false)} />
     </div>
   );
 }
@@ -884,7 +938,7 @@ function LigacaoMode({
         />
       ))}
 
-      {/* OBJEÇÕES */}
+      {/* OBJEÇÕES DESTA LIGAÇÃO */}
       {call.objections && call.objections.length > 0 && (
         <section className="rounded-3xl border border-border bg-white p-6 sm:p-8">
           <header className="mb-5 flex items-start gap-3">
@@ -894,21 +948,44 @@ function LigacaoMode({
             <div>
               <p className="text-[11px] font-semibold uppercase tracking-wider text-[var(--warn)]">Contorno de objeções</p>
               <h3 className="mt-0.5 text-xl sm:text-2xl font-bold text-[var(--navy)]">Respostas prontas</h3>
+              <p className="mt-1 text-sm text-muted-foreground">Toque em cada card para ver intenção, resposta e escalada.</p>
             </div>
           </header>
           <div className="grid gap-3 md:grid-cols-2">
             {call.objections.map((o, i) => (
-              <div key={i} className="rounded-2xl border border-border bg-[var(--surface)] p-5">
-                <p className="text-[11px] font-semibold uppercase tracking-wider text-[var(--danger)] flex items-center gap-1.5">
-                  <AlertTriangle className="h-3.5 w-3.5" /> Objeção do cliente
-                </p>
-                <p className="mt-1.5 text-sm font-semibold italic text-[var(--navy)]/80">“{o.q}”</p>
-                <blockquote className="fala-script mt-3">“{o.a}”</blockquote>
-              </div>
+              <ObjectionCard
+                key={i}
+                o={{
+                  q: o.q,
+                  resposta: o.a,
+                  intencao: o.intencao,
+                  escalada: o.escalada,
+                  categoria: o.categoria,
+                }}
+              />
             ))}
           </div>
         </section>
       )}
+
+      {/* OBJEÇÕES UNIVERSAIS */}
+      <section className="rounded-3xl border border-border bg-white p-6 sm:p-8">
+        <header className="mb-5 flex items-start gap-3">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--brand)]/15 text-[var(--brand)]">
+            <Shield className="h-5 w-5" />
+          </span>
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-[var(--brand)]">Objeções universais</p>
+            <h3 className="mt-0.5 text-xl sm:text-2xl font-bold text-[var(--navy)]">Respostas para as objeções mais comuns</h3>
+            <p className="mt-1 text-sm text-muted-foreground">Use em qualquer tipo de ligação. Cada card traz intenção, resposta e escalada.</p>
+          </div>
+        </header>
+        <div className="grid gap-3 md:grid-cols-2">
+          {SHARED_OBJECTIONS.map((o, i) => (
+            <ObjectionCard key={i} o={o} />
+          ))}
+        </div>
+      </section>
 
       {/* SELO FINAL, Fechamento e agendamento */}
       <section className="rounded-3xl border border-border bg-white p-6 sm:p-8">
