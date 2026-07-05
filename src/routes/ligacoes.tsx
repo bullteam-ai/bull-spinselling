@@ -723,6 +723,21 @@ function Ligacoes() {
     };
   }, [call]);
 
+  // Publica contexto para o Treinador IA
+  useEffect(() => {
+    const ctx = [
+      `Página: /ligacoes`,
+      `Modelo de ligação: ${call.label}`,
+      `Objetivo do modelo: ${call.objetivo}`,
+      `Modo: ${mode === "ligacao" ? "Ligação (execução ao vivo)" : "Treinamento"}`,
+      `Blocos disponíveis: ${call.blocks.map((b) => b.label).join(", ")}`,
+    ].join("\n");
+    window.__btTrainerContext = ctx;
+    return () => {
+      delete window.__btTrainerContext;
+    };
+  }, [call, mode]);
+
   const copy = async (text: string, id: string) => {
     const ok = await copyToClipboard(text);
     if (ok) {

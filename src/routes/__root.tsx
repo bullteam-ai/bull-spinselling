@@ -15,6 +15,7 @@ import { JOURNEY, type JourneyItem } from "./recomendacoes";
 import { FocusMode } from "../components/FocusMode";
 import { ContentProvider, useContent } from "../lib/content/ContentContext";
 import { UniversalEdit } from "../lib/content/UniversalEdit";
+import { TrainerAI } from "../components/TrainerAI";
 
 function NotFoundComponent() {
   return (
@@ -159,6 +160,7 @@ function RootComponent() {
         <Outlet />
         <FocusMode />
         <UniversalEdit />
+        <TrainerAI />
       </ContentProvider>
     </QueryClientProvider>
   );
