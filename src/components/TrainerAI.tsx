@@ -463,7 +463,7 @@ function EvaluationCard({ evaluation, onRestart }: { evaluation: any; onRestart:
     <div className="rounded-2xl border-2 border-[var(--success)]/40 bg-gradient-to-br from-[#0a1733] via-[var(--navy)] to-[#1a2e5c] p-5 text-white space-y-4">
       <div className="flex items-center gap-3">
         <div className="grid h-14 w-14 place-items-center rounded-2xl bg-[var(--success)] text-[var(--navy)] font-black text-lg">
-          {isNaN(nota) ? "—" : nota}
+          {isNaN(nota) ? "-" : nota}
         </div>
         <div className="min-w-0">
           <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--success)]">
@@ -480,7 +480,7 @@ function EvaluationCard({ evaluation, onRestart }: { evaluation: any; onRestart:
               <summary className="cursor-pointer list-none px-3 py-2 flex items-center justify-between text-sm">
                 <span className="font-bold capitalize">{k}</span>
                 <span className="rounded-md bg-[var(--success)]/20 text-[var(--success)] px-2 py-0.5 text-xs font-bold">
-                  {v?.nota ?? "—"}/10
+                  {v?.nota ?? "-"}/10
                 </span>
               </summary>
               <div className="px-3 pb-3 pt-1 text-xs space-y-1.5 text-white/85">
