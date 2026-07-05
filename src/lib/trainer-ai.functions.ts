@@ -13,8 +13,8 @@ const InputSchema = z.object({
   persona: z.string().optional(),
 });
 
-const GATEWAY_URL = "https://api.x.ai/v1/chat/completions";
-const MODEL = "grok-4-fast-non-reasoning";
+const GATEWAY_URL = "https://ai.gateway.lovable.dev/v1/chat/completions";
+const MODEL = "google/gemini-3-flash-preview";
 
 const BASE_PERSONA = `Você é o Treinador Comercial Oficial da Bull Team.
 
@@ -82,8 +82,8 @@ Nada além do JSON.`;
 export const runTrainerAI = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => InputSchema.parse(input))
   .handler(async ({ data }) => {
-    const key = process.env.XAI_API_KEY;
-    if (!key) throw new Error("XAI_API_KEY ausente. Configure a integração de IA.");
+    const key = process.env.LOVABLE_API_KEY;
+    if (!key) throw new Error("LOVABLE_API_KEY ausente. Ative a IA da Lovable Cloud.");
 
     const persona = data.persona ?? BASE_PERSONA;
     let system = persona;
@@ -106,7 +106,8 @@ export const runTrainerAI = createServerFn({ method: "POST" })
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${key}`,
+        "Lovable-API-Key": key,
+        "X-Lovable-AIG-SDK": "vercel-ai-sdk",
       },
       body: JSON.stringify(body),
     });
@@ -114,6 +115,7 @@ export const runTrainerAI = createServerFn({ method: "POST" })
     if (!res.ok) {
       const text = await res.text().catch(() => "");
       if (res.status === 429) throw new Error("Limite de uso atingido. Tente em alguns segundos.");
+      if (res.status === 402) throw new Error("Créditos de IA esgotados no workspace.");
       if (res.status === 401) throw new Error("Chave da IA inválida.");
       throw new Error(`Erro na IA (${res.status}): ${text.slice(0, 200)}`);
     }
