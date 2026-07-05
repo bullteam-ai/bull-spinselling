@@ -2,7 +2,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import {
   X, Send, Sparkles, Trash2, Copy, Check, Maximize2, Minimize2,
-  Bot, User as UserIcon, PhoneCall, Award, RefreshCw,
+  Bot, User as UserIcon, PhoneCall, Award, RefreshCw, Home,
+  Theater, Brain, ShieldAlert, TrendingUp, ClipboardCheck,
 } from "lucide-react";
 import { runTrainerAI } from "@/lib/trainer-ai.functions";
 import { copyToClipboard } from "@/lib/copy-to-clipboard";
@@ -20,14 +21,50 @@ declare global {
 
 const STORAGE_KEY = "bt:trainer-ai:v1";
 
-const SUGGESTIONS: { icon: string; label: string; prompt: string }[] = [
-  { icon: "🧠", label: "Como conduzo melhor essa etapa?", prompt: "Como conduzo melhor a etapa atual em que estou?" },
-  { icon: "🎯", label: "Como aumentar minha conversão?", prompt: "Como posso aumentar minha conversão nesse tipo de ligação? Me dê 3 ajustes práticos." },
-  { icon: "❓", label: "E se o cliente responder isso?", prompt: "E se o cliente responder que não tem tempo agora? Como conduzir?" },
-  { icon: "📞", label: "Simule um cliente comigo", prompt: "__SIMULATE__" },
-  { icon: "📝", label: "Analise minha abordagem", prompt: "Vou colar aqui minha abordagem. Me diga o que melhorar, mantendo a filosofia Bull Team." },
-  { icon: "💡", label: "Explique essa pergunta", prompt: "Explique a pergunta principal da etapa em que estou: por que ela existe, o erro mais comum e como um top performer faria." },
-  { icon: "🚀", label: "Como um Top Performer faria?", prompt: "Como um Top Performer conduziria essa etapa? Me dê a versão boa, excelente e top performer." },
+type QuickActionId = "simulate" | "explain" | "objection" | "improve" | "analyze";
+
+const QUICK_ACTIONS: {
+  id: QuickActionId;
+  emoji: string;
+  Icon: typeof Theater;
+  title: string;
+  description: string;
+}[] = [
+  {
+    id: "simulate",
+    emoji: "🎭",
+    Icon: Theater,
+    title: "Simular Cliente",
+    description: "Treine uma ligação completa com um cliente fictício e receba feedback no final.",
+  },
+  {
+    id: "explain",
+    emoji: "🧠",
+    Icon: Brain,
+    title: "Explicar Pergunta",
+    description: "Entenda por que cada pergunta do SPIN existe e qual seu objetivo psicológico.",
+  },
+  {
+    id: "objection",
+    emoji: "🚧",
+    Icon: ShieldAlert,
+    title: "Resolver Objeção",
+    description: "Receba ajuda para quebrar qualquer objeção do cliente.",
+  },
+  {
+    id: "improve",
+    emoji: "📈",
+    Icon: TrendingUp,
+    title: "Melhorar Conversão",
+    description: "Descubra oportunidades para conduzir melhor a conversa e aumentar seus agendamentos.",
+  },
+  {
+    id: "analyze",
+    emoji: "📝",
+    Icon: ClipboardCheck,
+    title: "Analisar Minha Resposta",
+    description: "Cole uma conversa, mensagem ou resposta e receba uma análise completa.",
+  },
 ];
 
 function uid() {
@@ -44,6 +81,7 @@ export function TrainerAI() {
   const [error, setError] = useState<string | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [evaluation, setEvaluation] = useState<any | null>(null);
+  const [showMenu, setShowMenu] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -108,6 +146,7 @@ export function TrainerAI() {
     setEvaluation(null);
     setError(null);
     setMode("chat");
+    setShowMenu(true);
   }, []);
 
   const restartSimulation = useCallback(() => {
@@ -119,9 +158,51 @@ export function TrainerAI() {
     void sendMessage("Comece agora como se estivesse atendendo minha ligação. Não avise nada, apenas fale como o cliente.", "simulate", true);
   }, []);
 
+  const openMenu = useCallback(() => setShowMenu(true), []);
+
+  function seedAssistant(content: string) {
+    setMessages((m) => [...m, { id: uid(), role: "assistant", content, ts: Date.now() }]);
+  }
+
+  function handleQuickAction(id: QuickActionId) {
+    setShowMenu(false);
+    setError(null);
+    setEvaluation(null);
+    setMode("chat");
+    if (id === "simulate") {
+      restartSimulation();
+      return;
+    }
+    if (id === "explain") {
+      setMessages([]);
+      void sendMessage(
+        "Explique a pergunta principal da etapa atual em que estou (use o contexto da tela). Responda em tópicos claros: 1) por que essa pergunta existe, 2) o erro mais comum que os hunters cometem, 3) o que ouvir na resposta do cliente, 4) quando aprofundar, 5) quando avançar para a próxima etapa.",
+        "chat",
+        true,
+      );
+      return;
+    }
+    if (id === "objection") {
+      setMessages([]);
+      seedAssistant("🚧 Vamos quebrar essa objeção juntos.\n\nQual foi exatamente a objeção do cliente? Cole aqui as palavras dele, o mais próximo possível do que ele disse.");
+      return;
+    }
+    if (id === "improve") {
+      setMessages([]);
+      seedAssistant("📈 Bora aumentar sua conversão.\n\nMe conta: o que aconteceu na ligação? Como abriu, o que perguntou, onde travou e como terminou. Pode escrever no seu estilo, eu vou destrinchar.");
+      return;
+    }
+    if (id === "analyze") {
+      setMessages([]);
+      seedAssistant("📝 Manda que eu analiso.\n\nCole aqui sua mensagem, resposta ou conversa. Vou devolver: nota geral, pontos fortes, pontos fracos, versão melhorada, versão Top Performer e a explicação das mudanças.");
+      return;
+    }
+  }
+
   async function sendMessage(text: string, forceMode?: Mode, silent = false) {
     const trimmed = text.trim();
     if (!trimmed || loading) return;
+    setShowMenu(false);
 
     const targetMode: Mode = forceMode ?? mode;
 
@@ -194,15 +275,6 @@ export function TrainerAI() {
     }
   }
 
-  function handleSuggestion(prompt: string) {
-    if (prompt === "__SIMULATE__") {
-      restartSimulation();
-      return;
-    }
-    setInput(prompt);
-    inputRef.current?.focus();
-  }
-
   async function copyMsg(m: Msg) {
     const ok = await copyToClipboard(m.content);
     if (ok) {
@@ -212,6 +284,7 @@ export function TrainerAI() {
   }
 
   const isEmpty = messages.length === 0 && !evaluation;
+  const showMenuPanel = showMenu || isEmpty;
 
   const panelClass = useMemo(() => {
     const base =
@@ -289,6 +362,16 @@ export function TrainerAI() {
 
             {/* Toolbar */}
             <div className="shrink-0 flex items-center gap-2 px-3 py-2 border-b border-border bg-[var(--surface)]">
+              {!showMenuPanel && (
+                <button
+                  type="button"
+                  onClick={openMenu}
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-white px-2.5 py-1.5 text-[11px] font-bold text-[var(--navy)] hover:bg-[var(--surface)]"
+                  title="Voltar ao menu de ações"
+                >
+                  <Home className="h-3.5 w-3.5" /> Menu
+                </button>
+              )}
               <button
                 type="button"
                 onClick={restartSimulation}
@@ -322,27 +405,42 @@ export function TrainerAI() {
 
             {/* Messages */}
             <div ref={scrollRef} className="flex-1 overflow-y-auto px-3 sm:px-4 py-4 space-y-3 bg-white">
-              {isEmpty ? (
+              {showMenuPanel ? (
                 <div className="space-y-4">
-                  <div className="rounded-2xl border border-border bg-[var(--surface)] p-4">
-                    <p className="text-sm text-[var(--navy)] leading-relaxed">
-                      Sou o seu treinador Bull Team. Uso <b>SPIN Selling</b> e os roteiros deste sistema para te ajudar em qualquer ligação. Comece com uma das opções abaixo ou me pergunte direto.
+                  <div className="rounded-2xl border border-border bg-gradient-to-br from-[#0a1733] via-[var(--navy)] to-[#1a2e5c] p-4 text-white">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--success)]">
+                      Bull Team · Treinador IA
+                    </p>
+                    <p className="mt-1 text-sm leading-relaxed text-white/90">
+                      Escolha por onde quer começar. Uso o contexto da tela e a filosofia Bull Team para te treinar como um top performer.
                     </p>
                   </div>
-                  <div className="grid gap-2">
-                    {SUGGESTIONS.map((s, i) => (
-                      <button
-                        key={i}
-                        type="button"
-                        onClick={() => handleSuggestion(s.prompt)}
-                        className="text-left rounded-xl border border-border bg-white px-3 py-2.5 hover:border-[var(--brand)] hover:bg-[var(--brand)]/5 transition"
-                      >
-                        <span className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--navy)]">
-                          <span aria-hidden className="text-base">{s.icon}</span>
-                          {s.label}
-                        </span>
-                      </button>
-                    ))}
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    {QUICK_ACTIONS.map((a) => {
+                      const Icon = a.Icon;
+                      return (
+                        <button
+                          key={a.id}
+                          type="button"
+                          onClick={() => handleQuickAction(a.id)}
+                          className="group text-left rounded-2xl border border-border bg-white p-4 hover:border-[var(--brand)] hover:-translate-y-0.5 hover:shadow-lg transition-all duration-200"
+                        >
+                          <div className="flex items-start gap-3">
+                            <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[var(--brand)]/10 to-[var(--navy)]/10 text-2xl group-hover:from-[var(--brand)]/20 group-hover:to-[var(--navy)]/20 transition-colors" aria-hidden>
+                              {a.emoji}
+                            </div>
+                            <div className="min-w-0">
+                              <p className="text-sm font-bold text-[var(--navy)] leading-tight">
+                                {a.title}
+                              </p>
+                              <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+                                {a.description}
+                              </p>
+                            </div>
+                          </div>
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
               ) : (
