@@ -1,54 +1,96 @@
-## Objetivo
+# Plano — Bull Team | Central de Condução Comercial
 
-Criar uma tela de login e um sistema que permita ao admin **clicar em qualquer texto** das páginas (Recomendações, Ligações, Esquentar, Prospecção, Guia da Ligação) e editar direto na tela. As edições ficam salvas no banco e aparecem para todos.
+Três camadas de uso convivendo na página `/ligacoes`, sem quebrar o que já existe:
 
-## Arquitetura
+1. **Consulta livre** (comportamento atual)
+2. **Modo Foco** (camada teleprompter opcional)
+3. **Ligação Guiada** (fluxo passo a passo com wizard)
 
-1. **Lovable Cloud (Supabase)** — auth real + banco para persistir as edições.
-2. **Tabela `content_overrides`** — chave/valor por `field_id` (string única por campo). Sem precisar mapear coluna por coluna; qualquer campo novo é só dar um id.
-3. **Tabela `user_roles`** + função `has_role()` — só quem for `admin` consegue editar (segue o padrão recomendado, role NUNCA na tabela de perfil).
-4. **Componente `<Editable id="..." as="h2">texto padrão</Editable>`** — usado em toda página. Quando o usuário admin ativa o "Modo Edição", aparece um lápis em cada campo; clicar abre editor inline (textarea + salvar/cancelar). Para usuários comuns, renderiza o texto normalmente (com override aplicado se existir).
-5. **Hook `useContent()`** — carrega todos os overrides uma vez via TanStack Query e devolve `get(id, default)`. Cache invalida após salvar.
-6. **Server functions** (`createServerFn` com `requireSupabaseAuth` + checagem `has_role('admin')`):
-   - `listOverrides()` — público, retorna todos os pares id→valor.
-   - `upsertOverride({ id, value })` — admin only.
-   - `deleteOverride({ id })` — admin only (volta ao texto padrão).
+Além disso, ampliação da seção de objeções.
 
-## UX
+---
 
-- **/auth** — tela de login (email + senha, sem cadastro público; admins criados manualmente pelo dono).
-- **TopNav** — quando logado como admin, aparece botão **✏️ Modo Edição**. Quando ativo, todo `<Editable>` ganha contorno tracejado e ícone de lápis no hover. Clique → editor inline → salvar persiste no banco.
-- Visitantes não autenticados veem tudo igual, com os overrides aplicados.
-- Botão **Sair** no menu quando logado.
+## 1. Modo Foco (refatorar `src/components/FocusMode.tsx`)
 
-## Implementação por etapas
+Hoje ele só esconde as demais `<section>`s e mostra a atual como está — mantém toda a poluição visual (treinamento, badges, etc). Vou trocar por uma **camada overlay teleprompter**:
 
-### Etapa 1 — agora, nesta resposta
-- Ativar Lovable Cloud.
-- Migration: `content_overrides`, `user_roles`, enum `app_role`, função `has_role`, RLS e GRANTs.
-- Criar rota `/auth` (login email/senha).
-- Criar `_authenticated/route.tsx` (gerenciado pela integração) — usado só para o painel admin.
-- Criar `<Editable>`, `useContent`, contexto `EditModeContext`.
-- Criar server functions `listOverrides` / `upsertOverride` / `deleteOverride`.
-- Integrar botão "Modo Edição" e "Entrar/Sair" no `TopNav`.
-- Aplicar `<Editable>` no **hero e títulos principais das 5 páginas** como prova de conceito (uns 20-30 campos).
+- Quando ativo, renderiza um `fixed inset-0` com fundo escuro sobre a página.
+- Card central grande com:
+  - Topo: `Modo Foco · Ligação ao vivo`
+  - Indicador "Etapa X de N · Nome"
+  - Pergunta / fala principal em fonte grande (`text-3xl sm:text-4xl`)
+  - Duas colunas: **✅ Se responder SIM** / **❌ Se responder NÃO** (empilhadas no mobile)
+  - `🎤 Transição recomendada`
+  - Rodapé: `← Voltar`, `Próxima etapa →`, `Sair do Modo Foco`
+- Continua lendo `<section id="…">` do `<main>` como fonte das etapas (retrocompatível).
+- Extração da pergunta/SIM/NÃO/transição a partir dos campos existentes do bloco (`script`, `doSay`, `dontSay`, `intent`). Onde não houver ramo SIM/NÃO explícito, oculta a caixa faltante.
+- Atalhos de teclado (← → Esc) preservados.
+- CSS antigo `.focus-mode [data-focus-hidden]` deixa de ser necessário (overlay resolve), mas mantenho por retrocompatibilidade.
 
-### Etapa 2 — turnos seguintes (sob demanda)
-- Aplicar `<Editable>` em massa nos demais campos. Posso fazer página por página conforme você for usando, ou rodar um script que envolve textos automaticamente. Você me diz por onde começar (sugiro Recomendações, já que é a maior).
+## 2. Ligação Guiada (novo)
 
-### Como criar o primeiro admin
-Depois que a Cloud subir, você cria sua conta na tela `/auth` e eu insiro manualmente uma linha em `user_roles` com seu `user_id` e `role='admin'` (te peço o email pra eu localizar).
+Novo componente `src/components/GuidedCall.tsx` acionado por um botão **🚀 Iniciar Ligação Guiada** no topo de `/ligacoes`.
 
-## Detalhes técnicos
+Wizard em 3 passos + condução:
 
-- Server fn `listOverrides` é pública (sem `requireSupabaseAuth`) e usa cliente publishable + policy `TO anon SELECT` — assim o SSR e visitantes anônimos veem os textos editados.
-- `upsertOverride` / `deleteOverride` exigem auth + `has_role('admin')`.
-- Cada `Editable` precisa de `id` único e estável (`recomendacoes.hero.title`, `ligacoes.modelo.confirmacao.intent`, etc.).
-- Valores são texto puro (sem HTML). Se precisar de markdown depois, dá pra adicionar.
+- **Passo 1:** Tipo de ligação — Amigo | Recomendação (chips grandes).
+- **Passo 2:** Objetivo principal — 11 objetivos listados (grid de cards).
+- **Passo 3:** Condução — sequência fixa **Abertura → Objetivo → Situação → Problema → Implicação → Necessidade → Sinais de Compra → Agendamento → Compromisso → Comparecimento** (10 etapas).
 
-## O que NÃO faço nesta etapa
-- Não troco a estrutura visual de nenhuma página.
-- Não permito cadastro aberto (só admin loga; sem signup público).
-- Não envolvo todos os ~500 textos ainda — vou marcando conforme você priorizar.
+Cada etapa mostra:
+- Barra de progresso "Etapa 3 de 10 · Problema"
+- Título + objetivo curto da etapa
+- Fala principal (card destaque)
+- Opções de aprofundamento
+- Botões: `cliente respondeu bem` (revela ramo SIM) · `cliente resistiu` (revela ramo NÃO) · `Próxima etapa`
 
-Confirma que posso começar pela Etapa 1?
+### Fonte de dados
+
+As 10 etapas SPIN não existem 1:1 nos `CallType` atuais. Crio um dataset novo, enxuto, em `src/data/guided-call.ts`:
+
+- `GUIDED_STAGES: { id, label, objetivo, fala, sim: string[], nao: string[], transicao }[]` (10 entradas).
+- `CALL_KINDS` (Amigo/Recomendação) e `OBJECTIVES` (11) apenas ajustam a **fala de "Objetivo"** e "Abertura" via um mapa `OBJECTIVE_HOOKS[objectiveId] = { abertura?, objetivo }`.
+
+Isso evita duplicar o conteúdo existente e mantém o dataset guiado compacto e editável. Fonte de verdade separada dos scripts atuais (que continuam intactos).
+
+## 3. Objeções expandidas
+
+Nova estrutura em `src/data/objecoes.ts`:
+
+```ts
+type Objection = {
+  q: string;
+  intencao: string;
+  resposta: string;
+  escalada: string;
+  categoria: "Tempo"|"Decisor"|"Dinheiro"|"Confiança"|"Desconforto"|"Autonomia"|"Medo de compromisso";
+};
+```
+
+- Adiciono as 6 novas objeções do briefing.
+- Atualizo o tipo `Objection` em `ligacoes.tsx` e migro as objeções antigas (que só têm `q`+`a`) para o novo shape com campos opcionais `intencao`/`escalada`/`categoria`.
+- Novo componente `ObjectionCard` (expansível/accordion): mostra objeção + tag; ao expandir revela Intenção, Resposta, Escalada e botão **Copiar resposta** (reusa `copyToClipboard`).
+- Aplico o novo layout em TODAS as listas de objeções da página (todos os `CallType`).
+
+## 4. Componentização e limpeza
+
+- `src/components/FocusOverlay.tsx` (novo overlay do Modo Foco).
+- `src/components/GuidedCall.tsx` (wizard + condutor).
+- `src/components/ObjectionCard.tsx` (card expansível reutilizável).
+- `src/data/guided-call.ts` + `src/data/objecoes.ts`.
+- Nenhum "—" nos textos visíveis (respeita o check de build já instalado).
+
+## 5. Preservação
+
+- Modo Ligação e Modo Treinamento intactos.
+- Busca, favoritos, filtros SPIN, termômetro e barra inferior preservados.
+- Nada removido do dataset atual `CALL_TYPES`.
+- Botões e fontes grandes, mobile-first no overlay e no wizard.
+
+---
+
+## Perguntas antes de codar
+
+1. **Ligação Guiada — escopo do dataset:** o briefing pede 10 etapas SPIN genéricas (Abertura → … → Comparecimento). Confirma que posso criar esse dataset novo/enxuto (~10 falas curtas + ramos SIM/NÃO) em vez de tentar mapear os `CallType` atuais (que são de Confirmação/Reagendamento/Recomendação, não uma ligação SPIN de descoberta)?
+2. **Modo Foco — origem dos ramos SIM/NÃO:** dentro do fluxo livre atual, poucos blocos têm ramificação SIM/NÃO real. Posso ocultar as caixas vazias quando não houver conteúdo, ou você prefere que eu preencha SIM/NÃO padrão para cada bloco existente (trabalho de conteúdo bem maior)?
+3. **Objeções antigas:** migro para o novo shape mesmo sem `intencao`/`escalada`/`categoria` preenchidos (campos ficam ocultos até você editar), ou prefere que eu escreva esses campos para as objeções existentes também?
