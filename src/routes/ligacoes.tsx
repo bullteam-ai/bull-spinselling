@@ -765,6 +765,13 @@ function Ligacoes() {
             <span className="inline-flex items-center gap-2 rounded-full border border-[var(--success)]/30 bg-[var(--success)]/10 px-3 py-1 text-xs font-semibold tracking-wide text-[var(--success)] backdrop-blur">
               <PhoneCall className="h-3.5 w-3.5" /> Modo Ligação
             </span>
+            <button
+              type="button"
+              onClick={() => setGuidedOpen(true)}
+              className="ml-auto inline-flex items-center gap-1.5 rounded-full bg-[var(--success)] px-3.5 py-1.5 text-xs font-bold text-[var(--navy)] shadow-lg shadow-[var(--success)]/30 hover:brightness-110 transition"
+            >
+              <Rocket className="h-3.5 w-3.5" /> Iniciar Ligação Guiada
+            </button>
           </div>
           <h1 className="mt-5 text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight">
             Passo a Passo de <span className="text-[var(--success)]">Ligações Elite</span>
