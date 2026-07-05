@@ -848,6 +848,255 @@ function PriorityCard({ tier, emoji, color, desc }: { tier: string; emoji: strin
   );
 }
 
+/* =========================================
+   PASSO 11 — RECONHECIMENTO
+   ========================================= */
+
+const RECONHECIMENTO_FALE_ISTO = `Antes de encerrarmos, quero te agradecer pela confiança e pela atitude que você teve agora.
+
+Pode parecer algo simples, mas não é.
+
+Você parou alguns minutos do seu dia para pensar em pessoas importantes da sua vida, e isso diz muito sobre quem você é.
+
+Pessoas que se preocupam genuinamente com quem está ao redor costumam gerar um impacto muito maior do que imaginam.
+
+Quero te parabenizar por essa atitude.
+
+E sabe o que eu acho mais legal nisso tudo?
+
+Talvez daqui a alguns meses ou alguns anos, alguma dessas pessoas esteja vivendo uma situação financeira melhor, realizando um sonho, conquistando mais tranquilidade ou tomando decisões mais inteligentes com o dinheiro.
+
+Se isso acontecer, uma pequena parte dessa transformação começou exatamente aqui, com a atitude que você teve hoje.
+
+Foi você quem abriu essa porta para que essa oportunidade chegasse até ela.
+
+Quero que fique tranquilo também: da mesma forma que fiz com você, vou conversar com cada uma dessas pessoas com muito respeito, responsabilidade e total transparência.
+
+Se eu perceber que realmente posso ajudá-las, vou fazer o meu melhor para que alcancem seus objetivos.
+
+E se entender que não faz sentido naquele momento, também serei completamente sincero.
+
+Nosso compromisso nunca foi vender algo para alguém.
+
+Nosso compromisso é cuidar das pessoas e ajudá-las a tomar as melhores decisões para a vida financeira delas.
+
+Mais uma vez, obrigado pela confiança e parabéns pela atitude que você teve hoje.`;
+
+const RECONHECIMENTO_ALT = [
+  "Você acabou de fazer algo que pouca gente faz: pensar primeiro em quem pode se beneficiar dessa oportunidade.",
+  "Isso mostra que você valoriza as pessoas que fazem parte da sua vida.",
+  "Obrigado pela confiança. Pode ter certeza de que vou tratar cada pessoa que você indicou com o mesmo respeito que tratei você.",
+  "As melhores recomendações acontecem quando alguém acredita tanto na experiência que faz questão de apresentá-la para pessoas importantes.",
+  "Independentemente do que acontecer depois, a atitude que você teve hoje já merece reconhecimento.",
+];
+
+const RECONHECIMENTO_ERROS = [
+  { frase: "Obrigado pelas indicações.", motivo: "Isso faz parecer que seu interesse são apenas os contatos." },
+  { frase: "Você me ajudou bastante.", motivo: "O foco fica em você, e não na atitude do cliente." },
+  { frase: "Agora preciso que você avise essas pessoas.", motivo: "Pode gerar sensação de obrigação." },
+  { frase: "Encerrar a reunião imediatamente após pegar os nomes.", motivo: "Você perde o momento emocional mais forte de todo o processo." },
+  { frase: "Prometer resultados.", motivo: "Nunca diga que você vai mudar a vida das pessoas. Diga que fará o melhor para ajudá-las caso isso faça sentido para elas." },
+];
+
+function ReconhecimentoStep() {
+  return (
+    <Step
+      id="passo-11"
+      n={11}
+      eyebrow="Passo 11"
+      title="Reconhecimento"
+      subtitle="Valorize a atitude do cliente e fortaleça seu compromisso com as pessoas que ele indicou."
+    >
+      {/* CARD PRINCIPAL — FALE ISTO */}
+      <section
+        className="rounded-3xl border-2 border-[var(--success)] bg-gradient-to-br from-[#0a1733] via-[var(--navy)] to-[#1a2e5c] p-6 sm:p-8 text-white shadow-2xl shadow-[var(--success)]/20"
+      >
+        <div className="flex items-center gap-2 flex-wrap">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--success)]/15 border border-[var(--success)]/40 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-[var(--success)]">
+            <Trophy className="h-3.5 w-3.5" /> Fale Isto
+          </span>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-white/60">Encerramento emocional</span>
+        </div>
+        <blockquote className="mt-5 space-y-3 text-[15px] sm:text-[16px] leading-relaxed text-white/90">
+          {RECONHECIMENTO_FALE_ISTO.split("\n\n").map((p, i) => (
+            <p key={i}>{`“${p}”`.replace(/^““|””$/g, "”").replace(/^“/, i === 0 ? "“" : "").replace(/”$/, i === RECONHECIMENTO_FALE_ISTO.split("\n\n").length - 1 ? "”" : "")}</p>
+          ))}
+        </blockquote>
+      </section>
+
+      {/* GRID: PSICOLOGIA + COMO TRANSMITIR */}
+      <div className="mt-6 grid gap-4 lg:grid-cols-2">
+        <article className="rounded-2xl border-2 border-[var(--success)]/40 bg-gradient-to-br from-[var(--success)]/10 to-white p-5 sm:p-6">
+          <p className="text-[11px] font-bold uppercase tracking-wider text-[var(--success)]">🧠 Psicologia da etapa</p>
+          <h3 className="mt-1 text-lg font-bold text-[var(--navy)]">O que acontece na mente do cliente</h3>
+          <p className="mt-3 text-sm text-foreground/85 leading-relaxed">
+            Quando uma pessoa é reconhecida por uma atitude positiva, ela tende a reforçar esse comportamento como parte da própria identidade.
+          </p>
+          <p className="mt-2 text-sm text-foreground/85 leading-relaxed">
+            Ao elogiar a decisão de pensar em pessoas importantes da vida dela — e não simplesmente agradecer pelas recomendações — você faz com que o cliente se enxergue como alguém que gera impacto positivo na vida de outras pessoas.
+          </p>
+          <p className="mt-3 text-[11px] font-bold uppercase tracking-wider text-[var(--success)]">Isso aumenta significativamente</p>
+          <ul className="mt-2 space-y-1.5 text-sm text-foreground/85 list-disc pl-5">
+            <li>confiança no planejador</li>
+            <li>orgulho pela própria atitude</li>
+            <li>vontade de falar bem da experiência</li>
+            <li>predisposição para preparar os indicados antes do contato</li>
+            <li>possibilidade de novas recomendações no futuro</li>
+          </ul>
+          <p className="mt-3 text-sm italic text-foreground/70">
+            O cliente deixa a reunião sentindo que participou de algo maior do que apenas fornecer nomes.
+          </p>
+        </article>
+
+        <article className="rounded-2xl border-2 border-[var(--brand)]/40 bg-gradient-to-br from-[var(--brand)]/10 to-white p-5 sm:p-6">
+          <p className="text-[11px] font-bold uppercase tracking-wider text-[var(--brand)]">🎯 Como transmitir</p>
+          <h3 className="mt-1 text-lg font-bold text-[var(--navy)]">Comunicação ideal</h3>
+          <ul className="mt-3 space-y-2 text-sm text-foreground/85">
+            <li className="flex items-start gap-2"><span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--brand)]" /> Fale olhando nos olhos.</li>
+            <li className="flex items-start gap-2"><span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--brand)]" /> Diminua o ritmo da conversa.</li>
+            <li className="flex items-start gap-2"><span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--brand)]" /> Demonstre gratidão verdadeira.</li>
+            <li className="flex items-start gap-2"><span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--brand)]" /> Faça pequenas pausas.</li>
+            <li className="flex items-start gap-2"><span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--brand)]" /> Termine sorrindo.</li>
+          </ul>
+          <div className="mt-4 rounded-xl border border-[var(--brand)]/30 bg-white p-3.5">
+            <p className="text-sm text-foreground/85">
+              O reconhecimento precisa parecer <strong>genuíno</strong>. Nunca dê a impressão de que está agradecendo pelos contatos —
+              você está reconhecendo a <strong>atitude</strong> da pessoa. Essa diferença muda completamente a percepção do cliente.
+            </p>
+          </div>
+        </article>
+      </div>
+
+      {/* FRASES ALTERNATIVAS — CARD LARANJA */}
+      <article className="mt-6 rounded-2xl border-2 border-amber-300 bg-gradient-to-br from-amber-50 to-white p-5 sm:p-6">
+        <p className="text-[11px] font-bold uppercase tracking-wider text-amber-700">💬 Frases alternativas</p>
+        <h3 className="mt-1 text-lg font-bold text-[var(--navy)]">Adapte o tom sem perder a essência</h3>
+        <div className="mt-4 grid gap-3 sm:grid-cols-2">
+          {RECONHECIMENTO_ALT.map((f, i) => (
+            <div key={i} className="rounded-xl border border-amber-200 bg-white p-4">
+              <p className="text-[11px] font-bold uppercase tracking-wider text-amber-700">Opção {i + 1}</p>
+              <p className="mt-1.5 text-sm text-[var(--navy)] leading-relaxed">“{f}”</p>
+            </div>
+          ))}
+        </div>
+      </article>
+
+      {/* ERROS PARA EVITAR — CARD VERMELHO */}
+      <article className="mt-6 rounded-2xl border-2 border-red-300 bg-gradient-to-br from-red-50 to-white p-5 sm:p-6">
+        <p className="text-[11px] font-bold uppercase tracking-wider text-red-700">⚠️ Erros para evitar</p>
+        <h3 className="mt-1 text-lg font-bold text-[var(--navy)]">O que <em>nunca</em> dizer no encerramento</h3>
+        <ul className="mt-4 space-y-3">
+          {RECONHECIMENTO_ERROS.map((e, i) => (
+            <li key={i} className="rounded-xl border border-red-200 bg-white p-4">
+              <p className="text-sm font-semibold text-red-700 flex items-start gap-2">
+                <span aria-hidden>❌</span>
+                <span>“{e.frase}”</span>
+              </p>
+              <p className="mt-1.5 text-sm text-foreground/75 pl-6">{e.motivo}</p>
+            </li>
+          ))}
+        </ul>
+      </article>
+
+      {/* ACCORDION — POR QUE FUNCIONA */}
+      <details className="mt-6 group rounded-2xl border border-border bg-white shadow-sm open:shadow-md transition">
+        <summary className="cursor-pointer list-none flex items-center gap-3 px-5 py-4 rounded-2xl select-none">
+          <span className="grid place-items-center h-9 w-9 shrink-0 rounded-xl bg-[var(--brand)]/10 text-[var(--brand)]">
+            <Brain className="h-4 w-4" />
+          </span>
+          <span className="flex-1 min-w-0">
+            <span className="block text-[11px] font-bold uppercase tracking-wider text-[var(--brand)]">Aprofundar</span>
+            <span className="block text-base sm:text-lg font-bold text-[var(--navy)]">🔍 Por que essa etapa funciona?</span>
+          </span>
+          <ChevronRight className="h-5 w-5 text-muted-foreground shrink-0 transition-transform group-open:rotate-90" />
+        </summary>
+
+        <div className="px-5 pb-6 sm:px-6 sm:pb-7 space-y-6 border-t border-border pt-5 animate-fade-in">
+          <div>
+            <h4 className="text-sm font-bold text-[var(--navy)]">A psicologia por trás do reconhecimento</h4>
+            <p className="mt-2 text-sm text-foreground/85 leading-relaxed">
+              As pessoas procuram agir de forma coerente com a imagem que possuem de si mesmas. Quando você reconhece a atitude do cliente, ele passa a acreditar que ajudar pessoas faz parte da própria identidade.
+            </p>
+            <p className="mt-2 text-sm text-foreground/85 leading-relaxed">Esse efeito aumenta naturalmente a probabilidade de:</p>
+            <ul className="mt-2 space-y-1.5 text-sm text-foreground/85 list-disc pl-5">
+              <li>falar bem da reunião</li>
+              <li>recomendar novamente</li>
+              <li>defender seu trabalho quando alguém perguntar</li>
+              <li>preparar melhor os indicados antes do contato</li>
+            </ul>
+            <p className="mt-2 text-sm italic text-foreground/70">
+              O elogio deve ser direcionado ao comportamento, nunca ao número de recomendações.
+            </p>
+          </div>
+
+          <div>
+            <h4 className="text-sm font-bold text-[var(--navy)]">O verdadeiro objetivo</h4>
+            <p className="mt-2 text-sm text-foreground/85 leading-relaxed">
+              Esta etapa não existe para agradecer. Ela existe para transformar uma recomendação em uma missão compartilhada.
+            </p>
+            <p className="mt-2 text-sm text-foreground/85 leading-relaxed">
+              O cliente deixa de sentir que “passou contatos”. Ele passa a sentir que abriu uma oportunidade para pessoas importantes da sua vida. Essa mudança de percepção fortalece muito o relacionamento.
+            </p>
+          </div>
+
+          <div>
+            <h4 className="text-sm font-bold text-[var(--navy)]">O compromisso do planejador</h4>
+            <p className="mt-2 text-sm text-foreground/85 leading-relaxed">
+              O encerramento também reforça um princípio essencial: o planejador não está buscando vender para qualquer pessoa. Está oferecendo uma conversa séria, respeitosa e transparente.
+            </p>
+            <p className="mt-2 text-sm text-foreground/85 leading-relaxed">
+              Caso exista uma oportunidade real de ajudar, fará isso com dedicação. Caso não exista, será igualmente honesto. Esse posicionamento aumenta a credibilidade e reduz qualquer sensação de pressão comercial.
+            </p>
+          </div>
+
+          <div>
+            <h4 className="text-sm font-bold text-[var(--navy)]">O impacto futuro</h4>
+            <p className="mt-2 text-sm text-foreground/85 leading-relaxed">
+              Quando uma das pessoas indicadas for contatada, existe uma grande chance de o cliente dizer algo como:
+            </p>
+            <blockquote className="mt-3 rounded-xl border-l-4 border-[var(--success)] bg-[var(--success)]/5 p-4 text-sm italic text-[var(--navy)]">
+              “Pode conversar com ele. Gostei muito da experiência e achei que faria sentido para você também.”
+            </blockquote>
+            <p className="mt-2 text-sm text-foreground/85 leading-relaxed">
+              Essa recomendação espontânea começa a ser construída exatamente neste momento.
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-[var(--brand)]/30 bg-[var(--brand)]/5 p-4 sm:p-5">
+            <p className="text-[11px] font-bold uppercase tracking-wider text-[var(--brand)] flex items-center gap-1.5">
+              <GraduationCap className="h-3.5 w-3.5" /> Modo Treinamento · Por que essa etapa existe?
+            </p>
+            <p className="mt-2 text-sm text-foreground/85 leading-relaxed">
+              O cérebro humano tende a repetir comportamentos que são reconhecidos positivamente. Quando você valoriza a atitude do cliente, ele associa emoções positivas à experiência que acabou de viver.
+            </p>
+            <p className="mt-2 text-sm text-foreground/85 leading-relaxed">Isso faz com que ele:</p>
+            <ul className="mt-2 space-y-1.5 text-sm text-foreground/85 list-disc pl-5">
+              <li>lembre da reunião com satisfação;</li>
+              <li>sinta orgulho da decisão que tomou;</li>
+              <li>recomende com mais convicção;</li>
+              <li>fale naturalmente bem do seu trabalho;</li>
+              <li>esteja mais disposto a indicar outras pessoas no futuro.</li>
+            </ul>
+            <p className="mt-3 text-sm italic text-foreground/70">
+              O objetivo desta etapa não é agradecer pelas recomendações. É fazer o cliente sair da reunião sentindo que fez algo importante para pessoas que ama.
+            </p>
+          </div>
+
+          <div className="rounded-2xl border-2 border-[var(--success)]/50 bg-gradient-to-br from-[var(--success)]/10 to-white p-5">
+            <p className="text-[11px] font-bold uppercase tracking-wider text-[var(--success)] flex items-center gap-1.5">
+              <Sparkles className="h-3.5 w-3.5" /> Dica Premium · Encerramento de Excelência
+            </p>
+            <p className="mt-2 text-sm text-foreground/85 leading-relaxed">Após concluir toda a conversa, finalize com calma:</p>
+            <blockquote className="mt-3 rounded-xl bg-white border border-[var(--success)]/30 p-4 text-sm leading-relaxed text-[var(--navy)]">
+              “Pode ficar tranquilo. Vou cuidar dessas pessoas exatamente da forma como cuidei de você: com respeito, responsabilidade e total transparência. Se eu perceber que consigo ajudá-las, farei o meu melhor para que alcancem seus objetivos. Se entender que este não é o momento certo, também serei completamente sincero. Meu compromisso sempre será ajudar as pessoas a tomarem boas decisões, nunca convencê-las de algo que não faça sentido.”
+            </blockquote>
+          </div>
+        </div>
+      </details>
+    </Step>
+  );
+}
+
 function TrainingNote({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="mt-4 rounded-2xl border border-[var(--brand)]/30 bg-[var(--brand)]/5 p-4">
