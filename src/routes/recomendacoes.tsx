@@ -9,6 +9,7 @@ import {
   Users, Trophy, FileSearch, ScrollText, ListTree, ChevronRight,
 } from "lucide-react";
 import { CentralInteligencia } from "@/components/central-inteligencia/CentralInteligencia";
+import { copyToClipboard } from "@/lib/copy-to-clipboard";
 
 export const Route = createFileRoute("/recomendacoes")({
   head: () => ({
@@ -197,11 +198,13 @@ function Recomendacoes() {
   const [recPerMeeting, setRecPerMeeting] = useState(10);
 
   const copyScript = async () => {
-    try {
-      await navigator.clipboard.writeText(FULL_SCRIPT);
+    const ok = await copyToClipboard(FULL_SCRIPT);
+    if (ok) {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    } catch {}
+    } else {
+      alert("Não foi possível copiar automaticamente. Selecione o texto manualmente.");
+    }
   };
 
   const oportunidades = meetings * recPerMeeting;
