@@ -8,6 +8,7 @@ import {
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { runObjecaoTrainer } from "@/lib/objecao-trainer.functions";
 import { MEDOS, ESCADA, OBJECOES, RADAR, FRASES, ERROS, type Objecao } from "./data";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 type ChatMsg = { role: "user" | "assistant"; content: string };
 type Evaluation = {
@@ -70,7 +71,7 @@ export function CentralInteligencia() {
         </div>
       )}
     </section>
-    {open && <FloatingBiblioteca />}
+    <FloatingBiblioteca />
     </>
   );
 }
@@ -246,15 +247,8 @@ function BibliotecaObjecoesLista() {
    FLOATING — Biblioteca sempre acessível
    ============================================ */
 function FloatingBiblioteca() {
-  const [visible, setVisible] = useState(false);
   const [openSheet, setOpenSheet] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setVisible(window.scrollY > 500);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  const isMobile = useIsMobile();
 
   return (
     <>
@@ -262,9 +256,7 @@ function FloatingBiblioteca() {
         type="button"
         onClick={() => setOpenSheet(true)}
         aria-label="Abrir biblioteca de objeções"
-        className={`fixed z-40 bottom-6 right-6 group flex items-center gap-2 rounded-full pl-4 pr-5 py-3 text-white font-semibold text-sm shadow-2xl shadow-[var(--brand)]/40 border border-white/10 bg-gradient-to-br from-[var(--brand)] via-[#2a5cff] to-[var(--success)] hover:scale-105 active:scale-95 transition-all duration-300 ${
-          visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6 pointer-events-none"
-        }`}
+        className="fixed z-40 bottom-5 right-5 sm:bottom-6 sm:right-6 group flex items-center gap-2 rounded-full pl-3 pr-4 sm:pl-4 sm:pr-5 py-3 text-white font-semibold text-sm shadow-2xl shadow-[var(--brand)]/40 border border-white/10 bg-gradient-to-br from-[var(--brand)] via-[#2a5cff] to-[var(--success)] hover:scale-105 active:scale-95 transition-all duration-300 animate-fade-in"
       >
         <span className="grid place-items-center h-7 w-7 rounded-full bg-white/20 backdrop-blur">
           <BookOpen className="h-4 w-4" />
@@ -275,9 +267,18 @@ function FloatingBiblioteca() {
 
       <Sheet open={openSheet} onOpenChange={setOpenSheet}>
         <SheetContent
-          side="right"
-          className="w-full sm:max-w-2xl overflow-y-auto bg-gradient-to-b from-[var(--surface)] to-background p-0"
+          side={isMobile ? "bottom" : "right"}
+          className={
+            isMobile
+              ? "h-[92vh] w-full rounded-t-3xl overflow-y-auto bg-gradient-to-b from-[var(--surface)] to-background p-0 border-t border-border"
+              : "w-full sm:max-w-2xl overflow-y-auto bg-gradient-to-b from-[var(--surface)] to-background p-0"
+          }
         >
+          {isMobile && (
+            <div className="sticky top-0 z-30 flex justify-center pt-2 pb-1 bg-gradient-to-br from-[var(--navy)] to-[#0f1e42]">
+              <span className="h-1.5 w-12 rounded-full bg-white/30" />
+            </div>
+          )}
           <div className="sticky top-0 z-20 bg-gradient-to-br from-[var(--navy)] to-[#0f1e42] text-white px-6 py-5 border-b border-white/10">
             <SheetHeader className="text-left space-y-1 p-0">
               <div className="flex items-center gap-2">
@@ -293,7 +294,7 @@ function FloatingBiblioteca() {
               </SheetDescription>
             </SheetHeader>
           </div>
-          <div className="px-4 sm:px-6 pb-8">
+          <div className="px-3 sm:px-6 pb-10">
             <BibliotecaObjecoesLista />
           </div>
         </SheetContent>
