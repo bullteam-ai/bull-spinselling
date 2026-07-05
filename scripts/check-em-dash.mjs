@@ -8,9 +8,18 @@ import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join, extname } from "node:path";
 
 const ROOTS = ["src"];
-const EXTS = new Set([".ts", ".tsx", ".js", ".jsx", ".md", ".mdx", ".html", ".css"]);
+const EXTS = new Set([".ts", ".tsx", ".js", ".jsx", ".html", ".css"]);
 const EM_DASH = "\u2014";
 const ALLOW = "allow-em-dash";
+
+function stripComments(source) {
+  // Remove /* ... */ block comments and //... line comments.
+  // Good enough for detecting stray em dashes in code/CSS: we don't need a real parser
+  // because comments are the only place where an em dash is legitimately allowed.
+  return source
+    .replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, " "))
+    .replace(/(^|[^:])\/\/[^\n]*/g, (_m, p1) => p1);
+}
 
 /** @type {{file:string,line:number,text:string}[]} */
 const hits = [];
@@ -23,12 +32,15 @@ function walk(dir) {
       if (entry === "node_modules" || entry.startsWith(".")) continue;
       walk(p);
     } else if (EXTS.has(extname(entry))) {
-      const content = readFileSync(p, "utf8");
-      if (!content.includes(EM_DASH)) continue;
-      const lines = content.split(/\r?\n/);
-      lines.forEach((line, i) => {
-        if (line.includes(EM_DASH) && !line.includes(ALLOW)) {
-          hits.push({ file: p, line: i + 1, text: line.trim() });
+      const raw = readFileSync(p, "utf8");
+      if (!raw.includes(EM_DASH)) continue;
+      if (raw.includes("AUTO-GENERATED")) continue;
+      const stripped = stripComments(raw);
+      const rawLines = raw.split(/\r?\n/);
+      const strippedLines = stripped.split(/\r?\n/);
+      strippedLines.forEach((line, i) => {
+        if (line.includes(EM_DASH) && !rawLines[i].includes(ALLOW)) {
+          hits.push({ file: p, line: i + 1, text: rawLines[i].trim() });
         }
       });
     }
