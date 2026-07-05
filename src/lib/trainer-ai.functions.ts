@@ -14,7 +14,7 @@ const InputSchema = z.object({
 });
 
 const GATEWAY_URL = "https://ai.gateway.lovable.dev/v1/chat/completions";
-const MODEL = "google/gemini-3-flash-preview";
+const MODEL = "google/gemini-3.1-flash-lite";
 
 const BASE_PERSONA = `Você é o Treinador Comercial Oficial da Bull Team.
 
