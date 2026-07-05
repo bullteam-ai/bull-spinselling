@@ -964,7 +964,7 @@ function ReconhecimentoStep() {
           </ul>
           <div className="mt-4 rounded-xl border border-[var(--brand)]/30 bg-white p-3.5">
             <p className="text-sm text-foreground/85">
-              O reconhecimento precisa parecer <strong>genuíno</strong>. Nunca dê a impressão de que está agradecendo pelos contatos —
+              O reconhecimento precisa parecer <strong>genuíno</strong>. Nunca dê a impressão de que está agradecendo pelos contatos,
               você está reconhecendo a <strong>atitude</strong> da pessoa. Essa diferença muda completamente a percepção do cliente.
             </p>
           </div>
