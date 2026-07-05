@@ -15,6 +15,7 @@ type Mode = "chat" | "simulate";
 declare global {
   interface Window {
     __btTrainerContext?: string;
+    __btTrainerPrompts?: string[];
     __btTrainerOpen?: () => void;
   }
 }
@@ -84,8 +85,17 @@ export function TrainerAI() {
   const [showMenu, setShowMenu] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const [pagePrompts, setPagePrompts] = useState<string[]>([]);
 
   const runAI = useServerFn(runTrainerAI);
+
+  // Sync page-contextual quick prompts from TrainerContextBridge
+  useEffect(() => {
+    const sync = () => setPagePrompts(window.__btTrainerPrompts ?? []);
+    sync();
+    window.addEventListener("bt:trainer-context-change", sync);
+    return () => window.removeEventListener("bt:trainer-context-change", sync);
+  }, []);
 
   // Load history
   useEffect(() => {
@@ -474,6 +484,28 @@ export function TrainerAI() {
             {error && (
               <div className="shrink-0 px-4 py-2 text-xs font-semibold text-[var(--danger)] bg-[var(--danger)]/10 border-t border-[var(--danger)]/30">
                 {error}
+              </div>
+            )}
+
+            {/* Quick prompts for the current page */}
+            {!showMenuPanel && mode !== "simulate" && pagePrompts.length > 0 && (
+              <div className="shrink-0 border-t border-border bg-[var(--surface)] px-3 py-2">
+                <p className="mb-1.5 text-[9px] font-bold uppercase tracking-[0.18em] text-muted-foreground">
+                  Perguntas rápidas desta tela
+                </p>
+                <div className="flex gap-1.5 overflow-x-auto pb-1 -mx-1 px-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                  {pagePrompts.map((p) => (
+                    <button
+                      key={p}
+                      type="button"
+                      onClick={() => void sendMessage(p)}
+                      disabled={loading}
+                      className="shrink-0 rounded-full border border-border bg-white px-3 py-1.5 text-[11px] font-semibold text-[var(--navy)] hover:border-[var(--brand)] hover:text-[var(--brand)] disabled:opacity-40 transition-colors"
+                    >
+                      {p}
+                    </button>
+                  ))}
+                </div>
               </div>
             )}
 
