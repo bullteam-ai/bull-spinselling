@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useRouterState } from "@tanstack/react-router";
+import { resolveFocusScript } from "@/data/focus-scripts";
 
 const PAGE_CONTEXT: Record<
   string,
@@ -92,6 +93,22 @@ export function TrainerContextBridge() {
     window.__btTrainerContext = buildContext(pathname);
     window.__btTrainerPrompts = resolveInfo(pathname).prompts;
     window.dispatchEvent(new CustomEvent("bt:trainer-context-change"));
+
+    // Publica roteiro do Modo Foco para a rota, exceto /ligacoes que já
+    // publica dinamicamente (por modelo de ligação) na própria página.
+    if (pathname.startsWith("/ligacoes")) return;
+    const steps = resolveFocusScript(pathname);
+    if (steps && steps.length) {
+      window.__btFocusSteps = steps;
+      window.dispatchEvent(
+        new CustomEvent("bt:focus-steps", { detail: { steps } }),
+      );
+    } else {
+      delete window.__btFocusSteps;
+      window.dispatchEvent(
+        new CustomEvent("bt:focus-steps", { detail: { steps: [] } }),
+      );
+    }
   }, [pathname]);
 
   return null;
