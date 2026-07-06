@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState, useCallback } from "react";
 import { useRouter } from "@tanstack/react-router";
+import { GUIDED_STAGES } from "@/data/guided-call";
 
 /**
  * Modo Foco (teleprompter):
@@ -9,7 +10,9 @@ import { useRouter } from "@tanstack/react-router";
  * Fontes de etapas, em ordem de prioridade:
  *   1) window.__btFocusSteps (populado pela página, ex.: /ligacoes).
  *   2) window "bt:focus-steps" CustomEvent com { steps }.
- *   3) Fallback: <section id> em <main> (comportamento antigo).
+ *   3) Fallback global: roteiro guiado (GUIDED_STAGES) — script universal
+ *      disponível em qualquer tela.
+ *   4) Último recurso: <section id> em <main> (comportamento antigo).
  */
 
 export type FocusStep = {
@@ -33,6 +36,17 @@ export function FocusMode() {
   const [steps, setSteps] = useState<FocusStep[]>([]);
   const router = useRouter();
   const path = router.state.location.pathname;
+
+  const guidedFallback = useCallback((): FocusStep[] => {
+    return GUIDED_STAGES.map((s) => ({
+      id: s.id,
+      label: s.label,
+      pergunta: s.fala,
+      sim: s.sim,
+      nao: s.nao,
+      transicao: s.transicao,
+    }));
+  }, []);
 
   const discoverFallback = useCallback((): FocusStep[] => {
     const main = document.querySelector("main");
@@ -59,8 +73,13 @@ export function FocusMode() {
       setSteps(custom);
       return;
     }
-    setSteps(discoverFallback());
-  }, [discoverFallback]);
+    const dom = discoverFallback();
+    if (dom.length) {
+      setSteps(dom);
+      return;
+    }
+    setSteps(guidedFallback());
+  }, [discoverFallback, guidedFallback]);
 
   useEffect(() => {
     if (!active) return;
