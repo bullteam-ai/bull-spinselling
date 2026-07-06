@@ -73,13 +73,8 @@ export function FocusMode() {
       setSteps(custom);
       return;
     }
-    const dom = discoverFallback();
-    if (dom.length) {
-      setSteps(dom);
-      return;
-    }
     setSteps(guidedFallback());
-  }, [discoverFallback, guidedFallback]);
+  }, [guidedFallback]);
 
   useEffect(() => {
     if (!active) return;
