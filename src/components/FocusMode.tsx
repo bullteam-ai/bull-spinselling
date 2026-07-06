@@ -30,10 +30,17 @@ declare global {
   }
 }
 
+const ALL_STEPS = "__all__";
+
+function stepKey(step: FocusStep, index: number) {
+  return step.id ?? `${step.label}-${index}`;
+}
+
 export function FocusMode() {
   const [active, setActive] = useState(false);
   const [index, setIndex] = useState(0);
   const [steps, setSteps] = useState<FocusStep[]>([]);
+  const [focusTarget, setFocusTarget] = useState(ALL_STEPS);
   const router = useRouter();
   const path = router.state.location.pathname;
 
@@ -50,6 +57,7 @@ export function FocusMode() {
     if (!active) return;
     loadSteps();
     setIndex(0);
+    setFocusTarget(ALL_STEPS);
   }, [active, path, loadSteps]);
 
   // Listen for external step publication
@@ -59,10 +67,18 @@ export function FocusMode() {
       const s = ce.detail?.steps;
       if (s && s.length) {
         window.__btFocusSteps = s;
-        if (active) setSteps(s);
+        if (active) {
+          setSteps(s);
+          setIndex(0);
+          setFocusTarget(ALL_STEPS);
+        }
       } else {
         delete window.__btFocusSteps;
-        if (active) loadSteps();
+        if (active) {
+          loadSteps();
+          setIndex(0);
+          setFocusTarget(ALL_STEPS);
+        }
       }
     };
     window.addEventListener("bt:focus-steps", onSteps as EventListener);
@@ -121,12 +137,22 @@ export function FocusMode() {
     return () => window.removeEventListener("keydown", onKey);
   }, [active, steps.length]);
 
-  const total = steps.length;
-  const current = steps[index];
+  const visibleSteps = useMemo(() => {
+    if (focusTarget === ALL_STEPS) return steps;
+    return steps.filter((step, stepIndex) => stepKey(step, stepIndex) === focusTarget);
+  }, [focusTarget, steps]);
+
+  const total = visibleSteps.length;
+  const current = visibleSteps[index];
   const progress = useMemo(
     () => (total > 0 ? Math.round(((index + 1) / total) * 100) : 0),
     [index, total],
   );
+
+  const selectFocusTarget = (target: string) => {
+    setFocusTarget(target);
+    setIndex(0);
+  };
 
   if (!active) return null;
 
@@ -164,7 +190,7 @@ export function FocusMode() {
 
       {/* Content */}
       <div className="mx-auto w-full max-w-5xl flex-1 px-4 sm:px-6 py-6 sm:py-10">
-        {total === 0 || !current ? (
+        {steps.length === 0 || !current ? (
           <div className="rounded-3xl border border-white/15 bg-white/5 p-8 text-center">
             <p className="text-lg font-semibold">
               Nenhuma etapa detectada nesta página.
@@ -175,9 +201,45 @@ export function FocusMode() {
           </div>
         ) : (
           <div className="space-y-6">
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-3">
+              <div className="flex gap-2 overflow-x-auto pb-1">
+                <button
+                  type="button"
+                  onClick={() => selectFocusTarget(ALL_STEPS)}
+                  aria-pressed={focusTarget === ALL_STEPS}
+                  className={`shrink-0 rounded-xl border px-3 py-2 text-xs font-extrabold transition ${
+                    focusTarget === ALL_STEPS
+                      ? "border-[var(--success)] bg-[var(--success)] text-[var(--navy)]"
+                      : "border-white/15 bg-white/5 text-white/75 hover:bg-white/10"
+                  }`}
+                >
+                  Tudo
+                </button>
+                {steps.map((step, stepIndex) => {
+                  const key = stepKey(step, stepIndex);
+                  const selected = focusTarget === key;
+                  return (
+                    <button
+                      key={key}
+                      type="button"
+                      onClick={() => selectFocusTarget(key)}
+                      aria-pressed={selected}
+                      className={`shrink-0 rounded-xl border px-3 py-2 text-xs font-bold transition ${
+                        selected
+                          ? "border-[var(--success)] bg-[var(--success)] text-[var(--navy)]"
+                          : "border-white/15 bg-white/5 text-white/75 hover:bg-white/10"
+                      }`}
+                    >
+                      {step.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
             <div className="text-center">
               <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/50">
-                Etapa {index + 1} de {total}
+                {focusTarget === ALL_STEPS ? `Etapa ${index + 1} de ${total}` : "Foco em uma etapa"}
               </p>
               <h2 className="mt-2 text-xl sm:text-2xl font-extrabold text-[var(--success)]">
                 {current.label}
