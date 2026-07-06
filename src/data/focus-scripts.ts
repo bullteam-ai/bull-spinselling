@@ -1,4 +1,5 @@
 import type { FocusStep } from "@/components/FocusMode";
+import { GUIDED_STAGES } from "./guided-call";
 
 /**
  * Roteiros do Modo Foco por rota. Cada entrada aqui é um roteiro estruturado,
@@ -12,7 +13,18 @@ import type { FocusStep } from "@/components/FocusMode";
  *     NÃO aparecem neste mapa e continuam controladas pela própria página.
  */
 
+const HOME_FOCUS_SCRIPT: FocusStep[] = GUIDED_STAGES.map((stage) => ({
+  id: stage.id,
+  label: stage.label,
+  pergunta: stage.fala,
+  sim: stage.sim,
+  nao: stage.nao,
+  transicao: stage.transicao,
+}));
+
 export const FOCUS_SCRIPTS: Record<string, FocusStep[]> = {
+  "/": HOME_FOCUS_SCRIPT,
+
   "/recomendacoes": [
     {
       id: "passo-1",
