@@ -259,7 +259,7 @@ function FloatingBiblioteca() {
         aria-haspopup="dialog"
         aria-expanded={openSheet}
         aria-controls="biblioteca-objecoes-sheet"
-        className="fixed z-40 bottom-5 right-5 sm:bottom-6 sm:right-6 group flex items-center gap-2 rounded-full pl-3 pr-4 sm:pl-4 sm:pr-5 py-3 text-white font-semibold text-sm shadow-2xl shadow-[var(--brand)]/40 border border-white/10 bg-gradient-to-br from-[var(--brand)] via-[#2a5cff] to-[var(--success)] hover:scale-105 active:scale-95 transition-all duration-300 animate-fade-in min-h-11 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[var(--brand)]/50"
+        className="fixed z-40 bottom-[5.5rem] right-4 sm:bottom-6 sm:right-[13.5rem] group flex items-center gap-2 rounded-full pl-3 pr-4 sm:pl-4 sm:pr-5 py-3 text-white font-semibold text-sm shadow-2xl shadow-[var(--brand)]/40 border border-white/10 bg-gradient-to-br from-[var(--brand)] via-[#2a5cff] to-[var(--success)] hover:scale-105 active:scale-95 transition-all duration-300 animate-fade-in min-h-11 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[var(--brand)]/50"
       >
         <span className="grid place-items-center h-7 w-7 rounded-full bg-white/20 backdrop-blur">
           <BookOpen className="h-4 w-4" />
