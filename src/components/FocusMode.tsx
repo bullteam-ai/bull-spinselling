@@ -18,7 +18,9 @@ import { useRouter } from "@tanstack/react-router";
 export type FocusStep = {
   id?: string;
   label: string;
+  objetivo?: string;
   pergunta: string;
+  aprofundamento?: string[];
   sim?: string[];
   nao?: string[];
   transicao?: string;
