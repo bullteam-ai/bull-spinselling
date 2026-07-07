@@ -2271,6 +2271,55 @@ function Index() {
                     </Fragment>
                   );
                 })}
+                {(() => {
+                  const open = openGoal === "endividado";
+                  const panelId = "goal-panel-endividado";
+                  return (
+                    <Fragment key="endividado">
+                      <button
+                        type="button"
+                        onClick={() => toggleGoal("endividado")}
+                        aria-expanded={open}
+                        aria-controls={panelId}
+                        className={`group relative flex min-h-[120px] sm:min-h-[152px] flex-col items-start justify-between gap-3 overflow-hidden rounded-3xl border p-4 sm:p-6 text-left transition-all motion-reduce:transition-none col-span-2 sm:col-span-3 ${
+                          open
+                            ? "border-[var(--danger)] bg-gradient-to-br from-[var(--danger)]/10 via-white to-[var(--warn)]/10 shadow-xl shadow-[var(--danger)]/15 ring-1 ring-[var(--danger)]/30"
+                            : "border-[var(--danger)]/40 bg-gradient-to-br from-[#FFF5F2] via-white to-[#FFFBEB] hover:border-[var(--danger)] hover:-translate-y-1 hover:shadow-xl hover:shadow-[var(--danger)]/10 motion-reduce:hover:translate-y-0"
+                        }`}
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className={`flex h-12 w-12 sm:h-14 sm:w-14 shrink-0 items-center justify-center rounded-2xl text-2xl sm:text-3xl transition ${
+                            open ? "bg-[var(--danger)] text-white shadow-md shadow-[var(--danger)]/30" : "bg-white text-[var(--danger)] border border-[var(--danger)]/30"
+                          }`}>
+                            <span aria-hidden>💳</span>
+                          </div>
+                          <div className="min-w-0">
+                            <p className="font-bold text-[var(--navy)] text-[15px] sm:text-lg leading-tight">Cliente Endividado</p>
+                            <p className={`mt-1 text-[11px] sm:text-xs font-semibold uppercase tracking-wider ${open ? "text-[var(--danger)]" : "text-muted-foreground"}`}>
+                              {open ? "Aprofundamento aberto ↓" : "Aprofundamento especial · tocar para abrir →"}
+                            </p>
+                          </div>
+                        </div>
+                        <span
+                          className="absolute top-3 right-3 inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-[var(--danger)] to-[var(--warn)] px-2.5 py-1 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-white shadow-md shadow-[var(--danger)]/30"
+                          aria-label="Aprofundamento Especial"
+                        >
+                          🚨 Especial
+                        </span>
+                      </button>
+                      {open && (
+                        <div
+                          id={panelId}
+                          role="region"
+                          aria-label="Aprofundamento Cliente Endividado"
+                          className="col-span-2 sm:col-span-3"
+                        >
+                          <EndividadoPanel />
+                        </div>
+                      )}
+                    </Fragment>
+                  );
+                })()}
               </div>
 
             </section>
