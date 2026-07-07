@@ -246,6 +246,11 @@ export function FocusMode() {
               <h2 className="mt-2 text-xl sm:text-2xl font-extrabold text-[var(--success)]">
                 {current.label}
               </h2>
+              {current.objetivo ? (
+                <p className="mt-2 text-sm sm:text-base text-white/70 max-w-2xl mx-auto">
+                  🎯 {current.objetivo}
+                </p>
+              ) : null}
             </div>
 
             <div className="rounded-3xl border-2 border-[var(--success)]/40 bg-gradient-to-br from-[#0a1733] via-[#0f2050] to-[#122b6b] p-6 sm:p-10 shadow-2xl">
@@ -256,6 +261,21 @@ export function FocusMode() {
                 “{current.pergunta}”
               </p>
             </div>
+
+            {current.aprofundamento?.length ? (
+              <div className="rounded-2xl border border-white/15 bg-white/5 p-5">
+                <p className="text-xs font-bold uppercase tracking-wider text-white/60">
+                  🧭 Aprofundamento
+                </p>
+                <ul className="mt-3 space-y-2">
+                  {current.aprofundamento.map((s, i) => (
+                    <li key={i} className="text-base leading-snug text-white/90">
+                      • {s}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
 
             {(current.sim?.length || current.nao?.length) ? (
               <div className="grid gap-4 md:grid-cols-2">
