@@ -3116,3 +3116,204 @@ function ExplorationList({
     </div>
   );
 }
+
+function EndividadoPanel() {
+  const cenario = [
+    "Hoje essas dívidas mais te preocupam ou já estão sob controle?",
+    "Elas são concentradas em um lugar ou estão espalhadas entre cartão, empréstimos e financiamentos?",
+    "Você consegue pagar todas as parcelas em dia?",
+    "Hoje sobra dinheiro no final do mês ou praticamente tudo já está comprometido?",
+    "Esse endividamento surgiu por algum acontecimento específico ou foi acontecendo aos poucos?",
+    "Qual é a maior preocupação quando você pensa nessas dívidas?",
+  ];
+  const impacto = [
+    "Como isso tem afetado sua tranquilidade?",
+    "Isso já fez você adiar algum sonho ou objetivo?",
+    "Você sente que trabalha bastante mas não consegue sair do lugar financeiramente?",
+    "Se continuar exatamente como está hoje, onde acredita que estará financeiramente daqui a dois ou três anos?",
+    "Isso gera preocupação dentro da sua família?",
+    "Existe algum momento do mês em que essa preocupação aumenta?",
+  ];
+  const oportunidade = [
+    "Você já tentou organizar essa situação sozinho?",
+    "O que já tentou fazer para resolver?",
+    "Funcionou?",
+    "Se alguém mostrasse um caminho mais eficiente para reorganizar essa situação, faria sentido conhecer?",
+    "Você acredita que hoje o problema é falta de renda, falta de planejamento ou ambos?",
+    "Se conseguisse organizar essa parte financeira, qual seria o primeiro objetivo que gostaria de voltar a perseguir?",
+  ];
+  const sinais = [
+    "Usa limite do cartão todos os meses",
+    "Faz pagamento mínimo",
+    "Tem empréstimos pessoais",
+    "Usa cheque especial",
+    "Faz dívida para pagar outra dívida",
+    "Não possui reserva financeira",
+    "Não sabe exatamente quanto deve",
+    "Não possui controle financeiro",
+    "Vive preocupado com dinheiro",
+    "Não consegue investir",
+  ];
+  const descobrir = [
+    "O tamanho emocional do problema.",
+    "Há quanto tempo isso acontece.",
+    "Se existe urgência.",
+    "O quanto isso afeta a qualidade de vida.",
+    "Se ele já tentou resolver.",
+    "Qual sonho está sendo adiado por causa da dívida.",
+  ];
+  const erros = [
+    "Pergunte o valor da dívida logo no início.",
+    "Julgue decisões financeiras.",
+    "Comece oferecendo soluções.",
+    "Interrompa quando o cliente estiver desabafando.",
+    "Transforme a conversa em consultoria.",
+  ];
+  const sentimentos = ["medo", "culpa", "ansiedade", "sensação de fracasso", "insegurança"];
+
+  return (
+    <div className="rounded-3xl border border-border bg-white p-4 sm:p-7 shadow-sm space-y-5">
+      <div className="flex items-center gap-3">
+        <span className="text-2xl" aria-hidden>💳</span>
+        <div>
+          <h3 className="text-lg sm:text-xl font-bold tracking-tight text-[var(--navy)]">Cliente Endividado</h3>
+          <p className="text-xs sm:text-sm text-muted-foreground">🚨 Se o cliente disser que está endividado - aprofundamento especial</p>
+        </div>
+      </div>
+
+      {/* Entender o cenário - VERMELHO */}
+      <div className="rounded-2xl border-2 border-[var(--danger)]/40 bg-gradient-to-br from-[#FFF5F2] via-white to-white p-4 sm:p-5">
+        <div className="flex items-center gap-2">
+          <span className="inline-flex items-center gap-1 rounded-full bg-[var(--danger)] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white">🟥 Entender o cenário</span>
+        </div>
+        <p className="mt-2 text-sm text-[var(--navy)]/80">Utilizar perguntas para compreender a situação antes de tentar resolver.</p>
+        <ul className="mt-3 space-y-2">
+          {cenario.map((q, i) => (
+            <li key={i} className="flex gap-2 text-[15px] text-[var(--navy)] leading-snug">
+              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--danger)]" />
+              <span>{q}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Entender o impacto - AMARELO */}
+      <div className="rounded-2xl border-2 border-[var(--warn)]/50 bg-gradient-to-br from-[#FFFBEB] via-white to-white p-4 sm:p-5">
+        <div className="flex items-center gap-2">
+          <span className="inline-flex items-center gap-1 rounded-full bg-[var(--warn)] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-[var(--navy)]">🟨 Entender o impacto</span>
+        </div>
+        <p className="mt-2 text-sm text-[var(--navy)]/80">Agora aprofundar o problema.</p>
+        <ul className="mt-3 space-y-2">
+          {impacto.map((q, i) => (
+            <li key={i} className="flex gap-2 text-[15px] text-[var(--navy)] leading-snug">
+              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--warn)]" />
+              <span>{q}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Identificar oportunidade - VERDE */}
+      <div className="rounded-2xl border-2 border-[var(--success)]/40 bg-gradient-to-br p-4 sm:p-5" style={{ backgroundImage: "linear-gradient(to bottom right, color-mix(in oklab, var(--success) 8%, white), white, white)" }}>
+        <div className="flex items-center gap-2">
+          <span className="inline-flex items-center gap-1 rounded-full bg-[var(--success)] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white">🟩 Identificar oportunidade</span>
+        </div>
+        <p className="mt-2 text-sm text-[var(--navy)]/80">Aqui o objetivo é entender abertura para ajuda.</p>
+        <ul className="mt-3 space-y-2">
+          {oportunidade.map((q, i) => (
+            <li key={i} className="flex gap-2 text-[15px] text-[var(--navy)] leading-snug">
+              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--success)]" />
+              <span>{q}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Sinais de alerta - AMARELO checklist */}
+      <div className="rounded-2xl border-2 border-[var(--warn)] bg-gradient-to-br from-[#FFFBEB] via-white to-[#FFF6E8] p-4 sm:p-5">
+        <div className="flex items-center gap-2">
+          <span className="inline-flex items-center gap-1 rounded-full bg-[var(--warn)] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-[var(--navy)]">🔍 Sinais de alerta</span>
+        </div>
+        <p className="mt-2 text-sm text-[var(--navy)]/80">Quanto mais respostas positivas abaixo, maior tende a ser a urgência da reunião.</p>
+        <ul className="mt-3 grid gap-2 sm:grid-cols-2">
+          {sinais.map((s, i) => (
+            <li key={i} className="flex items-start gap-2 text-[15px] text-[var(--navy)] leading-snug">
+              <span aria-hidden className="mt-0.5 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded border-2 border-[var(--warn)] bg-white text-[var(--warn)]">☐</span>
+              <span>{s}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* O que o Hunter precisa descobrir - AZUL */}
+      <div className="rounded-2xl border-2 border-[var(--brand)]/40 p-4 sm:p-5" style={{ backgroundColor: "color-mix(in oklab, var(--brand) 6%, white)" }}>
+        <div className="flex items-center gap-2">
+          <span className="inline-flex items-center gap-1 rounded-full bg-[var(--brand)] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white">💡 O que o Hunter precisa descobrir</span>
+        </div>
+        <p className="mt-2 text-sm text-[var(--navy)]/80">Antes de seguir a ligação tente descobrir:</p>
+        <ul className="mt-3 space-y-2">
+          {descobrir.map((q, i) => (
+            <li key={i} className="flex gap-2 text-[15px] text-[var(--navy)] leading-snug">
+              <span aria-hidden className="text-[var(--success)]">✅</span>
+              <span>{q}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Transição - AZUL */}
+      <div className="rounded-2xl border-2 border-[var(--brand)] bg-gradient-to-br from-[#EEF4FF] via-white to-[#F5F0FF] p-4 sm:p-5">
+        <div className="flex items-center gap-2">
+          <span className="inline-flex items-center gap-1 rounded-full bg-[var(--brand)] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white">🎯 Transição para o próximo bloco</span>
+        </div>
+        <blockquote className="mt-3 border-l-4 border-[var(--brand)] pl-4 text-[15px] sm:text-base italic text-[var(--navy)] leading-relaxed">
+          "Entendi. E sabe por que estou aprofundando nisso? Porque muitas vezes o problema não é apenas a dívida em si, mas a falta de uma estratégia financeira para sair desse ciclo. É justamente isso que buscamos entender melhor durante a reunião."
+        </blockquote>
+      </div>
+
+      {/* Dica do especialista - PREMIUM */}
+      <div className="relative overflow-hidden rounded-2xl border-2 border-[var(--navy)] bg-gradient-to-br from-[var(--navy)] via-[#0b1c3a] to-[var(--navy)] p-5 sm:p-6 text-white shadow-xl shadow-[var(--navy)]/20">
+        <div className="pointer-events-none absolute -top-16 -right-16 h-48 w-48 rounded-full bg-[var(--brand)]/25 blur-3xl" />
+        <div className="relative">
+          <div className="flex items-center gap-2">
+            <span className="inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-[var(--warn)] to-[#FFB020] px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider text-[var(--navy)] shadow-sm">🧠 Dica do especialista · Premium</span>
+          </div>
+          <p className="mt-3 text-lg sm:text-xl font-bold leading-snug">O que o cliente realmente está dizendo</p>
+          <p className="mt-2 text-sm sm:text-base text-white/85 leading-relaxed">Quando alguém fala que está endividado, normalmente o problema não é apenas financeiro. Na maioria das vezes existem sentimentos como:</p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {sentimentos.map((s) => (
+              <span key={s} className="inline-flex items-center rounded-full bg-white/10 border border-white/20 px-3 py-1 text-xs font-semibold text-white">
+                {s}
+              </span>
+            ))}
+          </div>
+          <div className="mt-4 rounded-xl bg-white/5 border border-white/10 p-4 space-y-2 text-sm sm:text-base text-white/90 leading-relaxed">
+            <p>Evite parecer um especialista que quer ensinar.</p>
+            <p>Seja alguém curioso que quer compreender.</p>
+            <p className="text-[var(--warn)] font-semibold">Quanto mais o cliente falar, maior será a percepção de valor da futura reunião.</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Erros do Hunter - VERMELHO */}
+      <div className="rounded-2xl border-2 border-[var(--danger)] bg-gradient-to-br from-[#FFF5F2] via-white to-white p-4 sm:p-5">
+        <div className="flex items-center gap-2">
+          <span className="inline-flex items-center gap-1 rounded-full bg-[var(--danger)] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white">🚫 Erros do Hunter</span>
+        </div>
+        <p className="mt-2 text-sm font-semibold text-[var(--danger)]">Nunca:</p>
+        <ul className="mt-2 space-y-2">
+          {erros.map((q, i) => (
+            <li key={i} className="flex gap-2 text-[15px] text-[var(--navy)] leading-snug">
+              <span aria-hidden className="text-[var(--danger)]">❌</span>
+              <span>{q}</span>
+            </li>
+          ))}
+        </ul>
+        <div className="mt-4 rounded-xl border border-[var(--brand)]/30 bg-[var(--brand)]/5 p-3 text-sm text-[var(--navy)] leading-relaxed">
+          <p>O objetivo da ligação não é resolver a dívida.</p>
+          <p className="mt-1 font-semibold">É fazer o cliente perceber que existe um problema importante e gerar desejo genuíno de participar da reunião, onde ele poderá receber uma análise completa e personalizada. Esse equilíbrio evita promessas irreais e aumenta a qualidade do agendamento.</p>
+        </div>
+      </div>
+    </div>
+  );
+}
