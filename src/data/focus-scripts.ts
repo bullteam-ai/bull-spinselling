@@ -16,7 +16,9 @@ import { GUIDED_STAGES } from "./guided-call";
 const HOME_FOCUS_SCRIPT: FocusStep[] = GUIDED_STAGES.map((stage) => ({
   id: stage.id,
   label: stage.label,
+  objetivo: stage.objetivo,
   pergunta: stage.fala,
+  aprofundamento: stage.aprofundamento,
   sim: stage.sim,
   nao: stage.nao,
   transicao: stage.transicao,

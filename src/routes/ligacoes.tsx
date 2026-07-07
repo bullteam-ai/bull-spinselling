@@ -700,10 +700,11 @@ function Ligacoes() {
     const steps: FocusStep[] = call.blocks.map((b) => ({
       id: b.id,
       label: b.label,
+      objetivo: b.intent,
       pergunta: b.script,
+      aprofundamento: b.trigger ? [b.trigger] : undefined,
       sim: b.doSay,
       nao: b.dontSay,
-      transicao: b.trigger,
     }));
     steps.push({
       id: "fechamento-final",
